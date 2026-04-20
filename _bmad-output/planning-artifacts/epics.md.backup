@@ -1,0 +1,347 @@
+---
+stepsCompleted:
+  - step-01-validate-prerequisites
+inputDocuments:
+  - _bmad-output/planning-artifacts/prd.md
+  - _bmad-output/planning-artifacts/product-brief-bagisto-2026-03-14.md
+---
+
+# bagisto - Epic Breakdown
+
+## Overview
+
+This document provides the complete epic and story breakdown for bagisto, decomposing the requirements from the PRD, UX Design if it exists, and Architecture requirements into implementable stories.
+
+## Requirements Inventory
+
+### Functional Requirements
+
+FR1: The system shall allow customers to purchase membership plans and convert payment value into purchased credit at a 1:1 ratio.
+
+FR2: The system shall maintain two separate wallet balances per customer: purchased credit and bonus credit.
+
+FR3: The system shall deduct credits during booking using deterministic priority: bonus credit first, then purchased credit.
+
+FR4: The system shall validate available credit at booking time and block booking completion when available credit is insufficient.
+
+FR5: The system shall require and process top-up for the exact shortfall amount before completing a booking with insufficient credit.
+
+FR6: The system shall enforce per-product/per-car refundability configuration.
+
+FR7: The system shall support configurable refund destination routing between account transfer and store credit.
+
+FR8: The system shall support admin-issued credit adjustments (grant/add) for authorized users only.
+
+FR9: The system shall record all balance-changing events in an immutable credit ledger with actor, reason, source event, and timestamp.
+
+FR10: The system shall support credit expiry policies for both lifetime and expiring credits.
+
+FR11: The system shall support cancellation/reversal flows that update wallet balances and ledger entries consistently.
+
+FR12: The system shall support recurring customer use cases including repeated bookings, bonus grants, and balance visibility.
+
+### NonFunctional Requirements
+
+NFR1: Membership-to-credit issuance must be atomic with no partial success state.
+
+NFR2: The platform must guarantee no negative wallet balance states.
+
+NFR3: Deduction and refund policy behaviors must be deterministic and test-covered.
+
+NFR4: All credit mutations must be auditable and searchable.
+
+NFR5: Access control must prevent unauthorized wallet mutations.
+
+NFR6: Core credit domain flows must be covered by automated unit and feature tests.
+
+NFR7: Critical acceptance scenarios for top-up blocking, deduction order, and refund routing must meet 100% pass rate targets.
+
+NFR8: Transaction integrity must achieve zero unreconciled wallet transactions in test/staging.
+
+NFR9: The ledger must be sufficient to reconstruct historical and current balances.
+
+### Additional Requirements
+
+- No architecture decision document was found in planning artifacts; architecture-specific setup requirements remain to be defined.
+- Phase 1 scope prioritizes store credit and explicitly defers POS workflows to a later phase.
+- MVP must align with Bagisto package patterns (modular package design, repository pattern, event-driven integration points).
+
+### UX Design Requirements
+
+No UX design specification document was found in planning artifacts at this step.
+
+### FR Coverage Map
+
+| Functional Requirement | Covered by Epic(s) |
+|---|---|
+| FR1: Customer purchase membership plans | Epic 2: Membership Credit Activation |
+| FR2: Dual wallet balances (purchased/bonus) | Epic 3: Wallet Ledger Foundation |
+| FR3: Deterministic deduction (bonus-first) | Epic 4: Booking Payment with Credit and Top-Up |
+| FR4: Available credit validation at booking | Epic 4: Booking Payment with Credit and Top-Up |
+| FR5: Required top-up for shortfall | Epic 4: Booking Payment with Credit and Top-Up |
+| FR6: Per-product refundability config | Epic 5: Refunds, Reversals, and Policy Enforcement |
+| FR7: Configurable refund routing | Epic 5: Refunds, Reversals, and Policy Enforcement |
+| FR8: Admin credit adjustments | Epic 6: Admin Governance and Operational Control |
+| FR9: Immutable credit ledger | Epic 3: Wallet Ledger Foundation |
+| FR10: Credit expiry policies | Epic 3: Wallet Ledger Foundation |
+| FR11: Cancellation/reversal flows | Epic 5: Refunds, Reversals, and Policy Enforcement |
+| FR12: Recurring customer use cases | Epic 2-5: Integrated workflow |
+
+## Epic List
+
+
+
+## Epic 1: Frontend Homepage, Product, Blog, and Theme Updates
+
+**Goal**: Modernize and customize the customer-facing experience by updating the homepage, car listing (product) page, blog pages, and overall shop theme.
+
+**Stories:**
+- Story 1.1: Redesign and implement the homepage with new layout, banners, and featured sections
+- Story 1.2: Update the product (car list) page to improve car browsing, filtering, and visual presentation
+- Story 1.3: Create or update blog pages for content marketing and SEO
+- Story 1.4: Customize the shop theme (colors, typography, layout) to match brand identity and improve UX
+- Story 1.5: Apply color, font, and branding
+- Story 1.6: Test responsiveness and accessibility
+- Story 1.7: Finalize and activate theme
+
+### Story 1.1: Redesign and implement the homepage with new layout, banners, and featured sections
+
+**As a** visitor or returning customer,
+**I want** to see a modern, visually appealing homepage with clear navigation, banners, and featured car sections,
+**So that** I can quickly understand the value proposition, browse cars, and access key site areas.
+
+**Requirements:**
+- Responsive layout for desktop, tablet, and mobile
+- Hero/banner section with promotional image and call-to-action
+- Featured cars section (e.g., “Popular Rentals” or “New Arrivals”)
+- Quick links to car list, registration, and blog
+- Section for customer testimonials or trust signals
+- Blog/news preview section (latest 2-3 posts)
+- Footer with contact info, social links, and legal
+- Theme colors, fonts, and branding consistent with company identity
+
+**Acceptance Criteria:**
+- Given I visit the homepage on any device
+  When the page loads
+  Then I see a hero/banner section with a prominent call-to-action
+  And I see a featured cars section with at least 3 cars displayed
+  And I see navigation links to car list, registration, and blog
+  And I see a preview of the latest blog posts
+  And I see a footer with contact info and social links
+- Given I resize the browser or use a mobile device
+  When the homepage loads
+  Then all sections are readable and visually appealing (responsive)
+- Given the homepage is loaded
+  When I click a featured car
+  Then I am taken to the car’s detail page
+- Given the homepage is loaded
+  When I click the registration or blog link
+  Then I am taken to the correct page
+- Given the homepage is loaded
+  When I view the theme
+  Then colors, fonts, and layout match the brand guidelines
+
+---
+
+### Story 1.2: Scaffold custom Bagisto theme package
+
+**Requirements:**
+- Create `packages/Webkul/AutoLeadingTheme/` with standard Bagisto theme structure
+- Set up Blade views, assets, config, and Vite bundling
+- Register theme in Bagisto config
+
+**Acceptance Criteria:**
+- Theme package exists and is recognized by Bagisto
+- Theme can be set as default in admin
+
+---
+
+### Story 1.3: Build homepage layout and shared components
+
+**Requirements:**
+- Implement homepage structure (hero, search, featured cars, brands, services, process, blog/FAQ/contact, footer)
+- Create reusable Blade components for cards, banners, navigation, etc.
+
+**Acceptance Criteria:**
+- Homepage matches reference design visually and functionally
+- Components are reusable across pages
+
+---
+
+### Story 1.4: Implement all referenced pages and sections
+
+**Requirements:**
+- Car list, car detail, brand filter, blog/news, FAQ, contact, registration/login, rental process, service commitment
+- Ensure navigation and routing work as expected
+
+**Acceptance Criteria:**
+- All pages are accessible and match design
+- Navigation is consistent and functional
+
+---
+
+### Story 1.5: Apply color, font, and branding
+
+**Requirements:**
+- Use correct color palette, typography, and logo
+- Style buttons, headings, and cards per design
+
+**Acceptance Criteria:**
+- Visuals match reference site and brand guidelines
+
+---
+
+### Story 1.6: Test responsiveness and accessibility
+
+**Requirements:**
+- Ensure layouts work on all device sizes
+- Check color contrast and keyboard navigation
+
+**Acceptance Criteria:**
+- Theme is fully responsive and accessible
+
+---
+
+### Story 1.7: Finalize and activate theme
+
+**Requirements:**
+- Bundle assets with Vite
+- Set theme as default in Bagisto
+- Document customization points (color/logo swap, Blade sections)
+
+**Acceptance Criteria:**
+- Theme is live and ready for production use
+- Documentation is available for future updates
+
+---
+
+## Epic 2: Customer Registration and Admin Approval Onboarding
+
+**Goal**: Enable new users to register, upload documents, and complete admin approval in a unified onboarding flow, ensuring only verified users can transact.
+
+**Workflow Summary**:
+1. User fills registration form (email, name, contact details) and uploads required documents (license, insurance, etc.)
+2. User submits registration (can be partial, status "unverified" if docs missing)
+3. User dashboard shows missing docs and allows uploads at any time
+4. Admin dashboard shows all pending and incomplete registrations
+5. Admin reviews, approves, or rejects users with notes
+6. User receives status updates and can re-submit if rejected
+7. **Gate**: User cannot purchase membership, top-up, or book cars until verification is approved
+
+**Covers Requirements**: None explicitly (foundational gate for all subsequent wallet operations)
+
+### Story 2.1: Combined Registration + Document Upload Form
+...existing code...
+### Story 2.2: Unverified Status & Missing Documents Dashboard
+...existing code...
+### Story 2.3: Admin Verification Dashboard
+...existing code...
+### Story 2.4: Admin Approval/Rejection Workflow
+...existing code...
+## Epic 2 Complete Summary
+**Epic 2: Customer Registration and Admin Approval Onboarding** includes **4 stories**:
+- ✅ Story 2.1: Combined Registration + Document Upload Form
+- ✅ Story 2.2: Unverified Status & Missing Documents Dashboard
+- ✅ Story 2.3: Admin Verification Dashboard
+- ✅ Story 2.4: Admin Approval/Rejection Workflow
+
+**FR Coverage for Epic 2**: None explicitly, but **foundational gate** for all subsequent wallet operations (Epic 3-7).
+
+**Key Gate Rule Enforced**: All stories in Epic 3-7 will verify user status is "verified" before allowing wallet operations.
+
+**Key Improvements**:
+- Combined registration + document form (single submission)
+- Partial submission allowed: shows "unverified" with missing documents list
+- Customer can see exactly which documents are missing and add them anytime
+- Automatic status upgrade when all documents are complete
+- Admin dashboard shows both complete and incomplete submissions
+
+**Goal**: Enable verified users to purchase membership plans and receive purchased credit safely and atomically at 1:1 ratio.
+
+**Requirements Addressed**: FR1, also supports FR2 (dual-balance setup), FR12 (recurring use)
+
+**Stories - To be defined in Step 3**:
+- Story 2.1: Membership Plan Selection and Purchase
+- Story 2.2: 1:1 Credit Issuance (Atomic Transaction)
+- Story 2.3: Membership Expiry and Renewal Support
+
+---
+
+## Epic 3: Wallet Ledger Foundation
+
+**Goal**: Enable reliable dual-balance wallet accounting (purchased/bonus) with immutable ledger and expiry support.
+
+**Requirements Addressed**: FR2, FR9, FR10, NFR2, NFR4, NFR8, NFR9
+
+**Stories - To be defined in Step 3**:
+- Story 3.1: Dual-Balance Wallet Structure (Purchased/Bonus)
+- Story 3.2: Immutable Credit Ledger with Metadata
+- Story 3.3: Credit Expiry Configuration and Enforcement
+- Story 3.4: Balance History and Reconstruction
+
+---
+
+## Epic 4: Booking Payment with Credit and Top-Up
+
+**Goal**: Enable booking payment with deterministic bonus-first deduction and enforced shortfall top-up.
+
+**Requirements Addressed**: FR3, FR4, FR5, NFR1, NFR3, NFR7
+
+**Stories - To be defined in Step 3**:
+- Story 4.1: Booking Credit Deduction (Bonus-First Priority)
+- Story 4.2: Available Credit Validation at Checkout
+- Story 4.3: Top-Up Requirement and Enforcement
+- Story 4.4: Atomic Booking + Payment Transaction
+
+---
+
+## Epic 5: Refunds, Reversals, and Policy Enforcement
+
+**Goal**: Enable post-booking financial correctness with refundability rules, destination routing, and reversal consistency.
+
+**Requirements Addressed**: FR6, FR7, FR11, NFR3, NFR8
+
+**Stories - To be defined in Step 3**:
+- Story 5.1: Per-Product Refundability Configuration
+- Story 5.2: Refund Destination Routing (Account vs Store Credit)
+- Story 5.3: Cancellation and Reversal Workflow
+- Story 5.4: Refund Ledger Recording
+
+---
+
+## Epic 6: Admin Governance and Operational Control
+
+**Goal**: Enable secure admin controls for adjustments, approvals, and full audit/compliance visibility.
+
+**Requirements Addressed**: FR8, NFR4, NFR5
+
+**Stories - To be defined in Step 3**:
+- Story 6.1: Admin Credit Adjustment Interface
+- Story 6.2: User Verification Approval Workflow (supports Epic 1)
+- Story 6.3: Audit Log and Compliance Reporting
+- Story 6.4: Role-Based Access Control for Admin Functions
+
+---
+
+## Critical Gate Rule
+
+**MUST enforce in ALL stories covering wallet operations (Epic 2-6)**:
+
+```
+Given a user is not verified or registration/docs are not approved
+When the user attempts to [purchase membership / top-up wallet / complete booking payment]
+Then the action is blocked
+And an error message directs user to complete registration and await admin approval
+```
+
+---
+
+## Epic 7: Frontend Homepage, Product, Blog, and Theme Updates
+
+**Goal**: Modernize and customize the customer-facing experience by updating the homepage, car listing (product) page, blog pages, and overall shop theme.
+
+**Stories:**
+- Story 7.1: Redesign and implement the homepage with new layout, banners, and featured sections
+- Story 7.2: Update the product (car list) page to improve car browsing, filtering, and visual presentation
+- Story 7.3: Create or update blog pages for content marketing and SEO
+- Story 7.4: Customize the shop theme (colors, typography, layout) to match brand identity and improve UX

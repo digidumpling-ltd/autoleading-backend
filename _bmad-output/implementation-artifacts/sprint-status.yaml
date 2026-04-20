@@ -1,0 +1,95 @@
+# generated: 2026-04-01 06:39:56 +08
+# last_updated: 2026-04-01 06:39:56 +08
+# project: bagisto
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: /home/developer/bagisto/_bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog -> in-progress: Automatically when first story is created (via create-story)
+#   - in-progress -> done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-04-01 06:39:56 +08
+last_updated: 2026-04-01 06:39:56 +08
+project: bagisto
+project_key: NOKEY
+tracking_system: file-system
+story_location: /home/developer/bagisto/_bmad-output/implementation-artifacts
+
+development_status:
+  epic-1: in-progress
+  1-1-redesign-and-implement-the-homepage-with-new-layout-banners-and-featured-sections: backlog
+  1-2-scaffold-custom-bagisto-theme-package: ready-for-dev
+  1-3-build-homepage-layout-and-shared-components: backlog
+  1-4-implement-all-referenced-pages-and-sections: backlog
+  1-5-apply-color-font-and-branding: backlog
+  1-6-test-responsiveness-and-accessibility: backlog
+  1-7-finalize-and-activate-theme: backlog
+  epic-1-retrospective: optional
+
+  epic-2: backlog
+  2-1-combined-registration-document-upload-form: backlog
+  2-2-unverified-status-missing-documents-dashboard: backlog
+  2-3-admin-verification-dashboard: backlog
+  2-4-admin-approval-rejection-workflow: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-dual-balance-wallet-structure-purchased-bonus: backlog
+  3-2-immutable-credit-ledger-with-metadata: backlog
+  3-3-credit-expiry-configuration-and-enforcement: backlog
+  3-4-balance-history-and-reconstruction: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-booking-credit-deduction-bonus-first-priority: backlog
+  4-2-available-credit-validation-at-checkout: backlog
+  4-3-top-up-requirement-and-enforcement: backlog
+  4-4-atomic-booking-payment-transaction: backlog
+  epic-4-retrospective: optional
+
+  epic-5: backlog
+  5-1-per-product-refundability-configuration: backlog
+  5-2-refund-destination-routing-account-vs-store-credit: backlog
+  5-3-cancellation-and-reversal-workflow: backlog
+  5-4-refund-ledger-recording: backlog
+  epic-5-retrospective: optional
+
+  epic-6: backlog
+  6-1-admin-credit-adjustment-interface: backlog
+  6-2-user-verification-approval-workflow-supports-epic-1: backlog
+  6-3-audit-log-and-compliance-reporting: backlog
+  6-4-role-based-access-control-for-admin-functions: backlog
+  epic-6-retrospective: optional
+
+  epic-7: backlog
+  7-1-redesign-and-implement-the-homepage-with-new-layout-banners-and-featured-sections: backlog
+  7-2-update-the-product-car-list-page-to-improve-car-browsing-filtering-and-visual-presentation: backlog
+  7-3-create-or-update-blog-pages-for-content-marketing-and-seo: backlog
+  7-4-customize-the-shop-theme-colors-typography-layout-to-match-brand-identity-and-improve-ux: backlog
+  epic-7-retrospective: optional
