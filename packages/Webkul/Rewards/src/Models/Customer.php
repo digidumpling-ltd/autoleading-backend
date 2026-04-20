@@ -22,6 +22,7 @@ class Customer extends BaseCustomer
         'api_token',
         'token',
         'customer_group_id',
+        'channel_id',
         'subscribed_to_news_letter',
         'status',
         'is_verified',
