@@ -1,19 +1,4 @@
-<header
-    class="al-header"
-    :class="{ 'is-scrolled': scrolled }"
-    x-data="{
-        scrolled: false,
-        mobileOpen: false,
-        langOpen: false,
-        userOpen: false,
-        init() {
-            this.scrolled = window.scrollY > 50;
-            window.addEventListener('scroll', () => {
-                this.scrolled = window.scrollY > 50;
-            }, { passive: true });
-        }
-    }"
->
+<header class="al-header">
     <div class="al-header-shell">
 
         {{-- Logo --}}
@@ -48,13 +33,11 @@
             <div class="al-auth-links hidden lg:flex">
 
                 @guest('customer')
-                    {{-- Login --}}
                     <a href="{{ route('shop.customer.session.index') }}" class="al-auth-link flex items-center gap-1">
                         <x-heroicon-o-user class="w-5 h-5 al-text-accent" />
                         {{ __('auto-leading-theme::app.common.login') }}
                     </a>
 
-                    {{-- Register --}}
                     <a href="{{ route('shop.customers.register.index') }}" class="al-auth-link">
                         {{ __('auto-leading-theme::app.common.register') }}
                     </a>
@@ -64,18 +47,16 @@
                         $localeLabels = ['en' => 'EN', 'zh_CN' => '中文', 'zh_TW' => '中文'];
                         $currentLabel = $localeLabels[app()->getLocale()] ?? strtoupper(app()->getLocale());
                     @endphp
-                    <div class="al-dropdown" x-data="{ open: false }">
+                    <div class="al-dropdown">
                         <button
-                            @click="open = !open"
-                            @click.outside="open = false"
-                            class="al-auth-link flex items-center gap-1"
-                            :aria-expanded="open"
                             type="button"
+                            class="al-auth-link flex items-center gap-1 al-dropdown-toggle"
+                            aria-expanded="false"
                         >
                             <x-heroicon-o-globe-alt class="w-5 h-5 al-text-accent" />
                             <span class="font-medium">{{ $currentLabel }}</span>
                         </button>
-                        <div x-show="open" x-transition class="al-dropdown-menu" @click.outside="open = false">
+                        <div class="al-dropdown-menu" style="display:none">
                             @foreach (core()->getAllLocales() as $locale)
                                 @if ($locale->code !== app()->getLocale())
                                     <a href="?locale={{ $locale->code }}" class="al-dropdown-item">
@@ -88,18 +69,16 @@
                 @endguest
 
                 @auth('customer')
-                    {{-- User Dropdown --}}
-                    <div class="al-dropdown" x-data="{ open: false }">
+                    <div class="al-dropdown">
                         <button
-                            @click="open = !open"
-                            class="al-auth-link flex items-center gap-1"
-                            :aria-expanded="open"
                             type="button"
+                            class="al-auth-link flex items-center gap-1 al-dropdown-toggle"
+                            aria-expanded="false"
                         >
                             <x-heroicon-o-user-circle class="w-5 h-5 al-text-accent" />
                             <span class="max-w-[100px] truncate">{{ auth()->guard('customer')->user()->first_name }}</span>
                         </button>
-                        <div x-show="open" x-transition @click.outside="open = false" class="al-dropdown-menu">
+                        <div class="al-dropdown-menu" style="display:none">
                             <a href="{{ route('shop.customers.account.profile.index') }}" class="al-dropdown-item">
                                 {{ __('shop::app.components.layouts.header.desktop.profile') }}
                             </a>
@@ -122,30 +101,20 @@
 
             {{-- Mobile Toggle --}}
             <button
-                class="al-hamburger lg:hidden"
-                @click="mobileOpen = !mobileOpen"
-                :aria-expanded="mobileOpen"
                 type="button"
+                class="al-hamburger lg:hidden al-mobile-toggle"
+                aria-expanded="false"
                 aria-label="{{ __('auto-leading-theme::app.common.menu') }}"
             >
-                <x-heroicon-o-bars-3 x-show="!mobileOpen" class="w-7 h-7 text-white" />
-                <x-heroicon-o-x-mark x-show="mobileOpen" class="w-7 h-7 text-white" />
+                <x-heroicon-o-bars-3 class="w-7 h-7 text-white al-icon-menu" />
+                <x-heroicon-o-x-mark class="w-7 h-7 text-white al-icon-close" style="display:none" />
             </button>
         </div>
 
     </div>
 
     {{-- Mobile Drawer --}}
-    <div
-        class="al-mobile-drawer lg:hidden border-t border-white/10 bg-[#0d0d0d]"
-        x-show="mobileOpen"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 -translate-y-2"
-        x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 translate-y-0"
-        x-transition:leave-end="opacity-0 -translate-y-2"
-    >
+    <div class="al-mobile-drawer lg:hidden border-t border-white/10 bg-[#0d0d0d]" style="display:none">
         <div class="px-6 py-8 flex flex-col gap-6">
             <a href="{{ route('shop.home.index') }}" class="text-xl font-medium text-white hover:al-text-accent transition-colors">{{ __('auto-leading-theme::app.nav.home') }}</a>
             <a href="#" class="text-xl font-medium text-white hover:al-text-accent transition-colors">{{ __('auto-leading-theme::app.nav.cross_border') }}</a>
@@ -182,3 +151,57 @@
     </div>
 
 </header>
+
+@pushOnce('scripts')
+<script>
+    function alInitNavbar() {
+        var header    = document.querySelector('.al-header');
+        var toggle    = document.querySelector('.al-mobile-toggle');
+        var drawer    = document.querySelector('.al-mobile-drawer');
+        var iconMenu  = document.querySelector('.al-icon-menu');
+        var iconClose = document.querySelector('.al-icon-close');
+
+        function onScroll() {
+            if (header) header.classList.toggle('is-scrolled', window.scrollY > 50);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        if (toggle && drawer) {
+            toggle.addEventListener('click', function () {
+                var isOpen = drawer.style.display !== 'none';
+                drawer.style.display    = isOpen ? 'none' : '';
+                iconMenu.style.display  = isOpen ? '' : 'none';
+                iconClose.style.display = isOpen ? 'none' : '';
+                toggle.setAttribute('aria-expanded', String(!isOpen));
+            });
+        }
+
+        document.querySelectorAll('.al-header .al-dropdown').forEach(function (dropdown) {
+            var btn  = dropdown.querySelector('.al-dropdown-toggle');
+            var menu = dropdown.querySelector('.al-dropdown-menu');
+            if (!btn || !menu) return;
+
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var opening = menu.style.display === 'none';
+                document.querySelectorAll('.al-header .al-dropdown-menu').forEach(function (m) {
+                    m.style.display = 'none';
+                    m.closest('.al-dropdown')?.querySelector('.al-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+                });
+                if (opening) {
+                    menu.style.display = '';
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+
+        document.addEventListener('click', function () {
+            document.querySelectorAll('.al-header .al-dropdown-menu').forEach(function (menu) {
+                menu.style.display = 'none';
+                menu.closest('.al-dropdown')?.querySelector('.al-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
+</script>
+@endPushOnce

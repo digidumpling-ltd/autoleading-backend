@@ -24,13 +24,10 @@
 
             {!! view_render_event('bagisto.shop.customers.sign-up.before') !!}
 
-            <form 
-                method="POST" 
-                action="{{ route('shop.customers.register.store') }}" 
+            <x-shop::form
+                action="{{ route('shop.customers.register.store') }}"
                 enctype="multipart/form-data"
             >
-                @csrf
-
                 {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
 
                 {{-- First Name + Last Name (2-col) --}}
@@ -223,7 +220,7 @@
                 {{-- Newsletter --}}
                 @if (core()->getConfigData('customer.settings.create_new_account_options.news_letter'))
                     <div class="al-auth-checkbox-row">
-                        <input type="checkbox" name="is_subscribed" id="is-subscribed">
+                        <input type="checkbox" name="is_subscribed" id="is-subscribed" class="al-auth-native-checkbox">
                         <label for="is-subscribed" class="al-auth-check-label">
                             @lang('shop::app.customers.signup-form.subscribe-to-newsletter')
                         </label>
@@ -263,13 +260,73 @@
                     <x-shop::form.control-group.error control-name="agreement" />
                 @endif
 
+                {{-- Personal Data Collection Statement --}}
+                <v-field
+                    name="agree_pdcs"
+                    rules="required"
+                    type="checkbox"
+                    :value="true"
+                    v-slot="{ field, errors }"
+                    label="{{ __('auto-leading-theme::app.auth_page.pdcs_title') }}"
+                >
+                    <div class="al-auth-checkbox-row">
+                        <input
+                            type="checkbox"
+                            id="agree-pdcs"
+                            name="agree_pdcs"
+                            v-bind="field"
+                            :value="true"
+                            class="al-auth-native-checkbox"
+                            :class="{ 'al-auth-checkbox--error': errors.length }"
+                        >
+                        <label class="al-auth-check-label" for="agree-pdcs">
+                            {!! __('auto-leading-theme::app.auth_page.pdcs_agree', [
+                                'link' => '<a href="#" target="_blank" class="al-auth-tnc-link">' . __('auto-leading-theme::app.auth_page.pdcs_title') . '</a>',
+                            ]) !!}
+                        </label>
+                    </div>
+                </v-field>
+                <v-error-message name="agree_pdcs" v-slot="{ message }">
+                    <p class="al-auth-field-error" v-text="message"></p>
+                </v-error-message>
+
+                {{-- Membership Terms & Conditions --}}
+                <v-field
+                    name="agree_membership_tnc"
+                    rules="required"
+                    type="checkbox"
+                    :value="true"
+                    v-slot="{ field, errors }"
+                    label="{{ __('auto-leading-theme::app.auth_page.membership_tnc_title') }}"
+                >
+                    <div class="al-auth-checkbox-row">
+                        <input
+                            type="checkbox"
+                            id="agree-membership-tnc"
+                            name="agree_membership_tnc"
+                            v-bind="field"
+                            :value="true"
+                            class="al-auth-native-checkbox"
+                            :class="{ 'al-auth-checkbox--error': errors.length }"
+                        >
+                        <label class="al-auth-check-label" for="agree-membership-tnc">
+                            {!! __('auto-leading-theme::app.auth_page.membership_tnc_agree', [
+                                'link' => '<a href="#" target="_blank" class="al-auth-tnc-link">' . __('auto-leading-theme::app.auth_page.membership_tnc_title') . '</a>',
+                            ]) !!}
+                        </label>
+                    </div>
+                </v-field>
+                <v-error-message name="agree_membership_tnc" v-slot="{ message }">
+                    <p class="al-auth-field-error" v-text="message"></p>
+                </v-error-message>
+
                 <button type="submit" class="al-auth-submit">
                     @lang('shop::app.customers.signup-form.button-title')
                 </button>
 
                 {!! view_render_event('bagisto.shop.customers.signup_form_controls.after') !!}
 
-            </form>
+            </x-shop::form>
 
             {!! view_render_event('bagisto.shop.customers.sign-up.after') !!}
 

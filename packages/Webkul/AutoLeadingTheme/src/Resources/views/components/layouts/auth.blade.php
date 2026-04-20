@@ -41,5 +41,11 @@
         </div>
 
         @stack('scripts')
+
+        <script>
+            window.addEventListener('load', function () {
+                app.mount('#app');
+            });
+        </script>
     </body>
 </html>

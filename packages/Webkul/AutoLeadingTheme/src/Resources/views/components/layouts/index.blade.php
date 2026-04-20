@@ -23,9 +23,6 @@
 
         @bagistoVite(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'], 'auto-leading-theme')
 
-        {{-- Alpine.js — loaded via CDN, independent of Vite/symlink --}}
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
-
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
@@ -60,101 +57,104 @@
             @if ($hasFooter)
                 <x-auto-leading-theme::layouts.footer />
             @endif
+
+            <v-al-auth-dialog></v-al-auth-dialog>
         </div>
 
         {!! view_render_event('bagisto.shop.layout.body.after') !!}
 
         @stack('scripts')
 
-        {{-- Auth dialog --}}
-        <div
-            x-data="{ open: false }"
-            x-on:open-auth-dialog.window="open = true"
-            x-on:keydown.escape.window="open = false"
-            x-show="open"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            class="fixed inset-0 z-[200] flex items-center justify-center p-4"
-            style="display:none;"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="al-auth-dialog-title"
-        >
-            {{-- Backdrop --}}
+        <script type="text/x-template" id="v-al-auth-dialog-template">
             <div
-                x-on:click="open = false"
-                aria-hidden="true"
-                class="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            ></div>
-
-            {{-- Panel --}}
-            <div
-                x-show="open"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95"
-                x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95"
-                class="relative z-10 bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden"
+                v-show="open"
+                class="fixed inset-0 z-[200] flex items-center justify-center p-4"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="al-auth-dialog-title"
             >
-                {{-- Header --}}
-                <div class="flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-100">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-amber-500/10">
-                            <x-heroicon-o-lock-closed class="w-5 h-5 text-amber-500" />
+                <div @click="close" aria-hidden="true" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+                <div class="relative z-10 bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">
+                    <div class="flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-amber-500/10">
+                                <span class="text-amber-500 text-xl icon-lock"></span>
+                            </div>
+                            <h2 id="al-auth-dialog-title" class="text-base font-bold text-gray-900">
+                                @{{ authDialogTitle }}
+                            </h2>
                         </div>
-                        <h2 id="al-auth-dialog-title" class="text-base font-bold text-gray-900">
-                            {{ __('auto-leading-theme::app.auth_dialog.title') }}
-                        </h2>
+                        <button
+                            type="button"
+                            @click="close"
+                            class="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors border-0 bg-transparent cursor-pointer"
+                        >
+                            <span class="icon-cancel text-lg"></span>
+                        </button>
                     </div>
-                    <button
-                        type="button"
-                        x-on:click="open = false"
-                        class="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors border-0 bg-transparent cursor-pointer"
-                        aria-label="{{ __('auto-leading-theme::app.common.close') }}"
-                    >
-                        <x-heroicon-o-x-mark class="w-4 h-4" />
-                    </button>
-                </div>
 
-                {{-- Body --}}
-                <div class="px-6 py-5 flex flex-col gap-3">
-                    <p class="text-sm text-gray-500">
-                        {{ __('auto-leading-theme::app.auth_dialog.message') }}
-                    </p>
+                    <div class="px-6 py-5 flex flex-col gap-3">
+                        <p class="text-sm text-gray-500">@{{ authDialogMessage }}</p>
 
-                    <a
-                        href="{{ route('shop.customer.session.index') }}"
-                        class="al-car-cta justify-center gap-2 rounded-xl px-6 py-3"
-                    >
-                        <x-heroicon-o-arrow-right-on-rectangle class="w-4 h-4 shrink-0" />
-                        {{ __('auto-leading-theme::app.common.login') }}
-                    </a>
+                        <a
+                            :href="loginUrl"
+                            class="al-car-cta justify-center gap-2 rounded-xl px-6 py-3"
+                        >
+                            @{{ loginLabel }}
+                        </a>
 
-                    <a
-                        href="{{ route('shop.customers.register.index') }}"
-                        class="flex items-center justify-center gap-2 rounded-xl px-6 py-3 border-2 border-gray-200 text-gray-700 font-bold text-xs uppercase tracking-wide no-underline hover:border-amber-500 hover:text-amber-500 transition-colors"
-                    >
-                        <x-heroicon-o-user-plus class="w-4 h-4 shrink-0" />
-                        {{ __('auto-leading-theme::app.common.register') }}
-                    </a>
+                        <a
+                            :href="registerUrl"
+                            class="flex items-center justify-center gap-2 rounded-xl px-6 py-3 border-2 border-gray-200 text-gray-700 font-bold text-xs uppercase tracking-wide no-underline hover:border-amber-500 hover:text-amber-500 transition-colors"
+                        >
+                            @{{ registerLabel }}
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </script>
+
+        <script type="module">
+            app.component('v-al-auth-dialog', {
+                template: '#v-al-auth-dialog-template',
+
+                data() {
+                    return {
+                        open: false,
+                        authDialogTitle:   "{{ __('auto-leading-theme::app.auth_dialog.title') }}",
+                        authDialogMessage: "{{ __('auto-leading-theme::app.auth_dialog.message') }}",
+                        loginLabel:        "{{ __('auto-leading-theme::app.common.login') }}",
+                        registerLabel:     "{{ __('auto-leading-theme::app.common.register') }}",
+                        loginUrl:          "{{ route('shop.customer.session.index') }}",
+                        registerUrl:       "{{ route('shop.customers.register.index') }}",
+                    };
+                },
+
+                mounted() {
+                    window.addEventListener('open-auth-dialog', () => { this.open = true; });
+
+                    window.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') this.close();
+                    });
+                },
+
+                methods: {
+                    close() { this.open = false; },
+                },
+            });
+        </script>
 
         <script>
-            // Legacy bridge — car-card Alpine components call these plain JS functions
             function alOpenAuthDialog() {
                 window.dispatchEvent(new CustomEvent('open-auth-dialog'));
             }
-            function alCloseAuthDialog() {
-                // handled by Alpine x-on:keydown.escape / backdrop click
-            }
+
+            window.addEventListener("load", function () {
+                app.mount("#app");
+
+                if (typeof alInitNavbar === 'function') alInitNavbar();
+            });
         </script>
     </body>
 </html>

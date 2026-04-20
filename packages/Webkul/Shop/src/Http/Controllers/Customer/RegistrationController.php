@@ -48,6 +48,10 @@ class RegistrationController extends Controller
     {
         $subscription = $this->subscriptionRepository->findOneWhere(['email' => request()->input('email')]);
 
+        $customerGroupCode = core()->getConfigData('customer.settings.create_new_account_options.default_group') ?? 'general';
+
+        $customerGroup = $this->customerGroupRepository->findOneWhere(['code' => $customerGroupCode]);
+
         $data = array_merge($registrationRequest->only([
             'first_name',
             'last_name',
@@ -58,6 +62,7 @@ class RegistrationController extends Controller
             'password' => bcrypt(request()->input('password')),
             'api_token' => Str::random(80),
             'is_verified' => ! core()->getConfigData('customer.settings.email.verification'),
+            'customer_group_id' => $customerGroup?->id,
             'channel_id' => core()->getCurrentChannel()->id,
             'token' => md5(uniqid(rand(), true)),
             'subscribed_to_news_letter' => (bool) (request()->input('is_subscribed') ?? $subscription?->is_subscribed),

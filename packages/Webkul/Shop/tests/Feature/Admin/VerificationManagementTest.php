@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
-use Webkul\Admin\Models\Admin;
+use Webkul\User\Models\Admin;
 use Webkul\Customer\Models\Customer;
 use Webkul\CustomerVerification\Models\VerificationAuditLog;
 use Webkul\CustomerVerification\Support\Verification;

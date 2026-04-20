@@ -1,9 +1,19 @@
 <?php
 
 use Webkul\Customer\Models\Customer;
+use Webkul\CustomerVerification\Listeners\PreventUnverifiedRentalAddToCartListener;
 use Webkul\CustomerVerification\Support\Verification;
+use Webkul\Product\Repositories\ProductRepository;
 
 use function Pest\Laravel\actingAs;
+
+function makeListener(object $product): PreventUnverifiedRentalAddToCartListener
+{
+    $repo = Mockery::mock(ProductRepository::class);
+    $repo->shouldIgnoreMissing();
+
+    return new PreventUnverifiedRentalAddToCartListener($repo);
+}
 
 it('prevents unverified customer from adding rental to cart', function () {
     $customer = Customer::factory()->create([
@@ -12,20 +22,10 @@ it('prevents unverified customer from adding rental to cart', function () {
 
     actingAs($customer, 'customer');
 
-    // Mock product data
-    $product = (object) [
-        'type' => 'rental',
-    ];
+    $product = (object) ['type' => 'rental'];
+    $listener = makeListener($product);
 
-    $event = (object) [
-        'product' => $product,
-    ];
-
-    $listener = new \Webkul\CustomerVerification\Listeners\PreventUnverifiedRentalAddToCartListener();
-
-    expect(function () use ($listener, $event) {
-        $listener->handle($event);
-    })->toThrow(Exception::class);
+    expect(fn () => $listener->handle($product))->toThrow(Exception::class);
 });
 
 it('allows verified customer to add rental to cart', function () {
@@ -35,18 +35,10 @@ it('allows verified customer to add rental to cart', function () {
 
     actingAs($customer, 'customer');
 
-    $product = (object) [
-        'type' => 'rental',
-    ];
+    $product = (object) ['type' => 'rental'];
+    $listener = makeListener($product);
 
-    $event = (object) [
-        'product' => $product,
-    ];
-
-    $listener = new \Webkul\CustomerVerification\Listeners\PreventUnverifiedRentalAddToCartListener();
-
-    // Should not throw exception
-    $listener->handle($event);
+    $listener->handle($product);
 
     expect(true)->toBeTrue();
 });
@@ -58,18 +50,10 @@ it('allows unverified customer to add non-rental product', function () {
 
     actingAs($customer, 'customer');
 
-    $product = (object) [
-        'type' => 'simple',
-    ];
+    $product = (object) ['type' => 'simple'];
+    $listener = makeListener($product);
 
-    $event = (object) [
-        'product' => $product,
-    ];
-
-    $listener = new \Webkul\CustomerVerification\Listeners\PreventUnverifiedRentalAddToCartListener();
-
-    // Should not throw exception
-    $listener->handle($event);
+    $listener->handle($product);
 
     expect(true)->toBeTrue();
 });

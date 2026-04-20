@@ -13,4 +13,12 @@ class CustomerGroupRepository extends Repository
     {
         return 'Webkul\Customer\Contracts\CustomerGroup';
     }
+
+    public function getConfigOptions(): array
+    {
+        return $this->all()->map(fn ($group) => [
+            'title' => $group->name,
+            'value' => $group->code,
+        ])->toArray();
+    }
 }

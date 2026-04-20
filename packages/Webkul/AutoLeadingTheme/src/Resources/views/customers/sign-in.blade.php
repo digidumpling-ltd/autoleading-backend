@@ -32,11 +32,7 @@
 
             {!! view_render_event('bagisto.shop.customers.login.before') !!}
 
-            <form 
-                method="POST" 
-                action="{{ route('shop.customer.session.create') }}" 
-            >
-                @csrf
+            <x-shop::form action="{{ route('shop.customer.session.create') }}">
 
                 {!! view_render_event('bagisto.shop.customers.login_form_controls.before') !!}
 
@@ -110,7 +106,7 @@
 
                 {!! view_render_event('bagisto.shop.customers.login_form_controls.after') !!}
 
-            </form>
+            </x-shop::form>
 
             {!! view_render_event('bagisto.shop.customers.login.after') !!}
 

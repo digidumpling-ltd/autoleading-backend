@@ -1,8 +1,8 @@
+@import "components/car-card.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import "components/car-card.css";
 
 @layer base {
 	:root {
@@ -1138,7 +1138,7 @@
 		background: #1a1410;
 		color: #c9b99a;
 		padding: 3rem 0 0;
-		margin-top: 2rem;
+		margin-top: 0;
 	}
 
 	.al-footer-grid {
@@ -1515,6 +1515,39 @@
 		letter-spacing: 0 !important;
 		cursor: pointer;
 		user-select: none;
+	}
+
+	.al-auth-native-checkbox {
+		width: 1rem !important;
+		height: 1rem !important;
+		flex-shrink: 0;
+		accent-color: #f59e0b;
+		cursor: pointer;
+		border-radius: 3px;
+	}
+
+	.al-auth-checkbox--error {
+		outline: 2px solid #f87171;
+		outline-offset: 1px;
+	}
+
+	.al-auth-field-error {
+		color: #f87171;
+		font-size: 0.75rem;
+		font-style: italic;
+		margin-top: 0.25rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.al-auth-tnc-link {
+		color: #f59e0b !important;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+		transition: color 0.2s ease;
+	}
+
+	.al-auth-tnc-link:hover {
+		color: #fbbf24 !important;
 	}
 
 	.al-auth-forgot {

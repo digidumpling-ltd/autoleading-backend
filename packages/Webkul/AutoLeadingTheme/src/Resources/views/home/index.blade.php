@@ -128,6 +128,52 @@
         </div>
     </section>
 
+    <!-- Services Section -->
+    <section class="al-services-section">
+        <div class="al-shell">
+            {{-- Section header --}}
+            <div class="al-services-head" style="text-align: center; margin-bottom: 2.5rem;">
+                <span style="color: #F0A500; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem; display: block; margin-bottom: 0.5rem;">
+                    {{ __('auto-leading-theme::app.services.section_label') }}
+                </span>
+                <h2 style="font-size: 2.5rem; font-weight: 900; font-style: italic; text-transform: uppercase; letter-spacing: -0.03em; color: #1a1a1a; margin: 0 0 1.25rem;">
+                    {{ __('auto-leading-theme::app.services.section_title') }}
+                </h2>
+                <div style="width: 56px; height: 4px; background: #F0A500; margin: 0 auto;"></div>
+            </div>
+
+            {{-- Service cards --}}
+            <div class="al-services">
+                {{-- Fleet --}}
+                <div class="al-service-card">
+                    <div class="al-service-icon">
+                        <x-heroicon-o-truck class="w-7 h-7" />
+                    </div>
+                    <h3>{{ __('auto-leading-theme::app.services.fleet_title') }}</h3>
+                    <p>{{ __('auto-leading-theme::app.services.fleet_desc') }}</p>
+                </div>
+
+                {{-- Flexible --}}
+                <div class="al-service-card">
+                    <div class="al-service-icon">
+                        <x-heroicon-o-calendar-days class="w-7 h-7" />
+                    </div>
+                    <h3>{{ __('auto-leading-theme::app.services.flexible_title') }}</h3>
+                    <p>{{ __('auto-leading-theme::app.services.flexible_desc') }}</p>
+                </div>
+
+                {{-- Support --}}
+                <div class="al-service-card">
+                    <div class="al-service-icon">
+                        <x-heroicon-o-phone class="w-7 h-7" />
+                    </div>
+                    <h3>{{ __('auto-leading-theme::app.services.support_title') }}</h3>
+                    <p>{{ __('auto-leading-theme::app.services.support_desc') }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Why Choose Us -->
     <section class="al-why-us py-24 bg-[#0d0d0d] text-white">
         <div class="al-shell grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">

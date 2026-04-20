@@ -15,7 +15,7 @@ class EventServiceProvider extends ServiceProvider
         'customer.registration.after' => [
             HandleCustomerRegistration::class,
         ],
-        'cart.item.adding' => [
+        'checkout.cart.add.before' => [
             PreventUnverifiedRentalAddToCartListener::class,
         ],
         // NOTE: Login verification checks are deferred to Story 2.3 (admin approval workflow)

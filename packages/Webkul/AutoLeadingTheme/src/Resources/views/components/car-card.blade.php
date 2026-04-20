@@ -12,35 +12,7 @@
 
 @php $isAuth = auth()->guard('customer')->check(); @endphp
 
-<div
-    class="al-car-card"
-    x-data="{
-        wishlisted: {{ $isWishlisted ? 'true' : 'false' }},
-        loading: false,
-        isCustomer: {{ $isAuth ? 'true' : 'false' }},
-        toggleWishlist() {
-            if (!this.isCustomer) { alOpenAuthDialog(); return; }
-            if (this.loading) return;
-            this.loading = true;
-            fetch('{{ route('shop.api.customers.account.wishlist.store') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: JSON.stringify({ product_id: {{ $productId ?? 0 }} })
-            })
-            .then(r => r.json())
-            .then(() => { this.wishlisted = !this.wishlisted; })
-            .finally(() => { this.loading = false; });
-        },
-        bookNow() {
-            if (!this.isCustomer) { alOpenAuthDialog(); return; }
-            window.location.href = '{{ $url }}';
-        }
-    }"
->
+<div class="al-car-card">
     {{-- Image / Thumb --}}
     <a href="{{ $url }}" class="al-car-thumb" aria-label="{{ $name }}">
 
@@ -70,17 +42,12 @@
 
         {{-- Wishlist button (bottom-left) --}}
         @if ($productId)
-            <button
-                type="button"
-                @click.prevent="toggleWishlist"
-                :disabled="loading"
-                :style="wishlisted ? 'color:#F0A500;' : 'color:#fff;'"
-                style="position:absolute;bottom:0.75rem;left:0.75rem;width:2rem;height:2rem;border-radius:50%;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,opacity 0.2s;"
-                aria-label="{{ __('auto-leading-theme::app.common.add_to_wishlist') }}"
-            >
-                <x-heroicon-o-star x-show="!wishlisted" style="width:1rem;height:1rem;" />
-                <x-heroicon-s-star x-show="wishlisted"  style="width:1rem;height:1rem;" />
-            </button>
+            <v-al-wishlist-btn
+                product-id="{{ $productId }}"
+                :is-wishlisted="{{ $isWishlisted ? 'true' : 'false' }}"
+                :is-customer="{{ $isAuth ? 'true' : 'false' }}"
+                wishlist-url="{{ route('shop.api.customers.account.wishlist.store') }}"
+            ></v-al-wishlist-btn>
         @endif
     </a>
 
@@ -99,10 +66,11 @@
         @if ($productId)
             <button
                 type="button"
-                @click="bookNow"
-                :disabled="loading"
                 class="al-car-cta"
                 style="width:100%;justify-content:center;border:none;cursor:pointer;margin-top:0.85rem;gap:0.4rem;"
+                data-url="{{ $url }}"
+                data-auth="{{ $isAuth ? '1' : '0' }}"
+                onclick="(function(el){if(el.dataset.auth==='1'){window.location.href=el.dataset.url;}else{alOpenAuthDialog();}})(this)"
             >
                 <x-heroicon-o-calendar-days style="width:1rem;height:1rem;flex-shrink:0;" />
                 {{ __('auto-leading-theme::app.common.book_now') }}
@@ -119,3 +87,59 @@
         @endif
     </div>
 </div>
+
+@pushOnce('scripts')
+    <script type="text/x-template" id="v-al-wishlist-btn-template">
+        <button
+            type="button"
+            @click.prevent="toggle"
+            :disabled="loading"
+            :style="wishlisted ? 'color:#F0A500;' : 'color:#fff;'"
+            style="position:absolute;bottom:0.75rem;left:0.75rem;width:2rem;height:2rem;border-radius:50%;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,opacity 0.2s;"
+            aria-label="{{ __('auto-leading-theme::app.common.add_to_wishlist') }}"
+        >
+            <x-heroicon-o-star v-if="!wishlisted" style="width:1rem;height:1rem;flex-shrink:0;" />
+            <x-heroicon-s-star v-else              style="width:1rem;height:1rem;flex-shrink:0;" />
+        </button>
+    </script>
+
+    <script type="module">
+        app.component('v-al-wishlist-btn', {
+            template: '#v-al-wishlist-btn-template',
+
+            props: {
+                productId:   { type: [Number, String], required: true },
+                isWishlisted: { type: Boolean, default: false },
+                isCustomer:   { type: Boolean, default: false },
+                wishlistUrl:  { type: String, required: true },
+            },
+
+            data() {
+                return {
+                    wishlisted: this.isWishlisted,
+                    loading: false,
+                };
+            },
+
+            methods: {
+                toggle() {
+                    if (!this.isCustomer) { alOpenAuthDialog(); return; }
+                    if (this.loading) return;
+                    this.loading = true;
+                    fetch(this.wishlistUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                        body: JSON.stringify({ product_id: this.productId }),
+                    })
+                    .then(r => r.json())
+                    .then(() => { this.wishlisted = !this.wishlisted; })
+                    .finally(() => { this.loading = false; });
+                },
+            },
+        });
+    </script>
+@endPushOnce

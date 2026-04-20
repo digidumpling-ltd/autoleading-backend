@@ -25,6 +25,11 @@ class CustomerVerificationServiceProvider extends ServiceProvider
             'menu.admin'
         );
 
+        $this->mergeConfigFrom(
+            dirname(__DIR__).'/Config/acl.php',
+            'acl'
+        );
+
         $this->app->bind(CustomerVerificationDocumentContract::class, CustomerVerificationDocument::class);
 
         $this->app->register(ModuleServiceProvider::class);

@@ -4,6 +4,7 @@ export default {
         './src/Resources/**/*.blade.php',
         './src/Resources/**/*.js',
         '../../../resources/themes/auto-leading-theme/**/*.blade.php',
+        '../Shop/src/Resources/views/components/**/*.blade.php',
     ],
 
     theme: {

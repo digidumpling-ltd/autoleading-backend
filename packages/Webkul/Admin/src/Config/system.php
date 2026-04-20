@@ -1421,18 +1421,7 @@ return [
                 'info' => 'admin::app.configuration.index.customer.settings.create-new-account-option.default-group.title-info',
                 'type' => 'select',
                 'default' => 'general',
-                'options' => [
-                    [
-                        'title' => 'admin::app.configuration.index.customer.settings.create-new-account-option.default-group.general',
-                        'value' => 'general',
-                    ], [
-                        'title' => 'admin::app.configuration.index.customer.settings.create-new-account-option.default-group.guest',
-                        'value' => 'guest',
-                    ], [
-                        'title' => 'admin::app.configuration.index.customer.settings.create-new-account-option.default-group.wholesale',
-                        'value' => 'wholesale',
-                    ],
-                ],
+                'options' => 'Webkul\Customer\Repositories\CustomerGroupRepository@getConfigOptions',
             ], [
                 'name' => 'news_letter',
                 'title' => 'admin::app.configuration.index.customer.settings.create-new-account-option.news-letter',

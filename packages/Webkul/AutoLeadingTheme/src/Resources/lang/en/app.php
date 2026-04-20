@@ -243,13 +243,17 @@ return [
     ],
 
     'auth_page' => [
-        'sign_in_title' => 'Welcome Back',
-        'sign_in_sub'   => 'Sign in to continue to Auto Leading.',
-        'sign_up_title' => 'Create Account',
-        'sign_up_sub'   => 'Join Auto Leading and start your journey.',
-        'brand_tagline' => 'Premium Car Rental Experience',
-        'brand_accent'  => 'Premium',
-        'brand_sub'     => 'Your trusted partner for luxury vehicle rentals in Hong Kong.',
+        'sign_in_title'          => 'Welcome Back',
+        'sign_in_sub'            => 'Sign in to continue to Auto Leading.',
+        'sign_up_title'          => 'Create Account',
+        'sign_up_sub'            => 'Join Auto Leading and start your journey.',
+        'brand_tagline'          => 'Premium Car Rental Experience',
+        'brand_accent'           => 'Premium',
+        'brand_sub'              => 'Your trusted partner for luxury vehicle rentals in Hong Kong.',
+        'pdcs_title'             => 'Personal Data Collection Statement',
+        'pdcs_agree'             => 'I have read and agree to the :link',
+        'membership_tnc_title'   => 'Membership Terms & Conditions',
+        'membership_tnc_agree'   => 'I have read and agree to the :link',
     ],
 
     'search' => [

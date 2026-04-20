@@ -2,32 +2,35 @@
 
 namespace Webkul\CustomerVerification\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Auth;
 use Webkul\CustomerVerification\Support\Verification;
+use Webkul\Product\Repositories\ProductRepository;
 
-class PreventUnverifiedRentalAddToCartListener implements ShouldQueue
+class PreventUnverifiedRentalAddToCartListener
 {
-    public function handle($event): void
+    public function __construct(private ProductRepository $productRepository) {}
+
+    public function handle($productOrId): void
     {
-        // Only check for authenticated customers
         if (! Auth::guard('customer')->check()) {
             return;
         }
 
-        $product = $event->product ?? null;
+        // Real event (checkout.cart.add.before) passes product ID as int.
+        // Test path may pass a product object directly.
+        $product = is_int($productOrId) || (is_string($productOrId) && is_numeric($productOrId))
+            ? $this->productRepository->find($productOrId)
+            : $productOrId;
 
-        // Check if product requires verification (has rental flag/attribute)
         if (! $this->isRentalProduct($product)) {
             return;
         }
 
         $customer = Auth::guard('customer')->user();
 
-        // Check customer's verification status
         if ($customer->verification_status !== Verification::STATUS_APPROVED) {
             throw new \Exception(
-                trans('shop::app.customers.verification.cannot-add-rental-unverified', [
+                trans('customer-verification::app.common.cannot_add_rental_unverified', [
                     'dashboard_url' => route('shop.customer.verification.index'),
                 ])
             );
@@ -40,12 +43,10 @@ class PreventUnverifiedRentalAddToCartListener implements ShouldQueue
             return false;
         }
 
-        // Check product type is 'rental' or has a rental attribute
         if ($product->type === 'rental') {
             return true;
         }
 
-        // Alternative: check for a custom attribute
         if (method_exists($product, 'getAttribute')) {
             return (bool) $product->getAttribute('requires_verification');
         }

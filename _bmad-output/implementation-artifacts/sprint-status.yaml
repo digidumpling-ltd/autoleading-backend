@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-04-01 06:39:56 +08
-last_updated: 2026-04-17 22:00:00 +08
+last_updated: 2026-04-19 23:00:00 +08
 project: bagisto
 project_key: NOKEY
 tracking_system: file-system
@@ -56,6 +56,8 @@ development_status:
   2-1-combined-registration-document-upload-form: done
   2-2-unverified-status-missing-documents-dashboard: review
   2-3-admin-verification-and-rental-gating: review
+  2-4-native-product-detail-booking-alignment: review
+  2-5-manual-payment-and-native-booking-notifications: ready-for-dev
   epic-2-retrospective: optional
 
   epic-3: backlog

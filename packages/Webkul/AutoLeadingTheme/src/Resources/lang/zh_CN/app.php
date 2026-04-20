@@ -222,13 +222,17 @@ return [
     ],
 
     'auth_page' => [
-        'sign_in_title' => '歡迎回來',
-        'sign_in_sub'   => '登入以繼續使用 Auto Leading。',
-        'sign_up_title' => '建立帳戶',
-        'sign_up_sub'   => '加入 Auto Leading，開始您的旅程。',
-        'brand_tagline' => '尊貴租車體驗',
-        'brand_accent'  => '尊貴',
-        'brand_sub'     => '您在香港值得信賴的豪華租車夥伴。',
+        'sign_in_title'          => '歡迎回來',
+        'sign_in_sub'            => '登入以繼續使用 Auto Leading。',
+        'sign_up_title'          => '建立帳戶',
+        'sign_up_sub'            => '加入 Auto Leading，開始您的旅程。',
+        'brand_tagline'          => '尊貴租車體驗',
+        'brand_accent'           => '尊貴',
+        'brand_sub'              => '您在香港值得信賴的豪華租車夥伴。',
+        'pdcs_title'             => '個人資料收集聲明',
+        'pdcs_agree'             => '本人已閱讀並同意:link',
+        'membership_tnc_title'   => '會員條款及細則',
+        'membership_tnc_agree'   => '本人已閱讀並同意:link',
     ],
 
     'search' => [
