@@ -46,7 +46,7 @@ development_status:
   1-1-redesign-and-implement-the-homepage-with-new-layout-banners-and-featured-sections: backlog
   1-2-scaffold-custom-bagisto-theme-package: review
   1-3-build-homepage-layout-and-shared-components: done
-  1-4-implement-all-referenced-pages-and-sections: backlog
+  1-4-implement-all-referenced-pages-and-sections: review
   1-5-apply-color-font-and-branding: backlog
   1-6-test-responsiveness-and-accessibility: backlog
   1-7-finalize-and-activate-theme: backlog

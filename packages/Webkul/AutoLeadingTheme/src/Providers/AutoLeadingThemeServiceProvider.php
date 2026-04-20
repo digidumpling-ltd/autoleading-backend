@@ -24,6 +24,8 @@ class AutoLeadingThemeServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'auto-leading-theme');
 
+        $this->loadRoutesFrom(__DIR__.'/../Routes/theme-routes.php');
+
         $this->publishes([
             __DIR__.'/../Resources/views' => resource_path('themes/auto-leading-theme/views'),
         ], 'auto-leading-theme-views');

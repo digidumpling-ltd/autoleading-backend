@@ -36,6 +36,18 @@ export default defineConfig(({ mode }) => {
             }),
         ],
 
+        resolve: {
+            alias: {
+                'vue/dist/vue.esm-bundler': path.resolve(__dirname, 'node_modules/vue/dist/vue.esm-bundler.js'),
+                'axios': path.resolve(__dirname, 'node_modules/axios'),
+                'mitt': path.resolve(__dirname, 'node_modules/mitt'),
+                'flatpickr': path.resolve(__dirname, 'node_modules/flatpickr'),
+                'vee-validate': path.resolve(__dirname, 'node_modules/vee-validate'),
+                '@vee-validate/i18n': path.resolve(__dirname, 'node_modules/@vee-validate/i18n'),
+                '@vee-validate/rules': path.resolve(__dirname, 'node_modules/@vee-validate/rules'),
+            },
+        },
+
         experimental: {
             renderBuiltUrl(filename, { hostType }) {
                 if (hostType === 'css') {
