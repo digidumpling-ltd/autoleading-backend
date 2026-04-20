@@ -1,365 +1,169 @@
-@php
-    $navItems = [
-        [
-            'label' => __('auto-leading-theme::app.nav.home'),
-            'url'   => route('shop.home.index'),
-        ],
-        [
-            'label' => __('auto-leading-theme::app.nav.cross_border'),
-            'url'   => url('/china-hk-travel'),
-        ],
-        [
-            'label' => __('auto-leading-theme::app.nav.about'),
-            'url'   => url('/page/about-us'),
-        ],
-        [
-            'label' => __('auto-leading-theme::app.nav.models'),
-            'url'   => route('shop.search.index'),
-        ],
-        [
-            'label' => __('auto-leading-theme::app.nav.notice'),
-            'url'   => url('/rental-notice'),
-        ],
-        [
-            'label' => __('auto-leading-theme::app.nav.membership'),
-            'url'   => url('/membership'),
-        ],
-        [
-            'label' => __('auto-leading-theme::app.nav.blog'),
-            'url'   => url('/blog'),
-        ],
-    ];
+<x-auto-leading-theme::layouts>
+    {{-- Hero Section --}}
+    <div
+        class="al-hero-section relative h-screen"
+        x-data="{
+            scrolled: false,
+            init() {
+                window.addEventListener('scroll', () => {
+                    this.scrolled = window.scrollY > 50;
+                });
+            }
+        }"
+    >
+        <div class="absolute inset-0 bg-black/40 z-10"></div>
 
-    $typeOptions = [
-        [
-            'label' => __('auto-leading-theme::app.types.sedan'),
-            'query' => 'sedan',
-            'icon'  => '🚘',
-        ],
-        [
-            'label' => __('auto-leading-theme::app.types.sports'),
-            'query' => 'sports',
-            'icon'  => '🏎️',
-        ],
-        [
-            'label' => __('auto-leading-theme::app.types.suv'),
-            'query' => 'suv',
-            'icon'  => '🚙',
-        ],
-        [
-            'label' => __('auto-leading-theme::app.types.convertible'),
-            'query' => 'convertible',
-            'icon'  => '🚗',
-        ],
-    ];
+        <img src="{{ bagisto_asset('images/hero-image.webp', 'auto-leading-theme') }}" class="absolute inset-0 w-full h-full object-cover" alt="Hero">
 
-    $staticFeaturedCars = [
-        [
-            'name'  => 'AUDI R8 4.2 FSI QUATTRO V8',
-            'price' => '$2,299',
-            'badge' => __('auto-leading-theme::app.badges.featured'),
-            'tag'   => __('auto-leading-theme::app.badges.hot'),
-        ],
-        [
-            'name'  => 'AUDI A6 2.0 TSFI LWB',
-            'price' => '$599',
-            'badge' => __('auto-leading-theme::app.badges.featured'),
-            'tag'   => __('auto-leading-theme::app.badges.efficient'),
-        ],
-        [
-            'name'  => 'BMW 428I GRAN COUPE',
-            'price' => '$699',
-            'badge' => __('auto-leading-theme::app.badges.popular'),
-            'tag'   => __('auto-leading-theme::app.badges.hot'),
-        ],
-        [
-            'name'  => 'MERCEDES BENZ C200',
-            'price' => '$649',
-            'badge' => __('auto-leading-theme::app.badges.featured'),
-            'tag'   => __('auto-leading-theme::app.badges.efficient'),
-        ],
-    ];
+        <div class="al-hero-content relative z-20 al-shell h-full flex flex-col justify-center items-center text-center text-white">
+            <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter mb-4 uppercase">
+                {{ __('auto-leading-theme::app.home.hero_title') }}
+            </h1>
 
-    $brandOptions    = ['Audi', 'Mercedes Benz', 'BMW', 'Maserati'];
-    $carTypeFilters  = ['Sedan', 'Sports', 'SUV', 'Convertible'];
-    $categoryOptions = [
-        __('auto-leading-theme::app.home.category_all'),
-        __('auto-leading-theme::app.home.category_hot'),
-        __('auto-leading-theme::app.home.category_latest'),
-    ];
-
-    $locales        = core()->getCurrentChannel()->locales()->orderBy('name')->get();
-    $currentLocale  = app()->getLocale();
-    $showSwitcher   = $locales->count() > 1;
-
-    $serviceItems = [
-        [
-            'icon'  => '🚘',
-            'title' => __('auto-leading-theme::app.services.fleet_title'),
-            'desc'  => __('auto-leading-theme::app.services.fleet_desc'),
-        ],
-        [
-            'icon'  => '📅',
-            'title' => __('auto-leading-theme::app.services.flexible_title'),
-            'desc'  => __('auto-leading-theme::app.services.flexible_desc'),
-        ],
-        [
-            'icon'  => '💬',
-            'title' => __('auto-leading-theme::app.services.support_title'),
-            'desc'  => __('auto-leading-theme::app.services.support_desc'),
-        ],
-    ];
-
-    $footerQuickLinks = [
-        ['label' => __('auto-leading-theme::app.nav.home'),       'url' => route('shop.home.index')],
-        ['label' => __('auto-leading-theme::app.nav.models'),     'url' => route('shop.search.index')],
-        ['label' => __('auto-leading-theme::app.nav.about'),      'url' => url('/page/about-us')],
-        ['label' => __('auto-leading-theme::app.nav.membership'), 'url' => url('/membership')],
-        ['label' => __('auto-leading-theme::app.nav.blog'),       'url' => url('/blog')],
-    ];
-
-    $footerCarModelLinks = [
-        ['label' => __('auto-leading-theme::app.types.sedan'),       'url' => route('shop.search.index', ['type' => 'sedan'])],
-        ['label' => __('auto-leading-theme::app.types.sports'),      'url' => route('shop.search.index', ['type' => 'sports'])],
-        ['label' => __('auto-leading-theme::app.types.suv'),         'url' => route('shop.search.index', ['type' => 'suv'])],
-        ['label' => __('auto-leading-theme::app.types.convertible'), 'url' => route('shop.search.index', ['type' => 'convertible'])],
-    ];
-@endphp
-
-<x-shop::layouts :has-header="false" :has-feature="false">
-    <x-slot:title>
-        {{ __('auto-leading-theme::app.home.title') }}
-    </x-slot>
-
-    <div class="al-site">
-        {{-- ========== HEADER ========== --}}
-        <header class="al-header">
-            <div class="al-shell al-header-shell">
-                <a
-                    href="{{ route('shop.customer.session.create') }}"
-                    class="al-account-link"
-                    aria-label="{{ __('auto-leading-theme::app.common.login') }}"
-                >
-                    <span aria-hidden="true">👤</span>
-                    <span>{{ __('auto-leading-theme::app.common.login') }}</span>
-                </a>
-
-                <nav class="al-nav al-nav-desktop" aria-label="{{ __('auto-leading-theme::app.nav.main_navigation') }}">
-                    @foreach ($navItems as $item)
-                        <a
-                            href="{{ $item['url'] }}"
-                            class="{{ request()->url() === $item['url'] ? 'is-active' : '' }}"
+            {{-- Search Form --}}
+            <form
+                action="{{ route('shop.search.index') }}"
+                method="GET"
+                class="w-full max-w-4xl"
+            >
+                <div class="grid grid-cols-1 md:grid-cols-4 items-center bg-white/10 backdrop-blur-md p-4 rounded-full gap-4 shadow-lg border border-white/20">
+                    {{-- Brand --}}
+                    <div class="relative col-span-1 md:col-span-1">
+                        <select
+                            name="brand"
+                            class="w-full bg-transparent text-white py-3 px-4 pr-8 rounded-full appearance-none focus:outline-none"
                         >
-                            {{ $item['label'] }}
-                        </a>
-                    @endforeach
-                </nav>
-
-                <div class="al-header-actions">
-                    @if ($showSwitcher)
-                        <div class="al-lang-switcher" aria-label="{{ __('auto-leading-theme::app.nav.language') }}">
-                            <span class="al-lang-current">🌐 {{ $locales->where('code', $currentLocale)->first()?->name ?? strtoupper($currentLocale) }}</span>
-
-                            <ul class="al-lang-dropdown" role="listbox">
-                                @foreach ($locales as $locale)
-                                    <li role="option" aria-selected="{{ $locale->code === $currentLocale ? 'true' : 'false' }}">
-                                        <a href="{{ request()->url() . '?locale=' . $locale->code }}">
-                                            {{ $locale->name }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <a
-                        href="{{ route('shop.customer.session.create') }}"
-                        class="al-profile-link"
-                        aria-label="{{ __('auto-leading-theme::app.common.account_center') }}"
-                    >
-                        👥
-                    </a>
-                </div>
-            </div>
-
-            <div class="al-logo-row">
-                <a
-                    href="{{ route('shop.home.index') }}"
-                    class="al-logo-link"
-                    aria-label="{{ __('auto-leading-theme::app.nav.home') }}"
-                >
-                    @if (core()->getCurrentChannel()->logo_url)
-                        <img
-                            src="{{ core()->getCurrentChannel()->logo_url }}"
-                            alt="{{ config('app.name') }}"
-                            width="220"
-                            height="72"
-                        >
-                    @else
-                        <span class="al-logo-text">{{ config('app.name') }}</span>
-                    @endif
-                </a>
-            </div>
-
-            <details class="al-mobile-menu">
-                <summary>{{ __('auto-leading-theme::app.common.menu') }}</summary>
-
-                <nav class="al-nav al-nav-mobile" aria-label="{{ __('auto-leading-theme::app.nav.main_navigation') }}">
-                    @foreach ($navItems as $item)
-                        <a href="{{ $item['url'] }}">{{ $item['label'] }}</a>
-                    @endforeach
-
-                    @if ($showSwitcher)
-                        <div class="al-lang-mobile">
-                            @foreach ($locales as $locale)
-                                <a href="{{ request()->url() . '?locale=' . $locale->code }}">
-                                    {{ $locale->name }}
-                                </a>
+                            <option value="" class="text-black">{{ __('auto-leading-theme::app.brands.all') }}</option>
+                            @foreach (app('Webkul\Attribute\Repositories\AttributeRepository')->findOneByField('code', 'brand')?->options ?? [] as $brand)
+                                <option value="{{ $brand->id }}" class="text-black">{{ $brand->admin_name }}</option>
                             @endforeach
-                        </div>
-                    @endif
-                </nav>
-            </details>
-        </header>
+                        </select>
+                        <x-heroicon-o-chevron-down class="w-5 h-5 text-white absolute top-1/2 right-4 -translate-y-1/2 pointer-events-none" />
+                    </div>
 
-        {{-- ========== HERO ========== --}}
-        <section class="al-hero">
-            <div class="al-hero-overlay"></div>
+                    {{-- Type --}}
+                    <div class="relative col-span-1 md:col-span-1">
+                        <select
+                            name="type"
+                            class="w-full bg-transparent text-white py-3 px-4 pr-8 rounded-full appearance-none focus:outline-none"
+                        >
+                            <option value="" class="text-black">{{ __('auto-leading-theme::app.types.all') }}</option>
+                            @foreach (app('Webkul\Attribute\Repositories\AttributeRepository')->findOneByField('code', 'type')?->options ?? [] as $type)
+                                <option value="{{ $type->id }}" class="text-black">{{ $type->admin_name }}</option>
+                            @endforeach
+                        </select>
+                        <x-heroicon-o-chevron-down class="w-5 h-5 text-white absolute top-1/2 right-4 -translate-y-1/2 pointer-events-none" />
+                    </div>
 
-            <div class="al-shell al-hero-content">
-                <h1>{{ __('auto-leading-theme::app.home.hero_title') }}</h1>
-
-                <form action="{{ route('shop.search.index') }}" method="GET" class="al-search-form">
-                    <label for="al-brand" class="sr-only">{{ __('auto-leading-theme::app.home.brand_placeholder') }}</label>
-
-                    <select id="al-brand" name="brand">
-                        <option value="">{{ __('auto-leading-theme::app.home.brand_placeholder') }}</option>
-
-                        @foreach ($brandOptions as $brand)
-                            <option value="{{ $brand }}">{{ $brand }}</option>
-                        @endforeach
-                    </select>
-
-                    <label for="al-type" class="sr-only">{{ __('auto-leading-theme::app.home.type_placeholder') }}</label>
-
-                    <select id="al-type" name="type">
-                        <option value="">{{ __('auto-leading-theme::app.home.type_placeholder') }}</option>
-
-                        @foreach ($carTypeFilters as $carType)
-                            <option value="{{ $carType }}">{{ $carType }}</option>
-                        @endforeach
-                    </select>
-
-                    <label for="al-category" class="sr-only">{{ __('auto-leading-theme::app.home.category_placeholder') }}</label>
-
-                    <select id="al-category" name="category">
-                        <option value="">{{ __('auto-leading-theme::app.home.category_placeholder') }}</option>
-
-                        @foreach ($categoryOptions as $category)
-                            <option value="{{ $category }}">{{ $category }}</option>
-                        @endforeach
-                    </select>
-
-                    <button type="submit">{{ __('auto-leading-theme::app.common.search') }}</button>
-                </form>
-
-                <div class="al-type-grid">
-                    @foreach ($typeOptions as $type)
-                        <a href="{{ route('shop.search.index', ['type' => $type['query']]) }}" class="al-type-chip">
-                            <span class="al-type-icon">{{ $type['icon'] }}</span>
-                            <span>{{ $type['label'] }}</span>
-                        </a>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-
-        {{-- ========== SERVICES ========== --}}
-        <section class="al-services al-shell" aria-label="{{ __('auto-leading-theme::app.services.section_label') }}">
-            @foreach ($serviceItems as $item)
-                <div class="al-service-card">
-                    <span class="al-service-icon" aria-hidden="true">{{ $item['icon'] }}</span>
-                    <h3>{{ $item['title'] }}</h3>
-                    <p>{{ $item['desc'] }}</p>
-                </div>
-            @endforeach
-        </section>
-
-        {{-- ========== FEATURED CARS ========== --}}
-        <section class="al-shell al-featured">
-            <div class="al-featured-head">
-                <p>{{ __('auto-leading-theme::app.home.featured_prefix') }}</p>
-                <h2>{{ __('auto-leading-theme::app.home.featured_title') }}</h2>
-            </div>
-
-            <div class="al-featured-grid">
-                @php
-                    $useDynamic = isset($featuredProducts) && $featuredProducts->isNotEmpty();
-                @endphp
-
-                @if ($useDynamic)
-                    @foreach ($featuredProducts as $product)
-                        <x-auto-leading-theme::car-card
-                            :name="$product->name"
-                            :price="core()->currency($product->product_flat->price ?? 0)"
-                            :url="route('shop.product_or_category.index', $product->url_key)"
-                            :badge="__('auto-leading-theme::app.badges.featured')"
-                            :image="$product->base_image?->url"
+                    {{-- Name --}}
+                    <div class="relative col-span-1 md:col-span-1">
+                        <input
+                            type="text"
+                            name="name"
+                            class="w-full bg-transparent text-white py-3 px-4 rounded-full focus:outline-none placeholder-white/70"
+                            placeholder="{{ __('auto-leading-theme::app.common.search_model') }}"
                         />
-                    @endforeach
-                @else
-                    @foreach ($staticFeaturedCars as $car)
-                        <x-auto-leading-theme::car-card
-                            :name="$car['name']"
-                            :price="$car['price']"
-                            :url="route('shop.search.index', ['query' => $car['name']])"
-                            :badge="$car['badge']"
-                            :tag="$car['tag']"
-                        />
-                    @endforeach
-                @endif
-            </div>
+                    </div>
 
-            <div class="al-featured-more">
-                <a href="{{ route('shop.search.index') }}">{{ __('auto-leading-theme::app.common.view_more') }}</a>
-            </div>
-        </section>
-
-        {{-- ========== FOOTER ========== --}}
-        <footer class="al-footer">
-            <div class="al-shell al-footer-grid">
-                <x-auto-leading-theme::footer-column
-                    :heading="__('auto-leading-theme::app.footer.quick_links')"
-                    :links="$footerQuickLinks"
-                />
-
-                <x-auto-leading-theme::footer-column
-                    :heading="__('auto-leading-theme::app.footer.car_models')"
-                    :links="$footerCarModelLinks"
-                />
-
-                <x-auto-leading-theme::footer-column
-                    :heading="__('auto-leading-theme::app.footer.contact')"
-                >
-                    <address class="al-footer-contact">
-                        <p>{{ __('auto-leading-theme::app.footer.address') }}</p>
-                        <p>
-                            <a href="tel:{{ __('auto-leading-theme::app.footer.phone') }}">
-                                {{ __('auto-leading-theme::app.footer.phone') }}
-                            </a>
-                        </p>
-                        <p>
-                            <a href="mailto:{{ __('auto-leading-theme::app.footer.email') }}">
-                                {{ __('auto-leading-theme::app.footer.email') }}
-                            </a>
-                        </p>
-                    </address>
-                </x-auto-leading-theme::footer-column>
-            </div>
-
-            <div class="al-footer-bar al-shell">
-                <p>© {{ date('Y') }} Auto Leading. {{ __('auto-leading-theme::app.footer.all_rights_reserved') }}</p>
-            </div>
-        </footer>
+                    {{-- Submit --}}
+                    <div class="col-span-1 md:col-span-1">
+                        <button
+                            type="submit"
+                            class="w-full bg-[#F0A500] hover:bg-[#C88600] text-black px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 uppercase tracking-wider flex items-center justify-center gap-2"
+                            aria-label="{{ __('auto-leading-theme::app.common.search') }}"
+                        >
+                            <x-heroicon-o-magnifying-glass class="w-5 h-5" />
+                            <span>{{ __('auto-leading-theme::app.common.search') }}</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</x-shop::layouts>
+
+    <!-- Featured Products Section -->
+    <section class="al-featured-section py-24 bg-white">
+        <div class="al-shell">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div>
+                    <span class="text-[#F0A500] font-bold uppercase tracking-widest text-sm mb-2 block">{{ __('auto-leading-theme::app.home.featured_label') }}</span>
+                    <h2 class="text-4xl font-black italic uppercase tracking-tighter">{{ __('auto-leading-theme::app.home.featured_title') }}</h2>
+                </div>
+                <a href="{{ route('shop.search.index') }}" class="text-[#1a1a1a] font-bold hover:text-[#F0A500] transition-colors uppercase tracking-widest text-sm flex items-center gap-2">
+                    {{ __('auto-leading-theme::app.home.view_all') }}
+                    <x-heroicon-o-arrow-right class="w-4 h-4" />
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                @foreach($featuredProducts as $product)
+                    @php
+                        $flatProduct = $product->product_flat ?? $product;
+                    @endphp
+                    <x-auto-leading-theme::car-card
+                        :name="$product->name"
+                        :price="core()->currency($flatProduct->price ?? 0)"
+                        :url="route('shop.product_or_category.index', $product->url_key)"
+                        :image="$product->base_image?->url"
+                        :badge="__('auto-leading-theme::app.home.featured_label')"
+                        :tag="__('auto-leading-theme::app.home.hot_deal_label')"
+                        :images-count="$product->images->count()"
+                        :product-id="$product->id"
+                        :is-wishlisted="in_array($product->id, $wishlistedProductIds ?? [])"
+                    />
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="al-brands-section py-20 bg-[#f9f9f9] border-t border-b border-gray-100">
+        <div class="al-shell grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-12 items-center opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
+            <div class="flex justify-center"><h3 class="font-bold text-2xl">TESLA</h3></div>
+            <div class="flex justify-center"><h3 class="font-bold text-2xl">MERCEDES</h3></div>
+            <div class="flex justify-center"><h3 class="font-bold text-2xl">BMW</h3></div>
+            <div class="flex justify-center"><h3 class="font-bold text-2xl">AUDI</h3></div>
+            <div class="flex justify-center"><h3 class="font-bold text-2xl">PORSCHE</h3></div>
+            <div class="flex justify-center"><h3 class="font-bold text-2xl">HONDA</h3></div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="al-why-us py-24 bg-[#0d0d0d] text-white">
+        <div class="al-shell grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div class="relative">
+                <div class="aspect-square bg-[#1a1a1a] rounded-3xl overflow-hidden shadow-2xl">
+                    <img src="{{ bagisto_asset('images/hero-image.webp', 'auto-leading-theme') }}" class="w-full h-full object-cover opacity-50" alt="About">
+                </div>
+                <div class="absolute -bottom-10 -right-10 bg-[#F0A500] p-10 rounded-3xl hidden md:block shadow-2xl">
+                    <span class="text-5xl font-black block text-black">15+</span>
+                    <span class="text-black font-bold uppercase tracking-widest text-sm">{{ __('auto-leading-theme::app.home.years_experience') }}</span>
+                </div>
+            </div>
+            <div>
+                <span class="text-[#F0A500] font-bold uppercase tracking-widest text-sm mb-2 block">{{ __('auto-leading-theme::app.home.about_label') }}</span>
+                <h2 class="text-5xl font-black italic uppercase tracking-tighter mb-8 leading-tight">{{ __('auto-leading-theme::app.home.about_title') }}</h2>
+                <div class="space-y-8">
+                    <div class="flex gap-6">
+                        <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center shrink-0">
+                            <x-heroicon-o-shield-check class="w-8 h-8 text-[#F0A500]" />
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-2 uppercase">{{ __('auto-leading-theme::app.home.feature_1_title') }}</h4>
+                            <p class="text-white/50 text-sm leading-relaxed">{{ __('auto-leading-theme::app.home.feature_1_desc') }}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center shrink-0">
+                            <x-heroicon-o-banknotes class="w-8 h-8 text-[#F0A500]" />
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-2 uppercase">{{ __('auto-leading-theme::app.home.feature_2_title') }}</h4>
+                            <p class="text-white/50 text-sm leading-relaxed">{{ __('auto-leading-theme::app.home.feature_2_desc') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</x-auto-leading-theme::layouts>

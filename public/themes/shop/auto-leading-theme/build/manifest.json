@@ -21,11 +21,11 @@
   },
   "../Shop/src/Resources/assets/images/hero-image.jpg": {
     "file": "assets/hero-image-BlVTwpsv.jpg",
-    "src": "../Shop/src/Resources/assets/images/hero-image.jpg"
+    "src": "src/Resources/assets/images/hero-image.jpg"
   },
   "../Shop/src/Resources/assets/images/hero-image.webp": {
     "file": "assets/hero-image-DwKg3YHc.webp",
-    "src": "../Shop/src/Resources/assets/images/hero-image.webp"
+    "src": "src/Resources/assets/images/hero-image.webp"
   },
   "../Shop/src/Resources/assets/images/large-product-placeholder.webp": {
     "file": "assets/large-product-placeholder-B9xoAuKQ.webp",
@@ -76,7 +76,7 @@
     "src": "src/Resources/assets/images/wishlist.png"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-DY_c_Mp1.css",
+    "file": "assets/app-Eih5Ubfg.css",
     "src": "src/Resources/assets/css/app.css",
     "isEntry": true
   },
@@ -87,6 +87,14 @@
   "src/Resources/assets/images/favicon.ico": {
     "file": "assets/favicon-Df9chQdB.ico",
     "src": "src/Resources/assets/images/favicon.ico"
+  },
+  "src/Resources/assets/images/hero-image.jpg": {
+    "file": "assets/hero-image-BlVTwpsv.jpg",
+    "src": "src/Resources/assets/images/hero-image.jpg"
+  },
+  "src/Resources/assets/images/hero-image.webp": {
+    "file": "assets/hero-image-DwKg3YHc.webp",
+    "src": "src/Resources/assets/images/hero-image.webp"
   },
   "src/Resources/assets/images/logo.svg": {
     "file": "assets/logo-CZWQQgOF.svg",
