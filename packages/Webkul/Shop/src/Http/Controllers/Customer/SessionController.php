@@ -63,21 +63,6 @@ class SessionController extends Controller
             return redirect()->back();
         }
 
-        if (auth()->guard('customer')->user()->verification_status !== 'approved') {
-            auth()->guard('customer')->logout();
-
-            $message = match (auth()->guard('customer')->user()->verification_status) {
-                'incomplete' => 'Your account verification is incomplete. Please complete your document submission.',
-                'pending' => 'Your account is pending verification. Please wait for admin approval.',
-                'rejected' => 'Your account verification has been rejected. Please contact support.',
-                default => 'Your account requires verification before you can log in.'
-            };
-
-            session()->flash('warning', $message);
-
-            return redirect()->back();
-        }
-
         /**
          * Event passed to prepare cart after login.
          */

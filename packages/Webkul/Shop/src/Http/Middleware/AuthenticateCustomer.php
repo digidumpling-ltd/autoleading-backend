@@ -39,26 +39,9 @@ class AuthenticateCustomer
                 return redirect()->route('shop.customer.session.index');
             }
 
-            if (auth()->guard($guard)->user()->verification_status !== 'approved') {
-                auth()->guard($guard)->logout();
-
-                $message = match (auth()->guard($guard)->user()->verification_status) {
-                    'incomplete' => 'Your account verification is incomplete. Please complete your document submission.',
-                    'pending' => 'Your account is pending verification. Please wait for admin approval.',
-                    'rejected' => 'Your account verification has been rejected. Please contact support.',
-                    default => 'Your account requires verification before you can access this page.'
-                };
-
-                if ($request->expectsJson()) {
-                    return response()->json([
-                        'message' => $message,
-                    ], 403);
-                }
-
-                session()->flash('warning', $message);
-
-                return redirect()->route('shop.customer.session.index');
-            }
+            // NOTE: Verification status checks for account access are deferred to Story 2.3
+            // For now, allow all authenticated customers to access their account
+            // regardless of verification_status
         }
 
         return $next($request);

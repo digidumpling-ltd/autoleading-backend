@@ -24,10 +24,13 @@
 
             {!! view_render_event('bagisto.shop.customers.sign-up.before') !!}
 
-            <x-shop::form
-                :action="route('shop.customers.register.store')"
+            <form 
+                method="POST" 
+                action="{{ route('shop.customers.register.store') }}" 
                 enctype="multipart/form-data"
             >
+                @csrf
+
                 {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
 
                 {{-- First Name + Last Name (2-col) --}}
@@ -266,7 +269,7 @@
 
                 {!! view_render_event('bagisto.shop.customers.signup_form_controls.after') !!}
 
-            </x-shop::form>
+            </form>
 
             {!! view_render_event('bagisto.shop.customers.sign-up.after') !!}
 

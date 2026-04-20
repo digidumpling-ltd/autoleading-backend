@@ -14,5 +14,9 @@ class EventServiceProvider extends ServiceProvider
         'customer.registration.after' => [
             HandleCustomerRegistration::class,
         ],
+        // NOTE: Login verification checks are deferred to Story 2.3 (admin approval workflow)
+        // 'customer.after.login' => [
+        //     HandleCustomerLogin::class,
+        // ],
     ];
 }

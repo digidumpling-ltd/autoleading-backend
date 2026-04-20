@@ -100,18 +100,18 @@
                             <span class="max-w-[100px] truncate">{{ auth()->guard('customer')->user()->first_name }}</span>
                         </button>
                         <div x-show="open" x-transition @click.outside="open = false" class="al-dropdown-menu">
-                            <a href="{{ route('shop.customer.profile.index') }}" class="al-dropdown-item">
-                                {{ __('shop::app.header.profile') }}
+                            <a href="{{ route('shop.customers.account.profile.index') }}" class="al-dropdown-item">
+                                {{ __('shop::app.components.layouts.header.desktop.profile') }}
                             </a>
-                            <a href="{{ route('shop.customer.orders.index') }}" class="al-dropdown-item">
-                                {{ __('shop::app.header.orders') }}
+                            <a href="{{ route('shop.customers.account.orders.index') }}" class="al-dropdown-item">
+                                {{ __('shop::app.components.layouts.header.desktop.orders') }}
                             </a>
                             <div class="border-t border-white/10 my-1"></div>
                             <form action="{{ route('shop.customer.session.destroy') }}" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="al-dropdown-item w-full text-left text-red-400 cursor-pointer">
-                                    {{ __('shop::app.header.logout') }}
+                                    {{ __('shop::app.components.layouts.header.desktop.logout') }}
                                 </button>
                             </form>
                         </div>
@@ -166,14 +166,14 @@
                     </a>
                 @endguest
                 @auth('customer')
-                    <a href="{{ route('shop.customer.profile.index') }}" class="flex items-center text-white">
+                    <a href="{{ route('shop.customers.account.profile.index') }}" class="flex items-center text-white">
                         {{ auth()->guard('customer')->user()->first_name }}
                     </a>
                     <form action="{{ route('shop.customer.session.destroy') }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button type="submit" class="text-left text-red-500 font-medium cursor-pointer">
-                            {{ __('shop::app.header.logout') }}
+                            {{ __('shop::app.components.layouts.header.bottom.logout') }}
                         </button>
                     </form>
                 @endauth
