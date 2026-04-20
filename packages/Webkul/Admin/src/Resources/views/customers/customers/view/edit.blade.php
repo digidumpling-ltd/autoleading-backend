@@ -238,6 +238,47 @@
                                 />
                             </x-admin::form.control-group>
                         </div>
+
+                        <!-- Verification Status -->
+                        <x-admin::form.control-group class="w-full">
+                            <x-admin::form.control-group.label>
+                                Verification Status
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="select"
+                                name="verification_status"
+                                ::value="customer.verification_status"
+                                id="verification_status"
+                                :label="'Verification Status'"
+                            >
+                                <option value="incomplete">
+                                    Incomplete
+                                </option>
+
+                                <option value="pending">
+                                    Pending Review
+                                </option>
+
+                                <option value="approved">
+                                    Approved
+                                </option>
+
+                                <option value="rejected">
+                                    Rejected
+                                </option>
+                            </x-admin::form.control-group.control>
+
+                            <x-admin::form.control-group.error control-name="verification_status" />
+                        </x-admin::form.control-group>
+
+                        <!-- View Documents Link -->
+                        <div class="mb-4">
+                            <a href="{{ route('admin.customers.verifications.show', $customer->id ?? '') }}" 
+                                class="inline-flex items-center rounded-lg bg-blue-100 px-3 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800">
+                                View Verification Documents →
+                            </a>
+                        </div>
                         
                         {!! view_render_event('bagisto.admin.customers.customers.view.edit.after', ['customer' => $customer]) !!}
                     </x-slot>

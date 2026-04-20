@@ -17,6 +17,14 @@ return [
         'book_now'         => 'Book Now',
         'add_to_wishlist'  => 'Add to Wishlist',
         'close'            => 'Close',
+        'upload_documents' => 'Upload Documents',
+        'upload_documents_hint' => 'Provide the required documents to start verification.',
+        'upload_id_document' => 'Upload ID Document',
+        'upload_id_document_hint' => 'PNG, JPG, or WEBP',
+        'upload_driver_license' => 'Upload Driver License',
+        'upload_driver_license_hint' => 'PNG, JPG, or WEBP',
+        'upload_address_proof' => 'Upload Address Proof',
+        'upload_address_proof_hint' => 'PNG, JPG, or PDF',
     ],
 
     'auth_dialog' => [
@@ -240,6 +248,16 @@ return [
         'message_placeholder'  => 'Tell us how we can help you...',
         'phone_placeholder'    => '+1 (555) 123-4567',
         'submit'               => 'Send Message',
+    ],
+
+    'auth_page' => [
+        'sign_in_title' => 'Welcome Back',
+        'sign_in_sub'   => 'Sign in to continue to Auto Leading.',
+        'sign_up_title' => 'Create Account',
+        'sign_up_sub'   => 'Join Auto Leading and start your journey.',
+        'brand_tagline' => 'Premium Car Rental Experience',
+        'brand_accent'  => 'Premium',
+        'brand_sub'     => 'Your trusted partner for luxury vehicle rentals in Hong Kong.',
     ],
 
     'search' => [

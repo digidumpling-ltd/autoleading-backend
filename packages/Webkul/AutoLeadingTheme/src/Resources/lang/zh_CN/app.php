@@ -17,6 +17,14 @@ return [
         'book_now'         => '立即預訂',
         'add_to_wishlist'  => '加入願望清單',
         'close'            => '關閉',
+        'upload_documents' => '上傳文件',
+        'upload_documents_hint' => '請提供所需文件以開始審核。',
+        'upload_id_document' => '上傳身份證',
+        'upload_id_document_hint' => 'PNG、JPG 或 WEBP',
+        'upload_driver_license' => '上傳駕照執照',
+        'upload_driver_license_hint' => 'PNG、JPG 或 WEBP',
+        'upload_address_proof' => '上傳地址證明文件',
+        'upload_address_proof_hint' => 'PNG、JPG 或 PDF',
     ],
 
     'auth_dialog' => [
@@ -219,6 +227,16 @@ return [
         'message_placeholder'  => '告訴我們我們如何可以幫助您...',
         'phone_placeholder'    => '+1 (555) 123-4567',
         'submit'               => '發送訊息',
+    ],
+
+    'auth_page' => [
+        'sign_in_title' => '歡迎回來',
+        'sign_in_sub'   => '登入以繼續使用 Auto Leading。',
+        'sign_up_title' => '建立帳戶',
+        'sign_up_sub'   => '加入 Auto Leading，開始您的旅程。',
+        'brand_tagline' => '尊貴租車體驗',
+        'brand_accent'  => '尊貴',
+        'brand_sub'     => '您在香港值得信賴的豪華租車夥伴。',
     ],
 
     'search' => [

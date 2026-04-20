@@ -18,11 +18,12 @@
 
     @php
         $method = strtoupper($method);
+        $viewErrors = $errors ?? session()->get('errors') ?? new \Illuminate\Support\ViewErrorBag();
     @endphp
 
     <v-form
         method="{{ $method === 'GET' ? 'GET' : 'POST' }}"
-        :initial-errors="{{ json_encode($errors->getMessages()) }}"
+        :initial-errors="{{ json_encode($viewErrors->getMessages()) }}"
         v-slot="{ meta, errors }"
         @invalid-submit="onInvalidSubmit"
         {{ $attributes }}

@@ -46,8 +46,6 @@ class RegistrationController extends Controller
      */
     public function store(RegistrationRequest $registrationRequest)
     {
-        $customerGroup = core()->getConfigData('customer.settings.create_new_account_options.default_group');
-
         $subscription = $this->subscriptionRepository->findOneWhere(['email' => request()->input('email')]);
 
         $data = array_merge($registrationRequest->only([
@@ -60,7 +58,6 @@ class RegistrationController extends Controller
             'password' => bcrypt(request()->input('password')),
             'api_token' => Str::random(80),
             'is_verified' => ! core()->getConfigData('customer.settings.email.verification'),
-            'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => $customerGroup])->id,
             'channel_id' => core()->getCurrentChannel()->id,
             'token' => md5(uniqid(rand(), true)),
             'subscribed_to_news_letter' => (bool) (request()->input('is_subscribed') ?? $subscription?->is_subscribed),
@@ -100,10 +97,10 @@ class RegistrationController extends Controller
         if (core()->getConfigData('customer.settings.email.verification')) {
             session()->flash('success', trans('shop::app.customers.signup-form.success-verify'));
         } else {
-            session()->flash('success', trans('shop::app.customers.signup-form.success'));
+            session()->flash('success', trans('shop::app.customers.signup-form.verification-documents-uploaded'));
         }
 
-        return redirect()->route('shop.customer.session.index');
+        return redirect()->route('shop.home.index');
     }
 
     /**

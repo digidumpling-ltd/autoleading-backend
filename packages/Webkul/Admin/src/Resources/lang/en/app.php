@@ -4696,6 +4696,7 @@ return [
                 'events' => 'Events',
                 'exchange-rates' => 'Exchange Rates',
                 'gdpr-data-requests' => 'GDPR Data Requests',
+                'verifications' => 'Customer Verifications',
                 'groups' => 'Groups',
                 'imports' => 'Imports',
                 'inventory-sources' => 'Inventory Sources',
