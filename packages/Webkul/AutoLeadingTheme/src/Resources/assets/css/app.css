@@ -1,0 +1,628 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--al-orange: #d18a1b;
+		--al-orange-dark: #a96f14;
+		--al-beige: #f8f3ea;
+		--al-ink: #1f1f1f;
+		--al-muted: #756c5f;
+	}
+
+	body {
+		margin: 0;
+		color: var(--al-ink);
+		background: linear-gradient(180deg, #f8f3ea 0%, #f3eee4 100%);
+		font-family: 'Noto Sans TC', 'Poppins', sans-serif;
+	}
+}
+
+@layer components {
+	.al-site {
+		min-height: 100vh;
+	}
+
+	.al-shell {
+		width: min(1200px, calc(100vw - 2rem));
+		margin-inline: auto;
+	}
+
+	.al-header {
+		position: sticky;
+		top: 0;
+		z-index: 30;
+		backdrop-filter: blur(8px);
+		background: color-mix(in srgb, #ffffff 90%, transparent);
+		border-bottom: 1px solid #ebe4d6;
+	}
+
+	.al-header-shell {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.7rem 0;
+	}
+
+	.al-account-link,
+	.al-profile-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		color: var(--al-muted);
+		font-size: 0.85rem;
+		text-decoration: none;
+	}
+
+	.al-profile-link {
+		justify-self: end;
+		font-size: 1.2rem;
+	}
+
+	.al-account-link:hover,
+	.al-profile-link:hover {
+		color: var(--al-orange);
+	}
+
+	.al-nav {
+		display: flex;
+		align-items: center;
+		gap: clamp(0.55rem, 1.4vw, 1.2rem);
+	}
+
+	.al-nav a {
+		color: var(--al-ink);
+		text-decoration: none;
+		font-size: 0.9rem;
+		font-weight: 500;
+		letter-spacing: 0.01em;
+		transition: color 0.2s ease;
+	}
+
+	.al-nav a:hover,
+	.al-nav a.is-active {
+		color: var(--al-orange);
+	}
+
+	.al-logo-row {
+		display: flex;
+		justify-content: center;
+		padding: 0.2rem 0 0.85rem;
+	}
+
+	.al-logo-link img {
+		max-height: 52px;
+		width: auto;
+		object-fit: contain;
+	}
+
+	.al-logo-text {
+		font-size: 1.4rem;
+		font-weight: 800;
+		color: var(--al-ink);
+		letter-spacing: -0.02em;
+	}
+
+	.al-mobile-menu {
+		display: none;
+	}
+
+	.al-hero {
+		position: relative;
+		overflow: hidden;
+		padding: clamp(2.3rem, 4vw, 4.2rem) 0 2.6rem;
+		background:
+			radial-gradient(1100px 350px at 50% 0%, rgba(209, 138, 27, 0.38), transparent),
+			linear-gradient(145deg, #0e0e0e 0%, #1e1d1a 48%, #2a2722 100%);
+	}
+
+	.al-hero-overlay {
+		position: absolute;
+		inset: 0;
+		background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.05));
+		pointer-events: none;
+	}
+
+	.al-hero-content {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		gap: 1.5rem;
+	}
+
+	.al-hero h1 {
+		margin: 0;
+		max-width: 16ch;
+		color: #fff;
+		line-height: 1.08;
+		font-size: clamp(2rem, 5vw, 3.4rem);
+		letter-spacing: 0.01em;
+	}
+
+	.al-search-form {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+		gap: 0.55rem;
+		padding: 0.65rem;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.95);
+		box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+	}
+
+	.al-search-form select,
+	.al-search-form button {
+		border: 0;
+		border-radius: 999px;
+		min-height: 46px;
+		font: inherit;
+	}
+
+	.al-search-form select {
+		background: #f4efe5;
+		color: #373027;
+		padding: 0 1rem;
+	}
+
+	.al-search-form select:focus {
+		outline: 2px solid color-mix(in srgb, var(--al-orange) 70%, #fff);
+		outline-offset: 1px;
+	}
+
+	.al-search-form button {
+		padding: 0 1.25rem;
+		color: #fff;
+		background: linear-gradient(180deg, var(--al-orange), var(--al-orange-dark));
+		font-weight: 700;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.al-search-form button:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 10px 20px rgba(209, 138, 27, 0.25);
+	}
+
+	.al-type-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 0.85rem;
+		margin-top: 0.55rem;
+	}
+
+	.al-type-chip {
+		display: grid;
+		justify-items: center;
+		gap: 0.45rem;
+		padding: 0.85rem 0.7rem;
+		border-radius: 16px;
+		text-decoration: none;
+		color: #f7f0e2;
+		background: rgba(255, 255, 255, 0.09);
+		border: 1px solid rgba(255, 255, 255, 0.17);
+		transition: transform 0.2s ease, background-color 0.2s ease;
+	}
+
+	.al-type-chip:hover {
+		transform: translateY(-2px);
+		background: rgba(255, 255, 255, 0.15);
+	}
+
+	.al-type-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		border-radius: 999px;
+		background: rgba(209, 138, 27, 0.33);
+		font-size: 1.25rem;
+	}
+
+	.al-featured {
+		padding: 2.6rem 0 3rem;
+	}
+
+	.al-featured-head {
+		display: grid;
+		gap: 0.1rem;
+		margin-bottom: 1rem;
+	}
+
+	.al-featured-head p {
+		margin: 0;
+		color: var(--al-orange);
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		font-size: 0.78rem;
+	}
+
+	.al-featured-head h2 {
+		margin: 0;
+		font-size: clamp(1.55rem, 2.8vw, 2.3rem);
+		line-height: 1.05;
+	}
+
+	.al-featured-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.al-car-card {
+		border-radius: 18px;
+		overflow: hidden;
+		border: 1px solid #eadfcb;
+		background: #fff;
+		box-shadow: 0 8px 22px rgba(24, 19, 8, 0.06);
+	}
+
+	.al-car-thumb {
+		display: grid;
+		place-items: center;
+		position: relative;
+		min-height: 190px;
+		text-decoration: none;
+		background: linear-gradient(145deg, #303030, #1e1e1e);
+	}
+
+	.al-car-badge {
+		position: absolute;
+		top: 0.75rem;
+		left: 0.75rem;
+		color: #fff;
+		font-size: 0.72rem;
+		font-weight: 700;
+		border-radius: 999px;
+		background: rgba(209, 138, 27, 0.94);
+		padding: 0.22rem 0.6rem;
+	}
+
+	.al-car-mark {
+		color: #f7f3eb;
+		font-size: 3.5rem;
+		font-weight: 700;
+		line-height: 1;
+	}
+
+	.al-car-body {
+		padding: 1rem 1rem 1.1rem;
+	}
+
+	.al-car-body h3 {
+		margin: 0;
+		min-height: 2.7em;
+		font-size: 0.94rem;
+		line-height: 1.4;
+	}
+
+	.al-car-price {
+		margin: 0.7rem 0 0;
+		color: #0f0f0f;
+		font-size: 1.15rem;
+		font-weight: 700;
+	}
+
+	.al-car-price small {
+		margin-right: 0.32rem;
+		font-size: 0.74rem;
+		font-weight: 500;
+		color: #7c7363;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	.al-car-tag {
+		margin: 0.42rem 0 0.82rem;
+		color: #88724c;
+		font-size: 0.84rem;
+		font-weight: 600;
+	}
+
+	.al-car-cta {
+		display: inline-flex;
+		text-decoration: none;
+		color: #fff;
+		background: linear-gradient(180deg, var(--al-orange), var(--al-orange-dark));
+		border-radius: 999px;
+		padding: 0.52rem 0.92rem;
+		font-size: 0.84rem;
+		font-weight: 700;
+	}
+
+	.al-featured-more {
+		display: flex;
+		justify-content: center;
+		margin-top: 1.5rem;
+	}
+
+	.al-featured-more a {
+		display: inline-flex;
+		text-decoration: none;
+		color: #2b241a;
+		border: 1px solid #dac8ab;
+		border-radius: 999px;
+		padding: 0.62rem 1.1rem;
+		font-size: 0.85rem;
+		font-weight: 700;
+		background: #f9f4eb;
+	}
+
+	/* ---- Header actions (lang switcher + profile) ---- */
+	.al-header-actions {
+		justify-self: end;
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.al-lang-switcher {
+		position: relative;
+		display: inline-block;
+		font-size: 0.82rem;
+	}
+
+	.al-lang-current {
+		cursor: pointer;
+		color: var(--al-muted);
+		font-weight: 500;
+		white-space: nowrap;
+	}
+
+	.al-lang-switcher:hover .al-lang-dropdown,
+	.al-lang-switcher:focus-within .al-lang-dropdown {
+		display: block;
+	}
+
+	.al-lang-dropdown {
+		display: none;
+		position: absolute;
+		top: 100%;
+		right: 0;
+		margin: 0.25rem 0 0;
+		padding: 0.4rem 0;
+		list-style: none;
+		background: #fff;
+		border: 1px solid #ebe4d6;
+		border-radius: 10px;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+		min-width: 120px;
+		z-index: 50;
+	}
+
+	.al-lang-dropdown li a {
+		display: block;
+		padding: 0.45rem 1rem;
+		color: var(--al-ink);
+		text-decoration: none;
+		font-size: 0.85rem;
+	}
+
+	.al-lang-dropdown li a:hover {
+		background: #f8f3ea;
+		color: var(--al-orange);
+	}
+
+	.al-lang-mobile {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		padding-top: 0.5rem;
+		border-top: 1px solid #ebe4d6;
+		margin-top: 0.5rem;
+	}
+
+	.al-lang-mobile a {
+		font-size: 0.82rem;
+		color: var(--al-muted);
+		text-decoration: none;
+	}
+
+	/* ---- Services section ---- */
+	.al-services {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.25rem;
+		padding: 2.5rem 0;
+	}
+
+	.al-service-card {
+		padding: 1.5rem 1.25rem;
+		border-radius: 16px;
+		border: 1px solid #eadfcb;
+		background: #fff;
+		text-align: center;
+		box-shadow: 0 4px 14px rgba(24, 19, 8, 0.05);
+	}
+
+	.al-service-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 52px;
+		height: 52px;
+		border-radius: 999px;
+		background: rgba(209, 138, 27, 0.12);
+		font-size: 1.4rem;
+		margin-bottom: 0.85rem;
+	}
+
+	.al-service-card h3 {
+		margin: 0 0 0.45rem;
+		font-size: 1rem;
+		font-weight: 700;
+		color: var(--al-ink);
+	}
+
+	.al-service-card p {
+		margin: 0;
+		font-size: 0.86rem;
+		color: var(--al-muted);
+		line-height: 1.55;
+	}
+
+	/* ---- Car card image support ---- */
+	.al-car-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	/* ---- Footer ---- */
+	.al-footer {
+		background: #1a1410;
+		color: #c9b99a;
+		padding: 3rem 0 0;
+		margin-top: 2rem;
+	}
+
+	.al-footer-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 2rem;
+		padding-bottom: 2rem;
+	}
+
+	.al-footer-heading {
+		margin: 0 0 1rem;
+		font-size: 0.9rem;
+		font-weight: 700;
+		letter-spacing: 0.07em;
+		text-transform: uppercase;
+		color: var(--al-orange);
+	}
+
+	.al-footer-links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.55rem;
+	}
+
+	.al-footer-links a {
+		color: #c9b99a;
+		text-decoration: none;
+		font-size: 0.88rem;
+		transition: color 0.2s ease;
+	}
+
+	.al-footer-links a:hover {
+		color: var(--al-orange);
+	}
+
+	.al-footer-contact {
+		font-style: normal;
+		font-size: 0.88rem;
+		display: grid;
+		gap: 0.55rem;
+	}
+
+	.al-footer-contact p {
+		margin: 0;
+	}
+
+	.al-footer-contact a {
+		color: #c9b99a;
+		text-decoration: none;
+	}
+
+	.al-footer-contact a:hover {
+		color: var(--al-orange);
+	}
+
+	.al-footer-bar {
+		border-top: 1px solid #382e22;
+		padding: 1rem 0;
+		font-size: 0.8rem;
+		text-align: center;
+		color: #7a6a56;
+	}
+
+	.al-footer-bar p {
+		margin: 0;
+	}
+}
+
+@media (max-width: 1023px) {
+	.al-nav-desktop {
+		display: none;
+	}
+
+	.al-account-link span:last-child {
+		display: none;
+	}
+
+	.al-lang-switcher {
+		display: none;
+	}
+
+	.al-mobile-menu {
+		display: block;
+		border-top: 1px solid #ebe4d6;
+	}
+
+	.al-mobile-menu summary {
+		cursor: pointer;
+		list-style: none;
+		padding: 0.7rem 1rem;
+		font-size: 0.9rem;
+		font-weight: 600;
+	}
+
+	.al-mobile-menu summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.al-nav-mobile {
+		padding: 0 1rem 0.8rem;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.62rem;
+	}
+
+	.al-search-form {
+		border-radius: 20px;
+		grid-template-columns: 1fr;
+	}
+
+	.al-type-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.al-featured-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.al-services {
+		grid-template-columns: 1fr;
+	}
+
+	.al-footer-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 640px) {
+	.al-header-shell {
+		padding: 0.55rem 0;
+	}
+
+	.al-logo-row {
+		padding: 0.05rem 0 0.62rem;
+	}
+
+	.al-logo-link img {
+		max-height: 40px;
+	}
+
+	.al-hero {
+		padding-top: 1.45rem;
+	}
+
+	.al-featured-grid {
+		grid-template-columns: 1fr;
+	}
+}

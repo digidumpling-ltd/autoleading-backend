@@ -23,6 +23,12 @@ return [
             'package_assets_directory' => 'src/Resources/assets',
         ],
 
+        'auto-leading-theme' => [
+            'hot_file' => 'auto-leading-theme-vite.hot',
+            'build_directory' => 'themes/shop/auto-leading-theme/build',
+            'package_assets_directory' => 'src/Resources/assets',
+        ],
+
         'installer' => [
             'hot_file' => 'installer-default-vite.hot',
             'build_directory' => 'themes/installer/default/build',

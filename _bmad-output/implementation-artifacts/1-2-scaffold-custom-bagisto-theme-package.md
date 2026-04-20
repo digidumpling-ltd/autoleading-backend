@@ -1,6 +1,6 @@
 # Story 1.2: Scaffold custom Bagisto theme package
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -23,52 +23,52 @@ so that subsequent homepage/product/blog stories can be implemented without touc
 
 ## Tasks / Subtasks
 
-- [ ] Create/complete package skeleton for AutoLeading theme (AC: 1)
-  - [ ] Ensure required directories exist:
+- [x] Create/complete package skeleton for AutoLeading theme (AC: 1)
+  - [x] Ensure required directories exist:
         - `packages/Webkul/AutoLeadingTheme/src/Providers`
         - `packages/Webkul/AutoLeadingTheme/src/Resources/views/home`
         - `packages/Webkul/AutoLeadingTheme/src/Resources/assets/css`
         - `packages/Webkul/AutoLeadingTheme/src/Resources/assets/js`
-  - [ ] Add minimal starter files:
+  - [x] Add minimal starter files:
         - `packages/Webkul/AutoLeadingTheme/src/Resources/views/home/index.blade.php`
         - `packages/Webkul/AutoLeadingTheme/src/Resources/assets/css/app.css`
         - `packages/Webkul/AutoLeadingTheme/src/Resources/assets/js/app.js`
 
-- [ ] Add and register service provider (AC: 2, 3)
-  - [ ] Create `packages/Webkul/AutoLeadingTheme/src/Providers/AutoLeadingThemeServiceProvider.php`
-  - [ ] Implement boot publishing for views (and assets if needed by chosen workflow)
-  - [ ] Add namespace mapping in root `composer.json`:
+- [x] Add and register service provider (AC: 2, 3)
+  - [x] Create `packages/Webkul/AutoLeadingTheme/src/Providers/AutoLeadingThemeServiceProvider.php`
+  - [x] Implement boot publishing for views (and assets if needed by chosen workflow)
+  - [x] Add namespace mapping in root `composer.json`:
         - `"Webkul\\AutoLeadingTheme\\": "packages/Webkul/AutoLeadingTheme/src"`
-  - [ ] Register provider in `bootstrap/providers.php`
-  - [ ] Run `composer dump-autoload`
+  - [x] Register provider in `bootstrap/providers.php`
+  - [x] Run `composer dump-autoload`
 
-- [ ] Configure theme and Vite registry (AC: 4, 5)
-  - [ ] Add `auto-leading-theme` entry under `shop` in `config/themes.php`
-  - [ ] Keep `shop-default` unchanged in this story (activation happens in Story 1.7)
-  - [ ] Add matching key in `config/bagisto-vite.php` under `viters`
-  - [ ] Ensure path values follow Bagisto conventions:
+- [x] Configure theme and Vite registry (AC: 4, 5)
+  - [x] Add `auto-leading-theme` entry under `shop` in `config/themes.php`
+  - [x] Keep `shop-default` unchanged in this story (activation happens in Story 1.7)
+  - [x] Add matching key in `config/bagisto-vite.php` under `viters`
+  - [x] Ensure path values follow Bagisto conventions:
         - `assets_path`: `public/themes/shop/auto-leading-theme`
         - `views_path`: `resources/themes/auto-leading-theme/views`
         - `vite.package_assets_directory`: `src/Resources/assets`
 
-- [ ] Scaffold package-level frontend build setup (AC: 7)
-  - [ ] Add package build config files in `packages/Webkul/AutoLeadingTheme/`:
+- [x] Scaffold package-level frontend build setup (AC: 7)
+  - [x] Add package build config files in `packages/Webkul/AutoLeadingTheme/`:
         - `package.json`
         - `vite.config.js`
         - `tailwind.config.js`
         - `postcss.config.js`
-  - [ ] Align toolchain with repository versions (Vite 5 + laravel-vite-plugin 1.x)
-  - [ ] Ensure build output points to `public/themes/shop/auto-leading-theme/build`
+  - [x] Align toolchain with repository versions (Vite 5 + laravel-vite-plugin 1.x)
+  - [x] Ensure build output points to `public/themes/shop/auto-leading-theme/build`
 
-- [ ] Verify theme render path and non-regression (AC: 6, 8)
-  - [ ] Publish/symlink theme views per chosen workflow
-  - [ ] Run `php artisan optimize:clear`
-  - [ ] Validate homepage route still returns OK and can resolve theme override
-  - [ ] Run targeted tests: `php artisan test --filter=HomePageTest`
+- [x] Verify theme render path and non-regression (AC: 6, 8)
+  - [x] Publish/symlink theme views per chosen workflow
+  - [x] Run `php artisan optimize:clear`
+  - [x] Validate homepage route still returns OK and can resolve theme override
+  - [x] Run targeted tests: `php artisan test --filter=HomePageTest`
 
-- [ ] Document quick start notes for next stories (AC: 1, 7)
-  - [ ] Add implementation notes on where to place future homepage/product/blog changes
-  - [ ] Confirm developers should modify package views/assets, not core shop package files
+- [x] Document quick start notes for next stories (AC: 1, 7)
+  - [x] Add implementation notes on where to place future homepage/product/blog changes
+  - [x] Confirm developers should modify package views/assets, not core shop package files
 
 ## Dev Notes
 
@@ -190,8 +190,8 @@ Minimum validation:
 
 ### Story Completion Status
 
-- Story status set to `ready-for-dev`.
-- Completion note: Ultimate context engine analysis completed - comprehensive developer guide created.
+- Story status set to `review`.
+- Completion note: Theme scaffold, provider registration, config wiring, tests, and build validation completed for Story 1.2.
 
 ## Dev Agent Record
 
@@ -201,13 +201,43 @@ GPT-5.3-Codex
 
 ### Debug Log References
 
-- No debug logs attached at story creation time.
+- `ddev composer dump-autoload`
+- `ddev php artisan vendor:publish --provider="Webkul\\AutoLeadingTheme\\Providers\\AutoLeadingThemeServiceProvider" --tag=auto-leading-theme-views --force`
+- `ddev php artisan optimize:clear`
+- `ddev php artisan test --filter=AutoLeadingThemeScaffoldTest`
+- `ddev php artisan test --filter=HomePageTest`
+- `npm run build` (from `packages/Webkul/AutoLeadingTheme`)
+- `ddev php artisan test` (attempted full suite; long-running with pre-existing unrelated failures)
 
 ### Completion Notes List
 
-- Sprint status file (`_bmad-output/implementation-artifacts/sprint-status.yaml`) was not present, so status transition file update was not applied.
-- Story selection assumption applied from sprint priority: Epic 1 -> Story 1.2.
+- Added and registered `Webkul\\AutoLeadingTheme\\Providers\\AutoLeadingThemeServiceProvider` with publish hooks for theme views/assets.
+- Added theme scaffold starter files: package homepage override and CSS/JS entrypoints under package resources.
+- Added theme/frontend build setup for AutoLeadingTheme (`package.json`, `vite.config.js`, `tailwind.config.js`, `postcss.config.js`) aligned to Vite 5 + laravel-vite-plugin 1.x.
+- Added `auto-leading-theme` entries in `config/themes.php` and `config/bagisto-vite.php` without changing `shop-default`.
+- Added `AutoLeadingThemeScaffoldTest` to validate scaffold files, config wiring, and themed `shop::home.index` resolution.
+- Targeted test suites passed (`AutoLeadingThemeScaffoldTest`, `HomePageTest`), and theme production build passed.
+- Full regression run was attempted but not completed due long duration and unrelated pre-existing failures in other suites.
 
 ### File List
 
 - `_bmad-output/implementation-artifacts/1-2-scaffold-custom-bagisto-theme-package.md`
+- `_bmad-output/implementation-artifacts/sprint-status.yaml`
+- `bootstrap/providers.php`
+- `composer.json`
+- `config/themes.php`
+- `config/bagisto-vite.php`
+- `packages/Webkul/AutoLeadingTheme/README.md`
+- `packages/Webkul/AutoLeadingTheme/package.json`
+- `packages/Webkul/AutoLeadingTheme/postcss.config.js`
+- `packages/Webkul/AutoLeadingTheme/tailwind.config.js`
+- `packages/Webkul/AutoLeadingTheme/vite.config.js`
+- `packages/Webkul/AutoLeadingTheme/src/Providers/AutoLeadingThemeServiceProvider.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/css/app.css`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/js/app.js`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/home/index.blade.php`
+- `packages/Webkul/Shop/tests/Feature/AutoLeadingThemeScaffoldTest.php`
+
+### Change Log
+
+- 2026-04-09: Implemented Story 1.2 scaffold and infrastructure for AutoLeading theme package; added provider/config wiring, build setup, test coverage, and validation runs.

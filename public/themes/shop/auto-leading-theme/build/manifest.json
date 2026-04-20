@@ -1,0 +1,25 @@
+{
+  "src/Resources/assets/css/app.css": {
+    "file": "assets/app-G1M0kaVE.css",
+    "src": "src/Resources/assets/css/app.css",
+    "isEntry": true
+  },
+  "src/Resources/assets/images/default-language.svg": {
+    "file": "assets/default-language-BxH8WlkY.svg",
+    "src": "src/Resources/assets/images/default-language.svg"
+  },
+  "src/Resources/assets/images/favicon.ico": {
+    "file": "assets/favicon-Df9chQdB.ico",
+    "src": "src/Resources/assets/images/favicon.ico"
+  },
+  "src/Resources/assets/images/logo.svg": {
+    "file": "assets/logo-CZWQQgOF.svg",
+    "src": "src/Resources/assets/images/logo.svg"
+  },
+  "src/Resources/assets/js/app.js": {
+    "file": "assets/app-l0sNRNKZ.js",
+    "name": "app",
+    "src": "src/Resources/assets/js/app.js",
+    "isEntry": true
+  }
+}
