@@ -25,6 +25,7 @@ use Webkul\Notification\Providers\NotificationServiceProvider;
 use Webkul\Payment\Providers\PaymentServiceProvider;
 use Webkul\Paypal\Providers\PaypalServiceProvider;
 use Webkul\Product\Providers\ProductServiceProvider;
+use Webkul\Rewards\Providers\RewardsServiceProvider;
 use Webkul\Rule\Providers\RuleServiceProvider;
 use Webkul\Sales\Providers\SalesServiceProvider;
 use Webkul\Shipping\Providers\ShippingServiceProvider;
@@ -79,4 +80,5 @@ return [
     TaxServiceProvider::class,
     ThemeServiceProvider::class,
     UserServiceProvider::class,
+    RewardsServiceProvider::class,
 ];
