@@ -3,6 +3,7 @@
 namespace Webkul\CustomerVerification\Listeners;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Webkul\Customer\Models\Customer;
 use Webkul\CustomerVerification\Repositories\CustomerVerificationDocumentRepository;
 
@@ -20,12 +21,39 @@ class HandleCustomerRegistration
      */
     public function handle($customer): void
     {
+        // Generate unique reference number for verification tracking
+        $this->generateReferenceNumber($customer);
+
         // Store documents if they were uploaded during registration
         $hasDocuments = $this->storeDocuments($customer->id, request());
 
         // Update verification status based on document upload
         $customer->verification_status = $hasDocuments ? 'pending' : 'incomplete';
         $customer->save();
+    }
+
+    /**
+     * Generate and assign a unique reference number to the customer.
+     */
+    protected function generateReferenceNumber($customer): void
+    {
+        $referenceNumber = $this->createUniqueReferenceNumber();
+        $customer->reference_number = $referenceNumber;
+        $customer->save();
+    }
+
+    /**
+     * Create a unique reference number for customer verification.
+     */
+    protected function createUniqueReferenceNumber(): string
+    {
+        do {
+            // Format: CV + Date(YYYYMMDD) + Random(6 chars)
+            // Example: CV20260418ABC123
+            $referenceNumber = 'CV' . now()->format('Ymd') . strtoupper(Str::random(6));
+        } while (Customer::where('reference_number', $referenceNumber)->exists());
+
+        return $referenceNumber;
     }
 
     /**

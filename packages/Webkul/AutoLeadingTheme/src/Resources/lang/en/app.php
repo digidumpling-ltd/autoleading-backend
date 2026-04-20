@@ -17,14 +17,6 @@ return [
         'book_now'         => 'Book Now',
         'add_to_wishlist'  => 'Add to Wishlist',
         'close'            => 'Close',
-        'upload_documents' => 'Upload Documents',
-        'upload_documents_hint' => 'Provide the required documents to start verification.',
-        'upload_id_document' => 'Upload ID Document',
-        'upload_id_document_hint' => 'PNG, JPG, or WEBP',
-        'upload_driver_license' => 'Upload Driver License',
-        'upload_driver_license_hint' => 'PNG, JPG, or WEBP',
-        'upload_address_proof' => 'Upload Address Proof',
-        'upload_address_proof_hint' => 'PNG, JPG, or PDF',
     ],
 
     'auth_dialog' => [

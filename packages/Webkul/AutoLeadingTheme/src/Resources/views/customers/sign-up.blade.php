@@ -149,16 +149,16 @@
                 {{-- Document Upload --}}
                 <div class="al-auth-section">
                     <p class="al-auth-section-title">
-                        {{ __('auto-leading-theme::app.common.upload_documents') }}
+                        {{ __('customer-verification::app.common.upload_documents') }}
                     </p>
                     <p class="al-auth-section-hint">
-                        {{ __('auto-leading-theme::app.common.upload_documents_hint') }}
+                        {{ __('customer-verification::app.common.upload_documents_hint') }}
                     </p>
 
                     <div class="al-auth-upload-grid">
                         <x-shop::form.control-group>
                             <x-shop::form.control-group.label>
-                                {{ __('auto-leading-theme::app.common.upload_id_document') }}
+                                {{ __('customer-verification::app.common.upload_id_document') }}
                             </x-shop::form.control-group.label>
 
                             <x-shop::form.control-group.control
@@ -168,7 +168,7 @@
                             />
 
                             <p class="al-auth-upload-hint">
-                                {{ __('auto-leading-theme::app.common.upload_id_document_hint') }}
+                                {{ __('customer-verification::app.common.upload_id_document_hint') }}
                             </p>
 
                             <x-shop::form.control-group.error control-name="id_document" />
@@ -176,7 +176,7 @@
 
                         <x-shop::form.control-group>
                             <x-shop::form.control-group.label>
-                                {{ __('auto-leading-theme::app.common.upload_driver_license') }}
+                                {{ __('customer-verification::app.common.upload_driver_license') }}
                             </x-shop::form.control-group.label>
 
                             <x-shop::form.control-group.control
@@ -186,7 +186,7 @@
                             />
 
                             <p class="al-auth-upload-hint">
-                                {{ __('auto-leading-theme::app.common.upload_driver_license_hint') }}
+                                {{ __('customer-verification::app.common.upload_driver_license_hint') }}
                             </p>
 
                             <x-shop::form.control-group.error control-name="driver_license" />
@@ -194,7 +194,7 @@
 
                         <x-shop::form.control-group>
                             <x-shop::form.control-group.label>
-                                {{ __('auto-leading-theme::app.common.upload_address_proof') }}
+                                {{ __('customer-verification::app.common.upload_address_proof') }}
                             </x-shop::form.control-group.label>
 
                             <x-shop::form.control-group.control
@@ -204,7 +204,7 @@
                             />
 
                             <p class="al-auth-upload-hint">
-                                {{ __('auto-leading-theme::app.common.upload_address_proof_hint') }}
+                                {{ __('customer-verification::app.common.upload_address_proof_hint') }}
                             </p>
 
                             <x-shop::form.control-group.error control-name="address_proof" />

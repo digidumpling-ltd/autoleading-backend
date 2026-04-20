@@ -1,6 +1,6 @@
 # Story 2.2: Unverified Status & Missing Documents Dashboard
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -25,51 +25,51 @@ so that I can complete onboarding and get approved.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Create authentication, routing, and controller for verification dashboard (AC: 6, 9)
-  - [ ] Add route `GET /customer/verification` to CustomerVerification package routes
-  - [ ] Create controller `VerificationDashboardController` with `index()` and optional `store()` actions
-  - [ ] Add middleware to ensure customer is authenticated and can only access own dashboard (customer.auth)
-  - [ ] Add authorization check: customer can only view/edit their own records
-  - [ ] Return 403 Forbidden if customer attempts unauthorized access
+- [x] Task 1: Create authentication, routing, and controller for verification dashboard (AC: 6, 9)
+  - [x] Add route `GET /customer/verification` to CustomerVerification package routes
+  - [x] Create controller `VerificationDashboardController` with `index()` and optional `store()` actions
+  - [x] Add middleware to ensure customer is authenticated and can only access own dashboard (customer.auth)
+  - [x] Add authorization check: customer can only view/edit their own records
+  - [x] Return 403 Forbidden if customer attempts unauthorized access
 
-- [ ] Task 2: Create verification dashboard Blade view and integrate into account navigation (AC: 1, 2, 6, 7)
-  - [ ] Create view file: `packages/Webkul/AutoLeadingTheme/src/Resources/views/customers/account/verification-dashboard.blade.php`
-  - [ ] Display current verification status with visual indicator (badge: incomplete/pending/approved/rejected)
-  - [ ] List all three required document types with upload state (✓ Uploaded / ✗ Missing) and upload date
-  - [ ] Display rejection reason if status is "rejected" (sourced from audit log or admin notes)
-  - [ ] Add navigation menu item in account sidebar linking to verification dashboard
-  - [ ] Use existing account layout component (`x-shop::layouts.account`) and theme styles
+- [x] Task 2: Create verification dashboard Blade view and integrate into account navigation (AC: 1, 2, 6, 7)
+  - [x] Create view file: `packages/Webkul/AutoLeadingTheme/src/Resources/views/customers/account/verification-dashboard.blade.php`
+  - [x] Display current verification status with visual indicator (badge: incomplete/pending/approved/rejected)
+  - [x] List all three required document types with upload state (✓ Uploaded / ✗ Missing) and upload date
+  - [x] Display rejection reason if status is "rejected" (sourced from audit log or admin notes)
+  - [x] Add navigation menu item in account sidebar linking to verification dashboard
+  - [x] Use existing account layout component (`x-shop::layouts.account`) and theme styles
 
-- [ ] Task 3: Implement document upload form and validation (AC: 3, 4, 10)
-  - [ ] Add form fields for each missing document type (only show fields for documents not yet uploaded)
-  - [ ] Apply same file validation as registration: type validation (ID/Driver: PNG/JPG/WEBP, Address: PNG/JPG/PDF), max 5MB per file
-  - [ ] On form submit, validate files, store to `storage/app/public/customer-documents/{customer_id}/{doc_type}/`
-  - [ ] Create/update record in `customer_verification_documents` table
-  - [ ] Handle errors: file upload failures, validation failures, duplicate types
-  - [ ] Display success or error messages to user
+- [x] Task 3: Implement document upload form and validation (AC: 3, 4, 10)
+  - [x] Add form fields for each missing document type (only show fields for documents not yet uploaded)
+  - [x] Apply same file validation as registration: type validation (ID/Driver: PNG/JPG/WEBP, Address: PNG/JPG/PDF), max 5MB per file
+  - [x] On form submit, validate files, store to `storage/app/public/customer-documents/{customer_id}/{doc_type}/`
+  - [x] Create/update record in `customer_verification_documents` table
+  - [x] Handle errors: file upload failures, validation failures, duplicate types
+  - [x] Display success or error messages to user
 
-- [ ] Task 4: Implement automatic status transition logic (AC: 5)
-  - [ ] After successful document upload, check if customer now has all three required document types
-  - [ ] If all three types present AND current status is "incomplete" or "rejected", set status to "pending" and save
-  - [ ] Do NOT change status if customer is already "approved" (they remain approved)
-  - [ ] Emit event `customer.verification.documents_complete` when status transitions to pending
-  - [ ] Log the status change in audit trail with timestamp
+- [x] Task 4: Implement automatic status transition logic (AC: 5)
+  - [x] After successful document upload, check if customer now has all three required document types
+  - [x] If all three types present AND current status is "incomplete" or "rejected", set status to "pending" and save
+  - [x] Do NOT change status if customer is already "approved" (they remain approved)
+  - [x] Emit event `customer.verification.documents_complete` when status transitions to pending
+  - [x] Log the status change in audit trail with timestamp
 
-- [ ] Task 5: Add comprehensive translation keys and labels (AC: 10)
-  - [ ] Status labels: `common.verification_status_incomplete`, `common.verification_status_pending`, `common.verification_status_approved`, `common.verification_status_rejected`
-  - [ ] Document type labels: `common.document_type_id_document`, `common.document_type_driver_license`, `common.document_type_address_proof`
-  - [ ] Form labels: `common.verification_dashboard_title`, `common.verification_upload_label`, `common.verification_upload_button`, `common.verification_status_label`
-  - [ ] Status messages: `common.verification_all_docs_uploaded`, `common.verification_docs_complete`, `common.verification_rejected_reason`
-  - [ ] Error messages: `common.verification_file_too_large`, `common.verification_invalid_file_type`, `common.verification_upload_failed`
-  - [ ] Hints/help text: `common.verification_upload_hint`, `common.verification_document_missing_hint`
+- [x] Task 5: Add comprehensive translation keys and labels (AC: 10)
+  - [x] Status labels: `common.verification_status_incomplete`, `common.verification_status_pending`, `common.verification_status_approved`, `common.verification_status_rejected`
+  - [x] Document type labels: `common.document_type_id_document`, `common.document_type_driver_license`, `common.document_type_address_proof`
+  - [x] Form labels: `common.verification_dashboard_title`, `common.verification_upload_label`, `common.verification_upload_button`, `common.verification_status_label`
+  - [x] Status messages: `common.verification_all_docs_uploaded`, `common.verification_docs_complete`, `common.verification_rejected_reason`
+  - [x] Error messages: `common.verification_file_too_large`, `common.verification_invalid_file_type`, `common.verification_upload_failed`
+  - [x] Hints/help text: `common.verification_upload_hint`, `common.verification_document_missing_hint`
 
-- [ ] Task 6: Add tests for verification dashboard and upload flow (AC: All)
-  - [ ] Unit tests for StatusTransitionService (if extracted to service layer)
-  - [ ] Feature tests for verification dashboard route access and authorization
-  - [ ] Feature tests for document upload with valid and invalid files
-  - [ ] Feature tests for status transition logic (all docs uploaded → pending)
-  - [ ] Feature tests for edge cases: re-upload existing document, upload with wrong file type, file too large
-  - [ ] Feature tests for rejected status (verify cannot auto-transition without admin action if explicitly rejected)
+- [x] Task 6: Add tests for verification dashboard and upload flow (AC: All)
+  - [x] Unit tests for StatusTransitionService (if extracted to service layer)
+  - [x] Feature tests for verification dashboard route access and authorization
+  - [x] Feature tests for document upload with valid and invalid files
+  - [x] Feature tests for status transition logic (all docs uploaded → pending)
+  - [x] Feature tests for edge cases: re-upload existing document, upload with wrong file type, file too large
+  - [x] Feature tests for rejected status (verify cannot auto-transition without admin action if explicitly rejected)
 
 ## Dev Notes
 
@@ -184,10 +184,43 @@ so that I can complete onboarding and get approved.
 
 ### Agent Model Used
 
-GPT-5.2-Codex
+GPT-5.3-Codex
 
 ### Debug Log References
 
+- Implemented customer verification route wiring via package provider + `Routes/customer-routes.php`.
+- Added dashboard flow classes: request, controller, document service, status service, constants support.
+- Added AutoLeading theme dashboard Blade and `common.*` translation keys in EN + ZH locales.
+- Executed test suite: `ddev php artisan test packages/Webkul/Shop/tests/Feature/Customers/VerificationDashboardTest.php packages/Webkul/Shop/tests/Feature/Customers/VerificationStatusServiceTest.php` (pass).
+- Executed regression check: `ddev php artisan test packages/Webkul/Shop/tests/Feature/RegistrationPageTest.php packages/Webkul/Shop/tests/Feature/Customers/AccountTest.php` (AccountTest pass; existing RegistrationPageTest redirect assertions fail due current registration redirect behavior in baseline code).
+
 ### Completion Notes List
 
+- Implemented dashboard route endpoints at `/customer/verification` and `/customer/verification/upload` with customer auth middleware and explicit owner check (`customer_id` mismatch returns 403).
+- Implemented verification dashboard UI in AutoLeading theme using existing account layout/navigation.
+- Added document state rendering for all required document types with uploaded/missing indicators and timestamps.
+- Added upload form for missing documents only, FormRequest validation, and translated error/success messaging.
+- Added reusable document service for validation metadata, storage path convention, and upsert-by-document-type behavior.
+- Added reusable status service for transition rules (`incomplete/rejected -> pending`, skip approved), event emission, and timestamped audit log entry.
+- Added customer menu integration through package config merge (`menu.customer`) without modifying core Shop views.
+- Added unit/feature coverage for route auth, upload validation, re-upload replacement, rejected retry transition, and status service behavior.
+
 ### File List
+
+- `packages/Webkul/CustomerVerification/src/Providers/CustomerVerificationServiceProvider.php`
+- `packages/Webkul/CustomerVerification/src/Config/menu.php`
+- `packages/Webkul/CustomerVerification/src/Routes/customer-routes.php`
+- `packages/Webkul/CustomerVerification/src/Support/Verification.php`
+- `packages/Webkul/CustomerVerification/src/Services/CustomerVerificationDocumentService.php`
+- `packages/Webkul/CustomerVerification/src/Services/CustomerVerificationStatusService.php`
+- `packages/Webkul/CustomerVerification/src/Http/Requests/Customer/CustomerVerificationUploadRequest.php`
+- `packages/Webkul/CustomerVerification/src/Http/Controllers/Customer/VerificationDashboardController.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/customers/account/verification-dashboard.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/lang/en/app.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/lang/zh_CN/app.php`
+- `packages/Webkul/Shop/tests/Feature/Customers/VerificationDashboardTest.php`
+- `packages/Webkul/Shop/tests/Feature/Customers/VerificationStatusServiceTest.php`
+
+### Change Log
+
+- 2026-04-16: Implemented Story 2.2 verification dashboard end-to-end (routes, controller/request/services, theme view/menu integration, translations, and test coverage).

@@ -10,7 +10,6 @@ use Webkul\Admin\Http\Controllers\Customers\CustomerController;
 use Webkul\Admin\Http\Controllers\Customers\CustomerGroupController;
 use Webkul\Admin\Http\Controllers\Customers\GDPRController;
 use Webkul\Admin\Http\Controllers\Customers\ReviewController;
-use Webkul\Admin\Http\Controllers\VerificationController;
 
 /**
  * Customers routes.
@@ -126,22 +125,5 @@ Route::prefix('customers')->group(function () {
         Route::put('edit/{id}', 'update')->name('admin.customers.gdpr.update');
 
         Route::delete('delete/{id}', 'delete')->name('admin.customers.gdpr.delete');
-    });
-
-    /**
-     * Customer verifications routes.
-     */
-    Route::controller(VerificationController::class)->prefix('verifications')->group(function () {
-        Route::get('', 'index')->name('admin.customers.verifications.index');
-
-        Route::get('get', 'getVerifications')->name('admin.customers.verifications.get');
-
-        Route::get('{id}', 'show')->name('admin.customers.verifications.show');
-
-        Route::put('{id}', 'update')->name('admin.customers.verifications.update');
-
-        Route::get('documents/{id}/download', 'downloadDocument')->name('admin.customers.verifications.download');
-
-        Route::put('mass-update', 'massUpdate')->name('admin.customers.verifications.mass-update');
     });
 });

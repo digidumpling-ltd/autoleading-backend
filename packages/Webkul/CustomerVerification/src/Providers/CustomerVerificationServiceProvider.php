@@ -6,22 +6,57 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Core\Http\Middleware\PreventRequestsDuringMaintenance;
 use Webkul\Customer\Models\Customer;
+use Webkul\CustomerVerification\Console\Commands\GenerateCustomerReferenceNumbers;
+use Webkul\CustomerVerification\Contracts\CustomerVerificationDocument as CustomerVerificationDocumentContract;
+use Webkul\CustomerVerification\Models\CustomerVerificationDocument;
 use Webkul\CustomerVerification\Observers\CustomerObserver;
 
 class CustomerVerificationServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->mergeConfigFrom(
+            dirname(__DIR__).'/Config/menu.php',
+            'menu.customer'
+        );
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__).'/Config/admin-menu.php',
+            'menu.admin'
+        );
+
         $this->app->bind(CustomerVerificationDocumentContract::class, CustomerVerificationDocument::class);
+
+        $this->app->register(ModuleServiceProvider::class);
 
         $this->app->register(EventServiceProvider::class);
     }
 
     public function boot(): void
     {
+        Route::middleware(['web', 'shop', PreventRequestsDuringMaintenance::class])
+            ->group(__DIR__.'/../Routes/customer-routes.php');
+
+        Route::middleware(['web'])
+            ->group(__DIR__.'/../Routes/admin-routes.php');
+
+        $this->loadViewsFrom(__DIR__.'/../Resources/views', 'customer-verification');
+
+        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'customer-verification');
+
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
-        // Register model observers
+        // Register artisan command for generating reference numbers
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                GenerateCustomerReferenceNumbers::class,
+            ]);
+        }
+
+        Customer::resolveRelationUsing('verificationDocuments', function ($customer) {
+            return $customer->hasMany(CustomerVerificationDocument::class, 'customer_id');
+        });
+
         Customer::observe(CustomerObserver::class);
     }
 }

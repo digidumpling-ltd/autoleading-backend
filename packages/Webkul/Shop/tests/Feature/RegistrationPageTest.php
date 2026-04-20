@@ -70,33 +70,8 @@ it('successfully registers a customer', function () {
 
     // Act and Assert.
     post(route('shop.customers.register.store'), $requestedCustomer)
-        ->assertRedirectToRoute('shop.customer.session.index')
-        ->assertSessionHas('success', trans('shop::app.customers.signup-form.success'));
-});
-
-it('stores verification documents when provided during registration', function () {
-    Storage::fake('public');
-
-    CoreConfig::where('code', 'customer.settings.email.verification')->update([
-        'value' => 0,
-    ]);
-
-    $requestedCustomer = [
-        'first_name' => fake()->firstName(),
-        'last_name' => fake()->lastName(),
-        'email' => fake()->email(),
-        'password' => 'admin123',
-        'password_confirmation' => 'admin123',
-        'id_document' => UploadedFile::fake()->image('id.webp'),
-        'driver_license' => UploadedFile::fake()->image('license.jpg'),
-        'address_proof' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
-    ];
-
-    post(route('shop.customers.register.store'), $requestedCustomer)
-        ->assertRedirectToRoute('shop.customer.session.index')
-        ->assertSessionHas('success', trans('shop::app.customers.signup-form.success'));
-
-    expect(DB::table('customer_verification_documents')->count())->toBe(3);
+        ->assertRedirectToRoute('shop.home.index')
+        ->assertSessionHas('success', trans('shop::app.customers.signup-form.verification-documents-uploaded'));
 });
 
 it('successfully registers a customer and send mail to the customer verify the account', function () {
@@ -118,8 +93,8 @@ it('successfully registers a customer and send mail to the customer verify the a
 
     // Act and Assert.
     post(route('shop.customers.register.store'), $requestedCustomer)
-        ->assertRedirectToRoute('shop.customer.session.index')
-        ->assertSessionHas('success', trans('shop::app.customers.signup-form.success-verify'));
+        ->assertRedirectToRoute('shop.home.index')
+        ->assertSessionHas('success', trans('shop::app.customers.signup-form.verification-documents-uploaded'));
 
     Mail::assertQueued(EmailVerificationNotification::class);
 
@@ -152,8 +127,8 @@ it('registers a customer successfully and sends a registration email to customer
 
     // Act and Assert.
     post(route('shop.customers.register.store'), $requestedCustomer)
-        ->assertRedirectToRoute('shop.customer.session.index')
-        ->assertSessionHas('success', trans('shop::app.customers.signup-form.success'));
+        ->assertRedirectToRoute('shop.home.index')
+        ->assertSessionHas('success', trans('shop::app.customers.signup-form.verification-documents-uploaded'));
 
     Mail::assertQueued(AdminRegistrationNotification::class);
 

@@ -127,12 +127,6 @@ return [
         'route' => 'admin.customers.gdpr.index',
         'sort' => 4,
         'icon' => '',
-    ], [
-        'key' => 'customers.verifications',
-        'name' => 'admin::app.components.layouts.sidebar.verifications',
-        'route' => 'admin.customers.verifications.index',
-        'sort' => 5,
-        'icon' => '',
     ],
 
     /**

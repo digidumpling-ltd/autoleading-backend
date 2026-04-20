@@ -17,14 +17,6 @@ return [
         'book_now'         => '立即預訂',
         'add_to_wishlist'  => '加入願望清單',
         'close'            => '關閉',
-        'upload_documents' => '上傳文件',
-        'upload_documents_hint' => '請提供所需文件以開始審核。',
-        'upload_id_document' => '上傳身份證',
-        'upload_id_document_hint' => 'PNG、JPG 或 WEBP',
-        'upload_driver_license' => '上傳駕照執照',
-        'upload_driver_license_hint' => 'PNG、JPG 或 WEBP',
-        'upload_address_proof' => '上傳地址證明文件',
-        'upload_address_proof_hint' => 'PNG、JPG 或 PDF',
     ],
 
     'auth_dialog' => [
