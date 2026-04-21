@@ -264,7 +264,7 @@
     "isDynamicEntry": true
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-DxbqLJkj.css",
+    "file": "assets/app-B1isUbUh.css",
     "src": "src/Resources/assets/css/app.css",
     "isEntry": true
   },
@@ -392,6 +392,18 @@
     "file": "assets/invoice-qNYgi9ea.svg",
     "src": "src/Resources/assets/images/settings/invoice.svg"
   },
+  "src/Resources/assets/images/settings/magic-ai-admin-features.svg": {
+    "file": "assets/magic-ai-admin-features-CnyzKTx_.svg",
+    "src": "src/Resources/assets/images/settings/magic-ai-admin-features.svg"
+  },
+  "src/Resources/assets/images/settings/magic-ai-providers.svg": {
+    "file": "assets/magic-ai-providers-zelM7TmT.svg",
+    "src": "src/Resources/assets/images/settings/magic-ai-providers.svg"
+  },
+  "src/Resources/assets/images/settings/magic-ai-storefront-features.svg": {
+    "file": "assets/magic-ai-storefront-features-CMRXtkmz.svg",
+    "src": "src/Resources/assets/images/settings/magic-ai-storefront-features.svg"
+  },
   "src/Resources/assets/images/settings/magic-ai.svg": {
     "file": "assets/magic-ai-C0gXN1sk.svg",
     "src": "src/Resources/assets/images/settings/magic-ai.svg"
@@ -457,7 +469,7 @@
     "src": "src/Resources/assets/images/unpaid-invoices.svg"
   },
   "src/Resources/assets/js/app.js": {
-    "file": "assets/app-gSfGm5ou.js",
+    "file": "assets/app-BlcvfuoB.js",
     "name": "app",
     "src": "src/Resources/assets/js/app.js",
     "isEntry": true,

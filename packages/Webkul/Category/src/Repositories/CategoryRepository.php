@@ -6,7 +6,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManager;
 use Webkul\Category\Contracts\Category;
 use Webkul\Category\Models\CategoryTranslationProxy;
 use Webkul\Core\Eloquent\Repository;
@@ -129,81 +128,6 @@ class CategoryRepository extends Repository
     }
 
     /**
-     * Specify category tree.
-     *
-     * @return Category
-     */
-    public function getCategoryTree(?int $id = null)
-    {
-        return $id
-            ? $this->model::orderBy('position', 'ASC')->where('id', '!=', $id)->get()->toTree()
-            : $this->model::orderBy('position', 'ASC')->get()->toTree();
-    }
-
-    /**
-     * Specify category tree.
-     *
-     * @return Collection
-     */
-    public function getCategoryTreeWithoutDescendant(?int $id = null)
-    {
-        return $id
-            ? $this->model::orderBy('position', 'ASC')->where('id', '!=', $id)->whereNotDescendantOf($id)->get()->toTree()
-            : $this->model::orderBy('position', 'ASC')->get()->toTree();
-    }
-
-    /**
-     * Get root categories.
-     *
-     * @return Collection
-     */
-    public function getRootCategories()
-    {
-        return $this->getModel()->where('parent_id', null)->get();
-    }
-
-    /**
-     * Get child categories.
-     *
-     * @return Collection
-     */
-    public function getChildCategories($parentId)
-    {
-        return $this->getModel()->where('parent_id', $parentId)->get();
-    }
-
-    /**
-     * get visible category tree.
-     *
-     * @param  int  $id
-     * @return Collection
-     */
-    public function getVisibleCategoryTree($id = null)
-    {
-        return $id
-            ? $this->model::orderBy('position', 'ASC')->where('status', 1)->descendantsAndSelf($id)->toTree($id)
-            : $this->model::orderBy('position', 'ASC')->where('status', 1)->get()->toTree();
-    }
-
-    /**
-     * Checks slug is unique or not based on locale.
-     *
-     * @param  int  $id
-     * @param  string  $slug
-     * @return bool
-     */
-    public function isSlugUnique($id, $slug)
-    {
-        $exists = CategoryTranslationProxy::modelClass()::where('category_id', '<>', $id)
-            ->where('slug', $slug)
-            ->limit(1)
-            ->select(DB::raw(1))
-            ->exists();
-
-        return ! $exists;
-    }
-
-    /**
      * Retrieve category from slug.
      *
      * @param  string  $slug
@@ -228,44 +152,77 @@ class CategoryRepository extends Repository
     }
 
     /**
-     * Upload category's images.
+     * Get root categories.
      *
-     * @param  array  $data
-     * @param  Category  $category
-     * @param  string  $type
-     * @return void
+     * @return Collection
      */
-    public function uploadImages($data, $category, $type = 'logo_path')
+    public function getRootCategories()
     {
-        if (isset($data[$type])) {
-            foreach ($data[$type] as $imageId => $image) {
-                $file = $type.'.'.$imageId;
+        return $this->getModel()->where('parent_id', null)->get();
+    }
 
-                if (request()->hasFile($file)) {
-                    if ($category->{$type}) {
-                        Storage::delete($category->{$type});
-                    }
+    /**
+     * Get child categories.
+     *
+     * @return Collection
+     */
+    public function getChildCategories($parentId)
+    {
+        return $this->getModel()->where('parent_id', $parentId)->get();
+    }
 
-                    $manager = new ImageManager;
+    /**
+     * Specify category tree.
+     *
+     * @return Category
+     */
+    public function getCategoryTree(?int $id = null)
+    {
+        return $id
+            ? $this->model::orderBy('position', 'ASC')->where('id', '!=', $id)->get()->toTree()
+            : $this->model::orderBy('position', 'ASC')->get()->toTree();
+    }
 
-                    $image = $manager->make(request()->file($file))->encode('webp');
+    /**
+     * Specify category tree.
+     *
+     * @return Collection
+     */
+    public function getCategoryTreeWithoutDescendant(?int $id = null)
+    {
+        return $id
+            ? $this->model::orderBy('position', 'ASC')->where('id', '!=', $id)->whereNotDescendantOf($id)->get()->toTree()
+            : $this->model::orderBy('position', 'ASC')->get()->toTree();
+    }
 
-                    $category->{$type} = 'category/'.$category->id.'/'.Str::random(40).'.webp';
+    /**
+     * get visible category tree.
+     *
+     * @param  int  $id
+     * @return Collection
+     */
+    public function getVisibleCategoryTree($id = null)
+    {
+        return $id
+            ? $this->model::orderBy('position', 'ASC')->where('status', 1)->descendantsAndSelf($id)->toTree($id)
+            : $this->model::orderBy('position', 'ASC')->where('status', 1)->get()->toTree();
+    }
 
-                    Storage::put($category->{$type}, $image);
+    /**
+     * Get the IDs of visible categories under the given root (inclusive).
+     *
+     * @param  int|null  $rootId
+     * @return array
+     */
+    public function getVisibleCategoryIds($rootId = null)
+    {
+        $query = $this->model::where('status', 1);
 
-                    $category->save();
-                }
-            }
-        } else {
-            if ($category->{$type}) {
-                Storage::delete($category->{$type});
-            }
-
-            $category->{$type} = null;
-
-            $category->save();
+        if ($rootId) {
+            $query = $query->descendantsAndSelf($rootId);
         }
+
+        return $query->pluck('id')->all();
     }
 
     /**
@@ -291,6 +248,63 @@ class CategoryRepository extends Repository
         }
 
         return $trimmed;
+    }
+
+    /**
+     * Checks slug is unique or not based on locale.
+     *
+     * @param  int  $id
+     * @param  string  $slug
+     * @return bool
+     */
+    public function isSlugUnique($id, $slug)
+    {
+        $exists = CategoryTranslationProxy::modelClass()::where('category_id', '<>', $id)
+            ->where('slug', $slug)
+            ->limit(1)
+            ->select(DB::raw(1))
+            ->exists();
+
+        return ! $exists;
+    }
+
+    /**
+     * Upload category's images.
+     *
+     * @param  array  $data
+     * @param  Category  $category
+     * @param  string  $type
+     * @return void
+     */
+    public function uploadImages($data, $category, $type = 'logo_path')
+    {
+        if (isset($data[$type])) {
+            foreach ($data[$type] as $imageId => $image) {
+                $file = $type.'.'.$imageId;
+
+                if (request()->hasFile($file)) {
+                    if ($category->{$type}) {
+                        Storage::delete($category->{$type});
+                    }
+
+                    $encoded = image_manager()->read(request()->file($file))->encodeByExtension('webp');
+
+                    $category->{$type} = 'category/'.$category->id.'/'.Str::random(40).'.webp';
+
+                    Storage::put($category->{$type}, (string) $encoded);
+
+                    $category->save();
+                }
+            }
+        } else {
+            if ($category->{$type}) {
+                Storage::delete($category->{$type});
+            }
+
+            $category->{$type} = null;
+
+            $category->save();
+        }
     }
 
     /**

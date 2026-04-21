@@ -1,4 +1,8 @@
 import { test, expect } from "../setup";
+import { ProductCreation } from "../pages/product";
+import { ProductCheckout } from "../pages/checkout-flow";
+import { loginAsCustomer, addAddress } from "../utils/customer";
+import { RMACreation } from "../pages/rma";
 import address from "../utils/address";
 import {
     generateFirstName,
@@ -18,6 +22,31 @@ import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const PRODUCTS_URL = "admin/catalog/products";
+const CREATE_PRODUCT_BUTTON = 'button.primary-button:has-text("Create Product")';
+const SAVE_PRODUCT_BUTTON = 'button.primary-button:has-text("Save Product")';
+const PRODUCT_FORM_SELECTOR = 'form[enctype="multipart/form-data"]';
+
+async function openCreateProductModal(adminPage) {
+    await adminPage.goto(PRODUCTS_URL);
+    await adminPage.waitForSelector(CREATE_PRODUCT_BUTTON);
+    await adminPage.getByRole("button", { name: "Create Product" }).click();
+}
+
+async function startProductCreation(adminPage, type, attributeFamily = "1") {
+    await openCreateProductModal(adminPage);
+    await adminPage.locator('select[name="type"]').selectOption(type);
+    await adminPage
+        .locator('select[name="attribute_family_id"]')
+        .selectOption(attributeFamily);
+    await adminPage.locator('input[name="sku"]').fill(generateSKU());
+    await adminPage.getByRole("button", { name: "Save Product" }).click();
+}
+
+async function waitForProductEditForm(adminPage) {
+    await adminPage.waitForSelector(SAVE_PRODUCT_BUTTON);
+    await adminPage.waitForSelector(PRODUCT_FORM_SELECTOR);
+}
 
 function saveGeneratedProductName(productName: string) {
     fs.writeFileSync(
@@ -38,7 +67,7 @@ async function createSimpleProduct(adminPage) {
      * Main product data which we will use to create the product.
      */
     const product = {
-        name: generateName(),
+        name: `simple-${Date.now()}`,
         sku: generateSKU(),
         productNumber: generateSKU(),
         shortDescription: generateDescription(),
@@ -52,37 +81,13 @@ async function createSimpleProduct(adminPage) {
      */
     saveGeneratedProductName(product.name);
 
-    /**
-     * Reaching to the create product page.
-     */
-    await adminPage.goto("admin/catalog/products");
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Create Product")',
-    );
-    await adminPage.getByRole("button", { name: "Create Product" }).click();
-
-    /**
-     * Opening create product form in modal.
-     */
-    await adminPage.locator('select[name="type"]').selectOption("simple");
-    await adminPage
-        .locator('select[name="attribute_family_id"]')
-        .selectOption("1");
-    await adminPage.locator('input[name="sku"]').fill(generateSKU());
-    await adminPage.getByRole("button", { name: "Save Product" }).click();
+    await startProductCreation(adminPage, "simple");
 
     /**
      * After creating the product, the page is redirected to the edit product page, where
      * all the details need to be filled in.
      */
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Save Product")',
-    );
-
-    /**
-     * Waiting for the main form to be visible.
-     */
-    await adminPage.waitForSelector('form[enctype="multipart/form-data"]');
+    await waitForProductEditForm(adminPage);
 
     /**
      * General Section.
@@ -129,15 +134,6 @@ async function createSimpleProduct(adminPage) {
     await adminPage.locator('input[name="inventories\\[1\\]"]').fill("5000");
 
     /**
-     * Categories Section.
-     */
-    await adminPage
-        .locator("label", { hasText: /^Men$/ })
-        .locator("span.icon-uncheckbox")
-        .first()
-        .click();
-
-    /**
      * Saving the product.
      */
     await adminPage.getByRole("button", { name: "Save Product" }).click();
@@ -179,24 +175,7 @@ async function createConfigurableProduct(adminPage) {
      */
     saveGeneratedProductName(product.name);
 
-    /**
-     * Reaching to the create product page.
-     */
-    await adminPage.goto("admin/catalog/products");
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Create Product")',
-    );
-    await adminPage.getByRole("button", { name: "Create Product" }).click();
-
-    /**
-     * Opening create product form in modal.
-     */
-    await adminPage.locator('select[name="type"]').selectOption("configurable");
-    await adminPage
-        .locator('select[name="attribute_family_id"]')
-        .selectOption("1");
-    await adminPage.locator('input[name="sku"]').fill(generateSKU());
-    await adminPage.getByRole("button", { name: "Save Product" }).click();
+    await startProductCreation(adminPage, "configurable");
 
     /**
      * After creating the product, the page is redirected to Configurable Attributes modal, where
@@ -214,6 +193,36 @@ async function createConfigurableProduct(adminPage) {
         .click();
     await adminPage
         .getByRole("paragraph")
+        .filter({ hasText: "Black" })
+        .locator("span")
+        .click();
+    await adminPage
+        .getByRole("paragraph")
+        .filter({ hasText: "White" })
+        .locator("span")
+        .click();
+    await adminPage
+        .getByRole("paragraph")
+        .filter({ hasText: "Orange" })
+        .locator("span")
+        .click();
+    await adminPage
+        .getByRole("paragraph")
+        .filter({ hasText: "Blue" })
+        .locator("span")
+        .click();
+    await adminPage
+        .getByRole("paragraph")
+        .filter({ hasText: "Pink" })
+        .locator("span")
+        .click();
+    await adminPage
+        .getByRole("paragraph")
+        .filter({ hasText: "Purple" })
+        .locator("span")
+        .click();
+    await adminPage
+        .getByRole("paragraph")
         .filter({ hasText: "Green" })
         .locator("span")
         .click();
@@ -221,6 +230,14 @@ async function createConfigurableProduct(adminPage) {
         .getByRole("paragraph")
         .filter({ hasText: "Yellow" })
         .locator("span")
+        .click();
+    await adminPage
+        .locator("div:nth-child(2) > div > p > .icon-cross")
+        .first()
+        .click();
+    await adminPage
+        .locator("div:nth-child(2) > div > p > .icon-cross")
+        .first()
         .click();
     await adminPage
         .locator("div:nth-child(2) > div > p > .icon-cross")
@@ -371,37 +388,13 @@ async function createGroupedProduct(adminPage) {
      */
     saveGeneratedProductName(product.name);
 
-    /**
-     * Reaching to the create product page.
-     */
-    await adminPage.goto("admin/catalog/products");
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Create Product")',
-    );
-    await adminPage.getByRole("button", { name: "Create Product" }).click();
-
-    /**
-     * Opening create product form in modal.
-     */
-    await adminPage.locator('select[name="type"]').selectOption("grouped");
-    await adminPage
-        .locator('select[name="attribute_family_id"]')
-        .selectOption("1");
-    await adminPage.locator('input[name="sku"]').fill(generateSKU());
-    await adminPage.getByRole("button", { name: "Save Product" }).click();
+    await startProductCreation(adminPage, "grouped");
 
     /**
      * After creating the product, the page is redirected to the edit product page, where
      * all the details need to be filled in.
      */
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Save Product")',
-    );
-
-    /**
-     * Waiting for the main form to be visible.
-     */
-    await adminPage.waitForSelector('form[enctype="multipart/form-data"]');
+    await waitForProductEditForm(adminPage);
 
     /**
      * General Section.
@@ -439,25 +432,17 @@ async function createGroupedProduct(adminPage) {
     await adminPage.getByRole("textbox", { name: "Search by name" }).click();
     await adminPage
         .getByRole("textbox", { name: "Search by name" })
-        .fill("arc");
+        .fill("simple");
 
-    await adminPage
-        .locator("div.flex.justify-between.gap-2\\.5.border-b", {
-            has: adminPage.locator("p", {
-                hasText: "Arctic Bliss Stylish Winter Scarf",
-            }),
-        })
-        .locator('input[type="checkbox"]')
-        .check({ force: true });
-
-    await adminPage
-        .locator("div.flex.justify-between.gap-2\\.5.border-b", {
-            has: adminPage.locator("p", {
-                hasText: "Arctic Touchscreen Winter Gloves",
-            }),
-        })
-        .locator('input[type="checkbox"]')
-        .check({ force: true });
+   await adminPage
+    .locator("div.flex.justify-between.gap-2\\.5.border-b", {
+        has: adminPage.locator("p", {
+            hasText: "simple-",
+        }),
+    })
+    .first()
+    .locator('input[type="checkbox"]')
+    .check({ force: true });
 
     /**
      * Saving the added product.
@@ -468,13 +453,7 @@ async function createGroupedProduct(adminPage) {
      * Waiting for the products to be added.
      */
     await adminPage.waitForSelector(
-        'p:has-text("Arctic Touchscreen Winter Gloves")',
-    );
-    await adminPage.waitForSelector(
-        'p:has-text("Arctic Warmth Wool Blend Socks")',
-    );
-    await adminPage.waitForSelector(
-        'p:has-text("Arctic Bliss Stylish Winter")',
+        'p:has-text("simple")',
     );
 
     /**
@@ -517,37 +496,13 @@ async function createVirtualProduct(adminPage) {
      */
     saveGeneratedProductName(product.name);
 
-    /**
-     * Reaching to the create product page.
-     */
-    await adminPage.goto("admin/catalog/products");
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Create Product")',
-    );
-    await adminPage.getByRole("button", { name: "Create Product" }).click();
-
-    /**
-     * Opening create product form in modal.
-     */
-    await adminPage.locator('select[name="type"]').selectOption("virtual");
-    await adminPage
-        .locator('select[name="attribute_family_id"]')
-        .selectOption("1");
-    await adminPage.locator('input[name="sku"]').fill(generateSKU());
-    await adminPage.getByRole("button", { name: "Save Product" }).click();
+    await startProductCreation(adminPage, "virtual");
 
     /**
      * After creating the product, the page is redirected to the edit product page, where
      * all the details need to be filled in.
      */
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Save Product")',
-    );
-
-    /**
-     * Waiting for the main form to be visible.
-     */
-    await adminPage.waitForSelector('form[enctype="multipart/form-data"]');
+    await waitForProductEditForm(adminPage);
 
     /**
      * General Section.
@@ -589,15 +544,6 @@ async function createVirtualProduct(adminPage) {
     await adminPage.locator('input[name="inventories\\[1\\]"]').fill("5000");
 
     /**
-     * Categories Section.
-     */
-    await adminPage
-        .locator("label", { hasText: /^Men$/ })
-        .locator("span.icon-uncheckbox")
-        .first()
-        .click();
-
-    /**
      * Saving the product.
      */
     await adminPage.getByRole("button", { name: "Save Product" }).click();
@@ -636,37 +582,13 @@ async function createDownloadableProduct(adminPage) {
      */
     saveGeneratedProductName(product.name);
 
-    /**
-     * Reaching to the create product page.
-     */
-    await adminPage.goto("admin/catalog/products");
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Create Product")',
-    );
-    await adminPage.getByRole("button", { name: "Create Product" }).click();
-
-    /**
-     * Opening create product form in modal.
-     */
-    await adminPage.locator('select[name="type"]').selectOption("downloadable");
-    await adminPage
-        .locator('select[name="attribute_family_id"]')
-        .selectOption("1");
-    await adminPage.locator('input[name="sku"]').fill(generateSKU());
-    await adminPage.getByRole("button", { name: "Save Product" }).click();
+    await startProductCreation(adminPage, "downloadable");
 
     /**
      * After creating the product, the page is redirected to the edit product page, where
      * all the details need to be filled in.
      */
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Save Product")',
-    );
-
-    /**
-     * Waiting for the main form to be visible.
-     */
-    await adminPage.waitForSelector('form[enctype="multipart/form-data"]');
+    await waitForProductEditForm(adminPage);
 
     /**
      * General Section.
@@ -779,37 +701,13 @@ async function createBookingProduct(adminPage) {
         .toISOString()
         .slice(0, 19)
         .replace("T", " ");
-    /**
-     * Reaching to the create product page.
-     */
-    await adminPage.goto("admin/catalog/products");
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Create Product")',
-    );
-    await adminPage.getByRole("button", { name: "Create Product" }).click();
-
-    /**
-     * Opening create product form in modal.
-     */
-    await adminPage.locator('select[name="type"]').selectOption("booking");
-    await adminPage
-        .locator('select[name="attribute_family_id"]')
-        .selectOption("1");
-    await adminPage.locator('input[name="sku"]').fill(generateSKU());
-    await adminPage.getByRole("button", { name: "Save Product" }).click();
+    await startProductCreation(adminPage, "booking");
 
     /**
      * After creating the product, the page is redirected to the edit product page, where
      * all the details need to be filled in.
      */
-    await adminPage.waitForSelector(
-        'button.primary-button:has-text("Save Product")',
-    );
-
-    /**
-     * Waiting for the main form to be visible.
-     */
-    await adminPage.waitForSelector('form[enctype="multipart/form-data"]');
+    await waitForProductEditForm(adminPage);
 
     /**
      * General Section.
@@ -1202,6 +1100,7 @@ export async function generateConfigurableOrder(adminPage) {
         "button.primary-button.w-max.px-11.py-3",
     );
     await nextBtn[nextBtn.length - 1].click();
+    await adminPage.waitForLoadState("networkidle");
     await expect(adminPage.getByText("Order Items")).toBeVisible();
 }
 
@@ -1373,6 +1272,7 @@ export async function generateGroupOrder(adminPage) {
         "button.primary-button.w-max.px-11.py-3",
     );
     await nextBtn[nextBtn.length - 1].click();
+    await adminPage.waitForLoadState("networkidle");
     await expect(adminPage.getByText("Order Items")).toBeVisible();
 }
 
@@ -1563,7 +1463,7 @@ export async function generateOrder(adminPage) {
     await adminPage.goto("admin/sales/orders");
     await adminPage.click("button.primary-button:visible");
     await adminPage.click(
-        "div.flex.flex-col.items-center > button.secondary-button:visible"
+        "div.flex.flex-col.items-center > button.secondary-button:visible",
     );
 
     /**
@@ -1571,7 +1471,7 @@ export async function generateOrder(adminPage) {
      */
     await adminPage.fill(
         'input[name="first_name"]:visible',
-        generateFirstName()
+        generateFirstName(),
     );
     await adminPage.fill('input[name="last_name"]:visible', generateLastName());
     await adminPage.fill('input[name="email"]:visible', generateEmail());
@@ -1595,7 +1495,7 @@ export async function generateOrder(adminPage) {
         await adminPage.click("button.primary-button:visible");
     } else {
         await adminPage.click(
-            "p.flex.flex-col.gap-1.text-base.font-semibold + button.secondary-button"
+            "p.flex.flex-col.gap-1.text-base.font-semibold + button.secondary-button",
         );
         await adminPage
             .getByRole("textbox", { name: "Search by name" })
@@ -1607,7 +1507,7 @@ export async function generateOrder(adminPage) {
         const searchResult = await adminPage
             .waitForSelector(
                 "button.cursor-pointer.text-sm.text-blue-600.transition-all",
-                { timeout: 5000 }
+                { timeout: 5000 },
             )
             .catch(() => null);
 
@@ -1625,19 +1525,19 @@ export async function generateOrder(adminPage) {
     const billingRadios = await adminPage.$$('input[name="billing.id"]');
     if (billingRadios.length > 0) {
         const addressLabels = await adminPage.$$(
-            `input[name="billing.id"] + label`
+            `input[name="billing.id"] + label`,
         );
         const randomIndex = Math.floor(Math.random() * billingRadios.length);
         await addressLabels[randomIndex].click();
     } else {
         await adminPage.click(
-            "p.text-base.font-medium.text-gray-600 + p.cursor-pointer.text-blue-600.transition-all"
+            "p.text-base.font-medium.text-gray-600 + p.cursor-pointer.text-blue-600.transition-all",
         );
         if ((await address(adminPage)) !== "done") return;
     }
 
     const useForShipping = await adminPage.$(
-        'input[name="billing.use_for_shipping"]'
+        'input[name="billing.use_for_shipping"]',
     );
     const shouldUseBilling = Math.floor(Math.random() * 20) % 3 !== 1;
     const isShippingChecked = await useForShipping?.isChecked();
@@ -1653,50 +1553,50 @@ export async function generateOrder(adminPage) {
         const shippingRadios = await adminPage.$$('input[name="shipping.id"]');
         if (shippingRadios.length > 0) {
             const shippingLabels = await adminPage.$$(
-                `input[name="shipping.id"] + label`
+                `input[name="shipping.id"] + label`,
             );
             const randomIndex = Math.floor(
-                Math.random() * shippingRadios.length
+                Math.random() * shippingRadios.length,
             );
             await shippingLabels[randomIndex].click();
         } else {
             await adminPage.click(
-                "p.text-base.font-medium.text-gray-600 + p.cursor-pointer.text-blue-600.transition-all:visible"
+                "p.text-base.font-medium.text-gray-600 + p.cursor-pointer.text-blue-600.transition-all:visible",
             );
 
             await adminPage.fill(
                 'input[name="shipping.company_name"]',
-                generateLastName()
+                generateLastName(),
             );
             await adminPage.fill(
                 'input[name="shipping.first_name"]',
-                generateFirstName()
+                generateFirstName(),
             );
             await adminPage.fill(
                 'input[name="shipping.last_name"]',
-                generateLastName()
+                generateLastName(),
             );
             await adminPage.fill(
                 'input[name="shipping.email"]',
-                generateEmail()
+                generateEmail(),
             );
             await adminPage.fill(
                 'input[name="shipping.address.[0]"]',
-                generateFirstName()
+                generateFirstName(),
             );
             await adminPage.selectOption(
                 'select[name="shipping.country"]',
-                "IN"
+                "IN",
             );
             await adminPage.selectOption('select[name="shipping.state"]', "UP");
             await adminPage.fill(
                 'input[name="shipping.city"]',
-                generateLastName()
+                generateLastName(),
             );
             await adminPage.fill('input[name="shipping.postcode"]', "201301");
             await adminPage.fill(
                 'input[name="shipping.phone"]',
-                generatePhoneNumber()
+                generatePhoneNumber(),
             );
             await adminPage.press('input[name="shipping.phone"]', "Enter");
         }
@@ -1706,7 +1606,7 @@ export async function generateOrder(adminPage) {
      * shipping method
      */
     await adminPage.click(
-        ".mt-4.flex.justify-end > button.primary-button:visible"
+        ".mt-4.flex.justify-end > button.primary-button:visible",
     );
 
     const shippingMethods = await adminPage
@@ -1717,7 +1617,7 @@ export async function generateOrder(adminPage) {
 
     if (shippingMethods) {
         const options = await adminPage.$$(
-            'input[name="shipping_method"] + label'
+            'input[name="shipping_method"] + label',
         );
         await options[Math.floor(Math.random() * options.length)].click();
     }
@@ -1725,15 +1625,94 @@ export async function generateOrder(adminPage) {
     await adminPage.locator("label", { hasText: "Money Transfer" }).click();
 
     const nextBtn = await adminPage.$$(
-        "button.primary-button.w-max.px-11.py-3"
+        "button.primary-button.w-max.px-11.py-3",
     );
     await nextBtn[nextBtn.length - 1].click();
     await expect(adminPage.getByText("Order Items")).toBeVisible();
 }
 
+test.describe("rma management", () => {
+    test.setTimeout(240000);
+    test.beforeEach(
+        "should create simple product for checkout to create rma",
+        async ({ adminPage }) => {
+            const productCreation = new ProductCreation(adminPage);
+
+            await productCreation.createProduct({
+                type: "simple",
+                sku: `SKU-${Date.now()}`,
+                name: `Simple-${Date.now()}`,
+                shortDescription: "Short desc",
+                description: "Full desc",
+                price: 199,
+                weight: 1,
+                inventory: 100,
+            });
+        },
+    );
+
+    test("should allow checkout and RMA creation so the admin can accept it", async ({
+        shopPage,
+    }) => {
+        await loginAsCustomer(shopPage);
+        await addAddress(shopPage);
+
+        const productCheckout = new ProductCheckout(shopPage);
+        await productCheckout.customerCheckout();
+
+        const rmaCreation = new RMACreation(shopPage);
+        await rmaCreation.rmaCreation();
+    });
+
+    test("should allow admin to accept rma", async ({ adminPage }) => {
+        const rmaCreation = new RMACreation(adminPage);
+        await rmaCreation.adminAcceptRMA();
+    });
+
+    test("should allow checkout and RMA creation so the admin can decline it", async ({
+        shopPage,
+    }) => {
+        await loginAsCustomer(shopPage);
+        await addAddress(shopPage);
+
+        const productCheckout = new ProductCheckout(shopPage);
+        await productCheckout.customerCheckout();
+
+        const rmaCreation = new RMACreation(shopPage);
+        await rmaCreation.rmaCreation();
+    });
+
+    test("should allow admin to declined rma", async ({ adminPage }) => {
+        const rmaCreation = new RMACreation(adminPage);
+        await rmaCreation.adminDeclinedRMA();
+    });
+});
+
+test.describe(" rma management ", () => {
+    test("should allow admin to create reason for rma", async ({
+        adminPage,
+    }) => {
+        const rmaCreation = new RMACreation(adminPage);
+        await rmaCreation.adminCraeteRMAReason();
+    });
+
+    test("should allow admin to create rule for rma", async ({ adminPage }) => {
+        const rmaCreation = new RMACreation(adminPage);
+        await rmaCreation.adminCraeteRMARules();
+    });
+
+    test("should allow admin to create status for rma", async ({
+        adminPage,
+    }) => {
+        const rmaCreation = new RMACreation(adminPage);
+        await rmaCreation.adminCraeteRMAStatus();
+    });
+});
+
 test.describe("sales management", () => {
     test("should be able to create orders", async ({ adminPage }) => {
-        await generateOrder(adminPage);
+        await createSimpleProduct(adminPage);
+        await generateSimpleOrder(adminPage);
     });
 
     test("should be comment on order", async ({ adminPage }) => {
@@ -1932,7 +1911,7 @@ test.describe("sales management", () => {
             /**
              * Should Cancel a Order
              */
-            await adminPage.getByRole('link', { name: 'Sales' }).click();
+            await adminPage.getByRole("link", { name: "Sales" }).click();
 
             await adminPage
                 .locator(".flex.items-center.justify-between > a")
@@ -1959,7 +1938,8 @@ test.describe("sales management", () => {
             /**
              * Should Cancel a Order
              */
-            await adminPage.getByRole('link', { name: 'Sales' }).click();
+            await adminPage.waitForTimeout(2000);
+            await adminPage.getByRole("link", { name: "Sales" }).click();
 
             await adminPage
                 .locator(".flex.items-center.justify-between > a")
@@ -1975,6 +1955,7 @@ test.describe("sales management", () => {
         });
 
         test("should be able to cancel group order", async ({ adminPage }) => {
+            await createSimpleProduct(adminPage);
             await createGroupedProduct(adminPage);
             /**
              * create order
@@ -1984,7 +1965,9 @@ test.describe("sales management", () => {
             /**
              * Should Cancel a Order
              */
-            await adminPage.getByRole('link', { name: 'Sales' }).click();
+            await adminPage.waitForLoadState("networkidle");
+            await adminPage.getByRole("link", { name: "Sales" }).click();
+            await adminPage.goto("admin/sales/orders");
 
             await adminPage
                 .locator(".flex.items-center.justify-between > a")
@@ -2011,7 +1994,9 @@ test.describe("sales management", () => {
             /**
              * Should Cancel a Order
              */
-            await adminPage.getByRole('link', { name: 'Sales' }).click();
+            await adminPage.waitForLoadState("networkidle");
+            await adminPage.getByRole("link", { name: "Sales" }).click();
+            await adminPage.goto("admin/sales/orders");
 
             await adminPage
                 .locator(".flex.items-center.justify-between > a")
@@ -2038,7 +2023,7 @@ test.describe("sales management", () => {
             /**
              * Should Cancel a Order
              */
-            await adminPage.getByRole('link', { name: 'Sales' }).click();
+            await adminPage.getByRole("link", { name: "Sales" }).click();
 
             await adminPage
                 .locator(".flex.items-center.justify-between > a")
@@ -2058,7 +2043,8 @@ test.describe("sales management", () => {
         /**
          * create order
          */
-        await generateOrder(adminPage);
+        await createSimpleProduct(adminPage);
+        await generateSimpleOrder(adminPage);
         await adminPage.waitForTimeout(3000);
 
         /**
@@ -2082,7 +2068,8 @@ test.describe("sales management", () => {
     test("support mass status Change  to Paid for Invoices", async ({
         adminPage,
     }) => {
-        await generateOrder(adminPage);
+        await createSimpleProduct(adminPage);
+        await generateSimpleOrder(adminPage);
         await adminPage.waitForTimeout(5000);
 
         /**

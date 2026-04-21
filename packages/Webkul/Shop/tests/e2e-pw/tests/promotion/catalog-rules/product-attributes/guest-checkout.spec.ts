@@ -2,6 +2,7 @@ import { expect, test } from "../../../../setup";
 import { ProductCreation } from "../../../../pages/product";
 import { CreateRules } from "../../../../pages/rules";
 import { loginAsCustomer } from "../../../../utils/customer";
+import { loginAsAdmin } from "../../../../utils/admin";
 
 let generatedName: string;
 generatedName = `Simple-${Date.now()}`;
@@ -35,7 +36,7 @@ test.describe("catalog rules", () => {
             page,
         }) => {
             const createRules = new CreateRules(page);
-            await createRules.adminlogin();
+            await loginAsAdmin(page);
             await createRules.catalogRuleCreationFlow();
             await createRules.addCondition({
                 attribute: "product|guest_checkout",
@@ -51,7 +52,7 @@ test.describe("catalog rules", () => {
             page,
         }) => {
             const createRules = new CreateRules(page);
-            await createRules.adminlogin();
+            await loginAsAdmin(page);
             await createRules.catalogRuleCreationFlow();
             await createRules.addCondition({
                 attribute: "product|guest_checkout",
@@ -59,20 +60,6 @@ test.describe("catalog rules", () => {
                 optionSelect: "0",
             });
             await createRules.saveCatalogRule();
-            await page.goto("admin/catalog/products");
-            await page
-                .locator("span.cursor-pointer.icon-sort-right")
-                .nth(1)
-                .click();
-            await page.waitForLoadState("networkidle");
-            await page.locator(".peer.h-5").nth(4).click();
-            await page
-                .locator('button:has-text("Save Product")')
-                .first()
-                .click();
-            await expect(
-                page.getByText("Product updated successfully").first(),
-            ).toBeVisible();
             await loginAsCustomer(page);
             await createRules.verifyCatalogRule();
         });

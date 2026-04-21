@@ -237,7 +237,6 @@
                             <div class="flex-auto">
                                 <div class="flex justify-end">
                                     <div class="grid max-w-max gap-2 text-sm">
-
                                         {!! view_render_event('bagisto.shop.customers.account.orders.view.information.subtotal.before') !!}
 
                                         <!-- Sub Total -->
@@ -397,9 +396,19 @@
                                         <div class="flex w-full justify-between gap-x-5">
                                             @lang('shop::app.customers.account.orders.view.information.total-due')
 
+                                            @php
+                                                $totalDue = $order->total_due;
+                                            @endphp
+
+                                            @foreach ($order->items as $item)
+                                                @php
+                                                    $totalDue = $totalDue - ($item->base_price * $item->qty_canceled);
+                                                @endphp
+                                            @endforeach
+
                                             <p>
                                                 @if($order->status !== \Webkul\Sales\Models\Order::STATUS_CANCELED)
-                                                    {{ core()->formatPrice($order->total_due, $order->order_currency_code) }}
+                                                    {{ core()->formatPrice($totalDue, $order->order_currency_code) }}
                                                 @else
                                                     {{ core()->formatPrice(0.00, $order->order_currency_code) }}
                                                 @endif
@@ -407,7 +416,6 @@
                                         </div>
 
                                         {!! view_render_event('bagisto.shop.customers.account.orders.view.information.total-due.after') !!}
-
                                     </div>
                                 </div>
                             </div>
@@ -863,9 +871,19 @@
                                         @lang('shop::app.customers.account.orders.view.information.total-due')
                                     </p>
 
+                                    @php
+                                        $baseTotalDue = $order->base_total_due;
+                                    @endphp
+
+                                    @foreach ($order->items as $item)
+                                        @php
+                                            $baseTotalDue = $baseTotalDue - ($item->base_price * $item->qty_canceled);
+                                        @endphp
+                                    @endforeach
+
                                     <p>
                                         @if($order->status !== \Webkul\Sales\Models\Order::STATUS_CANCELED)
-                                            {{ core()->formatPrice($order->total_due, $order->order_currency_code) }}
+                                            {{ core()->formatPrice($baseTotalDue, $order->order_currency_code) }}
                                         @else
                                             {{ core()->formatPrice(0.00, $order->order_currency_code) }}
                                         @endif
