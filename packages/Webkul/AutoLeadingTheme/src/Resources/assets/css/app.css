@@ -146,12 +146,12 @@
 	.al-auth-links {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: clamp(0.75rem, 1.2vw, 1.25rem);
 	}
 
 	.al-auth-icon {
-		width: 18px;
-		height: 18px;
+		width: 22px;
+		height: 22px;
 		flex-shrink: 0;
 		color: var(--al-orange) !important;
 		stroke: var(--al-orange) !important;
@@ -160,7 +160,7 @@
 	.al-auth-link {
 		color: rgba(255,255,255,0.82) !important;
 		text-decoration: none !important;
-		font-size: 0.875rem;
+		font-size: clamp(0.85rem, 1vw, 1rem);
 		font-weight: 500;
 		transition: color 0.2s ease;
 		cursor: pointer;

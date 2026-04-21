@@ -17,6 +17,11 @@ return [
         'book_now'         => '立即預訂',
         'add_to_wishlist'  => '加入願望清單',
         'close'            => '關閉',
+        'profile'          => '個人資料',
+        'orders'           => '我的訂單',
+        'logout'           => '登出',
+        'cart'             => '購物車',
+        'view_cart'        => '查看購物車',
     ],
 
     'auth_dialog' => [

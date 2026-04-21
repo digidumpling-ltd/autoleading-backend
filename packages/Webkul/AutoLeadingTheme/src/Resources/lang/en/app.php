@@ -17,6 +17,11 @@ return [
         'book_now'         => 'Book Now',
         'add_to_wishlist'  => 'Add to Wishlist',
         'close'            => 'Close',
+        'profile'          => 'Profile',
+        'orders'           => 'Orders',
+        'logout'           => 'Logout',
+        'cart'             => 'Cart',
+        'view_cart'        => 'View Cart',
     ],
 
     'auth_dialog' => [

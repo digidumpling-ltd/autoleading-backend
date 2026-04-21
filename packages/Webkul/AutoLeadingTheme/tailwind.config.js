@@ -5,6 +5,8 @@ export default {
         './src/Resources/**/*.js',
         '../../../resources/themes/auto-leading-theme/**/*.blade.php',
         '../Shop/src/Resources/views/components/**/*.blade.php',
+        '../Shop/src/Resources/views/checkout/**/*.blade.php',
+        '../Rewards/src/Resources/views/shop/checkout/**/*.blade.php',
     ],
 
     theme: {

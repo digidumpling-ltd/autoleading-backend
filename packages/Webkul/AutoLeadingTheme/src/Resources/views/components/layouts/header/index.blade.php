@@ -30,11 +30,11 @@
 
         {{-- Header Actions --}}
         <div class="al-header-actions">
-            <div class="al-auth-links hidden lg:flex">
+            <div class="al-auth-links hidden lg:flex items-center">
 
                 @guest('customer')
                     <a href="{{ route('shop.customer.session.index') }}" class="al-auth-link flex items-center gap-1">
-                        <x-heroicon-o-user class="w-5 h-5 al-text-accent" />
+                        <x-heroicon-o-user class="w-6 h-6 al-text-accent" />
                         {{ __('auto-leading-theme::app.common.login') }}
                     </a>
 
@@ -53,7 +53,7 @@
                             class="al-auth-link flex items-center gap-1 al-dropdown-toggle"
                             aria-expanded="false"
                         >
-                            <x-heroicon-o-globe-alt class="w-5 h-5 al-text-accent" />
+                            <x-heroicon-o-globe-alt class="w-6 h-6 al-text-accent" />
                             <span class="font-medium">{{ $currentLabel }}</span>
                         </button>
                         <div class="al-dropdown-menu" style="display:none">
@@ -75,27 +75,41 @@
                             class="al-auth-link flex items-center gap-1 al-dropdown-toggle"
                             aria-expanded="false"
                         >
-                            <x-heroicon-o-user-circle class="w-5 h-5 al-text-accent" />
+                            <x-heroicon-o-user-circle class="w-6 h-6 al-text-accent" />
                             <span class="max-w-[100px] truncate">{{ auth()->guard('customer')->user()->first_name }}</span>
                         </button>
                         <div class="al-dropdown-menu" style="display:none">
                             <a href="{{ route('shop.customers.account.profile.index') }}" class="al-dropdown-item">
-                                {{ __('shop::app.components.layouts.header.desktop.profile') }}
+                                {{ __('auto-leading-theme::app.common.profile') }}
                             </a>
                             <a href="{{ route('shop.customers.account.orders.index') }}" class="al-dropdown-item">
-                                {{ __('shop::app.components.layouts.header.desktop.orders') }}
+                                {{ __('auto-leading-theme::app.common.orders') }}
                             </a>
                             <div class="border-t border-white/10 my-1"></div>
                             <form action="{{ route('shop.customer.session.destroy') }}" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="al-dropdown-item w-full text-left text-red-400 cursor-pointer">
-                                    {{ __('shop::app.components.layouts.header.desktop.logout') }}
+                                    {{ __('auto-leading-theme::app.common.logout') }}
                                 </button>
                             </form>
                         </div>
                     </div>
                 @endauth
+
+                {{-- Cart Button --}}
+                <a
+                    href="{{ route('shop.checkout.cart.index') }}"
+                    class="al-auth-link relative flex items-center gap-1"
+                    aria-label="{{ __('auto-leading-theme::app.common.cart') }}"
+                >
+                    <x-heroicon-o-shopping-cart class="w-6 h-6 al-text-accent" />
+                    <span
+                        id="al-cart-count"
+                        class="absolute -top-2 -right-2 min-w-[18px] h-[18px] rounded-full bg-[#c9a84c] text-[10px] font-bold leading-[18px] text-center text-black px-1"
+                        style="display:none"
+                    ></span>
+                </a>
 
             </div>
 
@@ -138,14 +152,22 @@
                     <a href="{{ route('shop.customers.account.profile.index') }}" class="flex items-center text-white">
                         {{ auth()->guard('customer')->user()->first_name }}
                     </a>
+                    <a href="{{ route('shop.customers.account.orders.index') }}" class="flex items-center text-white">
+                        {{ __('auto-leading-theme::app.common.orders') }}
+                    </a>
                     <form action="{{ route('shop.customer.session.destroy') }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button type="submit" class="text-left text-red-500 font-medium cursor-pointer">
-                            {{ __('shop::app.components.layouts.header.bottom.logout') }}
+                            {{ __('auto-leading-theme::app.common.logout') }}
                         </button>
                     </form>
                 @endauth
+                <a href="{{ route('shop.checkout.cart.index') }}" class="flex items-center gap-2 text-white">
+                    <x-heroicon-o-shopping-cart class="w-6 h-6 al-text-accent" />
+                    {{ __('auto-leading-theme::app.common.view_cart') }}
+                    <span id="al-cart-count-mobile" class="hidden min-w-[18px] h-[18px] rounded-full bg-[#c9a84c] text-[10px] font-bold leading-[18px] text-center text-black px-1"></span>
+                </a>
             </div>
         </div>
     </div>
@@ -202,6 +224,29 @@
                 menu.closest('.al-dropdown')?.querySelector('.al-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
             });
         });
+    }
+
+    function alUpdateCartCount() {
+        fetch('{{ route('shop.api.checkout.cart.index') }}', {
+            headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            var qty = data?.data?.items_qty || 0;
+            ['al-cart-count', 'al-cart-count-mobile'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (!el) return;
+                if (qty > 0) {
+                    el.textContent = qty;
+                    el.style.display = '';
+                    el.classList.remove('hidden');
+                } else {
+                    el.style.display = 'none';
+                    el.classList.add('hidden');
+                }
+            });
+        })
+        .catch(function () {});
     }
 </script>
 @endPushOnce
