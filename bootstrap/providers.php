@@ -93,5 +93,4 @@ return [
     TaxServiceProvider::class,
     ThemeServiceProvider::class,
     UserServiceProvider::class,
-    RewardsServiceProvider::class,
 ];

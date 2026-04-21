@@ -19,6 +19,7 @@
         "ext-tokenizer": "*",
         "astrotomic/laravel-translatable": "^11.16",
         "barryvdh/laravel-dompdf": "^2.0.0|^3.0",
+        "blade-ui-kit/blade-heroicons": "^2.7",
         "diglactic/laravel-breadcrumbs": "^10.0",
         "elasticsearch/elasticsearch": "^8.10",
         "enshrined/svg-sanitize": "^0.22.0",
@@ -107,7 +108,6 @@
             "Webkul\\Tax\\": "packages/Webkul/Tax/src",
             "Webkul\\Theme\\": "packages/Webkul/Theme/src",
             "Webkul\\User\\": "packages/Webkul/User/src",
-            "Webkul\\GraphQL\\": "packages/Webkul/GraphQL/src",
             "Webkul\\Rewards\\": "packages/Webkul/Rewards/src"
         }
     },
