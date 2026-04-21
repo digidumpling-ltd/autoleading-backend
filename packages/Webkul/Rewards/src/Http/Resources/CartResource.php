@@ -3,7 +3,7 @@
 namespace Webkul\Rewards\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Webkul\Tax\Helpers\Tax;
+use Webkul\Tax\Facades\Tax;
 use Webkul\Shop\Http\Resources\CartItemResource;
 
 class CartResource extends JsonResource

@@ -1,8 +1,8 @@
 <!-- Points Vue Component -->
 @php
-  $cart = Cart::getCart();
-  
-  $cart["reward_points"] = null;
+  $cart = \Webkul\Checkout\Facades\Cart::getCart();
+
+  if ($cart) $cart["reward_points"] = null;
 
   $applyCheckCart = app('\Webkul\Rewards\Repositories\RedemptionSettingRepository')->first();
 @endphp
