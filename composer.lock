@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9172c9ec615b8f93d1dd21280a8bbef",
+    "content-hash": "e028080202bec779dd2b2a898de28211",
     "packages": [
         {
             "name": "apimatic/core",
@@ -363,6 +363,51 @@
             "time": "2022-12-07T17:46:57+00:00"
         },
         {
+            "name": "bagisto/bagisto-package-generator",
+            "version": "v2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bagisto/bagisto-package-generator.git",
+                "reference": "e6e9639c366f31f615160ff9c91bc78528aa8061"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bagisto/bagisto-package-generator/zipball/e6e9639c366f31f615160ff9c91bc78528aa8061",
+                "reference": "e6e9639c366f31f615160ff9c91bc78528aa8061",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": [],
+                    "providers": [
+                        "Webkul\\PackageGenerator\\Providers\\PackageGeneratorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webkul\\PackageGenerator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jitendra Singh",
+                    "email": "jitendra@webkul.com"
+                }
+            ],
+            "description": "Bagisto Package Generator",
+            "support": {
+                "issues": "https://github.com/bagisto/bagisto-package-generator/issues",
+                "source": "https://github.com/bagisto/bagisto-package-generator/tree/v2.1.2"
+            },
+            "time": "2025-09-02T16:15:30+00:00"
+        },
+        {
             "name": "barryvdh/laravel-dompdf",
             "version": "v3.1.2",
             "source": {
@@ -438,6 +483,100 @@
                 }
             ],
             "time": "2026-02-21T08:51:10+00:00"
+        },
+        {
+            "name": "bavix/laravel-wallet",
+            "version": "11.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bavix/laravel-wallet.git",
+                "reference": "7aad6e4890639aa4b804d78ba4d3bddb4681dfb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bavix/laravel-wallet/zipball/7aad6e4890639aa4b804d78ba4d3bddb4681dfb2",
+                "reference": "7aad6e4890639aa4b804d78ba4d3bddb4681dfb2",
+                "shasum": ""
+            },
+            "require": {
+                "brick/math": "~0.10",
+                "ext-json": "*",
+                "ext-pdo": "*",
+                "illuminate/contracts": "^11.0|^12.0|^13.0",
+                "illuminate/database": "^11.0|^12.0|^13.0",
+                "php": "^8.3",
+                "ramsey/uuid": "^4.0"
+            },
+            "require-dev": {
+                "deptrac/deptrac": "^4.2",
+                "driftingly/rector-laravel": "^2.0",
+                "ergebnis/phpstan-rules": "^2.1",
+                "infection/infection": "~0.27",
+                "larastan/larastan": "^3.0",
+                "laravel/cashier": "^15.0|^16.0",
+                "nunomaduro/collision": "^8.1",
+                "orchestra/testbench": "^9.0|^10.0|^11.0",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^11.0|^12.5.12",
+                "rector/rector": "^2.0",
+                "symplify/easy-coding-standard": "^13.0"
+            },
+            "suggest": {
+                "bavix/laravel-wallet-swap": "Addition to the laravel-wallet library for quick setting of exchange rates",
+                "bavix/laravel-wallet-uuid": "Addition to the laravel-wallet library uuid support in laravel-wallet",
+                "bavix/laravel-wallet-warmup": "Addition to the laravel-wallet library for refresh balance wallets"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bavix\\Wallet\\WalletServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bavix\\Wallet\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Babichev Maxim",
+                    "email": "info@babichev.net"
+                }
+            ],
+            "description": "It's easy to work with a virtual wallet.",
+            "homepage": "https://bavix.github.io/laravel-wallet/",
+            "keywords": [
+                "bavix",
+                "credits",
+                "currency",
+                "laravel",
+                "laravel-package",
+                "laravel-wallet",
+                "payments",
+                "virtual",
+                "wallet"
+            ],
+            "support": {
+                "issues": "https://github.com/bavix/laravel-wallet/issues",
+                "source": "https://github.com/bavix/laravel-wallet/tree/11.5.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.tinkoff.ru/cf/1OkIPwTvTLf",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://opencollective.com/laravel-wallet",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2026-03-18T21:19:55+00:00"
         },
         {
             "name": "blade-ui-kit/blade-heroicons",

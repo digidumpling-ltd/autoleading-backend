@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-04-01 06:39:56 +08
-last_updated: 2026-04-19 23:00:00 +08
+last_updated: 2026-04-23 00:00:00 +08
 project: bagisto
 project_key: NOKEY
 tracking_system: file-system
@@ -57,14 +57,15 @@ development_status:
   2-2-unverified-status-missing-documents-dashboard: review
   2-3-admin-verification-and-rental-gating: review
   2-4-native-product-detail-booking-alignment: review
-  2-5-manual-payment-and-native-booking-notifications: ready-for-dev
+  2-5-manual-payment-and-native-booking-notifications: done
   epic-2-retrospective: optional
 
-  epic-3: backlog
-  3-1-dual-balance-wallet-structure-purchased-bonus: backlog
-  3-2-immutable-credit-ledger-with-metadata: backlog
-  3-3-credit-expiry-configuration-and-enforcement: backlog
-  3-4-balance-history-and-reconstruction: backlog
+  epic-3: in-progress
+  3-1-install-and-configure-bavix-laravel-wallet: review
+  3-2-dual-balance-wallet-structure-purchased-bonus: review
+  3-3-customer-wallet-ui-balance-topup-transaction-history: backlog
+  3-4-credit-expiry-configuration-and-enforcement: backlog
+  3-5-admin-wallet-view-and-manual-adjustment: backlog
   epic-3-retrospective: optional
 
   epic-4: backlog

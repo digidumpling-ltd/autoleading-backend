@@ -10,6 +10,7 @@ use Webkul\PayU\Tests\PayUTestCase;
 use Webkul\Razorpay\Tests\RazorpayTestCase;
 use Webkul\Shop\Tests\ShopTestCase;
 use Webkul\Stripe\Tests\StripeTestCase;
+use Webkul\Wallet\Tests\WalletTestCase;
 
 ini_set('memory_limit', '1024M');
 
@@ -34,6 +35,7 @@ uses(PayUTestCase::class)->in('../packages/Webkul/PayU/tests');
 uses(RazorpayTestCase::class)->in('../packages/Webkul/Razorpay/tests');
 uses(ShopTestCase::class)->in('../packages/Webkul/Shop/tests');
 uses(StripeTestCase::class)->in('../packages/Webkul/Stripe/tests');
+uses(WalletTestCase::class)->in('../packages/Webkul/Wallet/tests');
 
 /*
 |--------------------------------------------------------------------------
