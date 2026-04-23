@@ -20,7 +20,11 @@ class WalletServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadTranslationsFrom(dirname(__DIR__).'/Resources/lang', 'wallet');
+        $this->loadTranslationsFrom(dirname(__DIR__).'/Resources/lang', 'bagisto-wallet');
+
+        $this->loadRoutesFrom(dirname(__DIR__).'/Routes/shop-routes.php');
+
+        $this->loadViewsFrom(dirname(__DIR__).'/Resources/views', 'wallet');
 
         Event::listen('checkout.order.save.after', 'Webkul\Wallet\Listeners\GenerateInvoice@handle');
     }
@@ -38,6 +42,10 @@ class WalletServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/system.php', 'core'
+        );
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/menu.php', 'menu.customer'
         );
     }
 }

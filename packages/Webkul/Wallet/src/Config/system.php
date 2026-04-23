@@ -3,8 +3,8 @@
 return [
     [
         'key'    => 'sales.payment_methods.wallet',
-        'name'   => 'wallet::app.configuration.index.sales.payment-methods.wallet',
-        'info'   => 'wallet::app.configuration.index.sales.payment-methods.wallet-info',
+        'name'   => 'bagisto-wallet::app.configuration.index.sales.payment-methods.wallet',
+        'info'   => 'bagisto-wallet::app.configuration.index.sales.payment-methods.wallet-info',
         'sort'   => 1,
         'fields' => [
             [
