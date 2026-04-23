@@ -24,9 +24,15 @@ class WalletServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(dirname(__DIR__).'/Routes/shop-routes.php');
 
+        $this->loadRoutesFrom(dirname(__DIR__).'/Routes/admin-routes.php');
+
         $this->loadViewsFrom(dirname(__DIR__).'/Resources/views', 'wallet');
 
         Event::listen('checkout.order.save.after', 'Webkul\Wallet\Listeners\GenerateInvoice@handle');
+
+        Event::listen('bagisto.admin.customers.customers.view.filters.after', function ($event) {
+            $event->addTemplate('wallet::admin.customers.wallet.button');
+        });
     }
     
     /**
@@ -46,6 +52,10 @@ class WalletServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/menu.php', 'menu.customer'
+        );
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/acl.php', 'acl'
         );
     }
 }

@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-04-01 06:39:56 +08
-last_updated: 2026-04-23 00:00:00 +08
+last_updated: 2026-04-24 00:00:00 +08
 project: bagisto
 project_key: NOKEY
 tracking_system: file-system
@@ -65,7 +65,7 @@ development_status:
   3-2-dual-balance-wallet-structure-purchased-bonus: review
   3-3-customer-wallet-ui-balance-topup-transaction-history: review
   3-4-credit-expiry-configuration-and-enforcement: backlog
-  3-5-admin-wallet-view-and-manual-adjustment: backlog
+  3-5-admin-wallet-view-and-manual-adjustment: review
   epic-3-retrospective: optional
 
   epic-4: backlog

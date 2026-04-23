@@ -1,6 +1,32 @@
 <?php
 
 return [
+    'admin' => [
+        'customers' => [
+            'wallet' => [
+                'acl-title'             => 'Wallet',
+                'title'                 => 'Customer Wallet',
+                'balance'               => 'Current Balance',
+                'adjust-title'          => 'Credit Adjustment',
+                'type-add'              => 'Add Credit',
+                'type-deduct'           => 'Deduct Credit',
+                'amount'                => 'Amount',
+                'reason'                => 'Reason',
+                'adjust-submit'         => 'Apply',
+                'adjust-add-success'    => 'Credit added successfully.',
+                'adjust-deduct-success' => 'Credit deducted successfully.',
+                'insufficient-balance'  => 'Insufficient balance.',
+                'transactions'          => 'Transaction History',
+                'no-transactions'       => 'No transactions yet.',
+                'col-type'              => 'Type',
+                'col-amount'            => 'Amount',
+                'col-meta'              => 'Note',
+                'col-date'              => 'Date',
+                'view-wallet'           => 'View Wallet',
+            ],
+        ],
+    ],
+
     'customers' => [
         'account' => [
             'wallet' => [
