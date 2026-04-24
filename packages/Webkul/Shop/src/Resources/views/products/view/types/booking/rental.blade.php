@@ -1,4 +1,11 @@
-<v-rental-slots :bookingProduct = "{{ $bookingProduct }}"></v-rental-slots>
+@php
+    $calendarAvailability = app(\Webkul\BookingProduct\Helpers\Booking::class)->getCalendarAvailability($bookingProduct);
+@endphp
+
+<v-rental-slots
+    :booking-product="{{ $bookingProduct }}"
+    :availability="{{ json_encode($calendarAvailability) }}"
+></v-rental-slots>
 
 @pushOnce('scripts')
     <script
@@ -84,7 +91,9 @@
                                 rules="required"
                                 :label="trans('shop::app.products.view.type.booking.rental.select-date')"
                                 :placeholder="trans('shop::app.products.view.type.booking.rental.select-date')"
-                                data-min-date="today"
+                                ::min-date="minDate"
+                                ::max-date="maxDate"
+                                ::disable="disabledDates"
                                 @change="dateSelected($event)"
                             />
 
@@ -214,7 +223,9 @@
                             v-model="booking.date_from"
                             :label="trans('shop::app.products.view.type.booking.rental.from')"
                             :placeholder="trans('shop::app.products.view.type.booking.rental.from')"
-                            data-min-date="today"
+                            ::min-date="minDate"
+                            ::max-date="maxDate"
+                            ::disable="disabledDates"
                             @change="dateSelected($event)"
                         />
 
@@ -234,7 +245,9 @@
                             v-model="booking.date_to"
                             :label="trans('shop::app.products.view.type.booking.rental.to')"
                             :placeholder="trans('shop::app.products.view.type.booking.rental.to')"
-                            data-min-date="today"
+                            ::min-date="booking.date_from || minDate"
+                            ::max-date="maxDate"
+                            ::disable="disabledDates"
                             @change="dateSelected($event)"
                         />
 
@@ -257,7 +270,7 @@
         app.component('v-rental-slots', {
             template: '#v-rental-slots-template',
 
-            props: ['bookingProduct'],
+            props: ['bookingProduct', 'availability'],
 
             data() {
                 return {
@@ -271,13 +284,77 @@
 
                     booking: {
                         date_from: '',
-                        
+
                         date_to: '',
                     },
                 }
             },
 
+            computed: {
+                minDate() {
+                    const today = new Date();
+
+                    const availableFrom = this.availability?.available_from
+                        ? new Date(this.availability.available_from + 'T00:00:00')
+                        : null;
+
+                    const effective = availableFrom && availableFrom > today
+                        ? availableFrom
+                        : today;
+
+                    return this.formatDate(effective);
+                },
+
+                maxDate() {
+                    if (this.availability?.available_every_week) {
+                        return '';
+                    }
+
+                    return this.availability?.available_to ?? '';
+                },
+
+                disabledDates() {
+                    const disabledDates = this.availability?.disabled_dates ?? [];
+
+                    const predicates = [];
+
+                    /**
+                     * The `valid_weekdays` array reflects the days that have
+                     * *hourly* slot configuration. For a daily rental, every
+                     * day within the availability window should be selectable
+                     * regardless of the hourly schedule, so we only apply the
+                     * weekday filter when the user is actually booking an
+                     * hourly slot.
+                     */
+                    const activeType = this.renting_type === 'daily_hourly'
+                        ? this.sub_renting_type
+                        : this.renting_type;
+
+                    if (activeType === 'hourly') {
+                        const validWeekdays = this.availability?.valid_weekdays ?? [0, 1, 2, 3, 4, 5, 6];
+
+                        if (validWeekdays.length < 7) {
+                            predicates.push((date) => ! validWeekdays.includes(date.getDay()));
+                        }
+                    }
+
+                    if (disabledDates.length) {
+                        predicates.push(...disabledDates);
+                    }
+
+                    return predicates;
+                },
+            },
+
             methods: {
+                formatDate(d) {
+                    const year = d.getFullYear();
+                    const month = String(d.getMonth() + 1).padStart(2, '0');
+                    const day = String(d.getDate()).padStart(2, '0');
+
+                    return `${year}-${month}-${day}`;
+                },
+
                 dateSelected(params) {
                     let date = params.target.value;
 
@@ -286,7 +363,7 @@
                     })
                         .then((response) => {
                             this.selected_slot = '';
-                            
+
                             this.slots = response.data.data;
                         })
                         .catch(error => {

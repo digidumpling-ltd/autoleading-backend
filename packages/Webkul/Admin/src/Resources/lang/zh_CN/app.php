@@ -257,6 +257,22 @@ return [
                         'none' => '无',
                         'total-amount' => '总金额',
                     ],
+
+                    'booking' => [
+                        'loading' => '正在加载预订配置…',
+                        'config-missing' => '此产品缺少预订配置。',
+                        'date' => '日期',
+                        'date-from' => '开始日期',
+                        'date-to' => '结束日期',
+                        'slot' => '时段',
+                        'select-slot' => '选择一个时段',
+                        'no-slots-available' => '所选日期没有可用时段',
+                        'note' => '备注',
+                        'quantity' => '数量',
+                        'renting-type' => '租赁类型',
+                        'daily' => '按天',
+                        'hourly' => '按小时',
+                    ],
                 ],
 
                 'cart' => [
@@ -389,6 +405,12 @@ return [
             'view' => [
                 'amount-per-unit' => ':amount 每单位 x :qty 数量',
                 'billing-address' => '账单地址',
+
+                'booking-cancellation-not-allowed' => [
+                    'title' => '不可取消的预订项目',
+                    'description' => '此订单包含为客户配置为不可取消的预订产品。作为管理员，您仍然可以取消它们——客户在自己的订单视图中无法取消。',
+                ],
+
                 'cancel' => '取消',
                 'cancel-msg' => '确定要取消此订单吗？',
                 'cancel-success' => '订单取消成功',
@@ -438,6 +460,7 @@ return [
                 'refund-id' => '退款号 #:refund',
                 'refunded' => '已退款',
                 'reorder' => '重新下单',
+                'reorder-booking-skipped' => '重新下单时已跳过预订产品。请使用新的日期和时间段重新预订。',
                 'ship' => '发货',
                 'shipment' => '发货 #:shipment',
                 'shipments' => '发货',
@@ -773,7 +796,7 @@ return [
                 'done' => '已完成',
                 'order-id' => '订单ID',
                 'pending' => '待处理',
-                'price' => '价格',
+                'product' => '产品',
                 'status' => '状态',
                 'time-slot' => '时间段：',
                 'view-details' => '查看详情',
@@ -1754,6 +1777,15 @@ return [
                 'value-per-locale' => '区域性值',
                 'yes' => '是',
 
+                'info' => [
+                    'is-filterable' => '将此属性添加到类别侧边栏过滤器。基于选项的类型显示为复选框；价格显示为范围滑块。',
+                    'is-configurable' => '将此属性标记为变体轴（例如颜色、尺寸）。仅 Select 类型可用。启用后会锁定"每渠道值"和"每区域值" — 变体按选项 ID 全局解析。',
+                    'value-per-locale' => '为每个区域存储不同的值。不适用于基于选项或布尔类型 — 其标签已通过选项表翻译。',
+                    'value-per-channel' => '为每个渠道存储不同的值。启用"用于创建可配置产品"时禁用。',
+                    'is-visible-on-front' => '在店铺前台的产品页面上显示此属性。',
+                    'is-comparable' => '比较产品时包含此属性。',
+                ],
+
                 'option' => [
                     'color' => '颜色样本',
                     'dropdown' => '下拉菜单',
@@ -1818,6 +1850,15 @@ return [
                 'value-per-channel' => '渠道性值',
                 'value-per-locale' => '区域性值',
                 'yes' => '是',
+
+                'info' => [
+                    'is-filterable' => '将此属性添加到类别侧边栏过滤器。基于选项的类型显示为复选框；价格显示为范围滑块。',
+                    'is-configurable' => '将此属性标记为变体轴（例如颜色、尺寸）。仅 Select 类型可用。启用后会锁定"每渠道值"和"每区域值" — 变体按选项 ID 全局解析。',
+                    'value-per-locale' => '为每个区域存储不同的值。不适用于基于选项或布尔类型 — 其标签已通过选项表翻译。',
+                    'value-per-channel' => '为每个渠道存储不同的值。启用"用于创建可配置产品"时禁用。',
+                    'is-visible-on-front' => '在店铺前台的产品页面上显示此属性。',
+                    'is-comparable' => '比较产品时包含此属性。',
+                ],
 
                 'option' => [
                     'color' => '颜色样本',

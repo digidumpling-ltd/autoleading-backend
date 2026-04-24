@@ -1,6 +1,8 @@
-import { test } from "../../../../setup";
-import { ProductCreation } from "../../../../pages/product";
-import { CreateRules } from "../../../../pages/rules";
+import { test, expect } from "../../../../setup";
+import { ProductCreation } from "../../../../pages/admin/catalog/products";
+import { RuleDeletePage } from "../../../../pages/admin/marketing/promotion/RuleDeletePage";
+import { RuleCreatePage } from "../../../../pages/admin/marketing/promotion/RuleCreatePage";
+import { RuleApplyPage } from "../../../../pages/shop/rules/RuleApplyPage";
 import { loginAsAdmin } from "../../../../utils/admin";
 
 test.beforeEach("should create simple product", async ({ adminPage }) => {
@@ -18,102 +20,124 @@ test.beforeEach("should create simple product", async ({ adminPage }) => {
     });
 });
 
-test.afterEach("should delete the created product and rule", async ({ adminPage }) => {
-    const createRules = new CreateRules(adminPage);
-    await createRules.deleteRuleAndProduct();
-});
-
+test.afterEach(
+    "should delete the created product and rule",
+    async ({ adminPage }) => {
+        const ruleDeletePage = new RuleDeletePage(adminPage);
+        await ruleDeletePage.deleteRuleAndProduct();
+    },
+);
 
 test.describe("cart rules", () => {
     test.describe("cart item attribute conditions", () => {
         test("should apply coupon when total weight in cart condition is -> is equal to", async ({
             page,
         }) => {
-            const createRules = new CreateRules(page);
+            const ruleCreatePage = new RuleCreatePage(page);
+            const ruleApplyPage = new RuleApplyPage(page);
             await loginAsAdmin(page);
-            await createRules.cartRuleCreationFlow();
-            await createRules.addCondition({
+            await ruleCreatePage.cartRuleCreationFlow();
+            await ruleCreatePage.addCondition({
                 attribute: "cart_item|base_total_weight",
                 operator: "==",
                 value: "1",
             });
-            await createRules.saveCartRule();
-            await createRules.applyCouponAtCheckout();
+            await ruleCreatePage.saveCartRule();
+            await ruleApplyPage.applyCouponAtCheckout();
         });
 
         test("should apply coupon when total weight in cart condition is -> is not equal to", async ({
             page,
         }) => {
-            const createRules = new CreateRules(page);
+            const ruleCreatePage = new RuleCreatePage(page);
+            const ruleApplyPage = new RuleApplyPage(page);
             await loginAsAdmin(page);
-            await createRules.cartRuleCreationFlow();
-            await createRules.addCondition({
+            await ruleCreatePage.cartRuleCreationFlow();
+            await ruleCreatePage.addCondition({
                 attribute: "cart_item|base_total_weight",
                 operator: "!=",
                 value: "2",
             });
-            await createRules.saveCartRule();
-            await createRules.applyCouponAtCheckout();
+            await ruleCreatePage.saveCartRule();
+            await ruleApplyPage.applyCouponAtCheckout();
         });
 
         test("should apply coupon when total weight in cart condition is -> equals or greater then", async ({
             page,
         }) => {
-            const createRules = new CreateRules(page);
+            const ruleCreatePage = new RuleCreatePage(page);
+            const ruleApplyPage = new RuleApplyPage(page);
             await loginAsAdmin(page);
-            await createRules.cartRuleCreationFlow();
-            await createRules.addCondition({
+            await ruleCreatePage.cartRuleCreationFlow();
+            await ruleCreatePage.addCondition({
                 attribute: "cart_item|base_total_weight",
                 operator: ">=",
                 value: "1",
             });
-            await createRules.saveCartRule();
-            await createRules.applyCoupon();
+            await ruleCreatePage.saveCartRule();
+            await ruleApplyPage.applyCouponAtCheckout();
         });
 
         test("should apply coupon when total weight in cart condition is -> equals or less than", async ({
             page,
         }) => {
-            const createRules = new CreateRules(page);
+            const ruleCreatePage = new RuleCreatePage(page);
+            const ruleApplyPage = new RuleApplyPage(page);
             await loginAsAdmin(page);
-            await createRules.cartRuleCreationFlow();
-            await createRules.addCondition({
+            await ruleCreatePage.cartRuleCreationFlow();
+            await ruleCreatePage.addCondition({
                 attribute: "cart_item|base_total_weight",
                 operator: "<=",
                 value: "2",
             });
-            await createRules.saveCartRule();
-            await createRules.applyCoupon();
+            await ruleCreatePage.saveCartRule();
+            await ruleApplyPage.applyCouponAtCheckout();
         });
 
         test("should apply coupon when total weight in cart condition is -> greater than", async ({
             page,
         }) => {
-            const createRules = new CreateRules(page);
+            const ruleCreatePage = new RuleCreatePage(page);
+            const ruleApplyPage = new RuleApplyPage(page);
             await loginAsAdmin(page);
-            await createRules.cartRuleCreationFlow();
-            await createRules.addCondition({
+            await ruleCreatePage.cartRuleCreationFlow();
+            await ruleCreatePage.addCondition({
                 attribute: "cart_item|base_total_weight",
                 operator: ">",
                 value: "1",
             });
-            await createRules.saveCartRule();
-            await createRules.applyCoupon(3);
+            await ruleCreatePage.saveCartRule();
+            await page.goto("admin/catalog/products");
+            await page
+                .locator("span.cursor-pointer.icon-sort-right")
+                .nth(1)
+                .click();
+            await page.waitForLoadState("networkidle");
+            await page.locator('input[name="weight"]').first().fill("2");
+            await page
+                .locator('button:has-text("Save Product")')
+                .first()
+                .click();
+            await expect(
+                page.getByText("Product updated successfully").first(),
+            ).toBeVisible();
+            await ruleApplyPage.applyCoupon();
         });
 
         test("should apply coupon when total weight in cart condition is -> less than", async ({
             page,
         }) => {
-            const createRules = new CreateRules(page);
+            const ruleCreatePage = new RuleCreatePage(page);
+            const ruleApplyPage = new RuleApplyPage(page);
             await loginAsAdmin(page);
-            await createRules.cartRuleCreationFlow();
-            await createRules.addCondition({
+            await ruleCreatePage.cartRuleCreationFlow();
+            await ruleCreatePage.addCondition({
                 attribute: "cart_item|base_total_weight",
                 operator: "<",
                 value: "2",
             });
-            await createRules.saveCartRule();
-            await createRules.applyCoupon();
+            await ruleCreatePage.saveCartRule();
+            await ruleApplyPage.applyCouponAtCheckout();
         });
     });
 });

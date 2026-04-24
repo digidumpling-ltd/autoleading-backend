@@ -257,6 +257,22 @@ return [
                         'none' => 'Ninguno',
                         'total-amount' => 'Monto total',
                     ],
+
+                    'booking' => [
+                        'loading' => 'Cargando configuración de reserva…',
+                        'config-missing' => 'Falta la configuración de reserva para este producto.',
+                        'date' => 'Fecha',
+                        'date-from' => 'Fecha desde',
+                        'date-to' => 'Fecha hasta',
+                        'slot' => 'Franja',
+                        'select-slot' => 'Seleccione una franja',
+                        'no-slots-available' => 'No hay franjas disponibles para la fecha seleccionada',
+                        'note' => 'Nota',
+                        'quantity' => 'Cantidad',
+                        'renting-type' => 'Tipo de alquiler',
+                        'daily' => 'Diario',
+                        'hourly' => 'Por hora',
+                    ],
                 ],
 
                 'cart' => [
@@ -389,6 +405,12 @@ return [
             'view' => [
                 'amount-per-unit' => ':amount Por Unidad x :qty Cantidad',
                 'billing-address' => 'Dirección de Facturación',
+
+                'booking-cancellation-not-allowed' => [
+                    'title' => 'Artículos de reserva no cancelables',
+                    'description' => 'Este pedido contiene productos de reserva configurados como no cancelables para los clientes. Como administrador, aún puede cancelarlos — el cliente no puede hacerlo desde su propia vista de pedido.',
+                ],
+
                 'cancel' => 'Cancelar',
                 'cancel-msg' => '¿Estás seguro de que quieres cancelar este pedido?',
                 'cancel-success' => 'Pedido cancelado exitosamente',
@@ -438,6 +460,7 @@ return [
                 'refund-id' => 'Reembolso #:refund',
                 'refunded' => 'Reembolsado',
                 'reorder' => 'Reordenar',
+                'reorder-booking-skipped' => 'Los productos de reserva se omitieron durante el reordenamiento. Por favor, resérvelos nuevamente con nuevas fechas y franjas horarias.',
                 'ship' => 'Enviar',
                 'shipment' => 'Envío #:shipment',
                 'shipments' => 'Envíos',
@@ -773,7 +796,7 @@ return [
                 'done' => 'Hecho',
                 'order-id' => 'ID de Pedido',
                 'pending' => 'Pendiente',
-                'price' => 'Precio',
+                'product' => 'Producto',
                 'status' => 'Estado',
                 'time-slot' => 'Franja Horaria:',
                 'view-details' => 'Ver Detalles',
@@ -1754,6 +1777,15 @@ return [
                 'value-per-locale' => 'Valor por Localización',
                 'yes' => 'Sí',
 
+                'info' => [
+                    'is-filterable' => 'Agrega este atributo a los filtros de la barra lateral de categoría. Los tipos basados en opciones se muestran como casillas; el precio como un control deslizante de rango.',
+                    'is-configurable' => 'Marca este atributo como un eje de variante (p. ej. Color, Talla). Solo disponible para Select. Activarlo bloquea Valor por Canal y Valor por Locale — las variantes se resuelven globalmente por id de opción.',
+                    'value-per-locale' => 'Almacena un valor diferente por locale. No aplicable a tipos basados en opciones ni booleanos — sus etiquetas ya se traducen mediante la tabla de opciones.',
+                    'value-per-channel' => 'Almacena un valor diferente por canal. Deshabilitado cuando "Usar para crear producto configurable" está activado.',
+                    'is-visible-on-front' => 'Mostrar este atributo en la página del producto en la tienda.',
+                    'is-comparable' => 'Incluir este atributo al comparar productos lado a lado.',
+                ],
+
                 'option' => [
                     'color' => 'Muestra de Color',
                     'dropdown' => 'Desplegable',
@@ -1818,6 +1850,15 @@ return [
                 'value-per-channel' => 'Valor por Canal',
                 'value-per-locale' => 'Valor por Localización',
                 'yes' => 'Sí',
+
+                'info' => [
+                    'is-filterable' => 'Agrega este atributo a los filtros de la barra lateral de categoría. Los tipos basados en opciones se muestran como casillas; el precio como un control deslizante de rango.',
+                    'is-configurable' => 'Marca este atributo como un eje de variante (p. ej. Color, Talla). Solo disponible para Select. Activarlo bloquea Valor por Canal y Valor por Locale — las variantes se resuelven globalmente por id de opción.',
+                    'value-per-locale' => 'Almacena un valor diferente por locale. No aplicable a tipos basados en opciones ni booleanos — sus etiquetas ya se traducen mediante la tabla de opciones.',
+                    'value-per-channel' => 'Almacena un valor diferente por canal. Deshabilitado cuando "Usar para crear producto configurable" está activado.',
+                    'is-visible-on-front' => 'Mostrar este atributo en la página del producto en la tienda.',
+                    'is-comparable' => 'Incluir este atributo al comparar productos lado a lado.',
+                ],
 
                 'option' => [
                     'color' => 'Muestra de Color',

@@ -257,6 +257,22 @@ return [
                         'none' => 'None',
                         'total-amount' => 'Total Amount',
                     ],
+
+                    'booking' => [
+                        'loading' => 'Se încarcă configurația rezervării…',
+                        'config-missing' => 'Configurația rezervării lipsește pentru acest produs.',
+                        'date' => 'Dată',
+                        'date-from' => 'Data de început',
+                        'date-to' => 'Data de sfârșit',
+                        'slot' => 'Interval',
+                        'select-slot' => 'Selectați un interval',
+                        'no-slots-available' => 'Nu sunt intervale disponibile pentru data selectată',
+                        'note' => 'Notă',
+                        'quantity' => 'Cantitate',
+                        'renting-type' => 'Tip de închiriere',
+                        'daily' => 'Zilnic',
+                        'hourly' => 'Orar',
+                    ],
                 ],
 
                 'cart' => [
@@ -389,6 +405,12 @@ return [
             'view' => [
                 'amount-per-unit' => ':amount Per Unit x :qty Quantity',
                 'billing-address' => 'Billing Address',
+
+                'booking-cancellation-not-allowed' => [
+                    'title' => 'Articole de rezervare neanulabile',
+                    'description' => 'Această comandă conține produse de rezervare configurate ca neanulabile pentru clienți. Ca administrator, le puteți anula în continuare — clientul nu poate face acest lucru din propria vizualizare a comenzii.',
+                ],
+
                 'cancel' => 'Cancel',
                 'cancel-msg' => 'Are your sure you want to cancel this order',
                 'cancel-success' => 'Order cancelled successfully',
@@ -438,6 +460,7 @@ return [
                 'refund-id' => 'Refund #:refund',
                 'refunded' => 'Refunded',
                 'reorder' => 'Reorder',
+                'reorder-booking-skipped' => 'Produsele de rezervare au fost omise în timpul recomandării. Vă rugăm să le rezervați din nou cu date și intervale de timp noi.',
                 'ship' => 'Ship',
                 'shipment' => 'Shipment #:shipment',
                 'shipments' => 'Shipments',
@@ -773,7 +796,7 @@ return [
                 'done' => 'Done',
                 'order-id' => 'Order Id',
                 'pending' => 'Pending',
-                'price' => 'Price',
+                'product' => 'Produs',
                 'status' => 'Status',
                 'time-slot' => 'Time Slot:',
                 'view-details' => 'View Details',
@@ -1754,6 +1777,15 @@ return [
                 'value-per-locale' => 'Value Per Locale',
                 'yes' => 'Yes',
 
+                'info' => [
+                    'is-filterable' => 'Adaugă acest atribut la filtrele din bara laterală a categoriei. Tipurile bazate pe opțiuni apar ca bifele; prețul ca glisor de interval.',
+                    'is-configurable' => 'Marchează acest atribut ca axă de variantă (ex.: Culoare, Mărime). Disponibil doar pentru Select. Activarea blochează Valoare per Canal și Valoare per Locale — variantele sunt rezolvate global după id-ul opțiunii.',
+                    'value-per-locale' => 'Stochează o valoare diferită per locale. Nu este aplicabil tipurilor bazate pe opțiuni sau booleene — etichetele lor sunt deja traduse prin tabelul de opțiuni.',
+                    'value-per-channel' => 'Stochează o valoare diferită per canal. Dezactivat când "Folosește pentru a crea produs configurabil" este activ.',
+                    'is-visible-on-front' => 'Afișează acest atribut pe pagina produsului în magazin.',
+                    'is-comparable' => 'Include acest atribut la compararea produselor.',
+                ],
+
                 'option' => [
                     'color' => 'Color Swatch',
                     'dropdown' => 'Dropdown',
@@ -1818,6 +1850,15 @@ return [
                 'value-per-channel' => 'Value Per Channel',
                 'value-per-locale' => 'Value Per Locale',
                 'yes' => 'Yes',
+
+                'info' => [
+                    'is-filterable' => 'Adaugă acest atribut la filtrele din bara laterală a categoriei. Tipurile bazate pe opțiuni apar ca bifele; prețul ca glisor de interval.',
+                    'is-configurable' => 'Marchează acest atribut ca axă de variantă (ex.: Culoare, Mărime). Disponibil doar pentru Select. Activarea blochează Valoare per Canal și Valoare per Locale — variantele sunt rezolvate global după id-ul opțiunii.',
+                    'value-per-locale' => 'Stochează o valoare diferită per locale. Nu este aplicabil tipurilor bazate pe opțiuni sau booleene — etichetele lor sunt deja traduse prin tabelul de opțiuni.',
+                    'value-per-channel' => 'Stochează o valoare diferită per canal. Dezactivat când "Folosește pentru a crea produs configurabil" este activ.',
+                    'is-visible-on-front' => 'Afișează acest atribut pe pagina produsului în magazin.',
+                    'is-comparable' => 'Include acest atribut la compararea produselor.',
+                ],
 
                 'option' => [
                     'color' => 'Color Swatch',

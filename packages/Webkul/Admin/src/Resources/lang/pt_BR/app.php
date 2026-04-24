@@ -257,6 +257,22 @@ return [
                         'none' => 'Nenhum',
                         'total-amount' => 'Valor Total',
                     ],
+
+                    'booking' => [
+                        'loading' => 'Carregando configuração de reserva…',
+                        'config-missing' => 'Configuração de reserva ausente para este produto.',
+                        'date' => 'Data',
+                        'date-from' => 'Data de início',
+                        'date-to' => 'Data de fim',
+                        'slot' => 'Horário',
+                        'select-slot' => 'Selecione um horário',
+                        'no-slots-available' => 'Nenhum horário disponível para a data selecionada',
+                        'note' => 'Observação',
+                        'quantity' => 'Quantidade',
+                        'renting-type' => 'Tipo de aluguel',
+                        'daily' => 'Diário',
+                        'hourly' => 'Por hora',
+                    ],
                 ],
 
                 'cart' => [
@@ -389,6 +405,12 @@ return [
             'view' => [
                 'amount-per-unit' => ':amount Por Unidade x :qty Quantidade',
                 'billing-address' => 'Endereço de Cobrança',
+
+                'booking-cancellation-not-allowed' => [
+                    'title' => 'Itens de reserva não canceláveis',
+                    'description' => 'Este pedido contém produtos de reserva configurados como não canceláveis para os clientes. Como administrador, você ainda pode cancelá-los — o cliente está bloqueado de fazer isso em sua própria visualização de pedido.',
+                ],
+
                 'cancel' => 'Cancelar',
                 'cancel-msg' => 'Tem certeza de que deseja cancelar este pedido?',
                 'cancel-success' => 'Pedido cancelado com sucesso',
@@ -438,6 +460,7 @@ return [
                 'refund-id' => 'Reembolso #:refund',
                 'refunded' => 'Reembolsado',
                 'reorder' => 'Reordenar',
+                'reorder-booking-skipped' => 'Os produtos de reserva foram ignorados durante o novo pedido. Reserve-os novamente com novas datas e horários.',
                 'ship' => 'Enviar',
                 'shipment' => 'Remessa #:shipment',
                 'shipments' => 'Remessas',
@@ -773,7 +796,7 @@ return [
                 'done' => 'Concluído',
                 'order-id' => 'ID do Pedido',
                 'pending' => 'Pendente',
-                'price' => 'Preço',
+                'product' => 'Produto',
                 'status' => 'Status',
                 'time-slot' => 'Horário:',
                 'view-details' => 'Ver Detalhes',
@@ -1754,6 +1777,15 @@ return [
                 'value-per-locale' => 'Valor Por Localização',
                 'yes' => 'Sim',
 
+                'info' => [
+                    'is-filterable' => 'Adiciona este atributo aos filtros laterais de categoria. Tipos baseados em opções são renderizados como caixas de seleção; preço como controle deslizante de intervalo.',
+                    'is-configurable' => 'Marca este atributo como eixo de variação (ex.: Cor, Tamanho). Disponível apenas para Select. Ativá-lo bloqueia Valor por Canal e Valor por Locale — as variações são resolvidas globalmente pelo id da opção.',
+                    'value-per-locale' => 'Armazena um valor diferente por locale. Não aplicável a tipos baseados em opções ou booleanos — seus rótulos já são traduzidos pela tabela de opções.',
+                    'value-per-channel' => 'Armazena um valor diferente por canal. Desativado quando "Usar para criar produto configurável" está ativo.',
+                    'is-visible-on-front' => 'Exibe este atributo na página do produto na loja.',
+                    'is-comparable' => 'Inclui este atributo ao comparar produtos lado a lado.',
+                ],
+
                 'option' => [
                     'color' => 'Mostruário de Cores',
                     'dropdown' => 'Caixa de Seleção',
@@ -1818,6 +1850,15 @@ return [
                 'value-per-channel' => 'Valor Por Canal',
                 'value-per-locale' => 'Valor Por Localização',
                 'yes' => 'Sim',
+
+                'info' => [
+                    'is-filterable' => 'Adiciona este atributo aos filtros laterais de categoria. Tipos baseados em opções são renderizados como caixas de seleção; preço como controle deslizante de intervalo.',
+                    'is-configurable' => 'Marca este atributo como eixo de variação (ex.: Cor, Tamanho). Disponível apenas para Select. Ativá-lo bloqueia Valor por Canal e Valor por Locale — as variações são resolvidas globalmente pelo id da opção.',
+                    'value-per-locale' => 'Armazena um valor diferente por locale. Não aplicável a tipos baseados em opções ou booleanos — seus rótulos já são traduzidos pela tabela de opções.',
+                    'value-per-channel' => 'Armazena um valor diferente por canal. Desativado quando "Usar para criar produto configurável" está ativo.',
+                    'is-visible-on-front' => 'Exibe este atributo na página do produto na loja.',
+                    'is-comparable' => 'Inclui este atributo ao comparar produtos lado a lado.',
+                ],
 
                 'option' => [
                     'color' => 'Mostruário de Cores',
