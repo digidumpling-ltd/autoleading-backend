@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-04-01 06:39:56 +08
-last_updated: 2026-04-24 13:30:00 +08
+last_updated: 2026-04-24 15:20:00 +08
 project: bagisto
 project_key: NOKEY
 tracking_system: file-system
@@ -70,7 +70,7 @@ development_status:
 
   epic-4: in-progress
   4-1-booking-credit-deduction-bonus-first-priority: done
-  4-2-available-credit-validation-at-checkout: backlog
+  4-2-available-credit-validation-at-checkout: done
   4-3-top-up-requirement-and-enforcement: backlog
   4-4-atomic-booking-payment-transaction: backlog
   epic-4-retrospective: optional

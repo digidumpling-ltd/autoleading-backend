@@ -4,6 +4,8 @@ namespace Webkul\Wallet\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Webkul\Wallet\Http\Middleware\WalletCheckoutMiddleware;
+use Webkul\Wallet\Services\WalletService;
 
 class WalletServiceProvider extends ServiceProvider
 {
@@ -13,6 +15,7 @@ class WalletServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->registerConfig();
+        $this->app->singleton(WalletService::class);
     }
 
     /**
@@ -32,8 +35,14 @@ class WalletServiceProvider extends ServiceProvider
 
         Event::listen('sales.invoice.save.after', 'Webkul\Wallet\Listeners\WalletInvoiceListener@handle');
 
+        $this->app['router']->pushMiddlewareToGroup('web', WalletCheckoutMiddleware::class);
+
         Event::listen('bagisto.admin.customers.customers.view.filters.after', function ($event) {
             $event->addTemplate('wallet::admin.customers.wallet.button');
+        });
+
+        Event::listen('bagisto.shop.checkout.onepage.summary.grand_total.after', function ($event) {
+            $event->addTemplate('wallet::shop.checkout.wallet-balance-widget');
         });
     }
     

@@ -48,6 +48,14 @@ return [
         ],
     ],
 
+    'checkout' => [
+        'insufficient-balance-button' => 'Insufficient Balance — Top Up Wallet',
+        'wallet-charge-note'          => 'You will be charged',
+        'wallet-balance-label'        => 'Your wallet balance:',
+        'insufficient-balance-hint'   => 'Your wallet balance is insufficient for this order.',
+        'insufficient-balance-server' => 'Insufficient wallet balance. Required: :required, Available: :available. Please top up your wallet.',
+    ],
+
     'listeners' => [
         'wallet-invoice' => [
             'insufficient-balance' => 'Insufficient wallet balance. Cannot create invoice.',
