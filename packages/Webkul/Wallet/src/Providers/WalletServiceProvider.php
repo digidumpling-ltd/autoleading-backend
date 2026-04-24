@@ -30,6 +30,8 @@ class WalletServiceProvider extends ServiceProvider
 
         Event::listen('checkout.order.save.after', 'Webkul\Wallet\Listeners\GenerateInvoice@handle');
 
+        Event::listen('sales.invoice.save.after', 'Webkul\Wallet\Listeners\WalletInvoiceListener@handle');
+
         Event::listen('bagisto.admin.customers.customers.view.filters.after', function ($event) {
             $event->addTemplate('wallet::admin.customers.wallet.button');
         });

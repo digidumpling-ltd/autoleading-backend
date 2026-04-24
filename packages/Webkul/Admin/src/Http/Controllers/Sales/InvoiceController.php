@@ -90,9 +90,15 @@ class InvoiceController extends Controller
             return redirect()->back();
         }
 
-        $this->invoiceRepository->create(array_merge(request()->all(), [
-            'order_id' => $orderId,
-        ]));
+        try {
+            $this->invoiceRepository->create(array_merge(request()->all(), [
+                'order_id' => $orderId,
+            ]));
+        } catch (\Exception $e) {
+            session()->flash('error', $e->getMessage());
+
+            return redirect()->back();
+        }
 
         session()->flash('success', trans('admin::app.sales.invoices.create.create-success'));
 

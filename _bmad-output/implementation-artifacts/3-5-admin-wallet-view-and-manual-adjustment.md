@@ -50,6 +50,12 @@ So that I can resolve disputes, grant credit, and correct errors.
   - [x] Deduction fails when balance insufficient
   - [x] Non-permitted admin gets 401
 
+### Review Follow-ups (AI)
+
+- [ ] [AI-Review][High] Reconcile story File List claims with git evidence (attach commit/hash or restore diff traceability) [_bmad-output/implementation-artifacts/3-5-admin-wallet-view-and-manual-adjustment.md:197]
+- [ ] [AI-Review][Medium] Add assertion that insufficient deduction returns the exact expected message "Insufficient balance." [packages/Webkul/Wallet/tests/Feature/AdminWalletControllerTest.php:93]
+- [ ] [AI-Review][Medium] Add required locale coverage for new wallet translation keys, or document/approve an English-only exception for this package [packages/Webkul/Wallet/src/Resources/lang/en/app.php:7]
+
 ## Dev Notes
 
 ### Route Registration (from Wallet package — no core admin files modified)

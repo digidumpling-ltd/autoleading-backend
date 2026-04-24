@@ -48,6 +48,12 @@ return [
         ],
     ],
 
+    'listeners' => [
+        'wallet-invoice' => [
+            'insufficient-balance' => 'Insufficient wallet balance. Cannot create invoice.',
+        ],
+    ],
+
     'configuration' => [
         'index' => [
             'sales' => [
