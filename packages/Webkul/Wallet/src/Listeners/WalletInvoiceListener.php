@@ -3,6 +3,7 @@
 namespace Webkul\Wallet\Listeners;
 
 use Webkul\Sales\Repositories\OrderTransactionRepository;
+use Webkul\Wallet\Models\Channel as WalletChannel;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
 
 class WalletInvoiceListener
@@ -41,11 +42,14 @@ class WalletInvoiceListener
             );
         }
 
-        $customer->withdrawFloat($amount, ['meta' => [
-            'type'       => 'booking_deduction',
-            'order_id'   => $invoice->order_id,
-            'invoice_id' => $invoice->id,
-        ]]);
+        $channel = WalletChannel::find($invoice->order->channel_id);
+
+        $customer->transferFloat($channel, $amount, [
+            'type'        => 'wallet_payment',
+            'order_id'    => $invoice->order_id,
+            'invoice_id'  => $invoice->id,
+            'description' => trans('bagisto-wallet::app.listeners.wallet-invoice.description', ['order' => $invoice->order_id]),
+        ]);
 
         $this->orderTransactionRepository->create([
             'transaction_id' => 'wallet_tx_' . $invoice->id . '_' . uniqid(),

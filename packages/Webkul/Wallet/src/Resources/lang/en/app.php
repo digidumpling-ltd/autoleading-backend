@@ -41,9 +41,11 @@ return [
                 'no-transactions'          => 'No transactions yet.',
                 'type'                     => 'Type',
                 'amount'                   => 'Amount',
+                'remarks'                  => 'Remarks',
                 'date'                     => 'Date',
                 'type-deposit'             => 'Top Up',
                 'type-withdraw'            => 'Payment',
+                'type-wallet_refund'       => 'Refund',
             ],
         ],
     ],
@@ -59,6 +61,11 @@ return [
     'listeners' => [
         'wallet-invoice' => [
             'insufficient-balance' => 'Insufficient wallet balance. Cannot create invoice.',
+            'description'          => 'Payment for order #:order',
+        ],
+
+        'wallet-refund' => [
+            'description' => 'Refund for order #:order',
         ],
     ],
 

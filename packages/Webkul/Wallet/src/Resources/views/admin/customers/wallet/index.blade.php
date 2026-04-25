@@ -161,15 +161,11 @@
 
                                 <td class="px-6 py-3 text-right font-medium
                                     {{ $transaction->type === 'deposit' ? 'text-green-600' : 'text-red-600' }}">
-                                    {{ $transaction->type === 'deposit' ? '+' : '-' }}{{ core()->formatPrice((float) $transaction->amountFloat) }}
+                                    {{ core()->formatPrice((float) $transaction->amountFloat) }}
                                 </td>
 
                                 <td class="px-6 py-3 text-xs text-gray-500">
-                                    @if (isset($transaction->meta['reason']))
-                                        {{ $transaction->meta['reason'] }}
-                                    @elseif (isset($transaction->meta['description']))
-                                        {{ $transaction->meta['description'] }}
-                                    @endif
+                                    {{ $transaction->meta['reason'] ?? $transaction->meta['description'] ?? '' }}
                                 </td>
 
                                 <td class="px-6 py-3 text-right text-gray-500">

@@ -205,3 +205,4 @@ ALTER TABLE products ADD COLUMN requires_verification BOOLEAN DEFAULT FALSE;
 
 - 2026-04-17: Story created with admin dashboard + rental gating tasks
 - 2026-04-19: Implementation complete — all tasks checked, bugs fixed, 9 tests passing
+- 2026-04-25: Verification gating refactored — `PreventUnverifiedRentalAddToCartListener` replaced by `PreventUnverifiedAddToCartListener` (applies to all product types, not just rental). New `VerificationCheckoutMiddleware` added to block unverified customers at order placement. Both gates made admin-configurable via new system config (`customer_verification.checkout.require_verification_add_to_cart` and `customer_verification.checkout.require_verification_checkout`, default on). New `Config/system.php` registered. Translations added for both en and zh_CN.

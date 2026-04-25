@@ -183,3 +183,4 @@ claude-sonnet-4-6
 ## Change Log
 
 - Customer wallet UI: balance display, top-up form, transaction history; routes/views/menu registered from Wallet package only (Date: 2026-04-23)
+- Post-implementation bug fix: Blade escaping in `wallet-balance-widget.blade.php` — Vue mustaches `{{ balanceLabel }}`, `{{ walletStatus.formatted_balance }}` etc. inside JS template literals were being parsed by Blade as PHP expressions. Fixed all 6 occurrences with `@{{ }}` prefix (Date: 2026-04-25)

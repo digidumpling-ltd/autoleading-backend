@@ -18,7 +18,7 @@ it('WalletPayment isAvailable returns false when unauthenticated', function () {
     expect((new Wallet)->isAvailable())->toBeFalse();
 });
 
-it('WalletPayment isAvailable returns false for unverified customer', function () {
+it('WalletPayment isAvailable returns true for authenticated customer regardless of verification status', function () {
     CoreConfig::updateOrCreate(
         ['code' => 'sales.payment_methods.wallet.active', 'channel_code' => 'default'],
         ['value' => '1'],
@@ -28,7 +28,7 @@ it('WalletPayment isAvailable returns false for unverified customer', function (
 
     $this->actingAs($customer, 'customer');
 
-    expect((new Wallet)->isAvailable())->toBeFalse();
+    expect((new Wallet)->isAvailable())->toBeTrue();
 });
 
 it('WalletPayment isAvailable returns true for verified and authenticated customer', function () {

@@ -1,6 +1,8 @@
 <?php
 
+use Bavix\Wallet\Models\Transfer;
 use Illuminate\Support\Facades\DB;
+use Webkul\Core\Models\Channel;
 use Webkul\Customer\Models\Customer as BaseCustomer;
 use Webkul\Sales\Models\Invoice;
 use Webkul\Sales\Models\Order;
@@ -11,30 +13,29 @@ use Webkul\Sales\Repositories\InvoiceRepository;
 use Webkul\User\Models\Admin;
 use Webkul\User\Models\Role;
 use Webkul\Wallet\Listeners\WalletInvoiceListener;
+use Webkul\Wallet\Models\Channel as WalletChannel;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
 
 use function Pest\Laravel\actingAs;
-use function Pest\Laravel\post;
 
 function makeWalletOrder(int $customerId, string $paymentMethod = 'wallet'): array
 {
-    $order = Order::factory()->create(['customer_id' => $customerId, 'status' => 'pending']);
+    $channel = Channel::first();
+    $order   = Order::factory()->create(['customer_id' => $customerId, 'status' => 'pending', 'channel_id' => $channel->id]);
     OrderPayment::create(['order_id' => $order->id, 'method' => $paymentMethod]);
 
-    return [$order];
+    return [$order, $channel];
 }
 
 function makeInvoice(int $orderId, float $total = 200.00): Invoice
 {
-    $invoice = Invoice::create([
+    return Invoice::create([
         'order_id'           => $orderId,
         'state'              => 'paid',
         'base_grand_total'   => $total,
         'grand_total'        => $total,
         'base_currency_code' => 'USD',
-    ]);
-
-    return $invoice->load('order.payment');
+    ])->load('order.payment');
 }
 
 it('deducts wallet balance on invoice confirmation for wallet order', function () {
@@ -49,6 +50,34 @@ it('deducts wallet balance on invoice confirmation for wallet order', function (
 
     expect($customer->fresh()->balanceFloatNum)->toBe(300.0);
     expect(OrderTransaction::where('invoice_id', $invoice->id)->where('payment_method', 'wallet')->exists())->toBeTrue();
+});
+
+it('credits the channel wallet when customer pays', function () {
+    $base     = BaseCustomer::factory()->create();
+    $customer = WalletCustomer::find($base->id);
+    $customer->depositFloat(500.00);
+
+    [$order, $channel] = makeWalletOrder($customer->id);
+    $invoice = makeInvoice($order->id, 200.00);
+
+    app(WalletInvoiceListener::class)->handle($invoice);
+
+    $walletChannel = WalletChannel::find($channel->id);
+    expect($walletChannel->balanceFloatNum)->toBe(200.0);
+});
+
+it('creates a Transfer record from customer to channel wallet', function () {
+    $base     = BaseCustomer::factory()->create();
+    $customer = WalletCustomer::find($base->id);
+    $customer->depositFloat(500.00);
+
+    [$order] = makeWalletOrder($customer->id);
+    $invoice = makeInvoice($order->id, 150.00);
+
+    app(WalletInvoiceListener::class)->handle($invoice);
+
+    $transfer = Transfer::where('status', Transfer::STATUS_PAID)->latest()->first();
+    expect($transfer)->not->toBeNull();
 });
 
 it('creates order transaction with correct fields after deduction', function () {
@@ -95,7 +124,7 @@ it('is idempotent — second call does not double-deduct', function () {
 
     $listener = app(WalletInvoiceListener::class);
     $listener->handle($invoice);
-    $listener->handle($invoice); // second call — should be no-op
+    $listener->handle($invoice);
 
     expect($customer->fresh()->balanceFloatNum)->toBe(400.0);
     expect(OrderTransaction::where('invoice_id', $invoice->id)->where('payment_method', 'wallet')->count())->toBe(1);
@@ -108,7 +137,6 @@ it('rolls back invoice when balance is insufficient — simulating InvoiceReposi
 
     [$order] = makeWalletOrder($customer->id);
 
-    // Simulate the DB::beginTransaction() pattern from InvoiceRepository::create()
     try {
         DB::beginTransaction();
 
@@ -127,11 +155,8 @@ it('rolls back invoice when balance is insufficient — simulating InvoiceReposi
         DB::rollBack();
     }
 
-    // Invoice must not exist after rollback
     expect(Invoice::where('order_id', $order->id)->exists())->toBeFalse();
-    // Wallet balance must be unchanged
     expect($customer->fresh()->balanceFloatNum)->toBe(50.0);
-    // No OrderTransaction must have been created
     expect(OrderTransaction::where('order_id', $order->id)->exists())->toBeFalse();
 });
 
@@ -154,7 +179,8 @@ it('admin sees error flash when wallet invoice creation fails due to insufficien
     $customer = WalletCustomer::find($base->id);
     $customer->depositFloat(50.00);
 
-    $order = Order::factory()->create(['customer_id' => $customer->id, 'status' => 'pending']);
+    $channel = Channel::first();
+    $order   = Order::factory()->create(['customer_id' => $customer->id, 'status' => 'pending', 'channel_id' => $channel->id]);
     OrderPayment::create(['order_id' => $order->id, 'method' => 'wallet']);
     $item = OrderItem::factory()->create([
         'order_id'     => $order->id,
@@ -163,8 +189,6 @@ it('admin sees error flash when wallet invoice creation fails due to insufficien
         'qty_canceled' => 0,
     ]);
 
-    // Mock InvoiceRepository so complex DB setup is not required;
-    // only create() needs to simulate the wallet exception
     $this->mock(InvoiceRepository::class)
         ->shouldReceive('haveProductToInvoice')->once()->andReturn(true)
         ->shouldReceive('isValidQuantity')->once()->andReturn(true)

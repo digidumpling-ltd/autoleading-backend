@@ -123,3 +123,4 @@ claude-sonnet-4-6
 
 - Initial implementation: wallet checkout validation with WalletService, WalletCheckoutMiddleware, checkout status API, balance widget, and Pest tests — all 34 tests pass (Date: 2026-04-24)
 - Addressed code review findings — 2 items resolved (Date: 2026-04-24)
+- Post-implementation fix: `Wallet::isAvailable()` was gating wallet visibility behind `verification_status === 'approved'`, causing wallet to not appear in payment method selection for unverified customers. Verification belongs in CustomerVerification package, not here. Removed the check — wallet now shows for any authenticated customer (Date: 2026-04-25)

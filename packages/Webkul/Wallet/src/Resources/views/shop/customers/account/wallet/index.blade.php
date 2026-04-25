@@ -59,6 +59,9 @@
                             <th class="px-6 py-3 text-right text-sm font-medium text-zinc-500">
                                 @lang('bagisto-wallet::app.customers.account.wallet.amount')
                             </th>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-zinc-500">
+                                @lang('bagisto-wallet::app.customers.account.wallet.remarks')
+                            </th>
                             <th class="px-6 py-3 text-right text-sm font-medium text-zinc-500">
                                 @lang('bagisto-wallet::app.customers.account.wallet.date')
                             </th>
@@ -69,15 +72,23 @@
                         @foreach ($transactions as $transaction)
                             <tr class="hover:bg-zinc-50">
                                 <td class="px-6 py-4">
-                                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
-                                        {{ $transaction->type === 'deposit' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                                        @lang('bagisto-wallet::app.customers.account.wallet.type-' . $transaction->type)
+                                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full
+                                        {{ $transaction->type === 'deposit' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' }}">
+                                        @if ($transaction->type === 'deposit')
+                                            <x-tabler-credit-card-pay class="h-5 w-5" />
+                                        @else
+                                            <x-tabler-credit-card-refund class="h-5 w-5" />
+                                        @endif
                                     </span>
                                 </td>
 
                                 <td class="px-6 py-4 text-right font-medium
                                     {{ $transaction->type === 'deposit' ? 'text-green-600' : 'text-red-600' }}">
-                                    {{ $transaction->type === 'deposit' ? '+' : '-' }}{{ core()->formatPrice((float) $transaction->amountFloat) }}
+                                    {{ core()->formatPrice((float) $transaction->amountFloat) }}
+                                </td>
+
+                                <td class="px-6 py-4 text-sm text-zinc-600">
+                                    {{ $transaction->meta['reason'] ?? $transaction->meta['description'] ?? '' }}
                                 </td>
 
                                 <td class="px-6 py-4 text-right text-sm text-zinc-500">

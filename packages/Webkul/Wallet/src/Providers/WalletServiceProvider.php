@@ -35,6 +35,8 @@ class WalletServiceProvider extends ServiceProvider
 
         Event::listen('sales.invoice.save.after', 'Webkul\Wallet\Listeners\WalletInvoiceListener@handle');
 
+        Event::listen('sales.refund.save.after', 'Webkul\Wallet\Listeners\WalletRefundListener@handle');
+
         $this->app['router']->pushMiddlewareToGroup('web', WalletCheckoutMiddleware::class);
 
         Event::listen('bagisto.admin.customers.customers.view.filters.after', function ($event) {
