@@ -16,19 +16,19 @@
                     :class="walletStatus.can_afford ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'"
                 >
                     <p class="text-sm font-medium" :class="walletStatus.can_afford ? 'text-green-700' : 'text-red-700'">
-                        {{ balanceLabel }} {{ walletStatus.formatted_balance }}
+                        @{{ balanceLabel }} @{{ walletStatus.formatted_balance }}
                     </p>
 
                     <template v-if="!walletStatus.can_afford">
-                        <p class="mt-1 text-xs text-red-600">{{ insufficientHint }}</p>
+                        <p class="mt-1 text-xs text-red-600">@{{ insufficientHint }}</p>
                         <a
                             :href="walletStatus.wallet_url + '?reason=insufficient_balance&required=' + walletStatus.shortfall"
                             class="mt-2 inline-block rounded-lg bg-[#d18a1b] px-4 py-2 text-xs font-medium text-white hover:bg-[#b8760f]"
-                        >{{ topUpLabel }}</a>
+                        >@{{ topUpLabel }}</a>
                     </template>
 
                     <template v-else>
-                        <p class="mt-1 text-xs text-green-600">{{ chargeNote }} {{ formattedTotal }}</p>
+                        <p class="mt-1 text-xs text-green-600">@{{ chargeNote }} @{{ formattedTotal }}</p>
                     </template>
                 </div>
             `,

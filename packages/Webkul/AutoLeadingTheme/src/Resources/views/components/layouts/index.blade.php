@@ -14,6 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="base-url" content="{{ url()->to('/') }}">
+        <meta http-equiv="content-language" content="{{ app()->getLocale() }}">
         <meta name="currency" content="{{ core()->getCurrentCurrency()->toJson() }}">
         <meta name="currency-code" content="{{ core()->getCurrentCurrencyCode() }}">
         <meta name="symbol" content="{{ core()->getCurrentCurrency()->symbol }}">
@@ -158,7 +159,7 @@
                 if (typeof alInitNavbar === 'function') alInitNavbar();
                 if (typeof alUpdateCartCount === 'function') {
                     alUpdateCartCount();
-                    emitter.on('update-mini-cart', alUpdateCartCount);
+                    app.config.globalProperties.$emitter.on('update-mini-cart', alUpdateCartCount);
                 }
             });
         </script>

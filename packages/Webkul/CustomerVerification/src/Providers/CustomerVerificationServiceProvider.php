@@ -8,6 +8,7 @@ use Webkul\Core\Http\Middleware\PreventRequestsDuringMaintenance;
 use Webkul\Customer\Models\Customer;
 use Webkul\CustomerVerification\Console\Commands\GenerateCustomerReferenceNumbers;
 use Webkul\CustomerVerification\Contracts\CustomerVerificationDocument as CustomerVerificationDocumentContract;
+use Webkul\CustomerVerification\Http\Middleware\VerificationCheckoutMiddleware;
 use Webkul\CustomerVerification\Models\CustomerVerificationDocument;
 use Webkul\CustomerVerification\Observers\CustomerObserver;
 
@@ -30,6 +31,11 @@ class CustomerVerificationServiceProvider extends ServiceProvider
             'acl'
         );
 
+        $this->mergeConfigFrom(
+            dirname(__DIR__).'/Config/system.php',
+            'core'
+        );
+
         $this->app->bind(CustomerVerificationDocumentContract::class, CustomerVerificationDocument::class);
 
         $this->app->register(ModuleServiceProvider::class);
@@ -50,6 +56,8 @@ class CustomerVerificationServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'customer-verification');
 
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+
+        $this->app['router']->pushMiddlewareToGroup('web', VerificationCheckoutMiddleware::class);
 
         // Register artisan command for generating reference numbers
         if ($this->app->runningInConsole()) {

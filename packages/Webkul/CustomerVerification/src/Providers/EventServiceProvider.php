@@ -4,7 +4,7 @@ namespace Webkul\CustomerVerification\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Webkul\CustomerVerification\Listeners\HandleCustomerRegistration;
-use Webkul\CustomerVerification\Listeners\PreventUnverifiedRentalAddToCartListener;
+use Webkul\CustomerVerification\Listeners\PreventUnverifiedAddToCartListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -16,7 +16,7 @@ class EventServiceProvider extends ServiceProvider
             HandleCustomerRegistration::class,
         ],
         'checkout.cart.add.before' => [
-            PreventUnverifiedRentalAddToCartListener::class,
+            PreventUnverifiedAddToCartListener::class,
         ],
         // NOTE: Login verification checks are deferred to Story 2.3 (admin approval workflow)
         // 'customer.after.login' => [

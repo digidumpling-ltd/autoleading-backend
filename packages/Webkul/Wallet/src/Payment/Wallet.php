@@ -58,10 +58,6 @@ class Wallet extends Payment
             return false;
         }
 
-        if (! auth('customer')->check()) {
-            return false;
-        }
-
-        return auth('customer')->user()->verification_status === 'approved';
+        return auth('customer')->check();
     }
 }

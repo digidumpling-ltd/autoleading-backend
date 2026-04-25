@@ -73,5 +73,21 @@ return [
         'verification_approved_success'         => 'Customer approval successfully completed.',
         'verification_rejected_success'         => 'Customer rejection has been recorded.',
         'cannot_add_rental_unverified'          => 'You must complete identity verification to rent cars. <a href=":dashboard_url">Visit your verification dashboard</a>.',
+        'cannot_add_unverified'                 => 'Your account must be verified before adding items to the cart. <a href=":dashboard_url">Visit your verification dashboard</a>.',
+        'cannot_checkout_unverified'            => 'Your account must be verified before placing an order. Please complete your verification first.',
+    ],
+
+    'configuration' => [
+        'title'      => 'Customer Verification',
+        'title-info' => 'Manage customer verification requirements.',
+
+        'checkout' => [
+            'title'                                    => 'Checkout Gating',
+            'title-info'                               => 'Control whether unverified customers can add items to cart or place orders.',
+            'require-verification-add-to-cart'         => 'Require Verification to Add to Cart',
+            'require-verification-add-to-cart-info'    => 'When enabled, only approved customers can add products to their cart.',
+            'require-verification-checkout'            => 'Require Verification to Place Orders',
+            'require-verification-checkout-info'       => 'When enabled, only approved customers can complete checkout and place orders.',
+        ],
     ],
 ];
