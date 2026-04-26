@@ -1,6 +1,5 @@
 <?php
 
-use Bavix\Wallet\Models\Transfer;
 use Illuminate\Support\Facades\DB;
 use Webkul\Core\Models\Channel;
 use Webkul\Customer\Models\Customer as BaseCustomer;
@@ -60,24 +59,39 @@ it('credits the channel wallet when customer pays', function () {
     [$order, $channel] = makeWalletOrder($customer->id);
     $invoice = makeInvoice($order->id, 200.00);
 
+    $walletChannel = WalletChannel::find($channel->id);
+    $initialBalance = $walletChannel->balanceFloatNum;
+
     app(WalletInvoiceListener::class)->handle($invoice);
 
-    $walletChannel = WalletChannel::find($channel->id);
-    expect($walletChannel->balanceFloatNum)->toBe(200.0);
+    expect($walletChannel->fresh()->balanceFloatNum)->toBe($initialBalance + 200.0);
 });
 
-it('creates a Transfer record from customer to channel wallet', function () {
+it('creates wallet payment transactions for customer and channel', function () {
     $base     = BaseCustomer::factory()->create();
     $customer = WalletCustomer::find($base->id);
     $customer->depositFloat(500.00);
 
     [$order] = makeWalletOrder($customer->id);
     $invoice = makeInvoice($order->id, 150.00);
+    $channel = WalletChannel::find($order->channel_id);
 
     app(WalletInvoiceListener::class)->handle($invoice);
 
-    $transfer = Transfer::where('status', Transfer::STATUS_PAID)->latest()->first();
-    expect($transfer)->not->toBeNull();
+    $customerTx = $customer->transactions()
+        ->where('type', 'withdraw')
+        ->where('meta->type', 'wallet_payment')
+        ->where('meta->invoice_id', $invoice->id)
+        ->first();
+
+    $channelTx = $channel->transactions()
+        ->where('type', 'deposit')
+        ->where('meta->type', 'wallet_payment')
+        ->where('meta->invoice_id', $invoice->id)
+        ->first();
+
+    expect($customerTx)->not->toBeNull();
+    expect($channelTx)->not->toBeNull();
 });
 
 it('creates order transaction with correct fields after deduction', function () {

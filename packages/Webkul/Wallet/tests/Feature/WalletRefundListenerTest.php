@@ -87,12 +87,12 @@ it('reduces channel wallet balance by the refunded amount', function () {
     payInvoiceViaWallet($order, 100.00);
 
     $walletChannel = WalletChannel::find($channel->id);
-    expect($walletChannel->balanceFloatNum)->toBe(100.0);
+    $afterPaymentBalance = $walletChannel->balanceFloatNum;
 
     $refund = makeRefund($order->id, 100.00);
     app(WalletRefundListener::class)->handle($refund);
 
-    expect($walletChannel->fresh()->balanceFloatNum)->toBe(0.0);
+    expect($walletChannel->fresh()->balanceFloatNum)->toBe($afterPaymentBalance - 100.0);
 });
 
 it('is idempotent — second handle() call does not double-credit', function () {
