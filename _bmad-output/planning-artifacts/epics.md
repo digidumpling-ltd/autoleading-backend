@@ -1479,3 +1479,17 @@ And the customer is redirected to /customer/wallet with the shortfall amount pre
 **And** the customer list grid (`Admin > Customers`) has a "Membership Level" column that shows the current tier and is filterable/sortable
 
 **And** a Pest test confirms correct badge/label is returned for each group code
+
+---
+
+## Epic 8: Payment Gateway Integration and Wallet Credit Purchase
+
+**Goal**: Integrate Yedpay as a standard Bagisto payment method for order checkout, then leverage that integration (and all other enabled gateways) to let customers purchase wallet credit from the wallet page via a custom lightweight checkout flow.
+
+**Requirements Addressed**: FR-Wallet-TopUp, FR-Payment-Gateway
+
+**Stories:**
+- Story 8.1: Yedpay Payment Gateway Module
+- Story 8.2: Customer Wallet Credit Purchase via Checkout
+
+---

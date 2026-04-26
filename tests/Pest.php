@@ -11,6 +11,7 @@ use Webkul\Razorpay\Tests\RazorpayTestCase;
 use Webkul\Shop\Tests\ShopTestCase;
 use Webkul\Stripe\Tests\StripeTestCase;
 use Webkul\Wallet\Tests\WalletTestCase;
+use Webkul\Yedpay\Tests\YedpayTestCase;
 
 ini_set('memory_limit', '1024M');
 
@@ -36,6 +37,7 @@ uses(RazorpayTestCase::class)->in('../packages/Webkul/Razorpay/tests');
 uses(ShopTestCase::class)->in('../packages/Webkul/Shop/tests');
 uses(StripeTestCase::class)->in('../packages/Webkul/Stripe/tests');
 uses(WalletTestCase::class)->in('../packages/Webkul/Wallet/tests');
+uses(YedpayTestCase::class)->in('../packages/Webkul/Yedpay/tests');
 
 /*
 |--------------------------------------------------------------------------

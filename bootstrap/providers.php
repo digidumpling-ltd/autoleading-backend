@@ -39,6 +39,7 @@ use Webkul\Sitemap\Providers\SitemapServiceProvider;
 use Webkul\SocialLogin\Providers\SocialLoginServiceProvider;
 use Webkul\SocialShare\Providers\SocialShareServiceProvider;
 use Webkul\Stripe\Providers\StripeServiceProvider;
+use Webkul\Yedpay\Providers\YedpayServiceProvider;
 use Webkul\Tax\Providers\TaxServiceProvider;
 use Webkul\Theme\Providers\ThemeServiceProvider;
 use Webkul\User\Providers\UserServiceProvider;
@@ -91,6 +92,7 @@ return [
     SocialLoginServiceProvider::class,
     SocialShareServiceProvider::class,
     StripeServiceProvider::class,
+    YedpayServiceProvider::class,
     TaxServiceProvider::class,
     ThemeServiceProvider::class,
     UserServiceProvider::class,

@@ -67,6 +67,11 @@
         <testsuite name="Wallet Feature Test">
             <directory suffix="Test.php">packages/Webkul/Wallet/tests/Feature</directory>
         </testsuite>
+
+        <!-- Yedpay package testsuites. -->
+        <testsuite name="Yedpay Feature Test">
+            <directory suffix="Test.php">packages/Webkul/Yedpay/tests/Feature</directory>
+        </testsuite>
     </testsuites>
 
     <source>

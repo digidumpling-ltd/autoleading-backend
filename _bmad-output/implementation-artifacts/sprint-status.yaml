@@ -95,3 +95,8 @@ development_status:
   7-3-create-or-update-blog-pages-for-content-marketing-and-seo: backlog
   7-4-customize-the-shop-theme-colors-typography-layout-to-match-brand-identity-and-improve-ux: backlog
   epic-7-retrospective: optional
+
+  epic-8: in-progress
+  8-1-yedpay-payment-gateway-module: review
+  8-2-customer-wallet-credit-purchase: backlog
+  epic-8-retrospective: optional
