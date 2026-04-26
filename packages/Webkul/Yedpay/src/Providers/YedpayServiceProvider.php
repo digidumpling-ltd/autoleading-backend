@@ -12,6 +12,11 @@ class YedpayServiceProvider extends ServiceProvider
             dirname(__DIR__) . '/Config/payment-methods.php',
             'payment_methods'
         );
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/system.php',
+            'core'
+        );
     }
 
     public function boot(): void

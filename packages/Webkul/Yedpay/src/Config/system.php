@@ -1,0 +1,74 @@
+<?php
+
+return [
+    [
+        'key'    => 'sales.payment_methods.yedpay',
+        'name'   => 'yedpay::app.configuration.title',
+        'info'   => 'yedpay::app.configuration.info',
+        'sort'   => 2,
+        'fields' => [
+            [
+                'name'          => 'active',
+                'title'         => 'admin::app.configuration.index.sales.payment-methods.status',
+                'type'          => 'boolean',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ], [
+                'name'          => 'title',
+                'title'         => 'admin::app.configuration.index.sales.payment-methods.title',
+                'type'          => 'text',
+                'depends'       => 'active:1',
+                'validation'    => 'required_if:active,1',
+                'channel_based' => true,
+                'locale_based'  => true,
+            ], [
+                'name'          => 'description',
+                'title'         => 'admin::app.configuration.index.sales.payment-methods.description',
+                'type'          => 'textarea',
+                'depends'       => 'active:1',
+                'channel_based' => true,
+                'locale_based'  => true,
+            ], [
+                'name'          => 'image',
+                'title'         => 'admin::app.configuration.index.sales.payment-methods.logo',
+                'type'          => 'image',
+                'info'          => 'admin::app.configuration.index.sales.payment-methods.logo-information',
+                'depends'       => 'active:1',
+                'channel_based' => true,
+                'locale_based'  => false,
+                'validation'    => 'mimes:bmp,jpeg,jpg,png,webp',
+            ], [
+                'name'          => 'api_key',
+                'title'         => 'yedpay::app.configuration.api-key',
+                'info'          => 'yedpay::app.configuration.api-key-info',
+                'type'          => 'password',
+                'depends'       => 'active:1',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ], [
+                'name'          => 'signing_key',
+                'title'         => 'yedpay::app.configuration.signing-key',
+                'info'          => 'yedpay::app.configuration.signing-key-info',
+                'type'          => 'password',
+                'depends'       => 'active:1',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ], [
+                'name'          => 'sandbox',
+                'title'         => 'admin::app.configuration.index.sales.payment-methods.sandbox',
+                'type'          => 'boolean',
+                'depends'       => 'active:1',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ], [
+                'name'          => 'sort',
+                'title'         => 'admin::app.configuration.index.sales.payment-methods.sort-order',
+                'type'          => 'number',
+                'depends'       => 'active:1',
+                'validation'    => 'required_if:active,1|integer|min:1',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ],
+        ],
+    ],
+];
