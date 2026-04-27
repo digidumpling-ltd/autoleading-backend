@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-04-01 06:39:56 +08
-last_updated: 2026-04-25 11:10:00 +08
+last_updated: 2026-04-26 14:00:00 +08
 project: bagisto
 project_key: NOKEY
 tracking_system: file-system
@@ -98,5 +98,5 @@ development_status:
 
   epic-8: in-progress
   8-1-yedpay-payment-gateway-module: review
-  8-2-customer-wallet-credit-purchase: backlog
+  8-2-customer-wallet-credit-purchase: done
   epic-8-retrospective: optional

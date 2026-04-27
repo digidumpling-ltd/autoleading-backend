@@ -61,6 +61,14 @@ return [
                 'channel_based' => true,
                 'locale_based'  => false,
             ], [
+                'name'          => 'sandbox_api_key',
+                'title'         => 'yedpay::app.configuration.sandbox-api-key',
+                'info'          => 'yedpay::app.configuration.sandbox-api-key-info',
+                'type'          => 'password',
+                'depends'       => 'active:1|sandbox:1',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ], [
                 'name'          => 'sort',
                 'title'         => 'admin::app.configuration.index.sales.payment-methods.sort-order',
                 'type'          => 'number',

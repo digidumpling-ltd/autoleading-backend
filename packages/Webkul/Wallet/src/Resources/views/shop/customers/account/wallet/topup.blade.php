@@ -52,6 +52,39 @@
                     </x-shop::form.control-group>
                 </div>
 
+                @if ($methods->isNotEmpty())
+                    <div class="mb-6">
+                        <label class="mb-2 block text-sm font-medium text-zinc-700">
+                            @lang('bagisto-wallet::app.customers.account.wallet.topup-select-method')
+                            <span class="text-red-500">*</span>
+                        </label>
+
+                        <div class="space-y-2">
+                            @foreach ($methods as $method)
+                                <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-200 p-3 hover:border-zinc-400">
+                                    <input
+                                        type="radio"
+                                        name="payment_method"
+                                        value="{{ $method['method'] }}"
+                                        {{ old('payment_method') === $method['method'] ? 'checked' : ($loop->first ? 'checked' : '') }}
+                                        class="accent-navyBlue"
+                                    />
+
+                                    <span class="text-sm font-medium">{{ $method['method_title'] }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+
+                        @error('payment_method')
+                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @else
+                    <p class="mb-4 text-sm text-zinc-500">
+                        @lang('bagisto-wallet::app.customers.account.wallet.topup-no-methods')
+                    </p>
+                @endif
+
                 <button
                     type="submit"
                     class="primary-button w-full justify-center rounded-2xl px-6 py-3"

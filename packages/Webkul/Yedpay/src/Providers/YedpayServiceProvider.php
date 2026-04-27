@@ -3,6 +3,8 @@
 namespace Webkul\Yedpay\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Webkul\Yedpay\Payment\Yedpay;
+use Webkul\Yedpay\Services\YedpayService;
 
 class YedpayServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,16 @@ class YedpayServiceProvider extends ServiceProvider
             dirname(__DIR__) . '/Config/system.php',
             'core'
         );
+
+        $this->app->bind(YedpayService::class, function ($app) {
+            $yedpay = $app->make(Yedpay::class);
+
+            return new YedpayService(
+                apiKey: $yedpay->getApiKey() ?? '',
+                signingKey: $yedpay->getSigningKey() ?? '',
+                sandbox: $yedpay->isSandbox(),
+            );
+        });
     }
 
     public function boot(): void
@@ -24,15 +36,5 @@ class YedpayServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
 
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'yedpay');
-
-        $this->app->bind(\Webkul\Yedpay\Services\YedpayService::class, function ($app) {
-            $yedpay = $app->make(\Webkul\Yedpay\Payment\Yedpay::class);
-
-            return new \Webkul\Yedpay\Services\YedpayService(
-                apiKey: $yedpay->getApiKey() ?? '',
-                signingKey: $yedpay->getSigningKey() ?? '',
-                sandbox: $yedpay->isSandbox(),
-            );
-        });
     }
 }

@@ -23,6 +23,8 @@ class WalletServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->loadMigrationsFrom(dirname(__DIR__).'/Database/Migrations');
+
         $this->loadTranslationsFrom(dirname(__DIR__).'/Resources/lang', 'bagisto-wallet');
 
         $this->loadRoutesFrom(dirname(__DIR__).'/Routes/shop-routes.php');
@@ -46,6 +48,8 @@ class WalletServiceProvider extends ServiceProvider
         Event::listen('bagisto.shop.checkout.onepage.summary.grand_total.after', function ($event) {
             $event->addTemplate('wallet::shop.checkout.wallet-balance-widget');
         });
+
+        $this->registerTopUpSystemConfig();
     }
     
     /**
@@ -53,6 +57,51 @@ class WalletServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    /**
+     * Register the wallet top-up admin configuration section.
+     * Called in boot() so config('payment_methods') is fully populated.
+     */
+    protected function registerTopUpSystemConfig(): void
+    {
+        $options = collect(config('payment_methods', []))
+            ->filter(function ($m) {
+                if (($m['code'] ?? '') === 'wallet') {
+                    return false;
+                }
+
+                return is_a($m['class'] ?? '', \Webkul\Wallet\Contracts\SupportsWalletTopUp::class, true);
+            })
+            ->map(fn ($m) => ['title' => $m['title'], 'value' => $m['code']])
+            ->values()
+            ->toArray();
+
+        config(['core' => array_merge(config('core', []), [
+            [
+                'key'  => 'sales.wallet',
+                'name' => 'bagisto-wallet::app.configuration.index.sales.wallet.title',
+                'info' => 'bagisto-wallet::app.configuration.index.sales.wallet.info',
+                'sort' => 99,
+            ],
+            [
+                'key'    => 'sales.wallet.settings',
+                'name'   => 'bagisto-wallet::app.configuration.index.sales.wallet.settings.title',
+                'info'   => 'bagisto-wallet::app.configuration.index.sales.wallet.settings.info',
+                'sort'   => 1,
+                'fields' => [
+                    [
+                        'name'          => 'topup_allowed_methods',
+                        'title'         => 'bagisto-wallet::app.configuration.index.sales.wallet.topup-allowed-methods',
+                        'info'          => 'bagisto-wallet::app.configuration.index.sales.wallet.topup-allowed-methods-info',
+                        'type'          => 'multiselect',
+                        'options'       => $options,
+                        'channel_based' => true,
+                        'locale_based'  => false,
+                    ],
+                ],
+            ],
+        ])]);
+    }
+
     protected function registerConfig()
     {
         $this->mergeConfigFrom(

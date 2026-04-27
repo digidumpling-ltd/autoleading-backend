@@ -3,14 +3,20 @@
 namespace Webkul\Yedpay\Payment;
 
 use Webkul\Payment\Payment\Payment;
+use Webkul\Wallet\Contracts\SupportsWalletTopUp;
 
-class Yedpay extends Payment
+class Yedpay extends Payment implements SupportsWalletTopUp
 {
     protected $code = 'yedpay';
 
     public function getRedirectUrl()
     {
         return route('yedpay.standard.redirect');
+    }
+
+    public function getTopUpRedirectUrl(): string
+    {
+        return route('yedpay.topup.redirect');
     }
 
     public function isAvailable()
@@ -30,12 +36,19 @@ class Yedpay extends Payment
 
     public function hasValidCredentials(): bool
     {
-        return ! empty($this->getConfigData('api_key'))
-            && ! empty($this->getConfigData('signing_key'));
+        $apiKey = $this->isSandbox()
+            ? $this->getConfigData('sandbox_api_key')
+            : $this->getConfigData('api_key');
+
+        return ! empty($apiKey) && ! empty($this->getConfigData('signing_key'));
     }
 
     public function getApiKey(): ?string
     {
+        if ($this->isSandbox()) {
+            return $this->getConfigData('sandbox_api_key');
+        }
+
         return $this->getConfigData('api_key');
     }
 

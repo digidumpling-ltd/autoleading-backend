@@ -29,15 +29,15 @@ class YedpayController extends Controller
         if (! $this->yedpay->hasValidCredentials()) {
             session()->flash('error', trans('yedpay::app.response.provide-credentials'));
 
-            return redirect()->route('shop.checkout.cart.index');
+            return $this->failureRedirect();
         }
 
-        $cart = Cart::getCart();
+        $cart = $this->resolveCart();
 
         if (! $cart) {
             session()->flash('error', trans('yedpay::app.response.cart-not-found'));
 
-            return redirect()->route('shop.checkout.cart.index');
+            return $this->failureRedirect();
         }
 
         try {
@@ -58,12 +58,20 @@ class YedpayController extends Controller
         } catch (Exception $e) {
             session()->flash('error', trans('yedpay::app.response.payment-failed') . ': ' . $e->getMessage());
 
-            return redirect()->route('shop.checkout.cart.index');
+            $this->cleanupWalletCart();
+
+            return $this->failureRedirect();
         }
     }
 
     public function success(): RedirectResponse
     {
+        if (! $this->yedpay->hasValidCredentials()) {
+            session()->flash('error', trans('yedpay::app.response.provide-credentials'));
+
+            return redirect()->route('shop.checkout.cart.index');
+        }
+
         $data = request()->all();
 
         try {
@@ -71,6 +79,12 @@ class YedpayController extends Controller
 
             if (! $service->verifyCallback($data)) {
                 session()->flash('error', trans('yedpay::app.response.verification-failed'));
+
+                return redirect()->route('shop.checkout.cart.index');
+            }
+
+            if (! $service->isPaymentPaid($data)) {
+                session()->flash('error', trans('yedpay::app.response.payment-failed'));
 
                 return redirect()->route('shop.checkout.cart.index');
             }
@@ -130,7 +144,7 @@ class YedpayController extends Controller
 
             Cart::deActivateCart();
 
-            session()->forget(['yedpay_custom_id', 'yedpay_cart_id']);
+            session()->forget(['yedpay_custom_id', 'yedpay_cart_id', 'wallet_topup_cart_id']);
 
             session()->flash('order_id', $order->id);
             session()->flash('success', trans('yedpay::app.response.payment-success'));
@@ -145,11 +159,13 @@ class YedpayController extends Controller
 
     public function cancel(): RedirectResponse
     {
+        $this->cleanupWalletCart();
+
         session()->forget(['yedpay_custom_id', 'yedpay_cart_id']);
 
         session()->flash('error', trans('yedpay::app.response.payment-cancelled'));
 
-        return redirect()->route('shop.checkout.cart.index');
+        return $this->failureRedirect();
     }
 
     /**
@@ -163,5 +179,32 @@ class YedpayController extends Controller
     protected function makeService(): YedpayService
     {
         return app(YedpayService::class);
+    }
+
+    protected function resolveCart(): ?\Webkul\Checkout\Contracts\Cart
+    {
+        if ($cartId = session('wallet_topup_cart_id')) {
+            return $this->cartRepository->find($cartId);
+        }
+
+        return Cart::getCart();
+    }
+
+    protected function cleanupWalletCart(): void
+    {
+        if ($cartId = session('wallet_topup_cart_id')) {
+            $this->cartRepository->update(['is_active' => 0], $cartId);
+        }
+    }
+
+    protected function failureRedirect(): RedirectResponse
+    {
+        $isWalletTopUp = session()->has('wallet_topup_cart_id');
+
+        session()->forget('wallet_topup_cart_id');
+
+        return $isWalletTopUp
+            ? redirect()->route('shop.customers.account.wallet.topup')
+            : redirect()->route('shop.checkout.cart.index');
     }
 }

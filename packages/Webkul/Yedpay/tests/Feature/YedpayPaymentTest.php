@@ -19,11 +19,12 @@ beforeEach(function () {
     yedpayConfig('active', '1');
     yedpayConfig('sandbox', '1');
     yedpayConfig('api_key', 'fake-api-key-for-testing');
+    yedpayConfig('sandbox_api_key', 'fake-sandbox-api-key');
     yedpayConfig('signing_key', '12345678901234567890123456789012');
 });
 
-it('reports credentials invalid when api_key is empty', function () {
-    yedpayConfig('api_key', '');
+it('reports credentials invalid when sandbox_api_key is empty', function () {
+    yedpayConfig('sandbox_api_key', '');
 
     $yedpay = app(Yedpay::class);
 
@@ -113,8 +114,8 @@ it('creates order invoice and transaction on successful yedpay callback', functi
     $cart = $this->createCartWithItems('yedpay');
 
     $this->mock(YedpayService::class)
-        ->shouldReceive('verifyCallback')
-        ->andReturn(true);
+        ->shouldReceive('verifyCallback')->andReturn(true)
+        ->shouldReceive('isPaymentPaid')->andReturn(true);
 
     session([
         'yedpay_cart_id'   => $cart->id,

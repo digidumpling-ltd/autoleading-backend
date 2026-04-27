@@ -35,8 +35,12 @@ return [
                 'topup'                    => 'Top Up',
                 'topup-amount'             => 'Amount',
                 'topup-amount-placeholder' => 'Enter amount',
+                'topup-select-method'      => 'Select Payment Method',
+                'topup-no-methods'         => 'No payment methods are currently available.',
+                'topup-invalid-method'     => 'The selected payment method is invalid.',
                 'topup-submit'             => 'Add Funds',
                 'topup-success'            => 'Wallet topped up successfully.',
+                'topup-already-completed'  => 'This top-up has already been processed.',
                 'transactions'             => 'Transaction History',
                 'no-transactions'          => 'No transactions yet.',
                 'type'                     => 'Type',
@@ -46,6 +50,7 @@ return [
                 'type-deposit'             => 'Top Up',
                 'type-withdraw'            => 'Payment',
                 'type-wallet_refund'       => 'Refund',
+                'type-wallet_topup'        => 'Top-Up',
             ],
         ],
     ],
@@ -67,6 +72,14 @@ return [
         'wallet-refund' => [
             'description' => 'Refund for order #:order',
         ],
+
+        'wallet-topup' => [
+            'description' => 'Wallet top-up #:order',
+        ],
+    ],
+
+    'product' => [
+        'wallet-credit-name' => 'Wallet Credit',
     ],
 
     'configuration' => [
@@ -75,6 +88,18 @@ return [
                 'payment-methods' => [
                     'wallet'      => 'Wallet',
                     'wallet-info' => 'Pay using your wallet balance.',
+                ],
+
+                'wallet' => [
+                    'title'                           => 'Wallet',
+                    'info'                            => 'Wallet top-up and credit settings.',
+                    'topup-allowed-methods'           => 'Allowed Top-Up Payment Methods',
+                    'topup-allowed-methods-info'      => 'Select which payment gateways customers may use on the wallet top-up page. Leave empty to allow all enabled gateways.',
+
+                    'settings' => [
+                        'title' => 'Top-Up Settings',
+                        'info'  => 'Configure which payment gateways are available for wallet top-ups.',
+                    ],
                 ],
             ],
         ],

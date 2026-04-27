@@ -39,7 +39,7 @@ class YedpayService
 
         $parsed = is_string($data) ? json_decode($data, true) : (array) $data;
 
-        $url = $parsed['payment_url'] ?? $parsed['url'] ?? null;
+        $url = $parsed['checkout_url'] ?? $parsed['payment_url'] ?? $parsed['url'] ?? null;
 
         if (! $url) {
             throw new Exception('Yedpay did not return a payment URL. Response: ' . json_encode($parsed));
@@ -58,6 +58,14 @@ class YedpayService
         $client = new Client($environment, $this->apiKey, false);
 
         return (bool) $client->verifySign($data, $this->signingKey);
+    }
+
+    /**
+     * Return true only when the callback data indicates a completed payment.
+     */
+    public function isPaymentPaid(array $data): bool
+    {
+        return ($data['status'] ?? '') === 'paid';
     }
 
     /**
