@@ -41,31 +41,6 @@
                     <a href="{{ route('shop.customers.register.index') }}" class="al-auth-link">
                         {{ __('auto-leading-theme::app.common.register') }}
                     </a>
-
-                    {{-- Language Switcher --}}
-                    @php
-                        $localeLabels = ['en' => 'EN', 'zh_CN' => '中文', 'zh_TW' => '中文'];
-                        $currentLabel = $localeLabels[app()->getLocale()] ?? strtoupper(app()->getLocale());
-                    @endphp
-                    <div class="al-dropdown">
-                        <button
-                            type="button"
-                            class="al-auth-link flex items-center gap-1 al-dropdown-toggle"
-                            aria-expanded="false"
-                        >
-                            <x-heroicon-o-globe-alt class="w-6 h-6 al-text-accent" />
-                            <span class="font-medium">{{ $currentLabel }}</span>
-                        </button>
-                        <div class="al-dropdown-menu" style="display:none">
-                            @foreach (core()->getAllLocales() as $locale)
-                                @if ($locale->code !== app()->getLocale())
-                                    <a href="?locale={{ $locale->code }}" class="al-dropdown-item">
-                                        {{ $localeLabels[$locale->code] ?? strtoupper($locale->code) }}
-                                    </a>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
                 @endguest
 
                 @auth('customer')
@@ -96,6 +71,35 @@
                         </div>
                     </div>
                 @endauth
+
+                {{-- Language Switcher (visible to all users when channel has >1 locale) --}}
+                @php
+                    $localeLabels   = ['en' => 'EN', 'zh_CN' => '中文', 'zh_TW' => '中文'];
+                    $currentLabel   = $localeLabels[app()->getLocale()] ?? strtoupper(app()->getLocale());
+                    $switcherLocales = core()->getCurrentChannel()->locales()
+                        ->where('code', '!=', app()->getLocale())
+                        ->get();
+                @endphp
+                @if($switcherLocales->count() > 0)
+                    <div class="al-dropdown">
+                        <button
+                            type="button"
+                            class="al-auth-link flex items-center gap-1 al-dropdown-toggle"
+                            aria-expanded="false"
+                            aria-label="{{ __('auto-leading-theme::app.nav.language') }}"
+                        >
+                            <x-heroicon-o-globe-alt class="w-6 h-6 al-text-accent" />
+                            <span class="font-medium">{{ $currentLabel }}</span>
+                        </button>
+                        <div class="al-dropdown-menu" style="display:none">
+                            @foreach($switcherLocales as $locale)
+                                <a href="?locale={{ $locale->code }}" class="al-dropdown-item">
+                                    {{ $localeLabels[$locale->code] ?? strtoupper($locale->code) }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
 
                 {{-- Cart Button --}}
                 <a

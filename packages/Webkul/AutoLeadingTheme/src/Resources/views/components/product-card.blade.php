@@ -12,9 +12,13 @@
 
 @php $isAuth = auth()->guard('customer')->check(); @endphp
 
-<div class="al-car-card">
+<div class="al-car-card" style="position:relative;cursor:pointer;">
+
+    {{-- Stretched link — clicking anywhere on the card navigates to the product page --}}
+    <a href="{{ $url }}" class="al-card-link" aria-label="{{ $name }}" style="position:absolute;inset:0;z-index:1;border-radius:inherit;"></a>
+
     {{-- Image / Thumb --}}
-    <a href="{{ $url }}" class="al-car-thumb" aria-label="{{ $name }}">
+    <div class="al-car-thumb">
 
         @if ($image)
             <img
@@ -34,13 +38,13 @@
 
         {{-- Image count (top-right) --}}
         @if ($imagesCount > 0)
-            <span style="position:absolute;top:0.75rem;right:0.75rem;display:flex;align-items:center;gap:0.2rem;background:rgba(0,0,0,0.45);backdrop-filter:blur(4px);color:#fff;font-size:0.72rem;font-weight:600;padding:0.2rem 0.55rem;border-radius:999px;">
+            <span style="position:absolute;top:0.75rem;right:0.75rem;z-index:2;display:flex;align-items:center;gap:0.2rem;background:rgba(0,0,0,0.45);backdrop-filter:blur(4px);color:#fff;font-size:0.72rem;font-weight:600;padding:0.2rem 0.55rem;border-radius:999px;">
                 <x-heroicon-o-photo style="width:0.85rem;height:0.85rem;flex-shrink:0;" />
                 {{ $imagesCount }}
             </span>
         @endif
 
-        {{-- Wishlist button (bottom-left) --}}
+        {{-- Wishlist button — z-index:2 keeps it above the stretched link --}}
         @if ($productId)
             <v-al-wishlist-btn
                 product-id="{{ $productId }}"
@@ -49,7 +53,7 @@
                 wishlist-url="{{ route('shop.api.customers.account.wishlist.store') }}"
             ></v-al-wishlist-btn>
         @endif
-    </a>
+    </div>
 
     {{-- Body --}}
     <div class="al-car-body">
@@ -61,30 +65,6 @@
                 <span class="al-car-tag">{{ $tag }}</span>
             @endif
         </div>
-
-        {{-- Book Now --}}
-        @if ($productId)
-            <button
-                type="button"
-                class="al-car-cta"
-                style="width:100%;justify-content:center;border:none;cursor:pointer;margin-top:0.85rem;gap:0.4rem;"
-                data-url="{{ $url }}"
-                data-auth="{{ $isAuth ? '1' : '0' }}"
-                onclick="(function(el){if(el.dataset.auth==='1'){window.location.href=el.dataset.url;}else{alOpenAuthDialog();}})(this)"
-            >
-                <x-heroicon-o-calendar-days style="width:1rem;height:1rem;flex-shrink:0;" />
-                {{ __('auto-leading-theme::app.common.book_now') }}
-            </button>
-        @else
-            <a
-                href="{{ $url }}"
-                class="al-car-cta"
-                style="width:100%;justify-content:center;margin-top:0.85rem;gap:0.4rem;"
-            >
-                <x-heroicon-o-calendar-days style="width:1rem;height:1rem;flex-shrink:0;" />
-                {{ __('auto-leading-theme::app.common.book_now') }}
-            </a>
-        @endif
     </div>
 </div>
 
@@ -95,7 +75,7 @@
             @click.prevent="toggle"
             :disabled="loading"
             :style="wishlisted ? 'color:#F0A500;' : 'color:#fff;'"
-            style="position:absolute;bottom:0.75rem;left:0.75rem;width:2rem;height:2rem;border-radius:50%;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,opacity 0.2s;"
+            style="position:absolute;bottom:0.75rem;left:0.75rem;z-index:2;width:2rem;height:2rem;border-radius:50%;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,opacity 0.2s;"
             aria-label="{{ __('auto-leading-theme::app.common.add_to_wishlist') }}"
         >
             <x-heroicon-o-star v-if="!wishlisted" style="width:1rem;height:1rem;flex-shrink:0;" />
@@ -108,7 +88,7 @@
             template: '#v-al-wishlist-btn-template',
 
             props: {
-                productId:   { type: [Number, String], required: true },
+                productId:    { type: [Number, String], required: true },
                 isWishlisted: { type: Boolean, default: false },
                 isCustomer:   { type: Boolean, default: false },
                 wishlistUrl:  { type: String, required: true },

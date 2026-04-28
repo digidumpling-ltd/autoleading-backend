@@ -388,6 +388,10 @@ Key debug finding: `bagisto_asset()` in `<x-shop::layouts>` calls `Theme::url()`
 - Fixed logo rendering: removed `bagisto_asset('images/logo.svg')` fallback (which would abort 404); now uses `@if(logo_url)` + text fallback.
 - Added image assets (`favicon.ico`, `logo.svg`, `default-language.svg`) to `src/Resources/assets/images/` and rebuilt Vite bundle so `<x-shop::layouts>` can resolve `bagisto_asset('images/favicon.ico')`.
 - Added 4 new Pest tests to `AutoLeadingThemeScaffoldTest.php`; all 7 tests in suite pass.
+- **[Code-Review Fix 2026-04-29]** H1: Added `@if($featuredProducts->isNotEmpty())` guard in `home/index.blade.php`; empty state falls back to `demo_cars.*` static placeholder cards.
+- **[Code-Review Fix 2026-04-29]** H2: Changed car-card CTA from `common.book_now` → `common.view_car` to match AC 2 contract.
+- **[Code-Review Fix 2026-04-29]** M1: Moved language switcher outside `@guest` block so authenticated users can switch locales; added `core()->getCurrentChannel()->locales()` count > 0 guard (uses channel-specific locales, not all system locales).
+- **[Code-Review Fix 2026-04-29]** M2: Refactored footer to use `<x-auto-leading-theme::footer-column>` for all three columns (Quick Links, Car Models, Contact); Car Models column dynamically populated from the `type` attribute options with static fallback.
 
 ### File List
 

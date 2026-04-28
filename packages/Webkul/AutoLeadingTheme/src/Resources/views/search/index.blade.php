@@ -83,7 +83,7 @@
                 @php
                     $flatProduct = $product->product_flat ?? $product;
                 @endphp
-                <x-auto-leading-theme::car-card
+                <x-auto-leading-theme::product-card
                     :name="$product->name"
                     :price="core()->currency($flatProduct->price ?? 0)"
                     :url="route('shop.product_or_category.index', $product->url_key)"

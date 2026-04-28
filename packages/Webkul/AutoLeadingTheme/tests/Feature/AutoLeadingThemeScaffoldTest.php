@@ -1,4 +1,3 @@
-// This file has been removed as it is now in the correct package.
 <?php
 
 use Illuminate\Support\Str;

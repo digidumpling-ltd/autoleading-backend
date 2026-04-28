@@ -1,31 +1,51 @@
+@php
+    $quickLinks = [
+        ['label' => __('auto-leading-theme::app.nav.home'),    'url' => route('shop.home.index')],
+        ['label' => __('auto-leading-theme::app.footer.car_models'), 'url' => route('shop.search.index')],
+        ['label' => __('auto-leading-theme::app.nav.services'), 'url' => '#'],
+        ['label' => __('auto-leading-theme::app.nav.about'),   'url' => '#'],
+        ['label' => __('auto-leading-theme::app.nav.contact'), 'url' => '#'],
+    ];
+
+    $typeAttrOptions = app(\Webkul\Attribute\Repositories\AttributeRepository::class)
+        ->findOneByField('code', 'type')?->options ?? collect();
+
+    $carModelLinks = $typeAttrOptions->map(fn ($opt) => [
+        'label' => $opt->admin_name,
+        'url'   => route('shop.search.index', ['type' => $opt->id]),
+    ])->toArray();
+
+    if (empty($carModelLinks)) {
+        $carModelLinks = [
+            ['label' => __('auto-leading-theme::app.types.sedan'),      'url' => route('shop.search.index')],
+            ['label' => __('auto-leading-theme::app.types.sports'),     'url' => route('shop.search.index')],
+            ['label' => __('auto-leading-theme::app.types.suv'),        'url' => route('shop.search.index')],
+            ['label' => __('auto-leading-theme::app.types.convertible'),'url' => route('shop.search.index')],
+        ];
+    }
+@endphp
+
 <footer class="al-footer">
     <div class="al-shell py-12">
         <div class="al-footer-grid">
-            <!-- Brand / About -->
-            <div>
-                <h2 class="al-footer-heading italic tracking-tighter text-white text-2xl">
-                    AUTO<span class="text-[var(--al-orange)]">LEADING</span>
-                </h2>
-                <p class="mt-3 text-sm leading-relaxed">
-                    {{ core()->getConfigData('general.general.store-information.name') ?? config('app.name') }}
-                </p>
-            </div>
 
-            <!-- Quick Links -->
-            <div>
-                <h3 class="al-footer-heading">{{ __('auto-leading-theme::app.footer.quick_links') }}</h3>
-                <ul class="al-footer-links">
-                    <li><a href="{{ route('shop.home.index') }}">{{ __('auto-leading-theme::app.nav.home') }}</a></li>
-                    <li><a href="{{ route('shop.search.index') }}">{{ __('auto-leading-theme::app.footer.car_models') }}</a></li>
-                    <li><a href="#">{{ __('auto-leading-theme::app.nav.services') }}</a></li>
-                    <li><a href="#">{{ __('auto-leading-theme::app.nav.about') }}</a></li>
-                    <li><a href="#">{{ __('auto-leading-theme::app.nav.contact') }}</a></li>
-                </ul>
-            </div>
+            {{-- Quick Links --}}
+            <x-auto-leading-theme::footer-column
+                :heading="__('auto-leading-theme::app.footer.quick_links')"
+                :links="$quickLinks"
+            />
 
-            <!-- Contact -->
-            <div>
-                <h3 class="al-footer-heading">{{ __('auto-leading-theme::app.footer.contact') }}</h3>
+            {{-- Car Models --}}
+            <x-auto-leading-theme::footer-column
+                :heading="__('auto-leading-theme::app.footer.car_models')"
+                :links="$carModelLinks"
+            />
+
+            {{-- Contact --}}
+            <x-auto-leading-theme::footer-column
+                :heading="__('auto-leading-theme::app.footer.contact')"
+                :links="[]"
+            >
                 <address class="al-footer-contact">
                     <p>{{ __('auto-leading-theme::app.footer.address') }}</p>
                     <p class="mt-2">
@@ -39,7 +59,8 @@
                         </a>
                     </p>
                 </address>
-            </div>
+            </x-auto-leading-theme::footer-column>
+
         </div>
     </div>
 

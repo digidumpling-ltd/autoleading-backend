@@ -96,22 +96,33 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                @foreach($featuredProducts as $product)
-                    @php
-                        $flatProduct = $product->product_flat ?? $product;
-                    @endphp
-                    <x-auto-leading-theme::car-card
-                        :name="$flatProduct->name ?? $product->name"
-                        :price="core()->currency($flatProduct->price ?? 0)"
-                        :url="route('shop.product_or_category.index', $product->url_key)"
-                        :image="$product->base_image?->url"
-                        :badge="__('auto-leading-theme::app.home.featured_label')"
-                        :tag="__('auto-leading-theme::app.home.hot_deal_label')"
-                        :images-count="$product->images->count()"
-                        :product-id="$product->id"
-                        :is-wishlisted="in_array($product->id, $wishlistedProductIds ?? [])"
-                    />
-                @endforeach
+                @if(isset($featuredProducts) && $featuredProducts->isNotEmpty())
+                    @foreach($featuredProducts as $product)
+                        @php
+                            $flatProduct = $product->product_flat ?? $product;
+                        @endphp
+                        <x-auto-leading-theme::product-card
+                            :name="$flatProduct->name ?? $product->name"
+                            :price="core()->currency($flatProduct->price ?? 0)"
+                            :url="route('shop.product_or_category.index', $product->url_key)"
+                            :image="$product->base_image?->url"
+                            :badge="__('auto-leading-theme::app.home.featured_label')"
+                            :tag="__('auto-leading-theme::app.home.hot_deal_label')"
+                            :images-count="$product->images->count()"
+                            :product-id="$product->id"
+                            :is-wishlisted="in_array($product->id, $wishlistedProductIds ?? [])"
+                        />
+                    @endforeach
+                @else
+                    @foreach([1, 2, 3, 4] as $i)
+                        <x-auto-leading-theme::product-card
+                            :name="__('auto-leading-theme::app.demo_cars.car' . $i . '_name')"
+                            :price="__('auto-leading-theme::app.demo_cars.car' . $i . '_price')"
+                            url="#"
+                            :badge="__('auto-leading-theme::app.home.featured_label')"
+                        />
+                    @endforeach
+                @endif
             </div>
         </div>
     </section>
