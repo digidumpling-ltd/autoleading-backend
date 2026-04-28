@@ -34,7 +34,7 @@
                             class="w-full bg-transparent text-white py-3 px-4 pr-8 rounded-full appearance-none focus:outline-none"
                         >
                             <option value="" class="text-black">{{ __('auto-leading-theme::app.brands.all') }}</option>
-                            @foreach (app('Webkul\Attribute\Repositories\AttributeRepository')->findOneByField('code', 'brand')?->options ?? [] as $brand)
+                            @foreach ($brandOptions as $brand)
                                 <option value="{{ $brand->id }}" class="text-black">{{ $brand->admin_name }}</option>
                             @endforeach
                         </select>
@@ -48,7 +48,7 @@
                             class="w-full bg-transparent text-white py-3 px-4 pr-8 rounded-full appearance-none focus:outline-none"
                         >
                             <option value="" class="text-black">{{ __('auto-leading-theme::app.types.all') }}</option>
-                            @foreach (app('Webkul\Attribute\Repositories\AttributeRepository')->findOneByField('code', 'type')?->options ?? [] as $type)
+                            @foreach ($typeOptions as $type)
                                 <option value="{{ $type->id }}" class="text-black">{{ $type->admin_name }}</option>
                             @endforeach
                         </select>
@@ -101,7 +101,7 @@
                         $flatProduct = $product->product_flat ?? $product;
                     @endphp
                     <x-auto-leading-theme::car-card
-                        :name="$product->name"
+                        :name="$flatProduct->name ?? $product->name"
                         :price="core()->currency($flatProduct->price ?? 0)"
                         :url="route('shop.product_or_category.index', $product->url_key)"
                         :image="$product->base_image?->url"
@@ -182,7 +182,7 @@
                     <img src="{{ bagisto_asset('images/hero-image.webp', 'auto-leading-theme') }}" class="w-full h-full object-cover opacity-50" alt="About">
                 </div>
                 <div class="absolute -bottom-10 -right-10 bg-[#F0A500] p-10 rounded-3xl hidden md:block shadow-2xl">
-                    <span class="text-5xl font-black block text-black">15+</span>
+                    <span class="text-5xl font-black block text-black">{{ __('auto-leading-theme::app.home.years_experience_count') }}</span>
                     <span class="text-black font-bold uppercase tracking-widest text-sm">{{ __('auto-leading-theme::app.home.years_experience') }}</span>
                 </div>
             </div>

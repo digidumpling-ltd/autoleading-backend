@@ -5,6 +5,39 @@ use Spatie\ResponseCache\Facades\ResponseCache;
 
 use function Pest\Laravel\get;
 
+/**
+ * Switch the active channel theme, run a callback, then restore the original.
+ */
+function withTheme(string $theme, callable $callback): void
+{
+    $channel       = core()->getCurrentChannel()->fresh();
+    $originalTheme = $channel->theme;
+
+    $packageHomeView  = base_path('packages/Webkul/AutoLeadingTheme/src/Resources/views/home/index.blade.php');
+    $publishedHomeView = resource_path('themes/auto-leading-theme/views/home/index.blade.php');
+
+    if (! is_dir(dirname($publishedHomeView))) {
+        mkdir(dirname($publishedHomeView), 0755, true);
+    }
+
+    copy($packageHomeView, $publishedHomeView);
+
+    $channel->theme = $theme;
+    $channel->save();
+    core()->setCurrentChannel($channel->fresh());
+
+    ResponseCache::clear();
+
+    try {
+        $callback();
+    } finally {
+        $channel = core()->getCurrentChannel()->fresh();
+        $channel->theme = $originalTheme;
+        $channel->save();
+        core()->setCurrentChannel($channel->fresh());
+    }
+}
+
 it('contains the required AutoLeading theme scaffold files', function () {
     $requiredFiles = [
         base_path('packages/Webkul/AutoLeadingTheme/src/Providers/AutoLeadingThemeServiceProvider.php'),
@@ -49,102 +82,29 @@ it('has footer-column blade component view file', function () {
 });
 
 it('renders footer section when AutoLeading theme is active', function () {
-    $packageHomeView  = base_path('packages/Webkul/AutoLeadingTheme/src/Resources/views/home/index.blade.php');
-    $publishedHomeView = resource_path('themes/auto-leading-theme/views/home/index.blade.php');
-
-    if (! is_dir(dirname($publishedHomeView))) {
-        mkdir(dirname($publishedHomeView), 0755, true);
-    }
-
-    copy($packageHomeView, $publishedHomeView);
-
-    $channel = core()->getCurrentChannel()->fresh();
-    $originalTheme = $channel->theme;
-
-    $channel->theme = 'auto-leading-theme';
-    $channel->save();
-    core()->setCurrentChannel($channel->fresh());
-
-    ResponseCache::clear();
-
-    try {
+    withTheme('auto-leading-theme', function () {
         $response = get('/');
         $response->assertOk();
         expect($response->content())->toContain('al-footer');
-    } finally {
-        $channel = core()->getCurrentChannel()->fresh();
-        $channel->theme = $originalTheme;
-        $channel->save();
-        core()->setCurrentChannel($channel->fresh());
-    }
+    });
 });
 
 it('renders services section when AutoLeading theme is active', function () {
-    $packageHomeView  = base_path('packages/Webkul/AutoLeadingTheme/src/Resources/views/home/index.blade.php');
-    $publishedHomeView = resource_path('themes/auto-leading-theme/views/home/index.blade.php');
-
-    if (! is_dir(dirname($publishedHomeView))) {
-        mkdir(dirname($publishedHomeView), 0755, true);
-    }
-
-    copy($packageHomeView, $publishedHomeView);
-
-    $channel = core()->getCurrentChannel()->fresh();
-    $originalTheme = $channel->theme;
-
-    $channel->theme = 'auto-leading-theme';
-    $channel->save();
-    core()->setCurrentChannel($channel->fresh());
-
-    ResponseCache::clear();
-
-    try {
+    withTheme('auto-leading-theme', function () {
         $response = get('/');
         $response->assertOk();
         expect($response->content())->toContain('al-services');
-    } finally {
-        $channel = core()->getCurrentChannel()->fresh();
-        $channel->theme = $originalTheme;
-        $channel->save();
-        core()->setCurrentChannel($channel->fresh());
-    }
+    });
 });
 
 it('renders homepage using AutoLeading override when channel theme is selected', function () {
-    $packageHomeView = base_path('packages/Webkul/AutoLeadingTheme/src/Resources/views/home/index.blade.php');
-    $publishedHomeView = resource_path('themes/auto-leading-theme/views/home/index.blade.php');
+    expect(file_exists(
+        base_path('packages/Webkul/AutoLeadingTheme/src/Resources/views/home/index.blade.php')
+    ))->toBeTrue();
 
-    expect(file_exists($packageHomeView))->toBeTrue();
-
-    if (! is_dir(dirname($publishedHomeView))) {
-        mkdir(dirname($publishedHomeView), 0755, true);
-    }
-
-    copy($packageHomeView, $publishedHomeView);
-
-    $channel = core()->getCurrentChannel()->fresh();
-
-    $originalTheme = $channel->theme;
-
-    $channel->theme = 'auto-leading-theme';
-    $channel->save();
-
-    core()->setCurrentChannel($channel->fresh());
-
-    ResponseCache::clear();
-
-    try {
+    withTheme('auto-leading-theme', function () {
         $response = get('/');
-
         $response->assertOk();
-
         expect(Str::contains($response->content(), trans('auto-leading-theme::app.home.hero_title')))->toBeTrue();
-    } finally {
-        $channel = core()->getCurrentChannel()->fresh();
-
-        $channel->theme = $originalTheme;
-        $channel->save();
-
-        core()->setCurrentChannel($channel->fresh());
-    }
+    });
 });

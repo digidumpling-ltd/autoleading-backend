@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'shop-default' => 'auto-leading-theme',
+    'shop-default' => 'default',
 
     'shop' => [
         'default' => [

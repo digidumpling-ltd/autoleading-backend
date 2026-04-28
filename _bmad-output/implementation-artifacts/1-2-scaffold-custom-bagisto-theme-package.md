@@ -1,6 +1,6 @@
 # Story 1.2: Scaffold custom Bagisto theme package
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -233,9 +233,45 @@ GPT-5.3-Codex
 - `packages/Webkul/AutoLeadingTheme/tailwind.config.js`
 - `packages/Webkul/AutoLeadingTheme/vite.config.js`
 - `packages/Webkul/AutoLeadingTheme/src/Providers/AutoLeadingThemeServiceProvider.php`
+- `packages/Webkul/AutoLeadingTheme/src/Routes/theme-routes.php`
+- `packages/Webkul/AutoLeadingTheme/src/Http/Controllers/BlogController.php`
+- `packages/Webkul/AutoLeadingTheme/src/Http/Controllers/FaqController.php`
 - `packages/Webkul/AutoLeadingTheme/src/Resources/assets/css/app.css`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/css/components/car-card.css`
 - `packages/Webkul/AutoLeadingTheme/src/Resources/assets/js/app.js`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/default-language.svg`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/favicon.ico`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/hero-image.jpg`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/hero-image.webp`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/logo.svg`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/no-address.png`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/review.png`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/small-product-placeholder.webp`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/spinner.svg`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/thank-you.png`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/user-placeholder.png`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/assets/images/wishlist.png`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/lang/en/app.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/lang/zh_CN/app.php`
 - `packages/Webkul/AutoLeadingTheme/src/Resources/views/home/index.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/blog/index.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/blog/show.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/contact/index.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/customers/account/profile/index.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/customers/account/verification-dashboard.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/customers/sign-in.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/customers/sign-up.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/faq/index.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/products/view.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/search/index.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/components/alert.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/components/car-card.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/components/footer-column.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/components/lang-switcher.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/components/layouts/auth.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/components/layouts/footer/index.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/components/layouts/header/index.blade.php`
+- `packages/Webkul/AutoLeadingTheme/src/Resources/views/components/layouts/index.blade.php`
 - `packages/Webkul/Shop/tests/Feature/AutoLeadingThemeScaffoldTest.php`
 
 ### Change Log

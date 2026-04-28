@@ -22,6 +22,8 @@ class AutoLeadingThemeServiceProvider extends ServiceProvider
     {
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'auto-leading-theme');
 
+        $this->loadRoutesFrom(__DIR__.'/../Routes/theme-routes.php');
+
         $this->publishes([
             __DIR__.'/../Resources/views' => resource_path('themes/auto-leading-theme/views'),
         ], 'auto-leading-theme-views');
@@ -32,10 +34,10 @@ class AutoLeadingThemeServiceProvider extends ServiceProvider
         );
 
         view()->composer('shop::home.index', function ($view) {
-            /** @var \Webkul\Product\Repositories\ProductRepository $repo */
-            $repo = app(\Webkul\Product\Repositories\ProductRepository::class);
+            /** @var \Webkul\Product\Repositories\ProductRepository $productRepo */
+            $productRepo = app(\Webkul\Product\Repositories\ProductRepository::class);
 
-            $view->with('featuredProducts', $repo->with(['images'])
+            $view->with('featuredProducts', $productRepo->with(['images'])
                 ->scopeQuery(fn ($q) => $q
                     ->join('product_flat as pf', 'products.id', '=', 'pf.product_id')
                     ->where('pf.status', 1)
@@ -57,6 +59,11 @@ class AutoLeadingThemeServiceProvider extends ServiceProvider
             }
 
             $view->with('wishlistedProductIds', $wishlistedProductIds);
+
+            /** @var \Webkul\Attribute\Repositories\AttributeRepository $attrRepo */
+            $attrRepo = app(\Webkul\Attribute\Repositories\AttributeRepository::class);
+            $view->with('brandOptions', $attrRepo->findOneByField('code', 'brand')?->options ?? []);
+            $view->with('typeOptions', $attrRepo->findOneByField('code', 'type')?->options ?? []);
         });
 
         view()->composer('shop::search.index', function ($view) {

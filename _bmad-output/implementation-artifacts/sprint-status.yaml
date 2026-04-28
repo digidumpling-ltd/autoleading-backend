@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-04-01 06:39:56 +08
-last_updated: 2026-04-26 14:00:00 +08
+last_updated: 2026-04-29 00:00:00 +08
 project: bagisto
 project_key: NOKEY
 tracking_system: file-system
@@ -44,7 +44,7 @@ story_location: /home/developer/bagisto/_bmad-output/implementation-artifacts
 development_status:
   epic-1: in-progress
   1-1-redesign-and-implement-the-homepage-with-new-layout-banners-and-featured-sections: backlog
-  1-2-scaffold-custom-bagisto-theme-package: review
+  1-2-scaffold-custom-bagisto-theme-package: done
   1-3-build-homepage-layout-and-shared-components: done
   1-4-implement-all-referenced-pages-and-sections: review
   1-5-apply-color-font-and-branding: backlog
