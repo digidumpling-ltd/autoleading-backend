@@ -2,6 +2,7 @@
 
 namespace Webkul\Yedpay\Payment;
 
+use Illuminate\Support\Facades\Storage;
 use Webkul\Payment\Payment\Payment;
 use Webkul\Wallet\Contracts\SupportsWalletTopUp;
 
@@ -22,6 +23,13 @@ class Yedpay extends Payment implements SupportsWalletTopUp
     public function isAvailable()
     {
         return parent::isAvailable() && $this->hasValidCredentials();
+    }
+
+    public function getImage(): string
+    {
+        $url = $this->getConfigData('image');
+
+        return $url ? Storage::url($url) : '';
     }
 
     public function getTitle()

@@ -54,24 +54,58 @@
 
                 @if ($methods->isNotEmpty())
                     <div class="mb-6">
-                        <label class="mb-2 block text-sm font-medium text-zinc-700">
+                        <label class="mb-3 block text-sm font-medium text-zinc-700">
                             @lang('bagisto-wallet::app.customers.account.wallet.topup-select-method')
                             <span class="text-red-500">*</span>
                         </label>
 
-                        <div class="space-y-2">
+                        <div class="flex flex-wrap gap-7 max-md:gap-4 max-sm:gap-2.5">
                             @foreach ($methods as $method)
-                                <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-200 p-3 hover:border-zinc-400">
+                                @php $checked = old('payment_method', $loop->first ? $method['method'] : null) === $method['method']; @endphp
+
+                                <div class="relative cursor-pointer max-md:max-w-full max-md:flex-auto">
                                     <input
                                         type="radio"
                                         name="payment_method"
                                         value="{{ $method['method'] }}"
-                                        {{ old('payment_method') === $method['method'] ? 'checked' : ($loop->first ? 'checked' : '') }}
-                                        class="accent-navyBlue"
+                                        id="payment_method_{{ $method['method'] }}"
+                                        {{ $checked ? 'checked' : '' }}
+                                        class="peer hidden"
                                     />
 
-                                    <span class="text-sm font-medium">{{ $method['method_title'] }}</span>
-                                </label>
+                                    <label
+                                        for="payment_method_{{ $method['method'] }}"
+                                        class="icon-radio-unselect peer-checked:icon-radio-select absolute top-5 cursor-pointer text-2xl text-navyBlue ltr:right-5 rtl:left-5"
+                                    ></label>
+
+                                    <label
+                                        for="payment_method_{{ $method['method'] }}"
+                                        class="block w-[190px] cursor-pointer rounded-xl border border-zinc-200 p-5 max-md:flex max-md:w-full max-md:gap-5 max-md:rounded-lg max-sm:gap-4 max-sm:px-4 max-sm:py-2.5"
+                                    >
+                                        @if ($method['image'])
+                                            <img
+                                                class="max-h-11 max-w-14"
+                                                src="{{ $method['image'] }}"
+                                                width="55"
+                                                height="55"
+                                                alt="{{ $method['method_title'] }}"
+                                                title="{{ $method['method_title'] }}"
+                                            />
+                                        @endif
+
+                                        <div>
+                                            <p class="mt-1.5 text-sm font-semibold max-md:mt-1 max-sm:mt-0">
+                                                {{ $method['method_title'] }}
+                                            </p>
+
+                                            @if ($method['description'])
+                                                <p class="mt-2.5 text-xs font-medium text-zinc-500 max-md:mt-1 max-sm:mt-0">
+                                                    {{ $method['description'] }}
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </label>
+                                </div>
                             @endforeach
                         </div>
 

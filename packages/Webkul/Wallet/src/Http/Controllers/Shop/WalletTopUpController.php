@@ -79,8 +79,10 @@ class WalletTopUpController extends Controller
                 $class = app($config['class']);
 
                 return [
-                    'method'           => $config['code'],
-                    'method_title'     => $class->getTitle(),
+                    'method'             => $config['code'],
+                    'method_title'       => $class->getTitle(),
+                    'description'        => $class->getDescription(),
+                    'image'              => $class->getImage(),
                     'topup_redirect_url' => $class->getTopUpRedirectUrl(),
                 ];
             })

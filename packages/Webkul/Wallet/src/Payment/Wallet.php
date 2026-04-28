@@ -2,6 +2,7 @@
 
 namespace Webkul\Wallet\Payment;
 
+use Illuminate\Support\Facades\Storage;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Payment\Payment\Payment;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
@@ -15,6 +16,13 @@ class Wallet extends Payment
      * @var string
      */
     protected $code = 'wallet';
+
+    public function getImage(): string
+    {
+        $url = $this->getConfigData('image');
+
+        return $url ? Storage::url($url) : '';
+    }
 
     /**
      * Redirect to wallet top-up page when balance is insufficient, null otherwise.
