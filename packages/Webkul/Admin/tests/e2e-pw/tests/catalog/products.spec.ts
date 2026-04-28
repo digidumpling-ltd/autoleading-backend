@@ -95,7 +95,7 @@ test.describe("configurable product management", () => {
         await new ProductEditPage(adminPage).editConfigurableProduct();
 
         await expect(
-            adminPage.getByText(/Product updated successfully/i),
+            adminPage.getByText(/Product updated successfully/i).first(),
         ).toBeVisible();
     });
 
@@ -131,10 +131,12 @@ test.describe("grouped product management", () => {
     });
 
     test("should edit a grouped product", async ({ adminPage }) => {
-        await new ProductEditPage(adminPage).editGroupedProduct();
+        const page = new ProductEditPage(adminPage);
+
+        await page.editGroupedProduct();
 
         await expect(
-            adminPage.getByText(/Product updated successfully/i).first(),
+            page.updateProductSuccessToast.first()
         ).toBeVisible();
     });
 
@@ -171,10 +173,12 @@ test.describe("virtual product management", () => {
     });
 
     test("should edit a virtual product", async ({ adminPage }) => {
-        await new ProductEditPage(adminPage).editVirtualProduct();
+        const page = new ProductEditPage(adminPage);
+
+        await page.editVirtualProduct();
 
         await expect(
-            adminPage.getByText(/Product updated successfully/i).first(),
+            page.updateProductSuccessToast.first(),
         ).toBeVisible();
     });
 
@@ -213,10 +217,12 @@ test.describe("downloadable product management", () => {
     });
 
     test("should edit a downloadable product", async ({ adminPage }) => {
-        await new ProductEditPage(adminPage).editDownloadableProduct();
+        const page = new ProductEditPage(adminPage);
+
+        await page.editDownloadableProduct()
 
         await expect(
-            adminPage.getByText(/Product updated successfully/i).first(),
+            page.updateProductSuccessToast.first(),
         ).toBeVisible();
     });
 
@@ -238,141 +244,439 @@ test.describe("booking product management", () => {
         test("should create default product with one booking for many days", async ({
             adminPage,
         }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createDefaultBookingProductWithOneBookingForManyDays();
+            const page = new ProductCreatePage(adminPage);
+            const name = await page.createDefaultBookingProductWithOneBookingForManyDays();
+            await expect(
+                page.updateProductSuccessToast.first(),
+            ).toBeVisible();
+            await page.verifyProductVisible(name)
+
         });
 
         test("should create default product with many booking for one day", async ({
             adminPage,
         }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createDefaultBookingProductWithManyBookingForOneDay();
+            const page = new ProductCreatePage(adminPage);
+
+            const name = await page.createDefaultBookingProductWithManyBookingForOneDay();
+
+            await expect(
+                page.updateProductSuccessToast.first(),
+            ).toBeVisible();
+
+            await page.verifyProductVisible(name)
+
         });
+
+        test("should get the validation error while creating default booking product with a time range shorter than the configured slots", async ({ adminPage }) => {
+            await new ProductCreatePage(adminPage,).handleDefaultBookingWithShorterTimeRangeThanSlots()
+
+            await new ProductCreatePage(adminPage,).expectBookingErrorText(
+                "This window must span at least 45 minutes.",
+            );
+
+        });
+    })
+});
+
+
+
+test.describe("booking product for appointment booking type", () => {
+    test("should create appointment booking product that are not available every week with same slot for all days", async ({
+        adminPage,
+    }) => {
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createAppointmentBookingProductNotAvailableEveryWeekWithSameSlotForAllDays();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+
     });
 
-    test.describe("booking product for appointment booking type", () => {
-        test("should create appointment booking product that are not available every week with same slot for all days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createAppointmentBookingProductNotAvailableEveryWeekWithSameSlotForAllDays();
-        });
+    test("should create appointment booking product that are not available every week with no same slot for all days", async ({
+        adminPage,
+    }) => {
+        const page = new ProductCreatePage(adminPage);
 
-        test("should create appointment booking product that are not available every week with no same slot for all days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createAppointmentBookingProductNotAvailableEveryWeekWithNoSameSlotForAllDays();
-        });
+        const name = await page.createAppointmentBookingProductNotAvailableEveryWeekWithNoSameSlotForAllDays();
 
-        test("should create appointment booking product that are available every week with no same slot for all days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createAppointmentBookingProductAvailableEveryWeekWithNoSameSlotForAllDays();
-        });
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
 
-        test("should create appointment booking product that are available every week with same slot for all days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createAppointmentBookingProductAvailableEveryWeekWithSameSlotForAllDays();
-        });
+        await page.verifyProductVisible(name)
+
     });
 
-    test.describe("booking product for event booking type", () => {
-        test("should create event booking product ", async ({ adminPage }) => {
-            await new ProductCreatePage(adminPage).createEventBookingProduct();
-        });
+    test("should create appointment booking product that are available every week with no same slot for all days", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createAppointmentBookingProductAvailableEveryWeekWithNoSameSlotForAllDays();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+
     });
 
-    test.describe("booking product for rental booking type", () => {
-        test("should create rental booking product for daily basis with not available for every week", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createRentalBookingProductDailyBasisNotAvailableEveryWeek();
-        });
+    test("should create appointment booking product that are available every week with same slot for all days", async ({
+        adminPage,
+    }) => {
 
-        test("should create rental booking product for daily basis with available for every week", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createRentalBookingProductDailyBasisAvailableEveryWeek();
-        });
+        const page = new ProductCreatePage(adminPage);
 
-        test("should create rental booking product for hourly basis available for same slot for All days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createRentalBookingProductHourlyBasisSameSlotAllDays();
-        });
+        const name = await page.createAppointmentBookingProductAvailableEveryWeekWithSameSlotForAllDays();
 
-        test("should create rental booking product for hourly basis available for not same slot for All days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createRentalBookingProductHourlyBasisNotSameSlotAllDays();
-        });
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
 
-        test("should create rental booking product for Both(hourly or day) basis available for same slot for All days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createRentalBookingProductBothBasisSameSlotAllDays();
-        });
-
-        test("should create rental booking product for Both(hourly or day) basis not available for same slot for All days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createRentalBookingProductBothBasisNotSameSlotAllDays();
-        });
+        await page.verifyProductVisible(name)
     });
 
-    test.describe("booking product for table booking type", () => {
-        test("should create Table booking product and charge per guest with same slot for all days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createTableBookingProductChargePerGuestSameSlotAllDays();
-        });
+});
 
-        test("should create Table booking product and charge per guest with not same slot for all days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createTableBookingProductChargePerGuestNotSameSlotAllDays();
-        });
+test.describe("Appointment Booking - Time Range Shorter Than Configured Slots Validation", () => {
 
-        test("should create Table booking product and charge per table with same slot for all days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createTableBookingProductChargePerTableSameSlotAllDays();
-        });
+    test("should get validation error when available every week with same slot all days", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleAppointmentBookingWithShorterTimeRangeThanSlots(true, true);
+        await new ProductCreatePage(adminPage).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
 
-        test("should create Table booking product and charge per table with not same slot for all days", async ({
-            adminPage,
-        }) => {
-            await new ProductCreatePage(
-                adminPage,
-            ).createTableBookingProductChargePerTableNotSameSlotAllDays();
-        });
+    test("should get validation error when available every week with different slots per day", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleAppointmentBookingWithShorterTimeRangeThanSlots(true, false);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+    test("should get validation error when not available every week with same slot all days", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleAppointmentBookingWithShorterTimeRangeThanSlots(false, true);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+    test("should get validation error when not available every week with different slots per day", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleAppointmentBookingWithShorterTimeRangeThanSlots(false, false);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+});
+
+test.describe("booking product for event booking type", () => {
+    test("should create event booking product ", async ({ adminPage }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createEventBookingProduct();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
     });
 });
+
+test.describe("booking product for rental booking type", () => {
+    test("should create rental booking product for daily basis with not available for every week", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createRentalBookingProductDailyBasisNotAvailableEveryWeek();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+    });
+
+    test("should create rental booking product for daily basis with available for every week", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createRentalBookingProductDailyBasisAvailableEveryWeek();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+
+    });
+
+    test("should create rental booking product for hourly basis available for same slot for All days", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createRentalBookingProductHourlyBasisSameSlotAllDays();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+    });
+
+    test("should create rental booking product for hourly basis available for not same slot for All days", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createRentalBookingProductHourlyBasisNotSameSlotAllDays();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+    });
+
+    test("should create rental booking product for Both(hourly or day) basis available for same slot for All days", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createRentalBookingProductBothBasisSameSlotAllDays();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+    });
+
+    test("should create rental booking product for Both(hourly or day) basis not available for same slot for All days", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createRentalBookingProductBothBasisNotSameSlotAllDays();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+    });
+});
+
+test.describe("Rental Booking - Time Range Shorter Than Configured Slots Validation for hourly only ", () => {
+
+    test("should get validation error when available every week with same slot all days", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleRentalBookingWithShorterTimeRangeThanSlots(true, true);
+
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 60 minutes.",
+        );
+    });
+
+    test("should get validation error when available every week with different slots per day", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleRentalBookingWithShorterTimeRangeThanSlots(true, false);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 60 minutes.",
+        );
+    });
+
+    test("should get validation error when not available every week with same slot all days", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleRentalBookingWithShorterTimeRangeThanSlots(false, true);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 60 minutes.",
+        );
+    });
+
+    test("should get validation error when not available every week with different slots per day", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleRentalBookingWithShorterTimeRangeThanSlots(false, false);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 60 minutes.",
+        );
+    });
+
+});
+
+test.describe("Rental Booking - Time Range Shorter Than Configured Slots (Daily/Hourly/Both) Validation", () => {
+
+    test("should get validation error when available every week with same slot all days", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).createRentalBookingProductBothhourlyDailywith_and_withoutRange(true, true);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 60 minutes.",
+        );
+    });
+
+    test("should get validation error when available every week with different slots per day", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).createRentalBookingProductBothhourlyDailywith_and_withoutRange(true, false);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 60 minutes.",
+        );
+    });
+
+    test("should get validation error when not available every week with same slot all days", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).createRentalBookingProductBothhourlyDailywith_and_withoutRange(false, true);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 60 minutes.",
+        );
+    });
+
+    test("should get validation error when not available every week with different slots per day", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).createRentalBookingProductBothhourlyDailywith_and_withoutRange(false, false);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 60 minutes.",
+        );
+    });
+
+});
+
+
+test.describe("booking product for table booking type", () => {
+    test("should create Table booking product and charge per guest with same slot for all days", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createTableBookingProductChargePerGuestSameSlotAllDays();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+    });
+
+    test("should create Table booking product and charge per guest with not same slot for all days", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createTableBookingProductChargePerGuestNotSameSlotAllDays();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+    });
+
+    test("should create Table booking product and charge per table with same slot for all days", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createTableBookingProductChargePerTableSameSlotAllDays();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+    });
+
+    test("should create Table booking product and charge per table with not same slot for all days", async ({
+        adminPage,
+    }) => {
+
+        const page = new ProductCreatePage(adminPage);
+
+        const name = await page.createTableBookingProductChargePerTableNotSameSlotAllDays();
+
+        await expect(
+            page.updateProductSuccessToast.first(),
+        ).toBeVisible();
+
+        await page.verifyProductVisible(name)
+    });
+});
+
+test.describe("Table Booking - Time Range Shorter Than Configured Slots (Guest) Validation", () => {
+
+    test("should get validation error when available every week with same slot all days", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleGuestTableBookingWithShorterTimeRangeThanSlots(true, true);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+    test("should get validation error when available every week with different slots per day", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleGuestTableBookingWithShorterTimeRangeThanSlots(true, false);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+    test("should get validation error when not available every week with same slot all days", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleGuestTableBookingWithShorterTimeRangeThanSlots(false, true);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+    test("should get validation error when not available every week with different slots per day", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleGuestTableBookingWithShorterTimeRangeThanSlots(false, false);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+});
+
+
+
+test.describe("Table Booking - Time Range Shorter Than Configured Slots (Table) Validation", () => {
+
+    test("should get validation error when available every week with same slot all days", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleTable_TableBookingWithShorterTimeRangeThanSlots(true, true);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+    test("should get validation error when available every week with different slots per day", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleTable_TableBookingWithShorterTimeRangeThanSlots(true, false);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+    test("should get validation error when not available every week with same slot all days", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleTable_TableBookingWithShorterTimeRangeThanSlots(false, true);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+    test("should get validation error when not available every week with different slots per day", async ({ adminPage }) => {
+        await new ProductCreatePage(adminPage).handleTable_TableBookingWithShorterTimeRangeThanSlots(false, false);
+        await new ProductCreatePage(adminPage,).expectBookingErrorText(
+            "This window must span at least 45 minutes.",
+        );
+    });
+
+});
+
+
