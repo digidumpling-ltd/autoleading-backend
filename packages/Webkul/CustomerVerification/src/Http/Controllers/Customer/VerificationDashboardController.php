@@ -35,7 +35,7 @@ class VerificationDashboardController extends Controller
             fn (string $documentType): bool => ! $documents->has($documentType)
         ));
 
-        return view('shop::customers.account.verification-dashboard', [
+        return view('customer-verification::shop.customers.account.verification-dashboard', [
             'customer' => $customer,
             'documents' => $documents,
             'documentMeta' => $documentMeta,

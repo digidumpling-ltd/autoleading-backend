@@ -19,7 +19,6 @@
 
         @bagistoVite(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'], 'auto-leading-theme')
 
-        {{-- Alpine.js — same CDN as main layout --}}
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -30,7 +30,7 @@
             >
                 {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
 
-                {{-- First Name + Last Name (2-col) --}}
+                {{-- First Name + Last Name --}}
                 <div class="al-auth-form-grid">
                     <x-shop::form.control-group>
                         <x-shop::form.control-group.label class="required">
@@ -75,7 +75,7 @@
                     {!! view_render_event('bagisto.shop.customers.signup_form.last_name.after') !!}
                 </div>
 
-                {{-- Email (full width) --}}
+                {{-- Email --}}
                 <x-shop::form.control-group>
                     <x-shop::form.control-group.label class="required">
                         @lang('shop::app.customers.signup-form.email')
@@ -97,7 +97,7 @@
 
                 {!! view_render_event('bagisto.shop.customers.signup_form.email.after') !!}
 
-                {{-- Password + Confirm Password (2-col) --}}
+                {{-- Password + Confirm Password --}}
                 <div class="al-auth-form-grid">
                     <x-shop::form.control-group>
                         <x-shop::form.control-group.label class="required">
@@ -141,72 +141,6 @@
                     </x-shop::form.control-group>
 
                     {!! view_render_event('bagisto.shop.customers.signup_form.password_confirmation.after') !!}
-                </div>
-
-                {{-- Document Upload --}}
-                <div class="al-auth-section">
-                    <p class="al-auth-section-title">
-                        {{ __('customer-verification::app.common.upload_documents') }}
-                    </p>
-                    <p class="al-auth-section-hint">
-                        {{ __('customer-verification::app.common.upload_documents_hint') }}
-                    </p>
-
-                    <div class="al-auth-upload-grid">
-                        <x-shop::form.control-group>
-                            <x-shop::form.control-group.label>
-                                {{ __('customer-verification::app.common.upload_id_document') }}
-                            </x-shop::form.control-group.label>
-
-                            <x-shop::form.control-group.control
-                                type="file"
-                                name="id_document"
-                                accept="image/png,image/jpeg,image/webp"
-                            />
-
-                            <p class="al-auth-upload-hint">
-                                {{ __('customer-verification::app.common.upload_id_document_hint') }}
-                            </p>
-
-                            <x-shop::form.control-group.error control-name="id_document" />
-                        </x-shop::form.control-group>
-
-                        <x-shop::form.control-group>
-                            <x-shop::form.control-group.label>
-                                {{ __('customer-verification::app.common.upload_driver_license') }}
-                            </x-shop::form.control-group.label>
-
-                            <x-shop::form.control-group.control
-                                type="file"
-                                name="driver_license"
-                                accept="image/png,image/jpeg,image/webp"
-                            />
-
-                            <p class="al-auth-upload-hint">
-                                {{ __('customer-verification::app.common.upload_driver_license_hint') }}
-                            </p>
-
-                            <x-shop::form.control-group.error control-name="driver_license" />
-                        </x-shop::form.control-group>
-
-                        <x-shop::form.control-group>
-                            <x-shop::form.control-group.label>
-                                {{ __('customer-verification::app.common.upload_address_proof') }}
-                            </x-shop::form.control-group.label>
-
-                            <x-shop::form.control-group.control
-                                type="file"
-                                name="address_proof"
-                                accept="image/png,image/jpeg,application/pdf"
-                            />
-
-                            <p class="al-auth-upload-hint">
-                                {{ __('customer-verification::app.common.upload_address_proof_hint') }}
-                            </p>
-
-                            <x-shop::form.control-group.error control-name="address_proof" />
-                        </x-shop::form.control-group>
-                    </div>
                 </div>
 
                 {{-- Captcha --}}

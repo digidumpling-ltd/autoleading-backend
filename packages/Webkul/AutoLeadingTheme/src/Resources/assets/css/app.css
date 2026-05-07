@@ -4,6 +4,160 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: "bagisto-shop";
+    src: url("../fonts/bagisto-shop.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@layer components {
+    [class^="icon-"],
+    [class*=" icon-"] {
+        font-family: "bagisto-shop" !important;
+        speak: never;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1 !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .icon-gdpr-safe:before { content: "\e84f"; }
+    .icon-checkout-address:before { content: "\e944"; }
+    .icon-edit:before { content: "\e943"; }
+    .icon-add-new:before { content: "\e900"; }
+    .icon-arrow-down:before { content: "\e901"; }
+    .icon-arrow-left-stylish:before { content: "\e902"; }
+    .icon-arrow-left:before { content: "\e903"; }
+    .icon-arrow-right-stylish:before { content: "\e904"; }
+    .icon-arrow-right:before { content: "\e905"; }
+    .icon-arrow-up:before { content: "\e906"; }
+    .icon-astreisk:before { content: "\e907"; }
+    .icon-bin:before { content: "\e908"; }
+    .icon-box-fill:before { content: "\e909"; }
+    .icon-calendar:before { content: "\e90a"; }
+    .icon-camera-fill:before { content: "\e90b"; }
+    .icon-camera:before { content: "\e90c"; }
+    .icon-cancel:before { content: "\e90d"; }
+    .icon-cart:before { content: "\e90e"; }
+    .icon-check-box:before { content: "\e90f"; }
+    .icon-compare-1:before { content: "\e910"; }
+    .icon-compare:before { content: "\e911"; }
+    .icon-dislike:before { content: "\e912"; }
+    .icon-dollar-sign:before { content: "\e913"; }
+    .icon-double-arrow:before { content: "\e914"; }
+    .icon-download:before { content: "\e915"; }
+    .icon-email:before { content: "\e916"; }
+    .icon-error:before { content: "\e917"; }
+    .icon-eye:before { content: "\e918"; }
+    .icon-filter-1:before { content: "\e919"; }
+    .icon-filter-fill:before { content: "\e91a"; }
+    .icon-filter:before { content: "\e91b"; }
+    .icon-flate-rate:before { content: "\e91c"; }
+    .icon-Free-Shipping:before { content: "\e91d"; }
+    .icon-grid-view-fill:before { content: "\e91e"; }
+    .icon-grid-view:before { content: "\e91f"; }
+    .icon-hamburger:before { content: "\e920"; }
+    .icon-heart-1:before { content: "\e921"; }
+    .icon-heart-2:before { content: "\e922"; }
+    .icon-heart-fill:before { content: "\e923"; }
+    .icon-heart:before { content: "\e924"; }
+    .icon-left-arrow:before { content: "\e925"; }
+    .icon-like:before { content: "\e926"; }
+    .icon-listing-fill:before { content: "\e927"; }
+    .icon-listing:before { content: "\e928"; }
+    .icon-location:before { content: "\e929"; }
+    .icon-minus:before { content: "\e92a"; }
+    .icon-more:before { content: "\e92b"; }
+    .icon-orders:before { content: "\e92c"; }
+    .icon-pen:before { content: "\e92d"; }
+    .icon-plus:before { content: "\e92e"; }
+    .icon-product:before { content: "\e92f"; }
+    .icon-radio-select:before { content: "\e930"; }
+    .icon-radio-unselect:before { content: "\e931"; }
+    .icon-right-arrow:before { content: "\e932"; }
+    .icon-search:before { content: "\e933"; }
+    .icon-share:before { content: "\e934"; }
+    .icon-sort-1:before { content: "\e935"; }
+    .icon-sort-by:before { content: "\e936"; }
+    .icon-sort:before { content: "\e937"; color: #7d7d7d; }
+    .icon-star-fill:before { content: "\e938"; }
+    .icon-star:before { content: "\e939"; }
+    .icon-support:before { content: "\e93a"; }
+    .icon-tick:before { content: "\e93b"; }
+    .icon-toast-done:before { content: "\e93c"; }
+    .icon-toast-error:before { content: "\e93d"; }
+    .icon-toast-exclamation-mark:before { content: "\e93e"; }
+    .icon-toast-info:before { content: "\e93f"; }
+    .icon-truck:before { content: "\e940"; }
+    .icon-uncheck:before { content: "\e941"; }
+    .icon-users:before { content: "\e942"; }
+
+    button:disabled {
+        @apply cursor-not-allowed opacity-50;
+    }
+
+    .primary-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        font-weight: 500;
+        border-radius: 0.75rem;
+        color: #000;
+        background-color: var(--al-orange);
+        border: 1px solid var(--al-orange);
+        padding: 1rem 2rem;
+        max-width: max-content;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .primary-button:hover {
+        background-color: var(--al-orange-dark);
+        border-color: var(--al-orange-dark);
+    }
+
+    .secondary-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        font-weight: 500;
+        border-radius: 0.75rem;
+        background-color: #fff;
+        color: #1a1a1a;
+        border: 1px solid #d4d4d4;
+        padding: 1rem 2rem;
+        max-width: max-content;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .secondary-button:hover {
+        background-color: #f5f5f5;
+    }
+
+    .shimmer {
+        animation-duration: 2.2s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: al-skeleton;
+        animation-timing-function: linear;
+        background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
+        background-size: 1250px 100%;
+    }
+
+    @keyframes al-skeleton {
+        0% { background-position: -1250px 0; }
+        100% { background-position: 1250px 0; }
+    }
+}
+
 @layer base {
 	:root {
 		--al-orange: #F0A500;
@@ -895,6 +1049,107 @@
 		min-width: 150px;
 	}
 
+	/* ---- Product detail page ---- */
+	.al-container {
+		width: min(1200px, calc(100vw - 2rem));
+		margin-inline: auto;
+		padding-top: calc(72px + 2rem);
+		padding-bottom: 4rem;
+	}
+
+	.al-breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.82rem;
+		color: rgba(0, 0, 0, 0.4);
+		margin-bottom: 2rem;
+	}
+
+	.al-breadcrumb a {
+		color: rgba(0, 0, 0, 0.4);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.al-breadcrumb a:hover {
+		color: var(--al-orange);
+	}
+
+	.al-breadcrumb span:last-child {
+		color: var(--al-ink);
+		font-weight: 500;
+	}
+
+	.al-product-detail {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem;
+		align-items: start;
+	}
+
+	/* Push the sticky gallery below the 72px fixed header */
+	.al-product-detail .sticky {
+		top: calc(72px + 1.5rem) !important;
+	}
+
+	.al-product-price {
+		color: var(--al-orange) !important;
+	}
+
+	.al-product-price * {
+		color: inherit !important;
+	}
+
+	.al-book-now-btn {
+		background: var(--al-orange) !important;
+		color: #000 !important;
+		font-weight: 800 !important;
+		text-transform: uppercase !important;
+		letter-spacing: 0.06em !important;
+		border-radius: 999px !important;
+		border: none !important;
+		transition: background 0.2s ease, transform 0.2s ease;
+	}
+
+	.al-book-now-btn:hover {
+		background: var(--al-orange-dark) !important;
+		transform: translateY(-1px);
+	}
+
+	.al-verification-banner {
+		padding: 1rem 1.25rem;
+		border-radius: 0.75rem;
+		background: rgba(240, 165, 0, 0.08);
+		border: 1px solid rgba(240, 165, 0, 0.3);
+	}
+
+	.al-verification-banner__title {
+		font-size: 0.9rem;
+		font-weight: 700;
+		color: var(--al-orange);
+		margin: 0 0 0.25rem;
+	}
+
+	.al-verification-banner__message {
+		font-size: 0.85rem;
+		color: var(--al-muted);
+		margin: 0 0 0.75rem;
+	}
+
+	.al-verification-banner__link {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--al-orange);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+		transition: color 0.2s ease;
+	}
+
+	.al-verification-banner__link:hover {
+		color: var(--al-orange-dark);
+	}
+
 	.al-products-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -1059,72 +1314,6 @@
 		text-decoration: none;
 	}
 
-	/* ---- Services section ---- */
-	.al-services-section {
-		background: #fff;
-		padding: 3.5rem 0;
-	}
-
-	.al-services-head {
-		margin-bottom: 2rem;
-	}
-
-	.al-services {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1.25rem;
-	}
-
-	.al-service-card {
-		padding: 1.75rem 1.5rem;
-		border-radius: 16px;
-		border: 1px solid #ede7da;
-		background: #fdf9f3;
-		text-align: center;
-		transition: box-shadow 0.2s ease, transform 0.2s ease;
-		cursor: pointer;
-	}
-
-	.al-service-card:hover {
-		transform: translateY(-3px);
-		box-shadow: 0 12px 32px rgba(24, 19, 8, 0.09);
-	}
-
-	.al-service-icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 56px;
-		height: 56px;
-		border-radius: 16px;
-		background: var(--al-orange);
-		margin-bottom: 1rem;
-	}
-
-	.al-service-icon svg {
-		width: 26px;
-		height: 26px;
-		fill: none;
-		stroke: #fff;
-		stroke-width: 2;
-		stroke-linecap: round;
-		stroke-linejoin: round;
-	}
-
-	.al-service-card h3 {
-		margin: 0 0 0.5rem;
-		font-size: 1rem;
-		font-weight: 700;
-		color: var(--al-ink);
-	}
-
-	.al-service-card p {
-		margin: 0;
-		font-size: 0.86rem;
-		color: var(--al-muted);
-		line-height: 1.6;
-	}
-
 	/* ---- Car card image support ---- */
 	.al-car-thumb img {
 		width: 100%;
@@ -1209,6 +1398,12 @@
 	}
 }
 
+@media (max-width: 1180px) {
+	.al-product-detail {
+		grid-template-columns: 1fr;
+	}
+}
+
 @media (max-width: 1023px) {
 	.al-nav-desktop {
 		display: none;
@@ -1237,10 +1432,6 @@
 
 	.al-featured-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-
-	.al-services {
-		grid-template-columns: 1fr;
 	}
 
 	.al-steps-grid {
@@ -1285,11 +1476,9 @@
 
 /* ============================================================
    Auth Pages — sporty dark, full-screen hero bg, glass card
-   Mirrors the home page: hero image · dark overlay · amber accents
    ============================================================ */
 @layer components {
 
-	/* ── Full-screen page shell ────────────────────────────── */
 	.al-auth-page {
 		position: relative;
 		min-height: 100vh;
@@ -1300,7 +1489,6 @@
 		overflow: hidden;
 	}
 
-	/* Hero background (same image as home page) */
 	.al-auth-page::before {
 		content: '';
 		position: absolute;
@@ -1311,7 +1499,6 @@
 		z-index: 0;
 	}
 
-	/* Dark overlay — heavier than home hero so card reads clearly */
 	.al-auth-page::after {
 		content: '';
 		position: absolute;
@@ -1320,7 +1507,6 @@
 		z-index: 1;
 	}
 
-	/* ── Glass card ─────────────────────────────────────────── */
 	.al-auth-card {
 		position: relative;
 		z-index: 2;
@@ -1334,19 +1520,27 @@
 		padding: clamp(2rem, 5vw, 2.75rem);
 	}
 
-	/* Wider variant for registration (2-column fields) */
 	.al-auth-card--wide {
 		max-width: 760px;
 	}
 
-	/* 2-column field grid */
+	.al-auth-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 10%;
+		right: 10%;
+		height: 2px;
+		background: linear-gradient(90deg, transparent, var(--al-orange), transparent);
+		border-radius: 0 0 2px 2px;
+	}
+
 	.al-auth-form-grid {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 0 1.25rem;
 	}
 
-	/* GDPR / terms link */
 	.al-auth-gdpr-link {
 		font-size: 0.78rem;
 		color: var(--al-orange);
@@ -1360,19 +1554,6 @@
 		color: var(--al-orange-dark);
 	}
 
-	/* Subtle amber top-border accent line */
-	.al-auth-card::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 10%;
-		right: 10%;
-		height: 2px;
-		background: linear-gradient(90deg, transparent, var(--al-orange), transparent);
-		border-radius: 0 0 2px 2px;
-	}
-
-	/* ── Logo ──────────────────────────────────────────────── */
 	.al-auth-logo {
 		display: flex;
 		justify-content: center;
@@ -1384,7 +1565,6 @@
 		width: auto;
 	}
 
-	/* ── Headings — sporty italic like the home hero ────────── */
 	.al-auth-heading {
 		font-size: clamp(1.65rem, 4vw, 2.1rem);
 		font-weight: 900;
@@ -1405,7 +1585,6 @@
 		text-align: center;
 	}
 
-	/* ── Flash alerts ───────────────────────────────────────── */
 	.al-alert {
 		display: flex;
 		align-items: flex-start;
@@ -1438,12 +1617,10 @@
 		border: 1px solid rgba(239, 68, 68, 0.25);
 	}
 
-	/* ── Form controls ──────────────────────────────────────── */
 	.al-auth-card .control-group {
 		margin-bottom: 1rem;
 	}
 
-	/* Labels — amber uppercase, matches section labels on home */
 	.al-auth-card label:not(.al-auth-check-label) {
 		display: block !important;
 		font-size: 0.78rem !important;
@@ -1454,7 +1631,6 @@
 		margin-bottom: 0.4rem !important;
 	}
 
-	/* Inputs — dark glass, white text, amber focus */
 	.al-auth-card input[type="text"],
 	.al-auth-card input[type="email"],
 	.al-auth-card input[type="password"],
@@ -1487,16 +1663,6 @@
 		box-shadow: 0 0 0 3px rgba(240, 165, 0, 0.15);
 	}
 
-	/* File inputs */
-	.al-auth-card input[type="file"] {
-		width: 100%;
-		font-size: 0.9rem;
-		color: rgba(255, 255, 255, 0.45);
-		cursor: pointer;
-		font-family: inherit;
-	}
-
-	/* ── Show-password / forgot-password row ────────────────── */
 	.al-auth-pw-row {
 		display: flex;
 		align-items: center;
@@ -1562,7 +1728,6 @@
 		color: var(--al-orange);
 	}
 
-	/* ── Submit button — amber pill, same as home search btn ── */
 	.al-auth-submit {
 		display: block;
 		width: 100%;
@@ -1590,7 +1755,6 @@
 		transform: translateY(0);
 	}
 
-	/* ── Switch page / sign-up link ─────────────────────────── */
 	.al-auth-switch {
 		margin-top: 1.25rem;
 		text-align: center;
@@ -1608,7 +1772,6 @@
 		color: var(--al-orange-dark);
 	}
 
-	/* ── Copyright ──────────────────────────────────────────── */
 	.al-auth-copyright {
 		text-align: center;
 		font-size: 0.78rem;
@@ -1618,41 +1781,6 @@
 		border-top: 1px solid rgba(255, 255, 255, 0.07);
 	}
 
-	/* ── Document upload section ────────────────────────────── */
-	.al-auth-section {
-		padding-top: 1.25rem;
-		margin-top: 1.25rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.08);
-	}
-
-	.al-auth-section-title {
-		font-size: 0.78rem;
-		font-weight: 700;
-		color: var(--al-orange);
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		margin: 0 0 0.2rem;
-	}
-
-	.al-auth-section-hint {
-		font-size: 0.875rem;
-		color: rgba(255, 255, 255, 0.35);
-		margin: 0 0 1rem;
-	}
-
-	.al-auth-upload-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 0.75rem;
-	}
-
-	.al-auth-upload-hint {
-		font-size: 0.78rem;
-		color: rgba(255, 255, 255, 0.25);
-		margin: 0.2rem 0 0;
-	}
-
-	/* ── Newsletter / GDPR checkbox rows ───────────────────── */
 	.al-auth-checkbox-row {
 		display: flex;
 		align-items: center;
@@ -1662,17 +1790,11 @@
 		color: rgba(255, 255, 255, 0.45);
 	}
 
-	/* ── Language bar (top-right of auth page) ─────────────── */
 	.al-auth-lang-bar {
 		position: fixed;
 		top: 1.25rem;
 		right: 1.5rem;
 		z-index: 10;
-	}
-
-	/* ── Lang switcher component ────────────────────────────── */
-	.al-lang-switcher {
-		position: relative;
 	}
 
 	.al-lang-switcher-btn {
@@ -1752,7 +1874,6 @@
 		color: var(--al-orange);
 	}
 
-	/* ── Mobile ─────────────────────────────────────────────── */
 	@media (max-width: 600px) {
 		.al-auth-card {
 			border-radius: 1rem;
@@ -1760,10 +1881,6 @@
 		}
 
 		.al-auth-form-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.al-auth-upload-grid {
 			grid-template-columns: 1fr;
 		}
 	}

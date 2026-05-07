@@ -1,7 +1,7 @@
 {
   "../Shop/src/Resources/assets/fonts/bagisto-shop.woff": {
     "file": "assets/bagisto-shop-BHAKyv0r.woff",
-    "src": "../Shop/src/Resources/assets/fonts/bagisto-shop.woff"
+    "src": "src/Resources/assets/fonts/bagisto-shop.woff"
   },
   "../Shop/src/Resources/assets/images/cash-on-delivery.png": {
     "file": "assets/cash-on-delivery-Ck2rBtSq.png",
@@ -88,9 +88,13 @@
     "src": "src/Resources/assets/images/wishlist.png"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-_3Al5AnQ.css",
+    "file": "assets/app-CTpW2oTv.css",
     "src": "src/Resources/assets/css/app.css",
     "isEntry": true
+  },
+  "src/Resources/assets/fonts/bagisto-shop.woff": {
+    "file": "assets/bagisto-shop-BHAKyv0r.woff",
+    "src": "src/Resources/assets/fonts/bagisto-shop.woff"
   },
   "src/Resources/assets/images/default-language.svg": {
     "file": "assets/default-language-BxH8WlkY.svg",

@@ -2,6 +2,7 @@
 
 namespace Webkul\CustomerVerification\Providers;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Core\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -71,5 +72,17 @@ class CustomerVerificationServiceProvider extends ServiceProvider
         });
 
         Customer::observe(CustomerObserver::class);
+
+        Event::listen('bagisto.shop.customers.account.profile.email.after', function () {
+            $customer = auth()->guard('customer')->user();
+
+            if (! $customer) {
+                return;
+            }
+
+            return view('customer-verification::shop.customers.account.profile-status-row', [
+                'status' => $customer->verification_status ?? 'incomplete',
+            ])->render();
+        });
     }
 }

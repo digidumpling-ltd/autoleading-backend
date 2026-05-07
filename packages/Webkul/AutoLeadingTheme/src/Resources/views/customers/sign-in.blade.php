@@ -39,14 +39,13 @@
                 <div class="space-y-6">
                     {{-- Email --}}
                     <x-shop::form.control-group>
-                        <x-shop::form.control-group.label class="text-gray-300 text-sm font-medium mb-1 block required">
+                        <x-shop::form.control-group.label class="required">
                             @lang('shop::app.customers.login-form.email')
                         </x-shop::form.control-group.label>
 
                         <x-shop::form.control-group.control
                             type="email"
                             name="email"
-                            class="w-full bg-[#111] border border-white/10 text-white placeholder-gray-600 focus:border-[#F0A500] focus:ring-[#F0A500] rounded-xl px-4 py-3"
                             :value="old('email')"
                             rules="required|email"
                             :label="trans('shop::app.customers.login-form.email')"
@@ -61,13 +60,13 @@
                     {{-- Password --}}
                     <x-shop::form.control-group>
                         <div class="flex justify-between items-center mb-1">
-                            <x-shop::form.control-group.label class="text-gray-300 text-sm font-medium block required">
+                            <x-shop::form.control-group.label class="required">
                                 @lang('shop::app.customers.login-form.password')
                             </x-shop::form.control-group.label>
 
-                            <a 
-                                href="{{ route('shop.customers.forgot_password.create') }}" 
-                                class="text-xs text-[#F0A500] hover:text-[#C88600] transition-colors"
+                            <a
+                                href="{{ route('shop.customers.forgot_password.create') }}"
+                                class="al-auth-forgot"
                             >
                                 @lang('shop::app.customers.login-form.forgot-pass')
                             </a>
@@ -77,7 +76,6 @@
                             type="password"
                             id="password"
                             name="password"
-                            class="w-full bg-[#111] border border-white/10 text-white placeholder-gray-600 focus:border-[#F0A500] focus:ring-[#F0A500] rounded-xl px-4 py-3"
                             rules="required|min:6"
                             :label="trans('shop::app.customers.login-form.password')"
                             :placeholder="trans('shop::app.customers.login-form.password')"
@@ -96,10 +94,7 @@
                         </x-shop::form.control-group>
                     @endif
 
-                    <button 
-                        type="submit" 
-                        class="w-full bg-[#F0A500] hover:bg-[#C88600] text-black font-bold py-4 rounded-xl transition-all transform hover:scale-[1.01] active:scale-[0.99] uppercase tracking-wider text-sm shadow-lg shadow-orange-500/20"
-                    >
+                    <button type="submit" class="al-auth-submit">
                         @lang('shop::app.customers.login-form.button-title')
                     </button>
                 </div>
@@ -110,17 +105,12 @@
 
             {!! view_render_event('bagisto.shop.customers.login.after') !!}
 
-            <div class="mt-8 text-center pt-6 border-t border-white/5">
-                <p class="text-gray-500 text-sm">
-                    @lang('shop::app.customers.login-form.new-customer')
-                    <a 
-                        href="{{ route('shop.customers.register.index') }}" 
-                        class="text-[#F0A500] font-semibold hover:underline ml-1"
-                    >
-                        @lang('shop::app.customers.login-form.create-your-account')
-                    </a>
-                </p>
-            </div>
+            <p class="al-auth-switch">
+                @lang('shop::app.customers.login-form.new-customer')
+                <a href="{{ route('shop.customers.register.index') }}">
+                    @lang('shop::app.customers.login-form.create-your-account')
+                </a>
+            </p>
 
             <p class="al-auth-copyright">
                 @lang('shop::app.customers.login-form.footer', ['current_year' => date('Y')])
