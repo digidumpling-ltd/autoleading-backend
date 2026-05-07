@@ -53,7 +53,7 @@
             </p>
 
             <div class="mt-14 rounded max-sm:mt-8">
-                <x-shop::form :action="route('shop.customers.register.store')" enctype="multipart/form-data">
+                <x-shop::form :action="route('shop.customers.register.store')">
                     {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
 
                     <!-- First Name -->
@@ -279,13 +279,6 @@
 
     @push('scripts')
         {!! \Webkul\Customer\Facades\Captcha::renderJS() !!}
-        <script>
-            window.addEventListener('load', () => {
-                if (window.app && !window.app._container) {
-                    window.app.mount('#app');
-                }
-            });
-        </script>
     @endpush
 
     <!-- Terms & Conditions Modal -->
