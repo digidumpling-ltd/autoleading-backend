@@ -6,25 +6,24 @@ return [
         'name' => 'customer-verification::app.configuration.title',
         'info' => 'customer-verification::app.configuration.title-info',
         'sort' => 8,
-    ], [
-        'key'    => 'customer_verification.checkout',
+    ],
+    [
+        'key'  => 'customer_verification.checkout',
+        'name' => 'customer-verification::app.configuration.checkout.title',
+        'info' => 'customer-verification::app.configuration.checkout.title-info',
+        'icon' => 'settings/settings.svg',
+        'sort' => 1,
+    ],
+    [
+        'key'    => 'customer_verification.checkout.gating',
         'name'   => 'customer-verification::app.configuration.checkout.title',
         'info'   => 'customer-verification::app.configuration.checkout.title-info',
-        'icon'   => 'settings/settings.svg',
         'sort'   => 1,
         'fields' => [
             [
-                'name'          => 'require_verification_add_to_cart',
-                'title'         => 'customer-verification::app.configuration.checkout.require-verification-add-to-cart',
-                'info'          => 'customer-verification::app.configuration.checkout.require-verification-add-to-cart-info',
-                'type'          => 'boolean',
-                'default'       => 1,
-                'channel_based' => false,
-                'locale_based'  => false,
-            ], [
-                'name'          => 'require_verification_checkout',
-                'title'         => 'customer-verification::app.configuration.checkout.require-verification-checkout',
-                'info'          => 'customer-verification::app.configuration.checkout.require-verification-checkout-info',
+                'name'          => 'require_verification',
+                'title'         => 'customer-verification::app.configuration.checkout.require-verification',
+                'info'          => 'customer-verification::app.configuration.checkout.require-verification-info',
                 'type'          => 'boolean',
                 'default'       => 1,
                 'channel_based' => false,

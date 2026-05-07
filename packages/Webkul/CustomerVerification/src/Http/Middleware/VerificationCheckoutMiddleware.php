@@ -14,7 +14,7 @@ class VerificationCheckoutMiddleware
             return $next($request);
         }
 
-        if (! core()->getConfigData('customer_verification.checkout.require_verification_checkout')) {
+        if (! core()->getConfigData('customer_verification.checkout.gating.require_verification')) {
             return $next($request);
         }
 

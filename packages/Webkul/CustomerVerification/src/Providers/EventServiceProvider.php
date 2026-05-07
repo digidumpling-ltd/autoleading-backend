@@ -3,8 +3,10 @@
 namespace Webkul\CustomerVerification\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
 use Webkul\CustomerVerification\Listeners\HandleCustomerRegistration;
 use Webkul\CustomerVerification\Listeners\PreventUnverifiedAddToCartListener;
+use Webkul\Theme\ViewRenderEventManager;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,4 +25,13 @@ class EventServiceProvider extends ServiceProvider
         //     HandleCustomerLogin::class,
         // ],
     ];
+
+    public function boot(): void
+    {
+        parent::boot();
+
+        Event::listen('bagisto.shop.customers.signup_form.newsletter_subscription.after', function (ViewRenderEventManager $viewRenderEventManager) {
+            $viewRenderEventManager->addTemplate('customer-verification::shop.customers.signup.tnc-fields');
+        });
+    }
 }

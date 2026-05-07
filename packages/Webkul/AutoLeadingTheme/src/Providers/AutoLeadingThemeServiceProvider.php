@@ -20,6 +20,8 @@ class AutoLeadingThemeServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->loadViewsFrom(__DIR__.'/../Resources/views', 'auto-leading-theme');
+
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'auto-leading-theme');
 
         $this->loadRoutesFrom(__DIR__.'/../Routes/theme-routes.php');

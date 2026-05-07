@@ -77,17 +77,22 @@ return [
         'cannot_checkout_unverified'            => 'Your account must be verified before placing an order. Please complete your verification first.',
     ],
 
+    'signup' => [
+        'pdcs_title'           => 'Personal Data Collection Statement',
+        'pdcs_agree'           => 'I have read and agree to the :link',
+        'membership_tnc_title' => 'Membership Terms & Conditions',
+        'membership_tnc_agree' => 'I have read and agree to the :link',
+    ],
+
     'configuration' => [
         'title'      => 'Customer Verification',
         'title-info' => 'Manage customer verification requirements.',
 
         'checkout' => [
-            'title'                                    => 'Checkout Gating',
-            'title-info'                               => 'Control whether unverified customers can add items to cart or place orders.',
-            'require-verification-add-to-cart'         => 'Require Verification to Add to Cart',
-            'require-verification-add-to-cart-info'    => 'When enabled, only approved customers can add products to their cart.',
-            'require-verification-checkout'            => 'Require Verification to Place Orders',
-            'require-verification-checkout-info'       => 'When enabled, only approved customers can complete checkout and place orders.',
+            'title'                    => 'Checkout Gating',
+            'title-info'               => 'Control whether unverified customers can add items to cart or place orders.',
+            'require-verification'     => 'Require Verification',
+            'require-verification-info' => 'When enabled, only approved customers can add products to their cart or place orders.',
         ],
     ],
 ];

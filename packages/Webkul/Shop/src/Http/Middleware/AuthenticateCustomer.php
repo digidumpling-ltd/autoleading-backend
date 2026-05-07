@@ -38,10 +38,6 @@ class AuthenticateCustomer
 
                 return redirect()->route('shop.customer.session.index');
             }
-
-            // NOTE: Verification status checks for account access are deferred to Story 2.3
-            // For now, allow all authenticated customers to access their account
-            // regardless of verification_status
         }
 
         return $next($request);

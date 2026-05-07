@@ -77,17 +77,22 @@ return [
         'cannot_checkout_unverified'            => '您的帳戶必須通過驗證才能下訂單。請先完成驗證。',
     ],
 
+    'signup' => [
+        'pdcs_title'           => '個人資料收集聲明',
+        'pdcs_agree'           => '本人已閱讀並同意:link',
+        'membership_tnc_title' => '會員條款及細則',
+        'membership_tnc_agree' => '本人已閱讀並同意:link',
+    ],
+
     'configuration' => [
         'title'      => '客戶驗證',
         'title-info' => '管理客戶驗證要求。',
 
         'checkout' => [
-            'title'                                    => '結帳管控',
-            'title-info'                               => '控制未驗證客戶是否可以將商品加入購物車或下訂單。',
-            'require-verification-add-to-cart'         => '加入購物車需要驗證',
-            'require-verification-add-to-cart-info'    => '啟用後，只有已通過審核的客戶才能將商品加入購物車。',
-            'require-verification-checkout'            => '下訂單需要驗證',
-            'require-verification-checkout-info'       => '啟用後，只有已通過審核的客戶才能完成結帳並下訂單。',
+            'title'                     => '結帳管控',
+            'title-info'                => '控制未驗證客戶是否可以將商品加入購物車或下訂單。',
+            'require-verification'      => '需要驗證',
+            'require-verification-info' => '啟用後，只有已通過審核的客戶才能將商品加入購物車或下訂單。',
         ],
     ],
 ];

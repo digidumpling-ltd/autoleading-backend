@@ -46,11 +46,9 @@ class RegistrationController extends Controller
      */
     public function store(RegistrationRequest $registrationRequest)
     {
+        $customerGroup = core()->getConfigData('customer.settings.create_new_account_options.default_group');
+
         $subscription = $this->subscriptionRepository->findOneWhere(['email' => request()->input('email')]);
-
-        $customerGroupCode = core()->getConfigData('customer.settings.create_new_account_options.default_group') ?? 'general';
-
-        $customerGroup = $this->customerGroupRepository->findOneWhere(['code' => $customerGroupCode]);
 
         $data = array_merge($registrationRequest->only([
             'first_name',
@@ -62,7 +60,7 @@ class RegistrationController extends Controller
             'password' => bcrypt(request()->input('password')),
             'api_token' => Str::random(80),
             'is_verified' => ! core()->getConfigData('customer.settings.email.verification'),
-            'customer_group_id' => $customerGroup?->id,
+            'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => $customerGroup])->id,
             'channel_id' => core()->getCurrentChannel()->id,
             'token' => md5(uniqid(rand(), true)),
             'subscribed_to_news_letter' => (bool) (request()->input('is_subscribed') ?? $subscription?->is_subscribed),
@@ -102,10 +100,10 @@ class RegistrationController extends Controller
         if (core()->getConfigData('customer.settings.email.verification')) {
             session()->flash('success', trans('shop::app.customers.signup-form.success-verify'));
         } else {
-            session()->flash('success', trans('shop::app.customers.signup-form.verification-documents-uploaded'));
+            session()->flash('success', trans('shop::app.customers.signup-form.success'));
         }
 
-        return redirect()->route('shop.home.index');
+        return redirect()->route('shop.customer.session.index');
     }
 
     /**
@@ -146,21 +144,17 @@ class RegistrationController extends Controller
      */
     public function resendVerificationEmail($email)
     {
+        $verificationData = [
+            'email' => $email,
+            'token' => md5(uniqid(rand(), true)),
+        ];
+
         $customer = $this->customerRepository->findOneByField('email', $email);
 
-        if (! $customer) {
-            session()->flash('success', trans('shop::app.customers.signup-form.verification-sent'));
-
-            return redirect()->back();
-        }
-
-        $customer = $this->customerRepository->update(
-            ['token' => md5(uniqid(rand(), true))],
-            $customer->id
-        );
+        $this->customerRepository->update(['token' => $verificationData['token']], $customer->id);
 
         try {
-            Mail::queue(new EmailVerificationNotification($customer));
+            Mail::queue(new EmailVerificationNotification($verificationData));
 
             if (Cookie::has('enable-resend')) {
                 Cookie::queue(Cookie::forget('enable-resend'));

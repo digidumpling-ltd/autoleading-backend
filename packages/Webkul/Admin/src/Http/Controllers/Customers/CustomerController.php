@@ -158,7 +158,6 @@ class CustomerController extends Controller
             'customer_group_id',
             'status',
             'is_suspended',
-            'verification_status',
         ]);
 
         if (empty($data['phone'])) {
@@ -202,7 +201,7 @@ class CustomerController extends Controller
             return redirect()->route('admin.customers.customers.index');
         }
 
-        session()->flash('error', trans('admin::app.customers.customers.delete-pending-order-error'));
+        session()->flash('error', trans('admin::app.customers.customers.view.order-pending'));
 
         return redirect()->route('admin.customers.customers.index');
     }

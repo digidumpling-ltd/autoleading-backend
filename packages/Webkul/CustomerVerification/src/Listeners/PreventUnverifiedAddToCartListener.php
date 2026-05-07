@@ -9,7 +9,7 @@ class PreventUnverifiedAddToCartListener
 {
     public function handle(mixed $_product): void
     {
-        if (! core()->getConfigData('customer_verification.checkout.require_verification_add_to_cart')) {
+        if (! core()->getConfigData('customer_verification.checkout.gating.require_verification')) {
             return;
         }
 
@@ -21,9 +21,9 @@ class PreventUnverifiedAddToCartListener
 
         if ($customer->verification_status !== Verification::STATUS_APPROVED) {
             throw new \Exception(
-                trans('customer-verification::app.common.cannot_add_unverified', [
+                strip_tags(trans('customer-verification::app.common.cannot_add_unverified', [
                     'dashboard_url' => route('shop.customer.verification.index'),
-                ])
+                ]))
             );
         }
     }
