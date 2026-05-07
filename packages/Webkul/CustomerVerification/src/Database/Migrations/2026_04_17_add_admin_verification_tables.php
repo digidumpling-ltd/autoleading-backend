@@ -18,7 +18,7 @@ return new class extends Migration
         if (! Schema::hasTable('verification_audit_logs')) Schema::create('verification_audit_logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('admin_id')->nullable();
-            $table->unsignedBigInteger('customer_id');
+            $table->unsignedInteger('customer_id');
             $table->string('action', 50); // approved, rejected, viewed
             $table->text('reason')->nullable();
             $table->timestamps();
