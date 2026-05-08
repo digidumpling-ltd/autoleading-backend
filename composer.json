@@ -19,6 +19,8 @@
         "ext-tokenizer": "*",
         "astrotomic/laravel-translatable": "^11.16",
         "bagisto/bagisto-package-generator": "^2.1",
+        "bagistoplus/visual": "^2.0@dev",
+        "bagistoplus/visual-debut": "^2.0@dev",
         "barryvdh/laravel-dompdf": "^2.0.0|^3.0",
         "bavix/laravel-wallet": "^11.0",
         "blade-ui-kit/blade-heroicons": "^2.7",
