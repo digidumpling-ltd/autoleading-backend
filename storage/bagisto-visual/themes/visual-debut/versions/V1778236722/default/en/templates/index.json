@@ -20,7 +20,7 @@
                 },
                 "section_width": "container",
                 "section_height": {
-                    "_default": "md"
+                    "_default": "lg"
                 },
                 "section_height_custom": 600,
                 "color_scheme": null,

@@ -19,9 +19,7 @@
                     "_default": 4
                 },
                 "section_width": "container",
-                "section_height": {
-                    "_default": "md"
-                },
+                "section_height": "sm",
                 "section_height_custom": 600,
                 "color_scheme": null,
                 "background_type": "image",

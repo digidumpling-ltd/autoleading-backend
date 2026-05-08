@@ -2,7 +2,7 @@
     "logo_desktop": null,
     "logo_mobile": null,
     "favicon": null,
-    "default_scheme": "scheme-10",
+    "default_scheme": null,
     "color_schemes": {
         "auto-leading": {
             "background": "#F8FAFC",

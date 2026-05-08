@@ -12,7 +12,7 @@
             },
             "parentId": null,
             "children": [],
-            "disabled": false,
+            "disabled": true,
             "static": false,
             "repeated": false,
             "ghost": false,

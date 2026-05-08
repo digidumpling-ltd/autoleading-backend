@@ -19,15 +19,24 @@
                     "_default": 4
                 },
                 "section_width": "container",
-                "section_height": "sm",
+                "section_height": {
+                    "_default": "md"
+                },
                 "section_height_custom": 600,
                 "color_scheme": null,
                 "background_type": "image",
                 "background_color": "#000000ff",
                 "background_gradient": null,
-                "background_image": "/themes/shop/visual-debut/images/hero-banner.avif",
+                "background_image": {
+                    "path": "bagisto-visual/images/4865726f2d42616e6e65722d3139323078313038302d31_69fdb93891330.png",
+                    "alt": "",
+                    "focalPoint": {
+                        "x": 50,
+                        "y": 50
+                    }
+                },
                 "background_size": "cover",
-                "background_repeat": "no-repeat",
+                "background_repeat": "repeat",
                 "border": false,
                 "border_width": 1,
                 "border_style": "solid",
@@ -289,8 +298,8 @@
             "repeated": false,
             "ghost": true,
             "semanticId": null,
-            "index": 2,
-            "iteration": 3
+            "index": 0,
+            "iteration": 1
         },
         "category-2_65e8fb9b": {
             "id": "category-2_65e8fb9b",
@@ -306,8 +315,8 @@
             "repeated": false,
             "ghost": true,
             "semanticId": null,
-            "index": 3,
-            "iteration": 4
+            "index": 1,
+            "iteration": 2
         },
         "basic_blocks_heading_0_54db266b_7692d783": {
             "id": "basic_blocks_heading_0_54db266b_7692d783",
@@ -338,8 +347,8 @@
             "repeated": false,
             "ghost": false,
             "semanticId": null,
-            "index": 0,
-            "iteration": 1
+            "index": 2,
+            "iteration": 3
         },
         "static-category-card_c8152370": {
             "id": "static-category-card_c8152370",
@@ -358,8 +367,8 @@
             "repeated": true,
             "ghost": false,
             "semanticId": "static-category-card",
-            "index": 1,
-            "iteration": 2
+            "index": 3,
+            "iteration": 4
         },
         "basic_blocks_heading_0_54db266b_203e3e5d": {
             "id": "basic_blocks_heading_0_54db266b_203e3e5d",
