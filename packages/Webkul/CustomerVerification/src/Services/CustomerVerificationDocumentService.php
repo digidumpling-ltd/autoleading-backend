@@ -20,17 +20,17 @@ class CustomerVerificationDocumentService
             Verification::DOCUMENT_TYPE_ID_DOCUMENT => [
                 'label' => 'customer-verification::app.common.document_type_id_document',
                 'hint' => 'customer-verification::app.common.upload_id_document_hint',
-                'accept' => 'image/png,image/jpeg,image/webp',
+                'accept' => 'image/png,image/jpeg,image/webp,application/pdf',
             ],
             Verification::DOCUMENT_TYPE_DRIVER_LICENSE => [
                 'label' => 'customer-verification::app.common.document_type_driver_license',
                 'hint' => 'customer-verification::app.common.upload_driver_license_hint',
-                'accept' => 'image/png,image/jpeg,image/webp',
+                'accept' => 'image/png,image/jpeg,image/webp,application/pdf',
             ],
             Verification::DOCUMENT_TYPE_ADDRESS_PROOF => [
                 'label' => 'customer-verification::app.common.document_type_address_proof',
                 'hint' => 'customer-verification::app.common.upload_address_proof_hint',
-                'accept' => 'image/png,image/jpeg,application/pdf',
+                'accept' => 'image/png,image/jpeg,image/webp,application/pdf',
             ],
         ];
     }
@@ -38,9 +38,9 @@ class CustomerVerificationDocumentService
     public function getUploadValidationRules(): array
     {
         return [
-            Verification::DOCUMENT_TYPE_ID_DOCUMENT => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp', 'max:5120'],
-            Verification::DOCUMENT_TYPE_DRIVER_LICENSE => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp', 'max:5120'],
-            Verification::DOCUMENT_TYPE_ADDRESS_PROOF => ['nullable', 'file', 'mimes:png,jpg,jpeg,pdf', 'max:5120'],
+            Verification::DOCUMENT_TYPE_ID_DOCUMENT => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp,pdf', 'max:5120'],
+            Verification::DOCUMENT_TYPE_DRIVER_LICENSE => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp,pdf', 'max:5120'],
+            Verification::DOCUMENT_TYPE_ADDRESS_PROOF => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp,pdf', 'max:5120'],
         ];
     }
 

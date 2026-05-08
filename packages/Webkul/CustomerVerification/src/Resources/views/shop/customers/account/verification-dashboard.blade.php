@@ -100,8 +100,8 @@
                     @endphp
 
                     <div class="rounded-lg border border-zinc-200 p-4">
-                        <div class="flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start">
-                            <div>
+                        <div class="flex items-start justify-between gap-4 max-sm:flex-col">
+                            <div class="flex-1">
                                 <p class="font-medium">{{ __($meta['label']) }}</p>
 
                                 @if ($document)
@@ -113,81 +113,52 @@
                                     <p class="mt-1 text-sm text-zinc-600">
                                         @lang('customer-verification::app.common.verification_document_missing_hint')
                                     </p>
+
+                                    <x-shop::form
+                                        class="mt-3"
+                                        :action="route('shop.customer.verification.upload')"
+                                        enctype="multipart/form-data"
+                                    >
+                                        <input
+                                            type="hidden"
+                                            name="customer_id"
+                                            value="{{ $customer->id }}"
+                                        >
+
+                                        <x-shop::form.control-group>
+                                            <x-shop::form.control-group.control
+                                                type="file"
+                                                name="{{ $documentType }}"
+                                                accept="{{ $meta['accept'] }}"
+                                            />
+
+                                            <p class="mt-1 text-xs text-zinc-500">
+                                                {{ __($meta['hint']) }}
+                                            </p>
+
+                                            <x-shop::form.control-group.error control-name="{{ $documentType }}" />
+                                            <x-shop::form.control-group.error control-name="documents" />
+                                        </x-shop::form.control-group>
+
+                                        <button
+                                            type="submit"
+                                            class="primary-button mt-3 rounded-lg px-5 py-2.5"
+                                        >
+                                            @lang('customer-verification::app.common.verification_upload_button')
+                                        </button>
+                                    </x-shop::form>
                                 @endif
                             </div>
 
                             @if ($document)
-                                <span class="inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700">
+                                <span class="inline-flex shrink-0 rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700">
                                     @lang('customer-verification::app.common.verification_document_uploaded')
-                                </span>
-                            @else
-                                <span class="inline-flex rounded-full bg-orange-100 px-2.5 py-1 text-xs font-semibold text-orange-700">
-                                    @lang('customer-verification::app.common.verification_document_missing')
                                 </span>
                             @endif
                         </div>
                     </div>
                 @endforeach
             </div>
-        </div>
-
-        <div class="mt-6 rounded-xl border border-zinc-200 p-6 max-sm:p-4">
-            <h3 class="text-lg font-medium">
-                @lang('customer-verification::app.common.verification_upload_label')
-            </h3>
-
-            <p class="mt-1 text-sm text-zinc-600">
-                @lang('customer-verification::app.common.verification_upload_hint')
-            </p>
-
-            @if (! empty($missingDocumentTypes))
-                <x-shop::form
-                    class="mt-4"
-                    :action="route('shop.customer.verification.upload')"
-                    enctype="multipart/form-data"
-                >
-                    <input
-                        type="hidden"
-                        name="customer_id"
-                        value="{{ $customer->id }}"
-                    >
-
-                    <div class="grid gap-4">
-                        @foreach ($missingDocumentTypes as $documentType)
-                            <x-shop::form.control-group>
-                                <x-shop::form.control-group.label>
-                                    {{ __($documentMeta[$documentType]['label']) }}
-                                </x-shop::form.control-group.label>
-
-                                <x-shop::form.control-group.control
-                                    type="file"
-                                    name="{{ $documentType }}"
-                                    accept="{{ $documentMeta[$documentType]['accept'] }}"
-                                />
-
-                                <p class="mt-1 text-xs text-zinc-500">
-                                    {{ __($documentMeta[$documentType]['hint']) }}
-                                </p>
-
-                                <x-shop::form.control-group.error control-name="{{ $documentType }}" />
-                            </x-shop::form.control-group>
-                        @endforeach
-
-                        <x-shop::form.control-group.error control-name="documents" />
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="primary-button mt-4 rounded-lg px-5 py-2.5"
-                    >
-                        @lang('customer-verification::app.common.verification_upload_button')
-                    </button>
-                </x-shop::form>
-            @else
-                <p class="mt-4 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-                    @lang('customer-verification::app.common.verification_no_documents_to_upload')
-                </p>
-            @endif
         </div>
     </div>
 </x-shop::layouts.account>

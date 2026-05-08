@@ -29,7 +29,7 @@
         </div>
 
         <!-- Balance Card -->
-        <div class="mb-8 rounded-xl border border-zinc-200 bg-gradient-to-r from-navyBlue to-blue-700 p-6 text-white">
+        <div class="mb-8 rounded-xl border border-zinc-200 p-6">
             <p class="mb-1 text-sm opacity-80">
                 @lang('bagisto-wallet::app.customers.account.wallet.balance')
             </p>
