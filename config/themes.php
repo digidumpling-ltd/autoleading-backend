@@ -36,6 +36,17 @@ return [
                 'package_assets_directory' => 'src/Resources/assets',
             ],
         ],
+
+        'custom-theme' => [
+            'name' => 'Custom-theme',
+            'assets_path' => 'public/themes/shop/custom-theme',
+            'views_path' => 'resources/themes/shop/custom-theme/views',
+            'vite' => [
+                'hot_file' => 'shop-custom-theme-vite.hot',
+                'build_directory' => 'themes/shop/custom-theme/build',
+                'package_assets_directory' => 'src/Resources/assets',
+            ],
+        ],
     ],
 
     /*
