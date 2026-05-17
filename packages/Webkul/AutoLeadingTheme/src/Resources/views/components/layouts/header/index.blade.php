@@ -24,7 +24,6 @@
             </a>
             <a href="#">{{ __('auto-leading-theme::app.nav.notice') }}</a>
             <a href="#">{{ __('auto-leading-theme::app.nav.membership') }}</a>
-            <a href="#">{{ __('auto-leading-theme::app.nav.blog') }}</a>
             <a href="#">{{ __('auto-leading-theme::app.nav.tvd') }}</a>
         </nav>
 
@@ -140,7 +139,6 @@
             <a href="{{ route('shop.search.index') }}" class="text-xl font-medium text-white hover:al-text-accent transition-colors">{{ __('auto-leading-theme::app.nav.models') }}</a>
             <a href="#" class="text-xl font-medium text-white hover:al-text-accent transition-colors">{{ __('auto-leading-theme::app.nav.notice') }}</a>
             <a href="#" class="text-xl font-medium text-white hover:al-text-accent transition-colors">{{ __('auto-leading-theme::app.nav.membership') }}</a>
-            <a href="#" class="text-xl font-medium text-white hover:al-text-accent transition-colors">{{ __('auto-leading-theme::app.nav.blog') }}</a>
             <a href="#" class="text-base font-medium text-white hover:al-text-accent transition-colors">{{ __('auto-leading-theme::app.nav.tvd') }}</a>
 
             <div class="mt-4 pt-6 border-t border-white/5 flex flex-col gap-4">
