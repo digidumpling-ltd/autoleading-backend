@@ -75,6 +75,9 @@ return [
         'cannot_add_rental_unverified'          => 'You must complete identity verification to rent cars. <a href=":dashboard_url">Visit your verification dashboard</a>.',
         'cannot_add_unverified'                 => 'Your account must be verified before adding items to the cart. <a href=":dashboard_url">Visit your verification dashboard</a>.',
         'cannot_checkout_unverified'            => 'Your account must be verified before placing an order. Please complete your verification first.',
+        'wallet_topup_disabled'                 => 'Wallet top-up is currently disabled. Please contact support or try again later.',
+        'wallet_topup_requires_verification'   => 'Please complete identity verification before topping up your wallet.',
+        'wallet_topup_requires_verification_link' => 'Please <a href=":dashboard_url" class="underline">complete identity verification</a> before topping up your wallet.' ,
     ],
 
     'signup' => [
@@ -93,6 +96,13 @@ return [
             'title-info'               => 'Control whether unverified customers can add items to cart or place orders.',
             'require-verification'     => 'Require Verification',
             'require-verification-info' => 'When enabled, only approved customers can add products to their cart or place orders.',
+        ],
+
+        'wallet' => [
+            'title'                    => 'Wallet Top-Up Gating',
+            'title-info'               => 'Control whether unverified customers are allowed to top up their wallet balance.',
+            'require-verification'     => 'Require Verification for Top-Up',
+            'require-verification-info'=> 'When enabled, only approved customers can access the wallet top-up flow; unverified customers will see a message directing them to verification dashboard.',
         ],
     ],
 ];

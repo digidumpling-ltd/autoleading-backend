@@ -94,5 +94,12 @@ return [
             'require-verification'      => '需要驗證',
             'require-verification-info' => '啟用後，只有已通過審核的客戶才能將商品加入購物車或下訂單。',
         ],
+
+        'wallet' => [
+            'title'                    => '錢包充值管控',
+            'title-info'               => '控制未驗證客戶是否被允許為錢包充值。',
+            'require-verification'     => '充值是否需要驗證',
+            'require-verification-info'=> '啟用後，只有已通過審核的客戶才能使用錢包充值，未驗證客戶會看到指向驗證儀表板的訊息。',
+        ],
     ],
 ];

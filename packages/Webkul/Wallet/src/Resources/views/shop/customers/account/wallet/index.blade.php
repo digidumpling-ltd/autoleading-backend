@@ -20,13 +20,37 @@
                 </h2>
             </div>
 
-            <a
-                href="{{ route('shop.customers.account.wallet.topup') }}"
-                class="primary-button rounded-2xl px-6 py-3 max-sm:px-4 max-sm:py-2 max-sm:text-sm"
-            >
-                @lang('bagisto-wallet::app.customers.account.wallet.topup')
-            </a>
+            @php
+            $walletGatingEnabled = core()->getConfigData('customer_verification.wallet.settings.require_verification');
+            $isVerified = auth()->guard('customer')->user()->verification_status ?? 'incomplete';
+            @endphp
+
+                           <a
+                    href="{{ route('shop.customers.account.wallet.topup') }}"
+                    class="primary-button rounded-2xl px-6 py-3 max-sm:px-4 max-sm:py-2 max-sm:text-sm"
+                >
+                    @lang('bagisto-wallet::app.customers.account.wallet.topup')
+                </a>
+
+            @if (!($walletGatingEnabled && $isVerified !== \Webkul\CustomerVerification\Support\Verification::STATUS_APPROVED))
+                <a
+                    href="{{ route('shop.customers.account.wallet.topup') }}"
+                    class="primary-button rounded-2xl px-6 py-3 max-sm:px-4 max-sm:py-2 max-sm:text-sm"
+                >
+                    @lang('bagisto-wallet::app.customers.account.wallet.topup')
+                </a>
+            @endif
         </div>
+
+            @if ($walletGatingEnabled && $isVerified !== \Webkul\CustomerVerification\Support\Verification::STATUS_APPROVED)
+                <div class="mb-6 rounded-md border border-yellow-200 bg-yellow-50 px-4 py-3 text-sm text-yellow-700 flex items-center gap-3">
+                    <span class="icon-toast-exclamation-mark text-2xl"></span>
+
+                    <div class="text-sm">
+                        {!! trans('customer-verification::app.common.wallet_topup_requires_verification_link', ['dashboard_url' => route('shop.customer.verification.index')]) !!}
+                    </div>
+                </div>
+            @endif
 
         <!-- Balance Card -->
         <div class="mb-8 rounded-xl border border-zinc-200 p-6">
