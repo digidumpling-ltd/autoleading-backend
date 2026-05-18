@@ -17,6 +17,7 @@ use Webkul\DataGrid\Providers\DataGridServiceProvider;
 use Webkul\DataTransfer\Providers\DataTransferServiceProvider;
 use Webkul\DebugBar\Providers\DebugBarServiceProvider;
 use Webkul\FPC\Providers\FPCServiceProvider;
+use Webkul\CustomerPromotions\Providers\CustomerPromotionsServiceProvider;
 use Webkul\GDPR\Providers\GDPRServiceProvider;
 use Webkul\ImageCache\Providers\ImageCacheServiceProvider;
 use Webkul\Installer\Providers\InstallerServiceProvider;
@@ -65,6 +66,7 @@ return [
     CheckoutServiceProvider::class,
     CoreServiceProvider::class,
     EnvValidatorServiceProvider::class,
+    CustomerPromotionsServiceProvider::class,
     CustomerServiceProvider::class,
     DataGridServiceProvider::class,
     DataTransferServiceProvider::class,

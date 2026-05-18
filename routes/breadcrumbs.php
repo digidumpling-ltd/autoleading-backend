@@ -97,6 +97,12 @@ Breadcrumbs::for('product', function (BreadcrumbTrail $trail, $entity) {
     $trail->push($entity->name ?? '', route('shop.product_or_category.index', $entity->url_key));
 });
 
+// Home > My Account > Promotions
+Breadcrumbs::for('promotions', function (BreadcrumbTrail $trail) {
+    $trail->parent('account');
+    $trail->push(trans('customer_promotions::app.layouts.promotions'), route('shop.customers.account.promotions.index'));
+});
+
 // Home > RMA
 Breadcrumbs::for('rma', function (BreadcrumbTrail $trail) {
     $trail->parent('account');

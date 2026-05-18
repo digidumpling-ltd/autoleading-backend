@@ -2,6 +2,7 @@
 
 use Webkul\Admin\Tests\AdminTestCase;
 use Webkul\Core\Tests\CoreTestCase;
+use Webkul\CustomerPromotions\Tests\CustomerPromotionsTestCase;
 use Webkul\Customer\Tests\CustomerTestCase;
 use Webkul\DataGrid\Tests\DataGridTestCase;
 use Webkul\Installer\Tests\InstallerTestCase;
@@ -27,6 +28,7 @@ ini_set('memory_limit', '1024M');
 */
 
 uses(AdminTestCase::class)->in('../packages/Webkul/Admin/tests');
+uses(CustomerPromotionsTestCase::class)->in('../packages/Webkul/CustomerPromotions/tests');
 uses(CoreTestCase::class)->in('../packages/Webkul/Core/tests');
 uses(CustomerTestCase::class)->in('../packages/Webkul/Customer/tests');
 uses(DataGridTestCase::class)->in('../packages/Webkul/DataGrid/tests');
