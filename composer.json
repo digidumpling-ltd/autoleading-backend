@@ -116,7 +116,8 @@
             "Webkul\\Theme\\": "packages/Webkul/Theme/src",
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Rewards\\": "packages/Webkul/Rewards/src",
-            "Webkul\\Wallet\\": "packages/Webkul/Wallet/src"
+            "Webkul\\Wallet\\": "packages/Webkul/Wallet/src",
+            "Themes\\CustomTheme\\": "packages/Themes/CustomTheme/src"
         }
     },
     "autoload-dev": {

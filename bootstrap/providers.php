@@ -45,6 +45,7 @@ use Webkul\Tax\Providers\TaxServiceProvider;
 use Webkul\Theme\Providers\ThemeServiceProvider;
 use Webkul\User\Providers\UserServiceProvider;
 use Webkul\Wallet\Providers\WalletServiceProvider;
+use Themes\CustomTheme\Providers\CustomThemeServiceProvider;
 
 return [
     /**
@@ -99,4 +100,5 @@ return [
     ThemeServiceProvider::class,
     UserServiceProvider::class,
     WalletServiceProvider::class,
+    CustomThemeServiceProvider::class,
 ];
