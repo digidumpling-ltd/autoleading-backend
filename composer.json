@@ -117,6 +117,7 @@
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Rewards\\": "packages/Webkul/Rewards/src",
             "Webkul\\Wallet\\": "packages/Webkul/Wallet/src",
+            "Webkul\\OrderPriceOverride\\": "packages/Webkul/OrderPriceOverride/src",
             "Themes\\CustomTheme\\": "packages/Themes/CustomTheme/src"
         }
     },
