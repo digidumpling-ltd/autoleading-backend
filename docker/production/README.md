@@ -57,7 +57,7 @@ All files live under **`docker/production/`** inside the Bagisto repository:
 ```
 bagisto/
 ├── .github/workflows/
-│   └── docker-publish.yml  # Auto-builds & pushes the image on every `v*` tag
+│   └── docker_publish.yml  # Auto-builds & pushes the image on every `v*` tag
 └── docker/production/
     ├── Dockerfile          # Single-stage production image definition
     ├── build-install.sh    # Runs at build time: installs Bagisto, seeds DB, bakes MySQL data into the image layer
@@ -105,7 +105,7 @@ Then visit `http://localhost:8080`.
 
 ## 4. Building the Image
 
-> **For releases, you do not need to build manually.** A GitHub Actions workflow (`.github/workflows/docker-publish.yml`) builds and pushes the multi-arch image to Docker Hub automatically when a `v*` tag is pushed. See [§7 — Full Release Workflow](#7-full-release-workflow).
+> **For releases, you do not need to build manually.** A GitHub Actions workflow (`.github/workflows/docker_publish.yml`) builds and pushes the multi-arch image to Docker Hub automatically when a `v*` tag is pushed. See [§7 — Full Release Workflow](#7-full-release-workflow).
 >
 > The instructions below cover **local development builds** — testing Dockerfile changes, debugging the install flow, or producing a single-arch image for a private registry.
 
@@ -175,15 +175,15 @@ How the workflow decides:
 
 | Git tag pushed | Default branch is `2.4` → Docker Hub tags published |
 |---|---|
-| `v2.4.1` (commit on `2.4`, stable) | `:2.4.1`, `:latest` |
-| `v2.3.20` (commit on `2.3`, stable) | `:2.3.20` (does **not** touch `:latest`) |
-| `v2.4.2-rc1` (pre-release) | `:2.4.2-rc1` only |
+| `v2.4.4` (commit on `2.4`, stable) | `:2.4.4`, `:latest` |
+| `v2.3.19` (commit on `2.3`, stable) | `:2.3.19` (does **not** touch `:latest`) |
+| `v2.4.5-rc1` (pre-release on `2.4`) | `:2.4.5-rc1` only |
 | Later: default branch switched to `2.5`, then `v2.5.0` released | `:2.5.0`, `:latest` |
-| Later: default branch is `2.5`, then a patch `v2.4.5` is released | `:2.4.5` (does **not** touch `:latest`) |
+| Later: default branch is `2.5`, then a patch `v2.4.5` is released on `2.4` | `:2.4.5` (does **not** touch `:latest`) |
 
 | Tag form | Mutability | Purpose |
 |---|---|---|
-| `:X.Y.Z` (e.g. `:2.4.1`) | Immutable | Pins to one exact build. Use this for reproducible deployments. |
+| `:X.Y.Z` (e.g. `:2.4.4`) | Immutable | Pins to one exact build. Use this for reproducible deployments. |
 | `:latest` | Floating | Latest stable release on the default branch line (controlled by GitHub's default-branch setting). |
 
 ### Manual tagging (local builds)
@@ -333,7 +333,7 @@ You should see entries for both `linux/amd64` and `linux/arm64`.
 
 ### Automated flow (standard)
 
-Releasing Bagisto `2.4.0` after previously having `2.3.12` is now a single tag push:
+Releasing a Bagisto version (e.g. `2.4.0` — the latest stable in this line is currently **`2.4.4`**) is a single tag push:
 
 ```bash
 # From the Bagisto repo root
@@ -341,22 +341,22 @@ git tag v2.4.0
 git push origin v2.4.0
 ```
 
-That's the entire release. The GitHub Actions workflow at `.github/workflows/docker-publish.yml` then:
+That's the entire release. The GitHub Actions workflow at `.github/workflows/docker_publish.yml` then:
 
 1. Validates the tag matches `vX.Y.Z` (or `vX.Y.Z-suffix` for pre-releases).
 2. Sets up QEMU + Buildx for cross-architecture builds.
 3. Logs in to Docker Hub using the `DOCKERHUB_USERNAME` / `DOCKERHUB_TOKEN` repo secrets.
 4. Builds `docker/production/Dockerfile` for `linux/amd64` and `linux/arm64` in parallel with `BAGISTO_VERSION=v2.4.0`.
-5. Pushes a single multi-arch manifest as `webkul/bagisto:2.4.0` and (for stable tags) also `webkul/bagisto:latest`.
+5. Pushes a single multi-arch manifest as `webkul/bagisto:2.4.0` and (since the `2.4` branch **is** the GitHub default branch) also updates `webkul/bagisto:latest`.
 6. Caches buildx layers in GitHub Actions cache for faster subsequent builds.
 
 Track progress in the repo's **Actions** tab. Build duration is typically **30–60 minutes** because the arm64 leg runs under QEMU emulation and Bagisto is fully installed (migrations, seeders, indexers) during the build.
 
 After the run finishes:
 
-- `webkul/bagisto:2.3.12` still exists and still works (tags are immutable once pushed).
+- `webkul/bagisto:2.4.3` (and any older patches) still exist and still work (tags are immutable once pushed).
 - `webkul/bagisto:2.4.0` points to the new build (both archs).
-- `webkul/bagisto:latest` now points to 2.4.0 (both archs).
+- `webkul/bagisto:latest` now points to `2.4.0` (since `2.4` is the default branch line).
 
 ### Pre-release / RC tags
 
