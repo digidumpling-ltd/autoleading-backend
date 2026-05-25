@@ -25,6 +25,8 @@ return [
                     'rental' => [
                         'whatsapp-enquire' => '通过WhatsApp咨询',
                         'whatsapp-message' => '您好，我对 :name 感兴趣 - :url',
+                        'pricing-tiers'    => '价格梯度',
+                        'days'             => '天',
                     ],
                 ],
             ],

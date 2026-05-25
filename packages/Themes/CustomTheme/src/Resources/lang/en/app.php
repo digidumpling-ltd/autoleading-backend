@@ -25,6 +25,8 @@ return [
                     'rental' => [
                         'whatsapp-enquire' => 'Enquire on WhatsApp',
                         'whatsapp-message' => 'Hi, I\'m interested in :name - :url',
+                        'pricing-tiers'    => 'Pricing Tiers',
+                        'days'             => 'days',
                     ],
                 ],
             ],

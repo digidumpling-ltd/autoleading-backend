@@ -8,6 +8,7 @@
         ])
     );
     $rentalMaxDays = (int) (core()->getConfigData('catalog.products.rental.max_days') ?? 0);
+    $dayPricingRules = $day_pricing_rules ?? [];
 @endphp
 
 @push('scripts')
@@ -22,6 +23,7 @@
     :availability="{{ json_encode($calendarAvailability) }}"
     :base-price="{{ $product->getTypeInstance()->getMinimalPrice() ?? 0 }}"
     :base-regular-price="{{ $product->getTypeInstance()->getRegularMinimalPrice() ?? 0 }}"
+    :day-pricing-rules="{{ json_encode($dayPricingRules) }}"
 ></v-rental-slots>
 
 @pushOnce('scripts')
@@ -275,14 +277,43 @@
                 </div>
             </div>
 
-            <!-- Rental Price Breakdown -->
+            <!-- Pricing Tiers + Rental Summary -->
             <div class="mt-3 rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-sm">
-                <p class="mb-3 font-semibold">
+
+                <!-- Sliding Day Pricing Tiers -->
+                <template v-if="dayPricingRules && dayPricingRules.length && (renting_type === 'daily' || (renting_type === 'daily_hourly' && sub_renting_type === 'daily'))">
+                    <div
+                        class="flex cursor-pointer select-none items-center justify-between"
+                        @click="tiersOpen = !tiersOpen"
+                    >
+                        <p class="font-semibold text-zinc-700">
+                            @lang('custom-theme::app.products.view.type.booking.rental.pricing-tiers')
+                        </p>
+
+                        <span :class="tiersOpen ? 'icon-arrow-up' : 'icon-arrow-down'" class="text-2xl text-zinc-500"></span>
+                    </div>
+
+                    <div v-show="tiersOpen" class="mt-2 divide-y divide-zinc-200">
+                        <div
+                            v-for="(rule, index) in dayPricingRules"
+                            :key="index"
+                            class="flex items-center justify-between py-1.5"
+                            :class="{ 'font-medium text-zinc-900': isActiveRule(rule) }"
+                        >
+                            <span class="text-zinc-600" v-text="tierLabel(rule)"></span>
+                            <span v-text="$shop.formatPrice(tierRate(rule))"></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 border-t border-zinc-200"></div>
+                </template>
+
+                <p class="mb-3 font-semibold" :class="{ 'mt-3': dayPricingRules && dayPricingRules.length && (renting_type === 'daily' || (renting_type === 'daily_hourly' && sub_renting_type === 'daily')) }">
                     @lang('shop::app.products.view.type.booking.rental.summary-title')
                 </p>
 
                 <template v-if="hasSelection">
-                    <div class="flex items-center justify-between py-1">
+                    <div v-if="Number(basePrice) > 0" class="flex items-center justify-between py-1">
                         <span class="text-zinc-600">
                             @lang('shop::app.products.view.type.booking.rental.base-rental-fee')
                         </span>
@@ -343,7 +374,7 @@
                     href="https://wa.me/{{ $waNumber }}?text={{ $waMessage }}"
                     target="_blank"
                     rel="noopener"
-                    class="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#1ebe57]"
+                    class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 text-base font-medium text-white transition hover:bg-[#1ebe57]"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 24 24">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
@@ -368,10 +399,12 @@
         app.component('v-rental-slots', {
             template: '#v-rental-slots-template',
 
-            props: ['bookingProduct', 'availability', 'basePrice', 'baseRegularPrice'],
+            props: ['bookingProduct', 'availability', 'basePrice', 'baseRegularPrice', 'dayPricingRules'],
 
             data() {
                 return {
+                    tiersOpen: true,
+
                     renting_type: "{{ $bookingProduct->rental_slot?->renting_type ?? 'daily' }}",
 
                     sub_renting_type: 'hourly',
@@ -493,12 +526,42 @@
                         : this.durationDays;
                 },
 
+                effectiveDailyRate() {
+                    const slot = this.bookingProduct?.rental_slot ?? {};
+                    const dailyPrice = Number(slot.daily_price ?? 0);
+                    const days = this.durationDays;
+                    const rules = this.dayPricingRules ?? [];
+
+                    if (! days || ! rules.length) {
+                        return dailyPrice;
+                    }
+
+                    const match = rules.find(r => {
+                        const min = Number(r.min_days);
+                        const max = r.max_days !== null && r.max_days !== undefined && r.max_days !== ''
+                            ? Number(r.max_days)
+                            : Infinity;
+
+                        return days >= min && days <= max;
+                    });
+
+                    if (! match) {
+                        return dailyPrice;
+                    }
+
+                    if (match.discount_type === 'fixed') {
+                        return Math.max(0, dailyPrice - Number(match.discount_value));
+                    }
+
+                    return dailyPrice * (1 - Number(match.discount_value) / 100);
+                },
+
                 rateUnit() {
                     const slot = this.bookingProduct?.rental_slot ?? {};
 
                     return this.activeRentingType === 'hourly'
                         ? Number(slot.hourly_price ?? 0)
-                        : Number(slot.daily_price ?? 0);
+                        : this.effectiveDailyRate;
                 },
 
                 rateTotal() {
@@ -563,6 +626,47 @@
             },
 
             methods: {
+                tierRate(rule) {
+                    const slot = this.bookingProduct?.rental_slot ?? {};
+                    const dailyPrice = Number(slot.daily_price ?? 0);
+
+                    if (rule.discount_type === 'fixed') {
+                        return Math.max(0, dailyPrice - Number(rule.discount_value));
+                    }
+
+                    return dailyPrice * (1 - Number(rule.discount_value) / 100);
+                },
+
+                tierLabel(rule) {
+                    const min = rule.min_days;
+                    const max = rule.max_days;
+
+                    if (! max) {
+                        return `${min}+ @lang('custom-theme::app.products.view.type.booking.rental.days')`;
+                    }
+
+                    if (min === max) {
+                        return `${min} @lang('custom-theme::app.products.view.type.booking.rental.days')`;
+                    }
+
+                    return `${min}–${max} @lang('custom-theme::app.products.view.type.booking.rental.days')`;
+                },
+
+                isActiveRule(rule) {
+                    const days = this.durationDays;
+
+                    if (! days) {
+                        return false;
+                    }
+
+                    const min = Number(rule.min_days);
+                    const max = rule.max_days !== null && rule.max_days !== undefined && rule.max_days !== ''
+                        ? Number(rule.max_days)
+                        : Infinity;
+
+                    return days >= min && days <= max;
+                },
+
                 formatDate(d) {
                     const year = d.getFullYear();
                     const month = String(d.getMonth() + 1).padStart(2, '0');
