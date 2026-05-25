@@ -46,6 +46,7 @@ use Webkul\Theme\Providers\ThemeServiceProvider;
 use Webkul\User\Providers\UserServiceProvider;
 use Webkul\Wallet\Providers\WalletServiceProvider;
 use Webkul\OrderPriceOverride\Providers\ServiceProvider as OrderPriceOverrideServiceProvider;
+use Webkul\RentalPricing\Providers\ServiceProvider as RentalPricingServiceProvider;
 use Themes\CustomTheme\Providers\CustomThemeServiceProvider;
 
 return [
@@ -102,5 +103,6 @@ return [
     UserServiceProvider::class,
     WalletServiceProvider::class,
     OrderPriceOverrideServiceProvider::class,
+    RentalPricingServiceProvider::class,
     CustomThemeServiceProvider::class,
 ];

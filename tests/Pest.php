@@ -1,6 +1,7 @@
 <?php
 
 use Webkul\Admin\Tests\AdminTestCase;
+use Webkul\RentalPricing\Tests\RentalPricingTestCase;
 use Webkul\Core\Tests\CoreTestCase;
 use Webkul\CustomerPromotions\Tests\CustomerPromotionsTestCase;
 use Webkul\Customer\Tests\CustomerTestCase;
@@ -40,6 +41,7 @@ uses(ShopTestCase::class)->in('../packages/Webkul/Shop/tests');
 uses(StripeTestCase::class)->in('../packages/Webkul/Stripe/tests');
 uses(WalletTestCase::class)->in('../packages/Webkul/Wallet/tests');
 uses(YedpayTestCase::class)->in('../packages/Webkul/Yedpay/tests');
+uses(RentalPricingTestCase::class)->in('../packages/Webkul/RentalPricing/tests');
 
 /*
 |--------------------------------------------------------------------------
