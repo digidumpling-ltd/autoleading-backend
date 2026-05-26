@@ -16,6 +16,31 @@ return [
                 ],
             ],
         ],
+        'general' => [
+            'design' => [
+                'navbar' => [
+                    'title'                     => 'Navbar Menu',
+                    'info'                      => 'Configure the navigation bar logo, menu items, and categories.',
+                    'logo-max-height'           => 'Logo Max Height (px)',
+                    'logo-fit'                  => 'Logo Fit',
+                    'logo-fit-contain'          => 'Contain',
+                    'logo-fit-cover'            => 'Cover',
+                    'logo-fit-fill'             => 'Fill',
+                    'logo-fit-none'             => 'None (original size)',
+                    'show-store-name'           => 'Show Store Name',
+                    'show-manual-menu'          => 'Show Menu Items',
+                    'menu-items'                => 'Menu Items',
+                    'menu-items-add'            => 'Add Item',
+                    'menu-items-item'           => 'Item',
+                    'menu-items-url'            => 'URL (must start with /)',
+                    'menu-items-order'          => 'Order',
+                    'show-categories'           => 'Show Categories',
+                    'categories-order'          => 'Categories Order',
+                    'show-categories-dropdown'  => 'Show as Dropdown',
+                    'categories-dropdown-label' => 'Dropdown Label',
+                ],
+            ],
+        ],
     ],
 
     'products' => [
