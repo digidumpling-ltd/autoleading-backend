@@ -204,3 +204,8 @@ php artisan bagisto:translations:check
 - Clear caches after making changes: `php artisan optimize:clear`
 - Use repository pattern for all database operations
 - Follow the modular structure when adding new features
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+<!-- SPECKIT END -->

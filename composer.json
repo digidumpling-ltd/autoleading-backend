@@ -53,7 +53,6 @@
         "spatie/laravel-sitemap": "^7.3",
         "stevebauman/purify": "^6.3",
         "stripe/stripe-php": "^17.3",
-        "webbycrown/blog-for-bagisto": "^1.0",
         "yedpay/php-library": "^1.4"
     },
     "require-dev": {
@@ -119,7 +118,8 @@
             "Webkul\\Wallet\\": "packages/Webkul/Wallet/src",
             "Webkul\\OrderPriceOverride\\": "packages/Webkul/OrderPriceOverride/src",
             "Webkul\\RentalPricing\\": "packages/Webkul/RentalPricing/src",
-            "Themes\\CustomTheme\\": "packages/Themes/CustomTheme/src"
+            "Themes\\CustomTheme\\": "packages/Themes/CustomTheme/src",
+            "Webbycrown\\BlogBagisto\\": "packages/Webbycrown/BlogBagisto/src"
         }
     },
     "autoload-dev": {

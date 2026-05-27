@@ -1,6 +1,7 @@
 .agents
 .agent*
 .claude
+.codex
 .cursor
 .env
 .env.testing
@@ -43,3 +44,6 @@ skills-lock.json
 /vendor
 yarn.lock
 yarn-error.log
+openspec/
+.github/skills/openspec*
+.specify

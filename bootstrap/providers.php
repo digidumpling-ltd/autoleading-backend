@@ -48,6 +48,7 @@ use Webkul\Wallet\Providers\WalletServiceProvider;
 use Webkul\OrderPriceOverride\Providers\ServiceProvider as OrderPriceOverrideServiceProvider;
 use Webkul\RentalPricing\Providers\ServiceProvider as RentalPricingServiceProvider;
 use Themes\CustomTheme\Providers\CustomThemeServiceProvider;
+use Webbycrown\BlogBagisto\Providers\BlogServiceProvider;
 
 return [
     /**
@@ -105,4 +106,5 @@ return [
     OrderPriceOverrideServiceProvider::class,
     RentalPricingServiceProvider::class,
     CustomThemeServiceProvider::class,
+    BlogServiceProvider::class,
 ];
