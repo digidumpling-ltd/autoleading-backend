@@ -12,6 +12,7 @@ use Webkul\PayU\Tests\PayUTestCase;
 use Webkul\Razorpay\Tests\RazorpayTestCase;
 use Webkul\Shop\Tests\ShopTestCase;
 use Webkul\Stripe\Tests\StripeTestCase;
+use Webkul\Membership\Tests\MembershipTestCase;
 use Webkul\Wallet\Tests\WalletTestCase;
 use Webkul\Yedpay\Tests\YedpayTestCase;
 
@@ -40,6 +41,7 @@ uses(RazorpayTestCase::class)->in('../packages/Webkul/Razorpay/tests');
 uses(ShopTestCase::class)->in('../packages/Webkul/Shop/tests');
 uses(StripeTestCase::class)->in('../packages/Webkul/Stripe/tests');
 uses(WalletTestCase::class)->in('../packages/Webkul/Wallet/tests');
+uses(MembershipTestCase::class)->in('../packages/Webkul/Membership/tests');
 uses(YedpayTestCase::class)->in('../packages/Webkul/Yedpay/tests');
 uses(RentalPricingTestCase::class)->in('../packages/Webkul/RentalPricing/tests');
 

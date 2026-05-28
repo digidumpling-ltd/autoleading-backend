@@ -100,6 +100,13 @@ return [
                         'title' => 'Top-Up Settings',
                         'info'  => 'Configure which payment gateways are available for wallet top-ups.',
                     ],
+
+                    'events' => [
+                        'title'                              => 'Wallet Events',
+                        'info'                               => 'Configure wallet event publishing.',
+                        'publish-balance-updated'            => 'Publish Balance Updated Event',
+                        'publish-balance-updated-info'       => 'When enabled, a WalletBalanceUpdated event is dispatched after every top-up or deduction. Disable to prevent downstream listeners (e.g. membership tier updates) from running.',
+                    ],
                 ],
             ],
         ],

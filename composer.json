@@ -116,6 +116,7 @@
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Rewards\\": "packages/Webkul/Rewards/src",
             "Webkul\\Wallet\\": "packages/Webkul/Wallet/src",
+            "Webkul\\Membership\\": "packages/Webkul/Membership/src",
             "Webkul\\OrderPriceOverride\\": "packages/Webkul/OrderPriceOverride/src",
             "Webkul\\RentalPricing\\": "packages/Webkul/RentalPricing/src",
             "Themes\\CustomTheme\\": "packages/Themes/CustomTheme/src",
@@ -137,6 +138,7 @@
             "Webkul\\Shop\\Tests\\": "packages/Webkul/Shop/tests",
             "Webkul\\Stripe\\Tests\\": "packages/Webkul/Stripe/tests",
             "Webkul\\Wallet\\Tests\\": "packages/Webkul/Wallet/tests",
+            "Webkul\\Membership\\Tests\\": "packages/Webkul/Membership/tests",
             "Webkul\\Yedpay\\Tests\\": "packages/Webkul/Yedpay/tests",
             "Webkul\\RentalPricing\\Tests\\": "packages/Webkul/RentalPricing/tests"
         }

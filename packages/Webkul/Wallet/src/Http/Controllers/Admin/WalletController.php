@@ -4,8 +4,10 @@ namespace Webkul\Wallet\Http\Controllers\Admin;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Wallet\Events\WalletBalanceUpdated;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
 
 class WalletController extends Controller
@@ -34,11 +36,22 @@ class WalletController extends Controller
         $customer = WalletCustomer::findOrFail($id);
 
         if ($request->type === 'add') {
+            $oldBalance = $customer->balanceFloatNum;
+
             $customer->depositFloat($request->amount, [
                 'type'     => 'admin_grant',
                 'admin_id' => auth()->guard('admin')->id(),
                 'reason'   => $request->reason,
             ]);
+
+            if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
+                Event::dispatch(new WalletBalanceUpdated(
+                    customerId: $customer->id,
+                    oldBalance: $oldBalance,
+                    newBalance: $customer->fresh()->balanceFloatNum,
+                    reason: 'admin_grant',
+                ));
+            }
 
             return redirect()
                 ->route('admin.customers.wallet.index', $id)
@@ -51,11 +64,22 @@ class WalletController extends Controller
             ]);
         }
 
+        $oldBalance = $customer->balanceFloatNum;
+
         $customer->withdrawFloat($request->amount, [
             'type'     => 'admin_deduct',
             'admin_id' => auth()->guard('admin')->id(),
             'reason'   => $request->reason,
         ]);
+
+        if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
+            Event::dispatch(new WalletBalanceUpdated(
+                customerId: $customer->id,
+                oldBalance: $oldBalance,
+                newBalance: $customer->fresh()->balanceFloatNum,
+                reason: 'admin_deduct',
+            ));
+        }
 
         return redirect()
             ->route('admin.customers.wallet.index', $id)

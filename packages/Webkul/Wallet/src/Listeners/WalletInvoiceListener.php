@@ -2,7 +2,9 @@
 
 namespace Webkul\Wallet\Listeners;
 
+use Illuminate\Support\Facades\Event;
 use Webkul\Sales\Repositories\OrderTransactionRepository;
+use Webkul\Wallet\Events\WalletBalanceUpdated;
 use Webkul\Wallet\Models\Channel as WalletChannel;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
 
@@ -44,12 +46,23 @@ class WalletInvoiceListener
 
         $channel = WalletChannel::find($invoice->order->channel_id);
 
+        $oldBalance = $customer->balanceFloatNum;
+
         $customer->transferFloat($channel, $amount, [
             'type'        => 'wallet_payment',
             'order_id'    => $invoice->order_id,
             'invoice_id'  => $invoice->id,
             'description' => trans('bagisto-wallet::app.listeners.wallet-invoice.description', ['order' => $invoice->order_id]),
         ]);
+
+        if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
+            Event::dispatch(new WalletBalanceUpdated(
+                customerId: $customer->id,
+                oldBalance: $oldBalance,
+                newBalance: $customer->fresh()->balanceFloatNum,
+                reason: 'wallet_payment',
+            ));
+        }
 
         $this->orderTransactionRepository->create([
             'transaction_id' => 'wallet_tx_' . $invoice->id . '_' . uniqid(),

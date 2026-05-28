@@ -100,6 +100,13 @@ return [
                         'title' => '充值设置',
                         'info'  => '配置钱包充值可用的支付网关。',
                     ],
+
+                    'events' => [
+                        'title'                              => '钱包事件',
+                        'info'                               => '配置钱包事件发布。',
+                        'publish-balance-updated'            => '发布余额更新事件',
+                        'publish-balance-updated-info'       => '启用后，每次充值或扣款后都会触发 WalletBalanceUpdated 事件。禁用以阻止下游监听器（如会员等级更新）运行。',
+                    ],
                 ],
             ],
         ],

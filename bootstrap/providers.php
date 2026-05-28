@@ -103,6 +103,7 @@ return [
     ThemeServiceProvider::class,
     UserServiceProvider::class,
     WalletServiceProvider::class,
+    \Webkul\Membership\Providers\MembershipServiceProvider::class,
     OrderPriceOverrideServiceProvider::class,
     RentalPricingServiceProvider::class,
     CustomThemeServiceProvider::class,

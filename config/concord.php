@@ -51,6 +51,7 @@ return [
         Webkul\Theme\Providers\ModuleServiceProvider::class,
         Webkul\User\Providers\ModuleServiceProvider::class,
         Webkul\Wallet\Providers\ModuleServiceProvider::class,
+        Webkul\Membership\Providers\ModuleServiceProvider::class,
         Webkul\RentalPricing\Providers\ModuleServiceProvider::class,
         Webbycrown\BlogBagisto\Providers\ModuleServiceProvider::class,
     ],

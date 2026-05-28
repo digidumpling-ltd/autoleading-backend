@@ -99,6 +99,22 @@ class WalletServiceProvider extends ServiceProvider
                     ],
                 ],
             ],
+            [
+                'key'    => 'sales.wallet.events',
+                'name'   => 'bagisto-wallet::app.configuration.index.sales.wallet.events.title',
+                'info'   => 'bagisto-wallet::app.configuration.index.sales.wallet.events.info',
+                'sort'   => 2,
+                'fields' => [
+                    [
+                        'name'          => 'publish_balance_updated',
+                        'title'         => 'bagisto-wallet::app.configuration.index.sales.wallet.events.publish-balance-updated',
+                        'info'          => 'bagisto-wallet::app.configuration.index.sales.wallet.events.publish-balance-updated-info',
+                        'type'          => 'boolean',
+                        'channel_based' => false,
+                        'locale_based'  => false,
+                    ],
+                ],
+            ],
         ])]);
     }
 
