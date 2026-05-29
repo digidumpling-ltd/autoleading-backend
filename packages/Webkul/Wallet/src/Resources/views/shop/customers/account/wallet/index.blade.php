@@ -21,16 +21,9 @@
             </div>
 
             @php
-            $walletGatingEnabled = core()->getConfigData('customer_verification.wallet.settings.require_verification');
-            $isVerified = auth()->guard('customer')->user()->verification_status ?? 'incomplete';
+                $walletGatingEnabled = core()->getConfigData('customer_verification.wallet.settings.require_verification');
+                $isVerified = auth()->guard('customer')->user()->verification_status ?? 'incomplete';
             @endphp
-
-                           <a
-                    href="{{ route('shop.customers.account.wallet.topup') }}"
-                    class="primary-button rounded-2xl px-6 py-3 max-sm:px-4 max-sm:py-2 max-sm:text-sm"
-                >
-                    @lang('bagisto-wallet::app.customers.account.wallet.topup')
-                </a>
 
             @if (!($walletGatingEnabled && $isVerified !== \Webkul\CustomerVerification\Support\Verification::STATUS_APPROVED))
                 <a
