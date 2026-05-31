@@ -61,6 +61,7 @@ class WalletInvoiceListener
                 oldBalance: $oldBalance,
                 newBalance: $customer->fresh()->balanceFloatNum,
                 reason: 'wallet_payment',
+                customerGroupId: $customer->customer_group_id,
             ));
         }
 

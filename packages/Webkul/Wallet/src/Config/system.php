@@ -1,5 +1,17 @@
 <?php
 
+$topupOptions = collect(config('payment_methods', []))
+    ->filter(function ($method) {
+        if (($method['code'] ?? '') === 'wallet') {
+            return false;
+        }
+
+        return is_a($method['class'] ?? '', \Webkul\Wallet\Contracts\SupportsWalletTopUp::class, true);
+    })
+    ->map(fn ($method) => ['title' => $method['title'], 'value' => $method['code']])
+    ->values()
+    ->toArray();
+
 return [
     [
         'key'    => 'sales.payment_methods.wallet',
@@ -76,6 +88,45 @@ return [
                     ],
                 ],
                 'channel_based' => true,
+                'locale_based'  => false,
+            ],
+        ],
+    ],
+    [
+        'key'  => 'sales.wallet',
+        'name' => 'bagisto-wallet::app.configuration.index.sales.wallet.title',
+        'info' => 'bagisto-wallet::app.configuration.index.sales.wallet.info',
+        'sort' => 99,
+    ],
+    [
+        'key'    => 'sales.wallet.settings',
+        'name'   => 'bagisto-wallet::app.configuration.index.sales.wallet.settings.title',
+        'info'   => 'bagisto-wallet::app.configuration.index.sales.wallet.settings.info',
+        'sort'   => 1,
+        'fields' => [
+            [
+                'name'          => 'topup_allowed_methods',
+                'title'         => 'bagisto-wallet::app.configuration.index.sales.wallet.topup-allowed-methods',
+                'info'          => 'bagisto-wallet::app.configuration.index.sales.wallet.topup-allowed-methods-info',
+                'type'          => 'multiselect',
+                'options'       => $topupOptions,
+                'channel_based' => true,
+                'locale_based'  => false,
+            ],
+        ],
+    ],
+    [
+        'key'    => 'sales.wallet.events',
+        'name'   => 'bagisto-wallet::app.configuration.index.sales.wallet.events.title',
+        'info'   => 'bagisto-wallet::app.configuration.index.sales.wallet.events.info',
+        'sort'   => 2,
+        'fields' => [
+            [
+                'name'          => 'publish_balance_updated',
+                'title'         => 'bagisto-wallet::app.configuration.index.sales.wallet.events.publish-balance-updated',
+                'info'          => 'bagisto-wallet::app.configuration.index.sales.wallet.events.publish-balance-updated-info',
+                'type'          => 'boolean',
+                'channel_based' => false,
                 'locale_based'  => false,
             ],
         ],

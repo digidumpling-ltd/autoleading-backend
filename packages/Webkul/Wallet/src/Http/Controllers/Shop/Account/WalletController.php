@@ -46,6 +46,7 @@ class WalletController extends Controller
                 oldBalance: $oldBalance,
                 newBalance: $customer->fresh()->balanceFloatNum,
                 reason: 'topup',
+                customerGroupId: $customer->customer_group_id,
             ));
         }
 

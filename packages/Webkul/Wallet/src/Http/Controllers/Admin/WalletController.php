@@ -50,6 +50,7 @@ class WalletController extends Controller
                     oldBalance: $oldBalance,
                     newBalance: $customer->fresh()->balanceFloatNum,
                     reason: 'admin_grant',
+                    customerGroupId: $customer->customer_group_id,
                 ));
             }
 
