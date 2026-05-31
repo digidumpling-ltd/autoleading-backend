@@ -4,19 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRewardPointsTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('reward_points', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('reward_points')->default(0);
-            $table->enum('status', array('processing', 'approved', 'closed', 'pending','fraud', 'expire', 'used', 'canceled', 'disapproved'))->default('pending');
+            $table->enum('status', ['processing', 'approved', 'closed', 'pending', 'fraud', 'expire', 'used', 'canceled', 'disapproved'])->default('pending');
             $table->text('note')->nullable();
             $table->date('exp_date')->nullable();
             $table->tinyInteger('product_purchased')->default(0);
@@ -40,13 +35,8 @@ class CreateRewardPointsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('reward_points');
     }
-}
+};

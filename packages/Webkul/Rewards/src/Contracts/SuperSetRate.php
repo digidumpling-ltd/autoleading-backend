@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\TableRate\Contracts;
+namespace Webkul\Rewards\Contracts;
 
 interface SuperSetRate
 {
