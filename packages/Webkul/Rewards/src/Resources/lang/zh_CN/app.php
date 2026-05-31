@@ -14,6 +14,7 @@ return [
                     'reward-point-on-product'                    => '产品奖励点数',
                     'reward-point'                               => '奖励点数',
                     'reward-system-details'                      => '奖励系统详情',
+                    'wallet-topup-reward-rules'                  => '充值奖励积分',
                 ],
             ],
         ],
@@ -363,6 +364,64 @@ return [
                         'total-reward-points' => '总奖励积分',
                         'used'                => '已使用',
                     ],
+                ],
+            ],
+
+            'wallet-topup' => [
+                'index' => [
+                    'add-btn'        => '添加充值奖励规则',
+                    'create-success' => '充值奖励规则创建成功',
+                    'delete-failed'  => '充值奖励规则删除失败',
+                    'delete-success' => '充值奖励规则删除成功',
+                    'title'          => '钱包充值奖励规则',
+                    'update-success' => '充值奖励规则更新成功',
+
+                    'datagrid' => [
+                        'customer-group'      => '客户组',
+                        'delete'              => '删除',
+                        'edit'                => '编辑',
+                        'id'                  => 'ID',
+                        'mass-delete-success' => '所选规则删除成功',
+                        'mass-update-success' => '所选规则更新成功',
+                        'max-topup'           => '最高充值金额',
+                        'min-topup'           => '最低充值金额',
+                        'mode'                => '模式',
+                        'priority'            => '优先级',
+                        'status'              => '状态',
+                        'update-status'       => '更新状态',
+                        'value'               => '积分值',
+
+                        'options' => [
+                            'active'   => '启用',
+                            'inactive' => '禁用',
+                        ],
+                    ],
+                ],
+
+                'create' => [
+                    'active'           => '启用',
+                    'all-groups'       => '所有客户组（全局）',
+                    'customer-group'   => '客户组',
+                    'inactive'         => '禁用',
+                    'max-topup-amount' => '最高充值金额',
+                    'min-topup-amount' => '最低充值金额',
+                    'mode'             => '积分模式',
+                    'mode-fixed'       => '固定积分',
+                    'mode-percent'     => '充值金额百分比',
+                    'priority'         => '优先级',
+                    'save-btn'         => '保存规则',
+                    'select-mode'      => '选择模式',
+                    'select-status'    => '选择状态',
+                    'status'           => '状态',
+                    'title'            => '添加充值奖励规则',
+                    'value'            => '积分值',
+                    'value-fixed'      => '奖励积分',
+                    'value-percent'    => '充值金额百分比 (%)',
+                ],
+
+                'edit' => [
+                    'save-btn' => '更新规则',
+                    'title'    => '编辑充值奖励规则',
                 ],
             ],
 

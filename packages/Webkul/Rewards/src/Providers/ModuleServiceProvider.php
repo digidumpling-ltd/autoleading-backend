@@ -15,5 +15,6 @@ class ModuleServiceProvider extends BaseModuleServiceProvider
         \Webkul\Rewards\Models\AttributeReward::class,
         \Webkul\Rewards\Models\RewardPoint::class,
         \Webkul\Rewards\Models\RedemptionSetting::class,
+        \Webkul\Rewards\Models\WalletTopupRewardRule::class,
     ];
 }

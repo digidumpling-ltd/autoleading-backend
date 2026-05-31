@@ -9,6 +9,7 @@ use Webkul\Rewards\Http\Controllers\Admin\CategorySpecificRewardController;
 use Webkul\Rewards\Http\Controllers\Admin\ProductSpecificRewardController;
 use Webkul\Rewards\Http\Controllers\Admin\SystemDetailsController;
 use Webkul\Rewards\Http\Controllers\Admin\RedemtionSettingController;
+use Webkul\Rewards\Http\Controllers\Admin\WalletTopupRewardRuleController;
 
 Route::group(['middleware' => ['admin'], 'prefix' => config('app.admin_url')], function () {
     Route::prefix('rewards')->group(function () {
@@ -172,6 +173,27 @@ Route::group(['middleware' => ['admin'], 'prefix' => config('app.admin_url')], f
             Route::get('', 'index')->name('admin.reward.system.index');
 
             Route::get('view/{id}', 'view')->name('admin.reward.system.view');
+        });
+
+        /**
+         * Wallet Topup Reward Rules
+         */
+        Route::controller(WalletTopupRewardRuleController::class)->prefix('wallet-topup')->group(function () {
+            Route::get('', 'index')->name('admin.reward.wallet-topup.index');
+
+            Route::get('create', 'create')->name('admin.reward.wallet-topup.create');
+
+            Route::post('store', 'store')->name('admin.reward.wallet-topup.store');
+
+            Route::get('edit/{id}', 'edit')->name('admin.reward.wallet-topup.edit');
+
+            Route::post('update/{id}', 'update')->name('admin.reward.wallet-topup.update');
+
+            Route::post('delete/{id}', 'destroy')->name('admin.reward.wallet-topup.delete');
+
+            Route::post('mass-delete', 'massDestroy')->name('admin.reward.wallet-topup.mass_delete');
+
+            Route::post('mass-update', 'massUpdate')->name('admin.reward.wallet-topup.mass_update');
         });
 
         /**

@@ -72,6 +72,11 @@
             <directory suffix="Test.php">packages/Webkul/Stripe/tests/Feature</directory>
         </testsuite>
 
+        <!-- Rewards package testsuites. -->
+        <testsuite name="Rewards Feature Test">
+            <directory suffix="Test.php">packages/Webkul/Rewards/tests/Feature</directory>
+        </testsuite>
+
         <!-- Wallet package testsuites. -->
         <testsuite name="Wallet Feature Test">
             <directory suffix="Test.php">packages/Webkul/Wallet/tests/Feature</directory>

@@ -44,6 +44,7 @@ use Webkul\Yedpay\Providers\YedpayServiceProvider;
 use Webkul\Tax\Providers\TaxServiceProvider;
 use Webkul\Theme\Providers\ThemeServiceProvider;
 use Webkul\User\Providers\UserServiceProvider;
+use Webkul\Rewards\Providers\RewardsServiceProvider;
 use Webkul\Wallet\Providers\WalletServiceProvider;
 use Webkul\OrderPriceOverride\Providers\ServiceProvider as OrderPriceOverrideServiceProvider;
 use Webkul\RentalPricing\Providers\ServiceProvider as RentalPricingServiceProvider;
@@ -102,6 +103,7 @@ return [
     TaxServiceProvider::class,
     ThemeServiceProvider::class,
     UserServiceProvider::class,
+    RewardsServiceProvider::class,
     WalletServiceProvider::class,
     \Webkul\Membership\Providers\MembershipServiceProvider::class,
     OrderPriceOverrideServiceProvider::class,

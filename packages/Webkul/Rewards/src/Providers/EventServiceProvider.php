@@ -2,8 +2,9 @@
 
 namespace Webkul\Rewards\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
+use Webkul\Wallet\Events\WalletBalanceUpdated;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -78,6 +79,8 @@ class EventServiceProvider extends ServiceProvider
             Event::listen('customer.registration.after', 'Webkul\Rewards\Listeners\Customer@register');
 
             Event::listen('customer.review.update.after', 'Webkul\Rewards\Listeners\Customer@updateReview');
+
+            Event::listen(WalletBalanceUpdated::class, 'Webkul\Rewards\Listeners\WalletTopup@handle');
         }
     }
 }

@@ -133,6 +133,11 @@ class RewardsServiceProvider extends ServiceProvider
             \Webkul\Rewards\Contracts\RedemptionSetting::class,
             \Webkul\Rewards\Models\RedemptionSetting::class
         );
+
+        $this->app->concord->registerModel(
+            \Webkul\Rewards\Contracts\WalletTopupRewardRule::class,
+            \Webkul\Rewards\Models\WalletTopupRewardRule::class
+        );
     }
 
     /**

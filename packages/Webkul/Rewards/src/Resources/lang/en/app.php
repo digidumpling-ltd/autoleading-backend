@@ -14,6 +14,7 @@ return [
                     'reward-point-on-product'                    => 'Reward Point on Product',
                     'reward-point'                               => 'Reward Point',
                     'reward-system-details'                      => 'Reward System Details',
+                    'wallet-topup-reward-rules'                  => 'Reward Point on Wallet Topup',
                 ],
             ],
         ],
@@ -363,6 +364,64 @@ return [
                         'total-reward-points' => 'Total Rewards Points',
                         'used'                => 'Used',
                     ],
+                ],
+            ],
+
+            'wallet-topup' => [
+                'index' => [
+                    'add-btn'        => 'Add Wallet Topup Reward Rule',
+                    'create-success' => 'Wallet Topup Reward Rule created successfully',
+                    'delete-failed'  => 'Wallet Topup Reward Rule could not be deleted',
+                    'delete-success' => 'Wallet Topup Reward Rule deleted successfully',
+                    'title'          => 'Wallet Topup Reward Rules',
+                    'update-success' => 'Wallet Topup Reward Rule updated successfully',
+
+                    'datagrid' => [
+                        'customer-group'      => 'Customer Group',
+                        'delete'              => 'Delete',
+                        'edit'                => 'Edit',
+                        'id'                  => 'ID',
+                        'mass-delete-success' => 'Selected rules deleted successfully',
+                        'mass-update-success' => 'Selected rules updated successfully',
+                        'max-topup'           => 'Max Topup',
+                        'min-topup'           => 'Min Topup',
+                        'mode'                => 'Mode',
+                        'priority'            => 'Priority',
+                        'status'              => 'Status',
+                        'update-status'       => 'Update Status',
+                        'value'               => 'Value',
+
+                        'options' => [
+                            'active'   => 'Active',
+                            'inactive' => 'Inactive',
+                        ],
+                    ],
+                ],
+
+                'create' => [
+                    'active'           => 'Active',
+                    'all-groups'       => 'All Groups (Global)',
+                    'customer-group'   => 'Customer Group',
+                    'inactive'         => 'Inactive',
+                    'max-topup-amount' => 'Max Topup Amount',
+                    'min-topup-amount' => 'Min Topup Amount',
+                    'mode'             => 'Points Mode',
+                    'mode-fixed'       => 'Fixed Points',
+                    'mode-percent'     => 'Percent of Topup Amount',
+                    'priority'         => 'Priority',
+                    'save-btn'         => 'Save Rule',
+                    'select-mode'      => 'Select Mode',
+                    'select-status'    => 'Select Status',
+                    'status'           => 'Status',
+                    'title'            => 'Add Wallet Topup Reward Rule',
+                    'value'            => 'Points Value',
+                    'value-fixed'      => 'Reward Points',
+                    'value-percent'    => 'Percentage of Topup Amount (%)',
+                ],
+
+                'edit' => [
+                    'save-btn' => 'Update Rule',
+                    'title'    => 'Edit Wallet Topup Reward Rule',
                 ],
             ],
 

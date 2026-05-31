@@ -50,6 +50,7 @@ return [
         Webkul\Tax\Providers\ModuleServiceProvider::class,
         Webkul\Theme\Providers\ModuleServiceProvider::class,
         Webkul\User\Providers\ModuleServiceProvider::class,
+        Webkul\Rewards\Providers\ModuleServiceProvider::class,
         Webkul\Wallet\Providers\ModuleServiceProvider::class,
         Webkul\Membership\Providers\ModuleServiceProvider::class,
         Webkul\RentalPricing\Providers\ModuleServiceProvider::class,

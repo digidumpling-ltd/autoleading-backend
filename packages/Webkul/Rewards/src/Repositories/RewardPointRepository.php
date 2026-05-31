@@ -333,6 +333,18 @@ class RewardPointRepository extends Repository
      * @param array $data
      * @return void
      */
+    public function awardPoints(int $customerId, int $points, string $note): void
+    {
+        $reward = $this->model->create([
+            'customer_id'   => $customerId,
+            'reward_points' => $points,
+            'note'          => $note,
+            'status'        => self::STATUS_APPROVED,
+        ]);
+
+        Event::dispatch('reward.points.save.after', [$reward]);
+    }
+
     public function insertRewardPoints($data, $key, $value)
     {
         if ($data) {

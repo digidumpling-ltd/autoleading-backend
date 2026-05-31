@@ -69,5 +69,11 @@ return [
         'route' => 'admin.reward.redemption.index',
         'sort'  => 6,
         'icon'  => '',
+    ], [
+        'key'   => 'rewards.wallet-topup',
+        'name'  => 'rewards::app.admin.components.layouts.sidebar.wallet-topup-reward-rules',
+        'route' => 'admin.reward.wallet-topup.index',
+        'sort'  => 7,
+        'icon'  => '',
     ],
 ];
