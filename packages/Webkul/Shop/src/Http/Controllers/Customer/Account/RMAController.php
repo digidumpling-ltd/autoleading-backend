@@ -8,9 +8,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\View\View;
 use Webkul\Admin\Mail\Admin\RMA\CustomerToAdminConversationNotification;
 use Webkul\RMA\Contracts\RMAReason;
+use Webkul\RMA\Enums\DefaultRMAResolution;
 use Webkul\RMA\Enums\DefaultRMAStatusEnum;
 use Webkul\RMA\Helpers\Helper as RMAHelper;
 use Webkul\RMA\Repositories\RMAAdditionalFieldRepository;
@@ -125,7 +127,7 @@ class RMAController extends Controller
             'order_id' => 'required|exists:orders,id',
             'order_item_id' => 'required',
             'rma_qty' => 'required',
-            'resolution_type' => 'required',
+            'resolution_type' => ['required', new Enum(DefaultRMAResolution::class)],
             'rma_reason_id' => 'required',
             'information' => 'nullable|string',
             'images' => 'nullable|array|min:1',
