@@ -49,106 +49,104 @@
                 v-if="{{ auth()->guard('customer')->user()->id }}"
             >
                 <div class="flex justify-between text-right">
-                    <p class="text-4 max-sm:text-4 max-sm:font-normal">
-                        @{{ rewardApplied ? "@lang('rewards::app.shop.checkout.cart.points.reward-points')" : "@lang('rewards::app.shop.checkout.cart.points.reward-points')" }}
+                    <p class="text-base max-md:font-normal max-sm:text-sm">
+                        @{{ rewardApplied ? "@lang('rewards::app.checkout.total.redem-points')" : "@lang('rewards::app.shop.checkout.cart.points.reward-points')" }}
                     </p>
 
-                    <p class="text-4 max-sm:text-3.5 font-medium">
+                    <p class="text-base font-medium max-sm:text-sm">
                         <!-- Apply points modal -->
-                        <x-shop::modal ref="RewardModel">
-                            <!-- Modal Toggler -->
-                            <x-slot:toggle>
-                                <span
-                                    class="cursor-pointer text-[#0A49A7]"
-                                    v-if="! rewardApplied"
-                                >
-                                    @lang('rewards::app.shop.checkout.cart.points.apply-points')
-                                </span>
-                            </x-slot:toggle>
+                        <x-shop::form
+                            v-slot="{ meta, errors, handleSubmit }"
+                            as="div"
+                        >
+                            <form @submit="handleSubmit($event, applyPoints)">
+                                <x-shop::modal ref="RewardModel">
+                                    <!-- Modal Toggler -->
+                                    <x-slot:toggle>
+                                        <span
+                                            class="cursor-pointer text-base text-blue-700 max-sm:text-sm"
+                                            role="button"
+                                            tabindex="0"
+                                            v-if="! rewardApplied"
+                                        >
+                                            @lang('rewards::app.shop.checkout.cart.points.apply-points')
+                                        </span>
+                                    </x-slot:toggle>
 
-                            <!-- Modal Header -->
-                            <x-slot:header>
-                                <h2 class="max-sm:text-3 text-[25px] font-medium">
-                                    @lang('rewards::app.shop.checkout.cart.points.apply-points')
-                                </h2>
-                            </x-slot:header>
+                                    <!-- Modal Header -->
+                                    <x-slot:header class="max-md:p-5">
+                                        <h2 class="text-2xl font-medium max-md:text-base">
+                                            @lang('rewards::app.shop.checkout.cart.points.apply-points')
+                                        </h2>
+                                    </x-slot:header>
 
-                            <!-- Modal Contentd -->
-                            <x-slot:content>
-                                <!-- Apply Points Form -->
-                                <x-shop::form
-                                    v-slot="{ meta, errors, handleSubmit }"
-                                    as="div"
-                                >
-                                    <!-- Apply Points form -->
-                                    <form @submit="handleSubmit($event, applyPoints)">
-                                        <x-shop::form.control-group>
-                                            <div class="bg-white p-[30px]">
-                                                <x-shop::form.control-group.control
-                                                    type="text"
-                                                    name="points"
-                                                    class="px-[25px] py-[20px]"
-                                                    :placeholder="trans('rewards::app.shop.checkout.cart.points.enter-points')"
-                                                    v-model="inputPoints"
-                                                >
-                                                </x-shop::form.control-group.control>
-
-                                                <p 
-                                                    style="color:#f22020;" 
-                                                    class="ml-1 flex flex-wrap items-center justify-between gap-[15px] text-sm italic"
-                                                >
-                                                    @{{ errorMessage }}
-                                                </p>
-                                            </div>
+                                    <!-- Modal Content -->
+                                    <x-slot:content class="!px-4">
+                                        <x-shop::form.control-group class="!mb-0">
+                                            <x-shop::form.control-group.control
+                                                type="text"
+                                                name="points"
+                                                class="px-6 py-4 max-md:!mb-0 max-md:!p-3 max-sm:!p-2"
+                                                :placeholder="trans('rewards::app.shop.checkout.cart.points.enter-points')"
+                                                v-model="inputPoints"
+                                            >
+                                            </x-shop::form.control-group.control>
                                         </x-shop::form.control-group>
 
-                                        <div class="flex items-center gap-4 flex-wrap">
-                                            <div class="flex gap-4 items-center">
-                                                <p class="text-sm font-medium text-[#6E6E6E]">
-                                                    @lang('shop::app.checkout.cart.coupon.subtotal')
+                                        <p
+                                            style="color:#f22020;"
+                                            class="mt-1 text-sm italic"
+                                        >
+                                            @{{ errorMessage }}
+                                        </p>
+
+                                        <p class="mt-3 text-sm text-zinc-500">
+                                            @lang('rewards::app.checkout.onepage.total-point', ['total_reward_points' => $totalrewardpoints ])
+                                            <i>({{ $redemptionSetting }})</i>
+                                        </p>
+                                    </x-slot:content>
+
+                                    <!-- Modal Footer -->
+                                    <x-slot:footer>
+                                        <div class="flex flex-wrap items-center gap-4 max-md:justify-between">
+                                            <div class="flex items-center gap-4 max-md:block">
+                                                <p class="text-sm font-medium text-zinc-500 max-md:text-left max-md:text-xs">
+                                                    @lang('shop::app.checkout.coupon.subtotal')
                                                 </p>
-        
-                                                <p 
-                                                    class="text-3xl font-semibold max-sm:text-xl" 
-                                                    v-text="subTotal"
-                                                >
+
+                                                <p class="text-3xl font-semibold max-md:text-lg" v-text="subTotal">
                                                 </p>
                                             </div>
-        
-                                            <x-shop::button
-                                                class="primary-button flex-auto max-w-none py-3 px-11 rounded-2xl"
-                                                :title="trans('shop::app.checkout.cart.coupon.button-title')"
-                                            />
 
-                                            <p class="text-xl font-semibold max-sm:text-xl">
-                                                @lang('rewards::app.checkout.onepage.total-point', ['total_reward_points' => $totalrewardpoints ])
-                                                <i>({{ $redemptionSetting }})</i>
-                                            </p>
+                                            <x-shop::button
+                                                class="primary-button max-w-none flex-auto rounded-2xl px-11 py-3 max-md:max-w-[153px] max-md:rounded-lg max-md:py-2"
+                                                :title="trans('shop::app.checkout.coupon.button-title')"
+                                            />
                                         </div>
-                                    </form>
-                                </x-shop::form>
-                            </x-slot:content>
-                        </x-shop::modal>
+                                    </x-slot:footer>
+                                </x-shop::modal>
+                            </form>
+                        </x-shop::form>
 
                         <!-- Applied Points Information Container -->
-                        <div
-                            class="font-small flex items-center justify-between text-xs"
+                        <span
+                            class="inline-flex items-center gap-2"
                             v-if="rewardApplied"
                         >
-                            <p
-                                class="text-navyBlue cursor-pointer text-base font-medium"
-                                title="@lang('shop::app.checkout.cart.coupon.applied')"
+                            <span
+                                class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-0.5 text-sm font-semibold text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 max-sm:text-xs"
+                                :title="'@lang('shop::app.checkout.coupon.applied')'"
                             >
                                 @{{ appliedPoints }}
-                            </p>
+                            </span>
 
                             <span
-                                class="icon-cancel cursor-pointer text-2xl"
-                                title="@lang('shop::app.checkout.cart.coupon.remove')"
+                                class="icon-cancel cursor-pointer text-xl text-gray-400 transition-colors hover:text-red-500 max-sm:text-base"
+                                title="@lang('shop::app.checkout.coupon.remove')"
                                 @click="removePoints"
                             >
                             </span>
-                        </div>
+                        </span>
                     </p>
                 </div>
             </script>
