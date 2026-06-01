@@ -173,6 +173,10 @@ Route::group(['middleware' => ['admin'], 'prefix' => config('app.admin_url')], f
             Route::get('', 'index')->name('admin.reward.system.index');
 
             Route::get('view/{id}', 'view')->name('admin.reward.system.view');
+
+            Route::post('allocate/{id}', 'allocate')->name('admin.reward.system.allocate');
+
+            Route::get('balance/{id}', 'balance')->name('admin.reward.system.balance');
         });
 
         /**

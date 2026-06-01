@@ -73,7 +73,7 @@ class RewardPoint extends Model implements RewardPointContract
         'reward_points',
         'note',
         'status',
-        'exp_date',   
+        'exp_date',
         'product_purchased',
         'product_reviewed',
         'customer_registed',

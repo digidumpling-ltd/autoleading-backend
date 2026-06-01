@@ -12,7 +12,7 @@ class SystemDetailByCustomerDataGrid extends DataGrid
 {
     /**
      * Create a new datagrid instance.
-     * 
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public function __construct(
@@ -32,16 +32,16 @@ class SystemDetailByCustomerDataGrid extends DataGrid
 
         $queryBuilder = DB::table('reward_points')
             ->addSelect(
-                'orders.id', 
-                'reward_points.order_id', 
-                'reward_points.category_id', 
-                'reward_points.attribute_id', 
-                'reward_points.product_id', 
-                'reward_points.status', 
-                'reward_points.exp_date', 
-                'reward_points.created_at', 
-                'reward_points.reward_points', 
-                'reward_points.note', 
+                'orders.id',
+                'reward_points.order_id',
+                'reward_points.category_id',
+                'reward_points.attribute_id',
+                'reward_points.product_id',
+                'reward_points.status',
+                'reward_points.exp_date',
+                'reward_points.created_at',
+                'reward_points.reward_points',
+                'reward_points.note',
                 'reward_points.status',
             )
             ->leftJoin('orders', 'reward_points.order_id', '=', 'orders.id')
@@ -93,7 +93,7 @@ class SystemDetailByCustomerDataGrid extends DataGrid
                 }
 
                 $data[] = $row->created_at;
-                
+
                 return implode(' ', $data);
             },
         ]);
@@ -142,7 +142,7 @@ class SystemDetailByCustomerDataGrid extends DataGrid
                         return '<span class="label-active">'.trans('rewards::app.admin.rewards.system.view.datagrid.used').'</span>';
                 }
             },
-            
+
             'filterable' => true,
         ]);
     }

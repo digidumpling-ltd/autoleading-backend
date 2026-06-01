@@ -339,8 +339,27 @@ return [
                     ],
                 ],
 
+                'balance-card' => [
+                    'title'        => '奖励积分',
+                    'points-label' => '可用积分',
+                    'view-history' => '查看记录',
+                ],
+
                 'view' => [
-                    'title' => '奖励系统详情',
+                    'title'            => '奖励系统详情',
+                    'allocate-btn'     => '分配积分',
+                    'allocate-success' => '奖励积分分配成功。',
+
+                    'allocate-modal' => [
+                        'title'              => '分配奖励积分',
+                        'points'             => '积分',
+                        'points-placeholder' => '输入积分数量',
+                        'reason'             => '原因',
+                        'reason-placeholder' => '输入分配原因',
+                        'save-btn'           => '保存',
+                        'error-points'       => '积分至少为1。',
+                        'error-reason'       => '原因为必填项。',
+                    ],
 
                     'datagrid' => [
                         'approved'            => '已批准',

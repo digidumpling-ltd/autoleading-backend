@@ -339,8 +339,27 @@ return [
                     ],
                 ],
 
+                'balance-card' => [
+                    'title'        => 'Reward Points',
+                    'points-label' => 'Available points',
+                    'view-history' => 'View history',
+                ],
+
                 'view' => [
-                    'title' => 'Reward System Details',
+                    'title'            => 'Reward System Details',
+                    'allocate-btn'     => 'Allocate Points',
+                    'allocate-success' => 'Reward points allocated successfully.',
+
+                    'allocate-modal' => [
+                        'title'              => 'Allocate Reward Points',
+                        'points'             => 'Points',
+                        'points-placeholder' => 'Enter number of points',
+                        'reason'             => 'Reason',
+                        'reason-placeholder' => 'Enter reason for allocation',
+                        'save-btn'           => 'Save',
+                        'error-points'       => 'Points must be at least 1.',
+                        'error-reason'       => 'Reason is required.',
+                    ],
 
                     'datagrid' => [
                         'approved'            => 'Approved',

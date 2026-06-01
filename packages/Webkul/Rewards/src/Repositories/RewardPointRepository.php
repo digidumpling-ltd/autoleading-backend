@@ -329,7 +329,7 @@ class RewardPointRepository extends Repository
 
     /**
      * Insert reward point
-     * 
+     *
      * @param array $data
      * @return void
      */
@@ -343,6 +343,14 @@ class RewardPointRepository extends Repository
         ]);
 
         Event::dispatch('reward.points.save.after', [$reward]);
+    }
+
+    /**
+     * Allocate reward points manually by an admin user.
+     */
+    public function allocateByAdmin(int $customerId, int $points, string $reason): void
+    {
+        $this->awardPoints($customerId, $points, $reason);
     }
 
     public function insertRewardPoints($data, $key, $value)
