@@ -41,10 +41,6 @@ class WalletServiceProvider extends ServiceProvider
 
         $this->app['router']->pushMiddlewareToGroup('web', WalletCheckoutMiddleware::class);
 
-        Event::listen('bagisto.admin.customers.customers.view.filters.after', function ($event) {
-            $event->addTemplate('wallet::admin.customers.wallet.button');
-        });
-
         Event::listen('bagisto.shop.checkout.onepage.summary.grand_total.after', function ($event) {
             $event->addTemplate('wallet::shop.checkout.wallet-balance-widget');
         });

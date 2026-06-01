@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'common' => [
+        'save-btn' => 'Save',
+        'edit-btn' => 'Edit',
+    ],
+
     'admin' => [
         'customers' => [
             'wallet' => [
@@ -22,7 +27,19 @@ return [
                 'col-amount'            => 'Amount',
                 'col-meta'              => 'Note',
                 'col-date'              => 'Date',
-                'view-wallet'           => 'View Wallet',
+                'balance-card' => [
+                    'title'              => 'Wallet Balance',
+                    'balance-label'      => 'Available balance',
+                    'view-history'       => 'View history',
+                    'update-btn'         => 'Update',
+                    'drawer-title'       => 'Adjust Wallet Balance',
+                    'type-label'         => 'Type',
+                    'amount-placeholder' => 'e.g. 10.00',
+                    'reason-placeholder' => 'Enter reason for adjustment',
+                    'error-type'         => 'Please select a type.',
+                    'error-amount'       => 'Amount must be at least 0.01.',
+                    'error-reason'       => 'Reason must be at least 5 characters.',
+                ],
             ],
         ],
     ],

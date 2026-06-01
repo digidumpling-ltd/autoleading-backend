@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'common' => [
+        'save-btn' => '保存',
+        'edit-btn' => '编辑',
+    ],
+
     'admin' => [
         'customers' => [
             'wallet' => [
@@ -22,7 +27,19 @@ return [
                 'col-amount'            => '金额',
                 'col-meta'              => '备注',
                 'col-date'              => '日期',
-                'view-wallet'           => '查看钱包',
+                'balance-card' => [
+                    'title'              => '钱包余额',
+                    'balance-label'      => '可用余额',
+                    'view-history'       => '查看记录',
+                    'update-btn'         => '更新',
+                    'drawer-title'       => '调整钱包余额',
+                    'type-label'         => '类型',
+                    'amount-placeholder' => '例如：10.00',
+                    'reason-placeholder' => '输入调整原因',
+                    'error-type'         => '请选择类型。',
+                    'error-amount'       => '金额至少为0.01。',
+                    'error-reason'       => '原因至少需要5个字符。',
+                ],
             ],
         ],
     ],
