@@ -48,6 +48,7 @@ class CartResource extends JsonResource
             'payment_method'                 => $this->payment ? core()->getConfigData('sales.payment_methods.' . $this->payment->method . '.title') : '',
             'base_redemption_points'         => $this->base_redemption_points,
             'reward_points'                  => $this->reward_points,
+            'points'                         => $this->points,
         ];
     }
 }

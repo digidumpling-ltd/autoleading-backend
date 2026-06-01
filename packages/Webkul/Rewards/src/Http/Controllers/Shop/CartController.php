@@ -74,6 +74,7 @@ class CartController extends BaseCartController
                     return response()->json([
                         'success' => true,
                         'message' => trans('rewards::app.checkout.total.success-points'),
+                        'data'    => new Resources(Cart::getCart()),
                     ]);
                 }
             }
@@ -115,6 +116,7 @@ class CartController extends BaseCartController
         return response()->json([
             'success' => true,
             'message' => trans('rewards::app.checkout.total.remove-points'),
+            'data'    => new Resources(Cart::getCart()),
         ]);
     }
 
@@ -129,7 +131,9 @@ class CartController extends BaseCartController
 
         $cart = Cart::getCart();
 
-        if(! empty($cart)) {
+        $response = ['data' => null];
+
+        if (! empty($cart)) {
             $rewardPoints = $redemptionPoints = 0;
 
             if (
@@ -140,16 +144,14 @@ class CartController extends BaseCartController
 
                 if (! empty($cart->points)) {
                     $redemptionPoints = $this->cartHelper->redemption($cart->points);
-               }
+                }
             }
 
             $cart['base_redemption_points'] = $redemptionPoints ?? core()->currency($redemptionPoints);
 
             $cart['reward_points'] = $rewardPoints;
 
-            $response = [
-               'data' => $cart ? new Resources($cart) : null,
-            ];
+            $response['data'] = new Resources($cart);
         }
 
         if (session()->has('info')) {

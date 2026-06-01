@@ -3,11 +3,14 @@
 namespace Webkul\Rewards\Http\Controllers\Shop;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Webkul\CartRule\Exceptions\CouponUsageLimitExceededException;
 use Webkul\Checkout\Facades\Cart;
-use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Payment\Facades\Payment;
+use Webkul\Rewards\Helpers\CartHelper;
+use Webkul\Rewards\Http\Resources\CartResource;
 use Webkul\Rewards\Repositories\RewardPointRepository;
 use Webkul\Sales\Repositories\OrderRepository;
+use Webkul\Sales\Transformers\OrderResource;
 use Webkul\Shop\Http\Controllers\API\OnepageController as BaseController;
 
 class OnepageController extends BaseController
@@ -18,10 +21,20 @@ class OnepageController extends BaseController
      * @return void
      */
     public function __construct(
-       protected OrderRepository $orderRepository,
-       protected CustomerRepository $customerRepository,
-       protected RewardPointRepository $rewardPointRepository,
+        protected CartHelper $cartHelper,
+        protected OrderRepository $orderRepository,
+        protected RewardPointRepository $rewardPointRepository,
     ) {
+    }
+
+    /**
+     * Return cart summary — uses Rewards CartResource so `points` field is included.
+     */
+    public function summary(): JsonResource
+    {
+        $cart = Cart::getCart();
+
+        return new CartResource($cart);
     }
 
     /**
@@ -38,7 +51,11 @@ class OnepageController extends BaseController
 
         Cart::collectTotals();
 
-        $this->validateOrder();
+        try {
+            $this->validateOrder();
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
 
         $cart = Cart::getCart();
 
@@ -49,7 +66,23 @@ class OnepageController extends BaseController
             ]);
         }
 
-        $order = $this->orderRepository->create(Cart::prepareDataForOrder());
+        $data = array_merge((new OrderResource($cart))->jsonSerialize(), [
+            'points'        => $cart->points,
+            'points_amount' => $cart->points ? $this->cartHelper->redemption($cart->points) : null,
+        ]);
+
+        try {
+            $order = $this->orderRepository->create($data);
+        } catch (CouponUsageLimitExceededException $e) {
+            cart()->removeCouponCode();
+
+            Cart::collectTotals();
+
+            return new JsonResource([
+                'redirect' => false,
+                'message'  => trans('shop::app.checkout.coupon.usage-limit-exceeded'),
+            ]);
+        }
 
         if (core()->getConfigData('reward.general.general.module-status')) {
             $this->rewardPointRepository->create($order);
@@ -57,9 +90,7 @@ class OnepageController extends BaseController
 
         Cart::deActivateCart();
 
-        Cart::activateCartIfSessionHasDeactivatedCartId();
-
-        session()->flash('order', $order);
+        session()->flash('order_id', $order->id);
 
         return new JsonResource([
             'redirect'     => true,

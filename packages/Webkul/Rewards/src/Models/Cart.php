@@ -5,6 +5,7 @@ namespace Webkul\Rewards\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Checkout\Contracts\Cart as CartContract;
 use Webkul\Checkout\Database\Factories\CartFactory;
 use Webkul\Checkout\Models\CartAddress;
@@ -12,6 +13,8 @@ use Webkul\Checkout\Models\CartAddressProxy;
 use Webkul\Checkout\Models\CartItemProxy;
 use Webkul\Checkout\Models\CartPaymentProxy;
 use Webkul\Checkout\Models\CartShippingRateProxy;
+use Webkul\Core\Models\ChannelProxy;
+use Webkul\Customer\Models\CustomerProxy;
 
 class Cart extends Model implements CartContract
 {
@@ -44,6 +47,22 @@ class Cart extends Model implements CartContract
     protected $casts = [
         'additional' => 'json',
     ];
+
+    /**
+     * Get the channel associated with the cart.
+     */
+    public function channel(): BelongsTo
+    {
+        return $this->belongsTo(ChannelProxy::modelClass());
+    }
+
+    /**
+     * Get the customer associated with the cart.
+     */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(CustomerProxy::modelClass());
+    }
 
     /**
      * To get relevant associated items with the cart instance.

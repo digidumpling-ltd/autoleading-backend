@@ -3,8 +3,6 @@
 namespace Webkul\Rewards\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Foundation\AliasLoader;
-use Webkul\Checkout\Facades\Cart;
 use Illuminate\Support\Facades\Route;
 use Webkul\Rewards\Http\Controllers\Shop\OnepageController;
 use Webkul\Rewards\Http\Controllers\Shop\ReviewController;
@@ -41,14 +39,6 @@ class RewardsServiceProvider extends ServiceProvider
 
         $this->publishable();
 
-        $loader = AliasLoader::getInstance();
-
-        $loader->alias('cart', CartFacade::class);
-
-        $this->app->singleton('cart', function () {
-            return new Cart();
-        });
-
         if (core()->getConfigData('reward.general.general.module-status')) {
             $this->mergeConfigFrom(
                 dirname(__DIR__) . '/Config/admin-menu.php',
@@ -61,7 +51,6 @@ class RewardsServiceProvider extends ServiceProvider
             );
         }
 
-        $this->app->bind('cart', 'Webkul\Rewards\Cart');
     }
 
     /**
@@ -84,9 +73,16 @@ class RewardsServiceProvider extends ServiceProvider
 
         $this->app->bind(BaseInvoiceRepository::class, InvoiceRepository::class);
 
+        $this->app->bind(\Webkul\Checkout\Cart::class, \Webkul\Rewards\Cart::class);
+
         $this->app->bind(APIOnepageController::class, OnepageController::class);
 
         $this->app->bind(APIReviewController::class, ReviewController::class);
+
+        $this->app->bind(
+            \Webkul\Shop\Http\Controllers\API\CartController::class,
+            \Webkul\Rewards\Http\Controllers\Shop\API\CartController::class
+        );
     }
 
     /**

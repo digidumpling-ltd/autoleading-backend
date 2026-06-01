@@ -8,16 +8,18 @@
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-mini-cart-reward-template">
-        <div class="flex justify-between items-center mt-2 mb-2 border-b px-6 pb-2 border-[#E9E9E9]">
+        <div
+            class="flex justify-between items-center mt-2 mb-2 border-b px-6 pb-2 border-[#E9E9E9]"
+            v-if="cart && cart.reward_points > 0"
+        >
             <p class="text-sm font-medium text-[#6E6E6E]">
                 @lang('rewards::app.shop.checkout.cart.mini-cart.reward-points')
             </p>
-            
+
             <p
-               class="text-xl font-semibold"
-               v-if = "cart"
-               v-text= "cart.reward_points">
-            </p>
+                class="text-xl font-semibold"
+                v-text="cart.reward_points"
+            ></p>
         </div>
     </script>
 
