@@ -10,44 +10,46 @@
         type="text/x-template"
         id="v-reward-balance-card-template"
     >
-        <div class="rounded-xl border bg-white dark:border-gray-800 dark:bg-gray-900">
+        <div class="box-shadow rounded bg-white dark:bg-gray-900">
             <!-- Header -->
-            <div class="flex items-center justify-between p-4">
-                <p class="text-base font-semibold text-gray-800 dark:text-white">
+            <div class="flex items-center justify-between p-1.5">
+                <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
                     @lang('rewards::app.admin.rewards.system.balance-card.title')
                 </p>
 
-                <a
-                    :href="`${viewUrl}/${customerId}`"
-                    class="cursor-pointer text-xs font-medium text-blue-600 hover:underline dark:text-blue-400"
-                >
-                    @lang('rewards::app.admin.rewards.system.balance-card.view-history')
-                </a>
+                <div class="flex items-center">
+                    <div
+                        class="flex cursor-pointer items-center gap-1.5 px-2.5 text-blue-600 transition-all hover:underline"
+                        @click="openDrawer"
+                    >
+                        @lang('rewards::app.common.edit-btn')
+                    </div>
+
+                    <span
+                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
+                        :class="[isOpen ? 'icon-arrow-up' : 'icon-arrow-down']"
+                        @click="isOpen = ! isOpen"
+                    ></span>
+                </div>
             </div>
 
-            <!-- Balance row -->
-            <div class="flex items-end justify-between border-t px-4 py-5 dark:border-gray-800">
-                <div>
-                    <template v-if="loading">
-                        <div class="shimmer h-7 w-24 rounded"></div>
-                    </template>
+            <!-- Content -->
+            <div class="px-4 pb-4" v-show="isOpen">
+                <template v-if="loading">
+                    <div class="shimmer mb-2 h-8 w-28 rounded"></div>
+                    <div class="shimmer h-3 w-20 rounded"></div>
+                </template>
 
-                    <template v-else>
-                        <p class="text-3xl font-bold text-gray-800 dark:text-white" v-text="balance"></p>
+                <template v-else>
+                    <p class="text-3xl font-bold text-gray-800 dark:text-white" v-text="`${balance} @lang('rewards::app.admin.rewards.system.balance-card.pts')`"></p>
 
-                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                            @lang('rewards::app.admin.rewards.system.balance-card.points-label')
-                        </p>
-                    </template>
-                </div>
-
-                <!-- Allocate button -->
-                <div
-                    class="secondary-button cursor-pointer"
-                    @click="openDrawer"
-                >
-                    @lang('rewards::app.admin.rewards.system.view.allocate-btn')
-                </div>
+                    <a
+                        :href="`${viewUrl}/${customerId}`"
+                        class="mt-1 inline-block text-xs font-medium text-blue-600 hover:underline dark:text-blue-400"
+                    >
+                        @lang('rewards::app.admin.rewards.system.balance-card.view-history')
+                    </a>
+                </template>
             </div>
 
             <!-- Allocate drawer -->
@@ -65,7 +67,7 @@
                                 :disabled="saving"
                                 @click="submit"
                             >
-                                @lang('rewards::app.admin.rewards.system.view.allocate-modal.save-btn')
+                                @lang('rewards::app.common.save-btn')
                             </button>
                         </div>
                     </div>
@@ -124,6 +126,7 @@
 
             data() {
                 return {
+                    isOpen:  true,
                     loading: true,
                     balance: 0,
                     saving:  false,

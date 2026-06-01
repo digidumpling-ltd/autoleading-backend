@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'common' => [
+        'save-btn' => 'Save',
+        'edit-btn' => 'Edit',
+    ],
+
     'admin' => [
         'components' => [
             'layouts' => [
@@ -341,8 +346,8 @@ return [
 
                 'balance-card' => [
                     'title'        => 'Reward Points',
-                    'points-label' => 'Available points',
                     'view-history' => 'View history',
+                    'pts'          => 'pts',
                 ],
 
                 'view' => [

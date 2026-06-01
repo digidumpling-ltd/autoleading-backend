@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'common' => [
+        'save-btn' => '保存',
+        'edit-btn' => '编辑',
+    ],
+
     'admin' => [
         'components' => [
             'layouts' => [
@@ -341,8 +346,8 @@ return [
 
                 'balance-card' => [
                     'title'        => '奖励积分',
-                    'points-label' => '可用积分',
                     'view-history' => '查看记录',
+                    'pts'          => '积分',
                 ],
 
                 'view' => [

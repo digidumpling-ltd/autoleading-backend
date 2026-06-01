@@ -32,6 +32,10 @@ class EventServiceProvider extends ServiceProvider
         });
 
         Event::listen('bagisto.admin.customers.customers.view.card.accordion.customer.before', function ($viewRenderEventManager) {
+            $viewRenderEventManager->addTemplate('wallet::admin.customers.wallet.balance-card');
+        });
+
+        Event::listen('bagisto.admin.customers.customers.view.card.accordion.customer.before', function ($viewRenderEventManager) {
             $viewRenderEventManager->addTemplate('rewards::admin.customers.reward-balance-card');
         });
 
