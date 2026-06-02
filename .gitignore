@@ -47,3 +47,5 @@ yarn-error.log
 openspec/
 .github/skills/openspec*
 .specify
+.gemini
+.kilocode

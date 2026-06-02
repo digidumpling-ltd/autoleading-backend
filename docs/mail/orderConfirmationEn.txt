@@ -1,0 +1,38 @@
+Subject: [Autoleading] Your Reservation is Confirmed! Order No.: #{{Online booking number}} (Pick-up Memo)
+Dear {{Member ID}},
+Great news! Our team has completed the review of your reservation. We are thrilled to confirm that your vehicle is ready for your upcoming journey!
+Please review your confirmed rental details below:
+🚗 Confirmed Reservation Summary
+•	Order Number: #{{online booking number}}
+•	Vehicle Model: {{Vehicle model}}
+•	Pick-up Time & Location: {{Booking Date}} ｜ {{Venue/Time}}
+•	Return Time & Location: {{Booking Date}} ｜ {{Venue/Time}}
+•	Payment Status: Paid ({{Paid $$$ HKD}})
+Rental Process Overview: 1. Preparation ➔ 2. Pick-up & Registration ➔ 3. Vehicle Usage ➔ 4. Return & Settlement
+1. Required Documents for Pick-up (Must Bring)
+To ensure a smooth pick-up process, the driver must present the following documents (please ensure your driving license is valid throughout the rental period):
+💡 Approved Document Combinations (Choose One):
+•	A. HK ID Card + HK Driving License
+•	B. Passport + International Driving Permit (IDP)
+•	C. Mainland Travel Permit (EEP) + HK Driving License
+•	Other Document: Order Confirmation Email (showing it on your phone is sufficient).
+•	Deposit Payment: The credit card used for the original payment (pre-authorization are not accepted/ Post-sales refund), OR via FPS (Faster Payment System):
+o	Account Name: Auto Leading Limited
+o	FPS ID: 113697387
+2. Important Pick-up Notes
+•	Punctuality: Please arrive according to the agreed time. If your schedule changes or is delayed, please notify us in advance. (First 15 minutes are free; thereafter, a late fee of HKD $75 per 15 minutes applies).
+•	Vehicle Inspection: Upon pick-up, our staff will inspect the vehicle condition with you. We highly recommend taking photos or videos on-site to protect your rights.
+•	Fuel Policy: Please note the fuel level at pick-up. We operate on a "Full-to-Full" policy. Please refuel the vehicle within 2 hours before returning it, at a petrol station no more than 8 km away from the return location and please keep the receipt.
+•	Child Restraint System: By law, children under 8 years old, unless they are 1.35m or taller, must use a child restraint system regardless of whether they sit in the front or rear seat. If you are traveling with children, you can inquire and arrange a complimentary child safety belt at least 12 hours prior to your pick-up time.
+3. During the Rental Period
+•	HKeToll Service: All our vehicles are equipped with "HKeToll" automatic payment tags. Please drive through tunnels with peace of mind.
+•	Complimentary Amenities: A free phone mount and charging cable are provided inside the vehicle for your convenience.
+•	Deduction of Expenses: Any expenses incurred during the rental period (including but not limited to: extra rental fees, tunnel tolls, fuel differences, late return fees, doorstep delivery/collection fees, Octopus card deposit of $20 (non-refundable), Octopus spending, and traffic violations) will be deducted directly from your security deposit on an at-cost basis.
+4. Vehicle Return & Settlement
+•	Final Settlement: Our staff will perform a final check and settlement with you upon a successful return.
+•	Deposit Refund: Most initial security deposit refunds will be processed and completed within 14 days after the vehicle is returned, depending on your payment method.
+📞 Have Any Questions? If you need to make temporary schedule changes or encounter any emergency, please contact our live customer service immediately via WhatsApp at +852 59909800 (Operating Hours: 10:00 - 20:00). We are always here to help.
+Thank you again for choosing Autoleading. We wish you a safe and wonderful journey!
+Best regards,
+Team Autoleading
+

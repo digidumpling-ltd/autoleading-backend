@@ -1,6 +1,65 @@
 <?php
 
 return [
+    'emails' => [
+        'orders' => [
+            'payment-confirmed' => [
+                'subject'         => 'Thank you for your reservation at Autoleading.net! Payment Received (Order: #:order_id)',
+                'title'           => 'Payment Received',
+                'greeting'        => 'Thank you so much for making a reservation with Autoleading.net! We are pleased to inform you that your payment has been successfully received.',
+                'review-message'  => 'To ensure all service and vehicle details are perfectly accurate, our team is currently working hard to verify your order. We will do our absolute best to complete this process as quickly as possible, after which you will receive an official "Order Confirmation" email.',
+                'summary-title'   => 'Reservation Summary',
+                'order-number'    => 'Order Number',
+                'vehicle-model'   => 'Vehicle Model',
+                'pickup-date'     => 'Pick-up Date',
+                'return-date'     => 'Return Date',
+                'amount-paid'     => 'Amount Paid',
+                'next-steps-title' => 'What Happens Next?',
+                'next-step-1'     => 'Reservation Review: We are currently reviewing your reservation details. Order verification is usually completed within 48 hours. Meanwhile, our customer service team will contact you to confirm your specific pick-up and drop off times.',
+                'next-step-2'     => 'Confirmation Email: Once verified, the system will automatically send you an "Order Confirmation & Pick-up Memo."',
+                'next-step-3'     => 'Track Progress: You can log into your account at Autoleading.net anytime to check the latest status.',
+                'contact-note'    => 'If you notice any mistakes in your reservation details (such as contact number, dates, or vehicle specifications), please contact us immediately via +852 59909800 (WhatsApp Support), and we will prioritize your request.',
+                'sign-off'        => 'Thank you again for your trust and support in Autoleading!',
+            ],
+
+            'order-confirmed' => [
+                'subject'                  => '[Autoleading] Your Reservation is Confirmed! Order No.: #:order_id (Pick-up Memo)',
+                'title'                    => 'Your Reservation is Confirmed!',
+                'greeting'                 => 'Great news! Our team has completed the review of your reservation. We are thrilled to confirm that your vehicle is ready for your upcoming journey!',
+                'summary-title'            => 'Confirmed Reservation Summary',
+                'order-number'             => 'Order Number',
+                'vehicle-model'            => 'Vehicle Model',
+                'pickup-time-location'     => 'Pick-up Time & Location',
+                'return-time-location'     => 'Return Time & Location',
+                'payment-status'           => 'Payment Status',
+                'payment-paid'             => 'Paid',
+                'process-overview'         => 'Rental Process Overview: 1. Preparation ➔ 2. Pick-up & Registration ➔ 3. Vehicle Usage ➔ 4. Return & Settlement',
+                'docs-title'               => 'Required Documents for Pick-up (Must Bring)',
+                'docs-intro'               => 'To ensure a smooth pick-up process, the driver must present the following documents (please ensure your driving license is valid throughout the rental period):',
+                'docs-combinations-title'  => '💡 Approved Document Combinations (Choose One)',
+                'docs-combo-a'             => 'HK ID Card + HK Driving License',
+                'docs-combo-b'             => 'Passport + International Driving Permit (IDP)',
+                'docs-combo-c'             => 'Mainland Travel Permit (EEP) + HK Driving License',
+                'docs-email'               => 'Other Document: Order Confirmation Email (showing it on your phone is sufficient).',
+                'docs-deposit'             => 'Deposit Payment: The credit card used for the original payment (pre-authorization are not accepted / Post-sales refund), OR via FPS (Faster Payment System): Account Name: Auto Leading Limited | FPS ID: 113697387',
+                'pickup-notes-title'       => 'Important Pick-up Notes',
+                'pickup-note-punctuality'  => 'Punctuality: Please arrive according to the agreed time. If your schedule changes or is delayed, please notify us in advance. (First 15 minutes are free; thereafter, a late fee of HKD $75 per 15 minutes applies).',
+                'pickup-note-inspection'   => 'Vehicle Inspection: Upon pick-up, our staff will inspect the vehicle condition with you. We highly recommend taking photos or videos on-site to protect your rights.',
+                'pickup-note-fuel'         => 'Fuel Policy: Please note the fuel level at pick-up. We operate on a "Full-to-Full" policy. Please refuel the vehicle within 2 hours before returning it, at a petrol station no more than 8 km away from the return location and please keep the receipt.',
+                'pickup-note-child'        => 'Child Restraint System: By law, children under 8 years old, unless they are 1.35m or taller, must use a child restraint system regardless of whether they sit in the front or rear seat. If you are traveling with children, you can inquire and arrange a complimentary child safety belt at least 12 hours prior to your pick-up time.',
+                'rental-title'             => 'During the Rental Period',
+                'rental-hketoll'           => 'HKeToll Service: All our vehicles are equipped with "HKeToll" automatic payment tags. Please drive through tunnels with peace of mind.',
+                'rental-amenities'         => 'Complimentary Amenities: A free phone mount and charging cable are provided inside the vehicle for your convenience.',
+                'rental-deduction'         => 'Deduction of Expenses: Any expenses incurred during the rental period (including but not limited to: extra rental fees, tunnel tolls, fuel differences, late return fees, doorstep delivery/collection fees, Octopus card deposit of $20 (non-refundable), Octopus spending, and traffic violations) will be deducted directly from your security deposit on an at-cost basis.',
+                'return-title'             => 'Vehicle Return & Settlement',
+                'return-settlement'        => 'Final Settlement: Our staff will perform a final check and settlement with you upon a successful return.',
+                'return-deposit'           => 'Deposit Refund: Most initial security deposit refunds will be processed and completed within 14 days after the vehicle is returned, depending on your payment method.',
+                'contact-note'             => 'If you need to make temporary schedule changes or encounter any emergency, please contact our live customer service immediately via WhatsApp at +852 59909800 (Operating Hours: 10:00 - 20:00). We are always here to help.',
+                'sign-off'                 => 'Thank you again for choosing Autoleading. We wish you a safe and wonderful journey!',
+            ],
+        ],
+    ],
+
     'configuration' => [
         'catalog' => [
             'products' => [
