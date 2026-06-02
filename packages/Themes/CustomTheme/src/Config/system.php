@@ -72,6 +72,14 @@ return [
                 'locale_based'  => false,
             ],
             [
+                'name'          => 'store_name_font_size',
+                'title'         => 'custom-theme::app.configuration.general.design.navbar.store-name-font-size',
+                'type'          => 'number',
+                'channel_based' => true,
+                'locale_based'  => false,
+                'default'       => 24,
+            ],
+            [
                 'name'          => 'show_manual_menu',
                 'title'         => 'custom-theme::app.configuration.general.design.navbar.show-manual-menu',
                 'type'          => 'boolean',
@@ -84,7 +92,7 @@ return [
                 'type'          => 'blade',
                 'path'          => 'custom-theme::configuration.navbar-menu-items',
                 'channel_based' => true,
-                'locale_based'  => false,
+                'locale_based'  => true,
             ],
             [
                 'name'          => 'show_categories',

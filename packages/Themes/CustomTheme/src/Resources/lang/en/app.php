@@ -87,6 +87,7 @@ return [
                     'logo-fit-fill'             => 'Fill',
                     'logo-fit-none'             => 'None (original size)',
                     'show-store-name'           => 'Show Store Name',
+                    'store-name-font-size'      => 'Store Name Font Size (px)',
                     'show-manual-menu'          => 'Show Menu Items',
                     'menu-items'                => 'Menu Items',
                     'menu-items-add'            => 'Add Item',

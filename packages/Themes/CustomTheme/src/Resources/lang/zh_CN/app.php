@@ -87,6 +87,7 @@ return [
                     'logo-fit-fill'             => '拉伸填充',
                     'logo-fit-none'             => '原始尺寸',
                     'show-store-name'           => '显示店铺名称',
+                    'store-name-font-size'      => '店铺名称字体大小（像素）',
                     'show-manual-menu'          => '显示菜单项',
                     'menu-items'                => '菜单项',
                     'menu-items-add'            => '添加项目',

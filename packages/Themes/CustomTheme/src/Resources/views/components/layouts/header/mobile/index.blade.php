@@ -4,7 +4,8 @@
 
     $logoMaxHeight  = (int) (core()->getConfigData('general.design.navbar.logo_max_height') ?? 40);
     $logoFit        = core()->getConfigData('general.design.navbar.logo_fit') ?? 'contain';
-    $showStoreName  = (bool) core()->getConfigData('general.design.navbar.show_store_name');
+    $showStoreName      = (bool) core()->getConfigData('general.design.navbar.show_store_name');
+    $storeNameFontSize  = (int) (core()->getConfigData('general.design.navbar.store_name_font_size') ?? 24);
     $showCategories = (bool) (core()->getConfigData('general.design.navbar.show_categories') ?? 1);
     $showManualMenu = (bool) core()->getConfigData('general.design.navbar.show_manual_menu');
     $categoriesOrder = (int) (core()->getConfigData('general.design.navbar.categories_order') ?? 0);
@@ -51,7 +52,7 @@
                 >
 
                 @if ($showStoreName)
-                    <span class="font-bold text-gray-800 dark:text-white" style="font-size: {{ round($logoMaxHeight * 0.6) }}px; line-height: 1;">
+                    <span class="font-bold text-gray-800 dark:text-white" style="font-size: {{ $storeNameFontSize }}px; line-height: 1;">
                         {{ core()->getCurrentChannel()->name }}
                     </span>
                 @endif
@@ -255,7 +256,7 @@
                         >
 
                         @if ($showStoreName)
-                            <span class="font-bold text-gray-800" style="font-size: {{ round($logoMaxHeight * 0.6) }}px; line-height: 1;">
+                            <span class="font-bold text-gray-800" style="font-size: {{ $storeNameFontSize }}px; line-height: 1;">
                                 {{ core()->getCurrentChannel()->name }}
                             </span>
                         @endif
