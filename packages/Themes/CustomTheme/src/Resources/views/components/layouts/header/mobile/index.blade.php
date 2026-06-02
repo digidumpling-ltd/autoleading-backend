@@ -27,7 +27,7 @@
     usort($navItems, fn ($a, $b) => $a['order'] <=> $b['order']);
 @endphp
 
-<div class="flex flex-wrap gap-4 px-4 pt-6 pb-4 shadow-sm lg:hidden">
+<div class="flex flex-wrap gap-4 bg-white px-4 pb-4 pt-6 shadow-sm lg:hidden">
     <div class="flex items-center justify-between w-full">
         <!-- Left Navigation -->
         <div class="flex items-center gap-x-1.5">
@@ -52,7 +52,7 @@
                 >
 
                 @if ($showStoreName)
-                    <span class="font-bold text-gray-800 dark:text-white" style="font-size: {{ $storeNameFontSize }}px; line-height: 1;">
+                    <span class="font-bold text-gray-800" style="font-size: {{ $storeNameFontSize }}px; line-height: 1;">
                         {{ core()->getCurrentChannel()->name }}
                     </span>
                 @endif

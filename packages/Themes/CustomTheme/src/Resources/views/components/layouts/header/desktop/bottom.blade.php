@@ -30,7 +30,7 @@
 
 {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.before') !!}
 
-<div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 px-[60px] max-1180:px-8">
+<div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 bg-white px-[60px] max-1180:px-8">
     <!-- Left Navigation Section -->
     <div class="flex items-center gap-x-10 max-[1180px]:gap-x-5">
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.before') !!}
@@ -48,7 +48,7 @@
             >
 
             @if ($showStoreName)
-                <span class="font-bold text-gray-800 dark:text-white" style="font-size: {{ $storeNameFontSize }}px; line-height: 1;">
+                <span class="font-bold text-gray-800" style="font-size: {{ $storeNameFontSize }}px; line-height: 1;">
                     {{ core()->getCurrentChannel()->name }}
                 </span>
             @endif
@@ -61,11 +61,9 @@
         <div class="flex items-center">
         @foreach ($navItems as $navItem)
             @if ($navItem['type'] === 'link')
-                <div class="flex h-[77px] items-center border-b-4 border-transparent hover:border-b-4 hover:border-navyBlue">
-                    <a href="{{ $navItem['item']['url'] }}" class="inline-block px-5 uppercase">
-                        {{ $navItem['item']['label'] }}
-                    </a>
-                </div>
+                <a href="{{ $navItem['item']['url'] }}" class="flex h-[77px] items-center border-b-4 border-transparent px-5 uppercase hover:border-navyBlue">
+                    {{ $navItem['item']['label'] }}
+                </a>
             @else
                 @if ($showCategoriesDropdown)
                     <v-custom-categories-dropdown categories-label="{{ $categoriesLabel }}">
