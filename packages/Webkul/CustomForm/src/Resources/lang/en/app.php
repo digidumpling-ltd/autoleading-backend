@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'title' => 'TVD Refund Application',
+    'submit' => 'Submit',
+    'success' => 'Your refund request has been submitted successfully.',
+    'menu' => 'TVD Submissions',
+    'back' => 'Back',
+    'view' => 'View',
+    'actions' => 'Actions',
+    'no-submissions' => 'No submissions found.',
+    'mail-subject' => 'New TVD Refund Application',
+    'fields' => [
+        'chinese-name' => 'Renter Full Chinese Name',
+        'chinese-name-placeholder' => 'Please fill in renter full Chinese name, enter N/A if not applicable',
+        'english-name' => 'Renter Full English Name',
+        'english-name-placeholder' => 'Please fill in renter full English name',
+        'rental-model' => 'Last Rental Model',
+        'rental-model-placeholder' => 'Please fill in last rental model',
+        'return-date' => 'Last Rental Return Date',
+        'contact-number' => "Renter's Contact Number",
+        'contact-number-placeholder' => "Please fill in renter's contact number",
+        'email' => "Renter's E-mail Address",
+        'email-placeholder' => "Please fill in renter's email address",
+        'refund-type' => 'Refund',
+        'refund-type-local' => 'Local Refund (Fill in Item 8)',
+        'refund-type-overseas' => 'Overseas Refund (Fill in Item 9)',
+        'local-bank-info' => 'FPS or Local Bank Information (Bank and Account Number)',
+        'local-bank-info-placeholder' => 'Please fill in your FPS or Local Bank Information (Bank and Account Number)',
+        'overseas-bank-info' => 'Country of Beneficiary Bank / Bank Name / SWIFT CODE / Full Legal Name of Beneficiary Account / Account Number or IBAN / Currency',
+        'overseas-bank-info-placeholder' => 'Please fill in Country of Beneficiary Bank / Bank Name / SWIFT CODE / Full Legal Name of Beneficiary Account / Account Number or IBAN / Currency',
+    ],
+];

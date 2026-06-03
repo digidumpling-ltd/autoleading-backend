@@ -51,6 +51,7 @@ use Webkul\OrderPriceOverride\Providers\ServiceProvider as OrderPriceOverrideSer
 use Webkul\RentalPricing\Providers\ServiceProvider as RentalPricingServiceProvider;
 use Themes\CustomTheme\Providers\CustomThemeServiceProvider;
 use Webbycrown\BlogBagisto\Providers\BlogServiceProvider;
+use Webkul\CustomForm\Providers\CustomFormServiceProvider;
 
 return [
     /**
@@ -112,4 +113,5 @@ return [
     RentalPricingServiceProvider::class,
     CustomThemeServiceProvider::class,
     BlogServiceProvider::class,
+    CustomFormServiceProvider::class,
 ];
