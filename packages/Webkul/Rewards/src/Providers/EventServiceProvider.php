@@ -39,7 +39,13 @@ class EventServiceProvider extends ServiceProvider
             $viewRenderEventManager->addTemplate('rewards::admin.customers.reward-balance-card');
         });
 
-        if (core()->getConfigData('reward.general.general.module-status')) {
+        try {
+        $rewardEnabled = core()->getConfigData('reward.general.general.module-status');
+        } catch (\Exception) {
+            $rewardEnabled = false;
+        }
+
+        if ($rewardEnabled) {
             Event::listen('bagisto.shop.customers.signup_form_controls.before', function($viewRenderEventManager) {
                 $viewRenderEventManager->addTemplate('rewards::shop.customers.account.sign-up');
             });

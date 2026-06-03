@@ -39,16 +39,20 @@ class RewardsServiceProvider extends ServiceProvider
 
         $this->publishable();
 
-        if (core()->getConfigData('reward.general.general.module-status')) {
-            $this->mergeConfigFrom(
-                dirname(__DIR__) . '/Config/admin-menu.php',
-                'menu.admin'
-            );
+        try {
+            if (core()->getConfigData('reward.general.general.module-status')) {
+                $this->mergeConfigFrom(
+                    dirname(__DIR__) . '/Config/admin-menu.php',
+                    'menu.admin'
+                );
 
-            $this->mergeConfigFrom(
-                dirname(__DIR__) . '/Config/shop-menu.php',
-                'menu.customer'
-            );
+                $this->mergeConfigFrom(
+                    dirname(__DIR__) . '/Config/shop-menu.php',
+                    'menu.customer'
+                );
+            }
+        } catch (\Exception) {
+            // Silently skip when database is not yet available (e.g., during installation).
         }
 
     }
