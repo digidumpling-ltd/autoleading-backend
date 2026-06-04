@@ -54,13 +54,21 @@
                                     @lang('shop::app.products.view.reviews.rating')
                                 </x-shop::form.control-group.label>
 
-                                <x-shop::products.star-rating
+                                <span
+                                    class="icon-star-fill cursor-pointer text-2xl"
+                                    role="presentation"
+                                    v-for="star in [1,2,3,4,5]"
+                                    :class="appliedRatings >= star ? 'text-amber-500' : 'text-zinc-500'"
+                                    @click="appliedRatings = star"
+                                >
+                                </span>
+
+                                <v-field
+                                    type="hidden"
                                     name="rating"
                                     rules="required"
-                                    :value="old('rating') ?? 5"
-                                    :label="trans('shop::app.products.view.reviews.rating')"
-                                    :disabled="false"
-                                />
+                                    v-model="appliedRatings"
+                                ></v-field>
 
                                 <x-shop::form.control-group.error control-name="rating" />
                             </x-shop::form.control-group>
@@ -187,7 +195,11 @@
                         <div class="flex gap-4 justify-between items-center max-w-[365px] mt-8 max-sm:flex-wrap">
                             <p class="text-3xl font-medium max-sm:text-base">{{ number_format($avgRatings, 1) }}</p>
 
-                            <x-shop::products.star-rating :value="$avgRatings" />
+                            <div class="flex items-center">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <span class="icon-star-fill text-xl {{ $i <= $avgRatings ? 'text-amber-500' : 'text-zinc-300' }}" role="presentation"></span>
+                                @endfor
+                            </div>
 
                             <p class="text-xs text-[#858585]">
                                 (@{{ meta.total }} @lang('shop::app.products.view.reviews.customer-review'))
@@ -275,10 +287,13 @@
                     </p>
 
                     <div class="flex items-center">
-                        <x-shop::products.star-rating 
-                            ::name="review.name" 
-                            ::value="review.rating"
-                        />
+                        <span
+                            class="icon-star-fill text-xl"
+                            v-for="star in [1,2,3,4,5]"
+                            :class="review.rating >= star ? 'text-amber-500' : 'text-zinc-300'"
+                            role="presentation"
+                        >
+                        </span>
                     </div>
                 </div>
 
@@ -372,6 +387,8 @@
                     isLoading: true,
 
                     canReview: false,
+
+                    appliedRatings: {{ old('rating') ?? 5 }},
 
                     reviews: [],
 
