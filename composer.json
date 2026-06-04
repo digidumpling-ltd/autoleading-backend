@@ -159,8 +159,12 @@
         "laravel": {
             "dont-discover": [
                 "bagisto/laravel-datafaker",
+                "barryvdh/laravel-debugbar",
                 "intervention/image",
-                "laravel/socialite"
+                "laravel/boost",
+                "laravel/socialite",
+                "nunomaduro/collision",
+                "pestphp/pest-plugin-laravel"
             ]
         }
     },
