@@ -77,6 +77,17 @@ return [
         ],
         'general' => [
             'design' => [
+                'footer' => [
+                    'title'        => 'Footer',
+                    'info'         => 'Configure footer contact details and business hours.',
+                    'phone'        => 'Phone Number',
+                    'email'        => 'Email Address',
+                    'address'      => 'Rental Office Address',
+                    'whatsapp-1'   => 'WhatsApp Number 1 (digits only, e.g. 85257610757)',
+                    'whatsapp-2'   => 'WhatsApp Number 2 (digits only, e.g. 85259909800)',
+                    'hours-rental' => 'Car Rental Service Hours',
+                    'hours-sales'  => 'Car Sales Service Hours',
+                ],
                 'navbar' => [
                     'title'                     => 'Navbar Menu',
                     'info'                      => 'Configure the navigation bar logo, menu items, and categories.',
@@ -101,6 +112,21 @@ return [
                 ],
             ],
         ],
+    ],
+
+    'footer' => [
+        'quick_links'         => 'Quick Links',
+        'no_links'            => 'No links configured.',
+        'business_hours'      => 'Business Hours',
+        'hours_days'          => 'Monday – Sunday',
+        'rental_hours_label'  => 'Car Rental Service:',
+        'sales_hours_label'   => 'Car Sales Service:',
+        'hotline'             => 'Booking & Enquiry Hotline',
+        'phone_label'         => 'Tel: ',
+        'email_label'         => 'Email: ',
+        'address_label'       => 'Address: ',
+        'whatsapp_label'      => 'WhatsApp:',
+        'all_rights_reserved' => 'All rights reserved.',
     ],
 
     'products' => [

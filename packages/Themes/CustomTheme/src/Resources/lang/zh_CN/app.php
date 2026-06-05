@@ -77,6 +77,17 @@ return [
         ],
         'general' => [
             'design' => [
+                'footer' => [
+                    'title'        => '頁腳設置',
+                    'info'         => '配置頁腳聯絡資訊及營業時間。',
+                    'phone'        => '電話號碼',
+                    'email'        => '電郵地址',
+                    'address'      => '租務部地址',
+                    'whatsapp-1'   => 'WhatsApp 號碼 1（純數字，例如 85257610757）',
+                    'whatsapp-2'   => 'WhatsApp 號碼 2（純數字，例如 85259909800）',
+                    'hours-rental' => '租車服務時間',
+                    'hours-sales'  => '汽車銷售服務時間',
+                ],
                 'navbar' => [
                     'title'                     => '导航栏菜单',
                     'info'                      => '配置导航栏Logo、菜单项和分类。',
@@ -101,6 +112,21 @@ return [
                 ],
             ],
         ],
+    ],
+
+    'footer' => [
+        'quick_links'         => '快速連結',
+        'no_links'            => '尚未設定連結。',
+        'business_hours'      => '營業時間',
+        'hours_days'          => '星期一至日',
+        'rental_hours_label'  => '租車服務時間：',
+        'sales_hours_label'   => '汽車銷售服務：',
+        'hotline'             => '預約服務查詢熱線',
+        'phone_label'         => '電話：',
+        'email_label'         => '郵箱：',
+        'address_label'       => '地址：',
+        'whatsapp_label'      => 'WhatsApp:',
+        'all_rights_reserved' => '版權所有。',
     ],
 
     'products' => [

@@ -36,6 +36,65 @@ return [
     ],
 
     [
+        'key'  => 'general.design.footer',
+        'name' => 'custom-theme::app.configuration.general.design.footer.title',
+        'info' => 'custom-theme::app.configuration.general.design.footer.info',
+        'sort' => 11,
+
+        'fields' => [
+            [
+                'name'          => 'phone',
+                'title'         => 'custom-theme::app.configuration.general.design.footer.phone',
+                'type'          => 'text',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ],
+            [
+                'name'          => 'email',
+                'title'         => 'custom-theme::app.configuration.general.design.footer.email',
+                'type'          => 'text',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ],
+            [
+                'name'          => 'address',
+                'title'         => 'custom-theme::app.configuration.general.design.footer.address',
+                'type'          => 'text',
+                'channel_based' => true,
+                'locale_based'  => true,
+            ],
+            [
+                'name'          => 'whatsapp_1',
+                'title'         => 'custom-theme::app.configuration.general.design.footer.whatsapp-1',
+                'type'          => 'text',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ],
+            [
+                'name'          => 'whatsapp_2',
+                'title'         => 'custom-theme::app.configuration.general.design.footer.whatsapp-2',
+                'type'          => 'text',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ],
+            [
+                'name'          => 'hours_rental',
+                'title'         => 'custom-theme::app.configuration.general.design.footer.hours-rental',
+                'type'          => 'text',
+                'channel_based' => true,
+                'locale_based'  => true,
+            ],
+            [
+                'name'          => 'hours_sales',
+                'title'         => 'custom-theme::app.configuration.general.design.footer.hours-sales',
+                'type'          => 'text',
+                'channel_based' => true,
+                'locale_based'  => true,
+            ],
+        ],
+    ],
+
+    [
         'key'  => 'general.design.navbar',
         'name' => 'custom-theme::app.configuration.general.design.navbar.title',
         'info' => 'custom-theme::app.configuration.general.design.navbar.info',
