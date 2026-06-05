@@ -190,13 +190,16 @@
                         initTinyMCE: function(extraConfiguration) {
                             let self2 = this;
 
-                            let config = {  
+                            let config = {
                                 relative_urls: false,
                                 menubar: false,
                                 remove_script_host: false,
                                 document_base_url: '{{ asset('/') }}',
                                 uploadRoute: '{{ route('admin.tinymce.upload') }}',
                                 csrfToken: '{{ csrf_token() }}',
+                                valid_elements: '*[*]',
+                                extended_valid_elements: '*[*]',
+                                verify_html: false,
                                 ...extraConfiguration,
                                 skin: self.currentSkin,
                                 content_css: self.currentContentCSS,

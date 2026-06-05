@@ -43,9 +43,11 @@ return [
         'default' => [
             'Core.Encoding' => 'utf-8',
             'HTML.Doctype' => 'HTML 4.01 Transitional',
-            'HTML.Allowed' => 'h1,h2,h3,h4,h5,h6,b,u,strong,i,em,s,del,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src],blockquote',
+            'HTML.Allowed' => 'h1[style],h2[style],h3[style],h4[style],h5[style],h6[style],b,u,strong,i,em,s,del,small[style],a[href|title|target|rel|style],ul,ol,li,p[style],br,span[style],img[width|height|alt|src|style],blockquote,table[style|cellpadding|cellspacing|width],thead,tbody,tfoot,tr[style],th[style|colspan|rowspan|scope],td[style|colspan|rowspan],div[style],hr,section[style]',
             'HTML.ForbiddenElements' => '',
-            'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
+            'CSS.AllowTricky' => true,
+            'CSS.Proprietary' => true,
+            'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,color,background-color,text-align,margin,margin-top,margin-bottom,margin-left,margin-right,padding,padding-top,padding-bottom,padding-left,padding-right,border,border-top,border-bottom,border-left,border-right,border-collapse,border-color,border-radius,width,height,max-width,min-width,display,vertical-align,line-height,white-space',
             'AutoFormat.AutoParagraph' => false,
             'AutoFormat.RemoveEmpty' => false,
         ],
