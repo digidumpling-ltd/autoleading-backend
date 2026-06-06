@@ -98,7 +98,11 @@ class OrderController extends Controller
 
         $cart = Cart::getCart();
 
-        if (! in_array($cart->payment->method, ['cashondelivery', 'moneytransfer'])) {
+        if (! in_array($cart->payment->method, [
+            'cashondelivery',
+            'moneytransfer',
+            'wallet', // Custom: added by Wallet package
+        ])) {
             return response()->json([
                 'message' => trans('admin::app.sales.orders.create.payment-not-supported'),
             ], Response::HTTP_BAD_REQUEST);

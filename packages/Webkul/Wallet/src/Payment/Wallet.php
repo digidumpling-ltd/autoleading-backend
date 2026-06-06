@@ -51,7 +51,7 @@ class Wallet extends Payment
             $shortfall = $service->shortfall($customer, (float) $cart->grand_total);
 
             return route('shop.customers.account.wallet.index')
-                . '?reason=insufficient_balance&required=' . $shortfall;
+                .'?reason=insufficient_balance&required='.$shortfall;
         }
 
         return null;
@@ -66,6 +66,25 @@ class Wallet extends Payment
             return false;
         }
 
-        return auth('customer')->check();
+        if (auth('customer')->check()) {
+            return true;
+        }
+
+        // Admin context: check if cart's customer has sufficient wallet balance
+        if (! $this->cart) {
+            $this->setCart();
+        }
+
+        if (! $this->cart || ! $this->cart->customer_id) {
+            return false;
+        }
+
+        $customer = WalletCustomer::find($this->cart->customer_id);
+
+        if (! $customer) {
+            return false;
+        }
+
+        return app(WalletService::class)->canAfford($customer, (float) $this->cart->grand_total);
     }
 }
