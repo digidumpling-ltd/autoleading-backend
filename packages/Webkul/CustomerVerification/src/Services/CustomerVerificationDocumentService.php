@@ -94,10 +94,13 @@ class CustomerVerificationDocumentService
 
         $fileName = now()->timestamp.'_'.$customerId.'_'.$documentType.'.'.$extension;
 
-        return Storage::disk('public')->putFileAs(
+        $disk = config('filesystems.default');
+
+        return Storage::disk($disk)->putFileAs(
             'customer-documents/'.$customerId.'/'.$documentType,
             $uploadedFile,
-            $fileName
+            $fileName,
+            ['visibility' => 'public']
         );
     }
 }

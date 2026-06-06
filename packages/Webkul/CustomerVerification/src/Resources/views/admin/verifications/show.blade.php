@@ -56,11 +56,12 @@
                         {{ trans('customer-verification::app.common.document_type_' . $docType) }}
                     </p>
                     @if($doc)
+                        @php $storageDisk = config('filesystems.default'); @endphp
                         @if(in_array(pathinfo($doc->path, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'webp']))
-                            <img src="{{ Storage::url($doc->path) }}" alt="{{ $doc->original_name }}" class="mb-2 max-h-48 w-full rounded object-contain">
+                            <img src="{{ Storage::disk($storageDisk)->url($doc->path) }}" alt="{{ $doc->original_name }}" class="mb-2 max-h-48 w-full rounded object-contain">
                         @else
                             <p class="mb-2 text-xs text-gray-500">{{ $doc->original_name }}</p>
-                            <a href="{{ Storage::url($doc->path) }}" target="_blank" class="secondary-button py-1 px-3 text-xs">
+                            <a href="{{ Storage::disk($storageDisk)->url($doc->path) }}" target="_blank" class="secondary-button py-1 px-3 text-xs">
                                 {{ trans('customer-verification::app.common.download') }}
                             </a>
                         @endif
