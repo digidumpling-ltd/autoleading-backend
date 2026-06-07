@@ -42,26 +42,9 @@ class OrderRepository extends BaseOrderRepository
      */
     public function updateOrderStatus($order, $orderState = null)
     {
-        if (! empty($orderState)) {
-            $status = $orderState;
-        } else {
-            $status = "processing";
+        parent::updateOrderStatus($order, $orderState);
 
-            if ($this->isInCompletedState($order)) {
-                $status = 'completed';
-            }
-
-            if ($this->isInCanceledState($order)) {
-                $status = 'canceled';
-            } elseif ($this->isInClosedState($order)) {
-                $status = 'closed';
-            }
-        }
-        
-        $order->status = $status;
-        $order->save();
-
-        $this->rewardPointRepository->updateStatus($order, $status);
+        $this->rewardPointRepository->updateStatus($order, $order->status);
     }
 
     /**

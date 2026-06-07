@@ -12,11 +12,7 @@ class Order extends Base
     public function afterOrderConfirmed(OrderContract $order): void
     {
         try {
-            if ($order->status !== OrderModel::STATUS_PROCESSING) {
-                return;
-            }
-
-            if (! core()->getConfigData('emails.general.notifications.new_order')) {
+            if (! in_array($order->status, [OrderModel::STATUS_COMPLETED, OrderModel::STATUS_PROCESSING])) {
                 return;
             }
 
