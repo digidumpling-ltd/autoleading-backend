@@ -54,6 +54,7 @@ return [
         'reject_button'                         => '拒絕客戶',
         'rejection_reason'                      => '拒絕原因',
         'rejection_reason_placeholder'          => '請提供拒絕的原因...',
+        'rejection_reason_required'             => '必須填寫拒絕原因。',
         'rejection_updated_at'                  => '拒絕於',
         'back'                                  => '返回',
         'all_status'                            => '所有狀態',
@@ -75,6 +76,13 @@ return [
         'cannot_add_rental_unverified'          => '您必須完成身份驗證才能租借車輛。<a href=":dashboard_url">造訪您的驗證儀表板</a>。',
         'cannot_add_unverified'                 => '您的帳戶必須通過驗證才能將商品加入購物車。<a href=":dashboard_url">造訪您的驗證儀表板</a>。',
         'cannot_checkout_unverified'            => '您的帳戶必須通過驗證才能下訂單。請先完成驗證。',
+        'wallet_topup_disabled'                 => '錢包充值目前已停用。請聯繫客服或稍後再試。',
+        'wallet_topup_requires_verification'   => '請先完成身份驗證，方可為錢包充值。',
+        'wallet_topup_requires_verification_link' => '請先<a href=":dashboard_url" class="underline">完成身份驗證</a>，方可為錢包充值。',
+        'document_deleted'                      => '文件已成功刪除。',
+        'open_document'                         => '開啟文件',
+        'confirm_delete_document'              => '您確定要刪除此文件嗎？',
+        'cannot_delete_doc_approved'           => '已批准客戶的文件不能刪除。',
     ],
 
     'signup' => [

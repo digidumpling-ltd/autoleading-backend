@@ -109,6 +109,8 @@
                                         @lang('customer-verification::app.common.verification_uploaded_on'):
                                         {{ \Illuminate\Support\Carbon::parse($uploadedAt)->format('M d, Y H:i') }}
                                     </p>
+
+                                    <a href="{{ Storage::disk(config('filesystems.default'))->url($document->path) }}" target="_blank" rel="noopener noreferrer" class="mt-1 text-sm text-blue-600 hover:underline dark:text-blue-400 break-all">{{ $document->original_name }}</a>
                                 @else
                                     <p class="mt-1 text-sm text-zinc-600">
                                         @lang('customer-verification::app.common.verification_document_missing_hint')

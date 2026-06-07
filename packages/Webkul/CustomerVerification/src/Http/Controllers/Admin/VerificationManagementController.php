@@ -10,6 +10,7 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\CustomerVerification\Repositories\CustomerVerificationDocumentRepository;
 use Webkul\CustomerVerification\Services\AdminVerificationActionService;
+use Webkul\CustomerVerification\Services\CustomerVerificationDocumentService;
 use Webkul\CustomerVerification\Support\Verification;
 
 class VerificationManagementController extends Controller
@@ -17,7 +18,8 @@ class VerificationManagementController extends Controller
     public function __construct(
         private CustomerRepository $customerRepository,
         private CustomerVerificationDocumentRepository $documentRepository,
-        private AdminVerificationActionService $verificationService
+        private AdminVerificationActionService $verificationService,
+        private CustomerVerificationDocumentService $documentService
     ) {}
 
     public function index(Request $request): View
@@ -69,6 +71,27 @@ class VerificationManagementController extends Controller
         ]);
     }
 
+    public function destroyDocument(int $customerId, int $documentId): RedirectResponse
+    {
+        $customer = $this->customerRepository->find($customerId);
+
+        if (! $customer) {
+            abort(404);
+        }
+
+        if ($customer->verification_status === Verification::STATUS_APPROVED) {
+            session()->flash('error', trans('customer-verification::app.common.cannot_delete_doc_approved'));
+
+            return redirect()->route('admin.verification.show', $customerId);
+        }
+
+        $this->documentService->deleteDocument($documentId, $customerId);
+
+        session()->flash('success', trans('customer-verification::app.common.document_deleted'));
+
+        return redirect()->route('admin.verification.show', $customerId);
+    }
+
     public function approve(int $customerId): RedirectResponse
     {
         $customer = $this->customerRepository->find($customerId);
@@ -97,7 +120,7 @@ class VerificationManagementController extends Controller
         $reason = $request->input('rejection_reason');
 
         if (!$reason) {
-            return redirect()->back()->withErrors(['rejection_reason' => trans('shop::app.customers.verification.rejection-reason-required')]);
+            return redirect()->back()->withErrors(['rejection_reason' => trans('customer-verification::app.common.rejection_reason_required')]);
         }
 
         $adminId = auth('admin')->id();

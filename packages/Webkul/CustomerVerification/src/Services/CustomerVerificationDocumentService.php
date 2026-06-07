@@ -88,6 +88,24 @@ class CustomerVerificationDocumentService
         $this->documentRepository->create($payload);
     }
 
+    public function deleteDocument(int $documentId, int $customerId): void
+    {
+        $doc = $this->documentRepository->findOneWhere([
+            'id'          => $documentId,
+            'customer_id' => $customerId,
+        ]);
+
+        if (! $doc) {
+            abort(404);
+        }
+
+        $disk = config('filesystems.default');
+
+        Storage::disk($disk)->delete($doc->path);
+
+        $this->documentRepository->delete($documentId);
+    }
+
     protected function storeOnPublicDisk(int $customerId, string $documentType, UploadedFile $uploadedFile): string
     {
         $extension = strtolower($uploadedFile->getClientOriginalExtension() ?: $uploadedFile->extension() ?: 'bin');

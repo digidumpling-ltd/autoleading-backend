@@ -54,6 +54,7 @@ return [
         'reject_button'                         => 'Reject Customer',
         'rejection_reason'                      => 'Rejection Reason',
         'rejection_reason_placeholder'          => 'Please provide a reason for the rejection...',
+        'rejection_reason_required'             => 'A rejection reason is required.',
         'rejection_updated_at'                  => 'Rejected On',
         'back'                                  => 'Back',
         'all_status'                            => 'All Status',
@@ -77,7 +78,11 @@ return [
         'cannot_checkout_unverified'            => 'Your account must be verified before placing an order. Please complete your verification first.',
         'wallet_topup_disabled'                 => 'Wallet top-up is currently disabled. Please contact support or try again later.',
         'wallet_topup_requires_verification'   => 'Please complete identity verification before topping up your wallet.',
-        'wallet_topup_requires_verification_link' => 'Please <a href=":dashboard_url" class="underline">complete identity verification</a> before topping up your wallet.' ,
+        'wallet_topup_requires_verification_link' => 'Please <a href=":dashboard_url" class="underline">complete identity verification</a> before topping up your wallet.',
+        'document_deleted'                       => 'Document deleted successfully.',
+        'open_document'                          => 'Open document',
+        'confirm_delete_document'               => 'Are you sure you want to delete this document?',
+        'cannot_delete_doc_approved'            => 'Documents cannot be deleted for an approved customer.',
     ],
 
     'signup' => [
