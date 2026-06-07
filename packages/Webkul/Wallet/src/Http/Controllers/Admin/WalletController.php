@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Wallet\DataGrids\Admin\WalletTransactionDataGrid;
 use Webkul\Wallet\Events\WalletBalanceUpdated;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
 
@@ -19,9 +20,14 @@ class WalletController extends Controller
 
         $customer = WalletCustomer::findOrFail($id);
 
-        $transactions = $customer->transactions()->latest()->paginate(20);
+        return view('wallet::admin.customers.wallet.index', compact('customer'));
+    }
 
-        return view('wallet::admin.customers.wallet.index', compact('customer', 'transactions'));
+    public function transactions(int $id): JsonResponse
+    {
+        abort_if(! bouncer()->hasPermission('customers.wallet'), 401);
+
+        return datagrid(WalletTransactionDataGrid::class)->process();
     }
 
     public function balance(int $id): JsonResponse

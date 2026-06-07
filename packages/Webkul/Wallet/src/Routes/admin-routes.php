@@ -11,6 +11,7 @@ Route::middleware('web')->group(function () {
     ], function () {
         Route::prefix('customers/{id}/wallet')->group(function () {
             Route::get('', [WalletController::class, 'index'])->name('admin.customers.wallet.index');
+            Route::get('transactions', [WalletController::class, 'transactions'])->name('admin.customers.wallet.transactions');
             Route::post('adjust', [WalletController::class, 'adjust'])->name('admin.customers.wallet.adjust');
             Route::get('balance', [WalletController::class, 'balance'])->name('admin.customers.wallet.balance');
             Route::post('ajax-adjust', [WalletController::class, 'ajaxAdjust'])->name('admin.customers.wallet.ajax-adjust');

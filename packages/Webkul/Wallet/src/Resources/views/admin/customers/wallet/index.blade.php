@@ -100,58 +100,8 @@
                 </h3>
             </div>
 
-            @if ($transactions->isEmpty())
-            <div class="flex h-24 items-center justify-center text-sm text-gray-500">
-                @lang('bagisto-wallet::app.admin.customers.wallet.no-transactions')
+            <div class="px-4 py-4">
+                <x-admin::datagrid :src="route('admin.customers.wallet.transactions', $customer->id)" />
             </div>
-            @else
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead>
-                        <tr
-                            class="bg-gray-50 text-left text-xs font-medium uppercase text-gray-500 dark:bg-gray-800 dark:text-gray-400">
-                            <th class="px-6 py-3">@lang('bagisto-wallet::app.admin.customers.wallet.col-type')</th>
-                            <th class="px-6 py-3 text-right">
-                                @lang('bagisto-wallet::app.admin.customers.wallet.col-amount')</th>
-                            <th class="px-6 py-3">@lang('bagisto-wallet::app.admin.customers.wallet.col-meta')</th>
-                            <th class="px-6 py-3 text-right">
-                                @lang('bagisto-wallet::app.admin.customers.wallet.col-date')</th>
-                        </tr>
-                    </thead>
-
-                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                        @foreach ($transactions as $transaction)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <td class="px-6 py-3">
-                                @php $type = $transaction->meta['type'] ?? $transaction->type; @endphp
-                                <span
-                                    class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
-                                        {{ $transaction->type === 'deposit' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                                    {{ $type }}
-                                </span>
-                            </td>
-
-                            <td class="px-6 py-3 text-right font-medium
-                                    {{ $transaction->type === 'deposit' ? 'text-green-600' : 'text-red-600' }}">
-                                {{ core()->formatPrice((float) $transaction->amountFloat) }}
-                            </td>
-
-                            <td class="px-6 py-3 text-xs text-gray-500">
-                                {{ $transaction->meta['reason'] ?? $transaction->meta['description'] ?? '' }}
-                            </td>
-
-                            <td class="px-6 py-3 text-right text-gray-500">
-                                {{ $transaction->created_at->format('d M Y, H:i') }}
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="border-t border-gray-100 px-6 py-3 dark:border-gray-700">
-                {{ $transactions->links() }}
-            </div>
-            @endif
         </div>
 </x-admin::layouts>

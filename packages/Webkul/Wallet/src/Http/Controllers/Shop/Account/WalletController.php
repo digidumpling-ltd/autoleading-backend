@@ -7,18 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Shop\Http\Controllers\Controller;
+use Webkul\Wallet\DataGrids\Shop\WalletTransactionDataGrid;
 use Webkul\Wallet\Events\WalletBalanceUpdated;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
 
 class WalletController extends Controller
 {
-    public function index(): View
+    public function index(): mixed
     {
+        if (request()->ajax()) {
+            return datagrid(WalletTransactionDataGrid::class)->process();
+        }
+
         $customer = WalletCustomer::find(auth()->guard('customer')->id());
 
-        $transactions = $customer->transactions()->latest()->paginate(15);
-
-        return view('wallet::shop.customers.account.wallet.index', compact('customer', 'transactions'));
+        return view('wallet::shop.customers.account.wallet.index', compact('customer'));
     }
 
     public function topup(): View
