@@ -12,7 +12,7 @@ class ProductReward extends Model implements ProductRewardContract
      *
      * @var string
      */
-    protected $tables = 'product_rewards';
+    protected $table = 'product_rewards';
 
     /**
      * The attributes that are mass assignable.

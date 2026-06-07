@@ -12,7 +12,7 @@ class CategoryReward extends Model implements CategoryRewardContract
      *
      * @var string
      */
-    protected $tables = 'category_rewards';
+    protected $table = 'category_rewards';
 
     /**
      * The attributes that are mass assignable.

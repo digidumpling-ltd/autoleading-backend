@@ -12,7 +12,7 @@ class CategorySpecificTimeReward extends Model implements CategorySpecificTimeRe
      *
      * @var string
      */
-    protected $tables = 'category_rewards';
+    protected $table = 'category_specific_time_rewards';
 
     /**
      * The attributes that are mass assignable.

@@ -12,7 +12,7 @@ class ProductSpecificTimeReward extends Model implements ProductSpecificTimeRewa
      *
      * @var string
      */
-    protected $tables = 'product_specific_time_rewards';
+    protected $table = 'product_specific_time_rewards';
 
     /**
      * The attributes that are mass assignable.

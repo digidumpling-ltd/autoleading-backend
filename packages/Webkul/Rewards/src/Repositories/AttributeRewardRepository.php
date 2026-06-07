@@ -12,7 +12,7 @@ class AttributeRewardRepository extends Repository
      *
      * @return string
      */
-    function model()
+    public function model(): string
     {
         return AttributeReward::class;
     }

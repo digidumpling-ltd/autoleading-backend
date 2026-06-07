@@ -12,7 +12,7 @@ class AttributeReward extends Model implements AttributeRewardContract
      *
      * @var string
      */
-    protected $tables = 'attribute_rewards';
+    protected $table = 'attribute_rewards';
 
     /**
      * The attributes that are mass assignable.

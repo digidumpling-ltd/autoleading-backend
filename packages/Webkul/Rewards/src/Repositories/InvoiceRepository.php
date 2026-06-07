@@ -24,10 +24,10 @@ class InvoiceRepository extends BaseInvoiceRepository
         protected RewardCartHelper $rewardCartHelper,
         Container $container,
     ) {
-        parent::__construct(  
+        parent::__construct(
             $orderRepository,
-            $orderItemRepository,    
-            $invoiceItemRepository,    
+            $orderItemRepository,
+            $invoiceItemRepository,
             $downloadableLinkPurchasedRepository,
             $container,
         );

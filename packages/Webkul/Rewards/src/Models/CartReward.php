@@ -12,7 +12,7 @@ class CartReward extends Model implements CartRewardContract
      *
      * @var string
      */
-    protected $tables = 'cart_rewards';
+    protected $table = 'cart_rewards';
 
     /**
      * The attributes that are mass assignable.

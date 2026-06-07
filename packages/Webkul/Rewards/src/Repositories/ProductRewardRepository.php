@@ -12,7 +12,7 @@ class ProductRewardRepository extends Repository
      *
      * @return string
      */
-    function model()
+    public function model(): string
     {
         return ProductReward::class;
     }

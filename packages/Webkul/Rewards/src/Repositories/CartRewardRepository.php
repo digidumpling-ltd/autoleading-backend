@@ -12,7 +12,7 @@ class CartRewardRepository extends Repository
      *
      * @return string
      */
-    function model()
+    public function model(): string
     {
         return CartReward::class;
     }

@@ -122,7 +122,7 @@ class RewardPointRepository extends Repository
      *
      * @return string
      */
-    function model()
+    public function model(): string
     {
         return RewardPoint::class;
     }

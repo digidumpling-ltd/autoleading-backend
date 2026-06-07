@@ -12,7 +12,7 @@ class CategoryRewardRepository extends Repository
      *
      * @return string
      */
-    function model()
+    public function model(): string
     {
         return CategoryReward::class;
     }

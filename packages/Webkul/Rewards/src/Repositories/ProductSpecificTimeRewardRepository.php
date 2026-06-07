@@ -13,7 +13,7 @@ class ProductSpecificTimeRewardRepository extends Repository
      *
      * @return string
      */
-    function model()
+    public function model(): string
     {
         return ProductSpecificTimeReward::class;
     }

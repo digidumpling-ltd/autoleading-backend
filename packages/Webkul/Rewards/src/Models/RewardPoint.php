@@ -12,7 +12,7 @@ class RewardPoint extends Model implements RewardPointContract
      *
      * @var string
      */
-    protected $tables = 'reward_points';
+    protected $table = 'reward_points';
 
     /**
      * reward status for processing
