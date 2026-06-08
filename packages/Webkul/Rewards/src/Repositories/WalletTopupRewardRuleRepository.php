@@ -13,21 +13,22 @@ class WalletTopupRewardRuleRepository extends Repository
     }
 
     /**
-     * Find the best matching rule for a customer group and topup amount.
+     * Find the best matching rule for a customer group, amount, and trigger.
      *
      * Priority: group-specific > global, higher priority value wins,
-     * then narrowest range (smallest max_topup_amount - min_topup_amount).
+     * then narrowest range (smallest max_amount - min_amount).
      */
-    public function findBestRule(?int $customerGroupId, float $topupAmount): ?object
+    public function findBestRule(?int $customerGroupId, float $amount, string $trigger): ?object
     {
         $query = $this->model->where('status', true)
-            ->where(function ($q) use ($topupAmount) {
-                $q->whereNull('min_topup_amount')
-                    ->orWhere('min_topup_amount', '<=', $topupAmount);
+            ->where('trigger', $trigger)
+            ->where(function ($q) use ($amount) {
+                $q->whereNull('min_amount')
+                    ->orWhere('min_amount', '<=', $amount);
             })
-            ->where(function ($q) use ($topupAmount) {
-                $q->whereNull('max_topup_amount')
-                    ->orWhere('max_topup_amount', '>=', $topupAmount);
+            ->where(function ($q) use ($amount) {
+                $q->whereNull('max_amount')
+                    ->orWhere('max_amount', '>=', $amount);
             })
             ->where(function ($q) use ($customerGroupId) {
                 $q->whereNull('customer_group_id');
@@ -41,7 +42,6 @@ class WalletTopupRewardRuleRepository extends Repository
             return null;
         }
 
-        // Prefer group-specific over global, then higher priority, then narrowest range
         return $query->sort(function ($a, $b) use ($customerGroupId) {
             $aIsGroup = $customerGroupId && $a->customer_group_id == $customerGroupId;
             $bIsGroup = $customerGroupId && $b->customer_group_id == $customerGroupId;
@@ -54,12 +54,12 @@ class WalletTopupRewardRuleRepository extends Repository
                 return $b->priority <=> $a->priority;
             }
 
-            $aRange = ($a->max_topup_amount !== null && $a->min_topup_amount !== null)
-                ? $a->max_topup_amount - $a->min_topup_amount
+            $aRange = ($a->max_amount !== null && $a->min_amount !== null)
+                ? $a->max_amount - $a->min_amount
                 : PHP_INT_MAX;
 
-            $bRange = ($b->max_topup_amount !== null && $b->min_topup_amount !== null)
-                ? $b->max_topup_amount - $b->min_topup_amount
+            $bRange = ($b->max_amount !== null && $b->min_amount !== null)
+                ? $b->max_amount - $b->min_amount
                 : PHP_INT_MAX;
 
             return $aRange <=> $bRange;

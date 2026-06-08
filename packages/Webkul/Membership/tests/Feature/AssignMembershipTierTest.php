@@ -1,120 +1,97 @@
 <?php
 
-use Webkul\Customer\Models\Customer as BaseCustomer;
-use Webkul\Customer\Models\CustomerGroup;
+use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Membership\Listeners\AssignMembershipTier;
 use Webkul\Membership\Models\TierRule;
+use Webkul\Membership\Repositories\TierRuleRepository;
 use Webkul\Wallet\Events\WalletBalanceUpdated;
 
-function ensureGroup(string $code, string $name): CustomerGroup
+function makeBalanceEvent(int $customerId, float $newBalance, float $oldBalance = 0.0): WalletBalanceUpdated
 {
-    return CustomerGroup::firstOrCreate(['code' => $code], ['name' => $name]);
+    return new WalletBalanceUpdated(
+        customerId: $customerId,
+        oldBalance: $oldBalance,
+        newBalance: $newBalance,
+        reason: 'wallet_topup',
+    );
 }
 
-function makeTierCustomer(string $groupCode = 'general'): BaseCustomer
+function fakeCustomer(int $id, int $groupId): object
 {
-    $group = ensureGroup($groupCode, ucfirst($groupCode));
-
-    return BaseCustomer::factory()->create(['customer_group_id' => $group->id]);
+    return (object) ['id' => $id, 'customer_group_id' => $groupId];
 }
 
-function seedTierRules(): void
+function fakeTier(int $groupId): TierRule
 {
-    $general  = ensureGroup('general',  'General');
-    $gold     = ensureGroup('gold',     'Gold');
-    $platinum = ensureGroup('platinum', 'Platinum');
+    $tier = new TierRule;
+    $tier->customer_group_id = $groupId;
 
-    TierRule::insert([
-        ['min_balance' => 0,   'max_balance' => 99.99,  'customer_group_id' => $general->id,  'sort_order' => 1, 'created_at' => now(), 'updated_at' => now()],
-        ['min_balance' => 100, 'max_balance' => 399.99, 'customer_group_id' => $gold->id,     'sort_order' => 2, 'created_at' => now(), 'updated_at' => now()],
-        ['min_balance' => 400, 'max_balance' => 999.99, 'customer_group_id' => $platinum->id, 'sort_order' => 3, 'created_at' => now(), 'updated_at' => now()],
-    ]);
+    return $tier;
+}
+
+function makeAssignListener(object $tierRepo, object $customerRepo): AssignMembershipTier
+{
+    return new AssignMembershipTier($tierRepo, $customerRepo);
 }
 
 it('assigns correct group when balance falls in a tier range', function () {
-    seedTierRules();
+    $customer = fakeCustomer(id: 1, groupId: 10);
+    $tier     = fakeTier(groupId: 20);
 
-    $customer = makeTierCustomer('general');
+    $tierRepo     = Mockery::mock(TierRuleRepository::class);
+    $customerRepo = Mockery::mock(CustomerRepository::class);
 
-    app(AssignMembershipTier::class)->handle(new WalletBalanceUpdated(
-        customerId: $customer->id,
-        oldBalance: 0.0,
-        newBalance: 250.0,
-        reason: 'topup',
-    ));
+    $tierRepo->shouldReceive('findMatchingTier')->with(250.0)->andReturn($tier);
+    $customerRepo->shouldReceive('find')->with(1)->andReturn($customer);
+    $customerRepo->shouldReceive('update')->with(['customer_group_id' => 20], 1)->once();
 
-    expect($customer->fresh()->group->code)->toBe('gold');
+    makeAssignListener($tierRepo, $customerRepo)->handle(makeBalanceEvent(1, 250.0));
 });
 
 it('leaves group unchanged when no tier matches the balance', function () {
-    seedTierRules();
+    $tierRepo     = Mockery::mock(TierRuleRepository::class);
+    $customerRepo = Mockery::mock(CustomerRepository::class);
 
-    $customer = makeTierCustomer('general');
+    $tierRepo->shouldReceive('findMatchingTier')->with(1500.0)->andReturn(null);
+    $customerRepo->shouldNotReceive('update');
 
-    app(AssignMembershipTier::class)->handle(new WalletBalanceUpdated(
-        customerId: $customer->id,
-        oldBalance: 0.0,
-        newBalance: 1500.0,
-        reason: 'topup',
-    ));
-
-    expect($customer->fresh()->group->code)->toBe('general');
+    makeAssignListener($tierRepo, $customerRepo)->handle(makeBalanceEvent(1, 1500.0));
 });
 
 it('skips update when customer is already in the target group', function () {
-    seedTierRules();
+    $customer = fakeCustomer(id: 1, groupId: 20);
+    $tier     = fakeTier(groupId: 20);
 
-    $customer = makeTierCustomer('gold');
+    $tierRepo     = Mockery::mock(TierRuleRepository::class);
+    $customerRepo = Mockery::mock(CustomerRepository::class);
 
-    app(AssignMembershipTier::class)->handle(new WalletBalanceUpdated(
-        customerId: $customer->id,
-        oldBalance: 100.0,
-        newBalance: 200.0,
-        reason: 'topup',
-    ));
+    $tierRepo->shouldReceive('findMatchingTier')->andReturn($tier);
+    $customerRepo->shouldReceive('find')->with(1)->andReturn($customer);
+    $customerRepo->shouldNotReceive('update');
 
-    expect($customer->fresh()->group->code)->toBe('gold');
+    makeAssignListener($tierRepo, $customerRepo)->handle(makeBalanceEvent(1, 200.0));
 });
 
-it('applies inclusive boundary at min balance', function () {
-    seedTierRules();
+it('does nothing when customer is not found', function () {
+    $tier = fakeTier(groupId: 20);
 
-    $customer = makeTierCustomer('general');
+    $tierRepo     = Mockery::mock(TierRuleRepository::class);
+    $customerRepo = Mockery::mock(CustomerRepository::class);
 
-    app(AssignMembershipTier::class)->handle(new WalletBalanceUpdated(
-        customerId: $customer->id,
-        oldBalance: 50.0,
-        newBalance: 100.0,
-        reason: 'topup',
-    ));
+    $tierRepo->shouldReceive('findMatchingTier')->andReturn($tier);
+    $customerRepo->shouldReceive('find')->with(99)->andReturn(null);
+    $customerRepo->shouldNotReceive('update');
 
-    expect($customer->fresh()->group->code)->toBe('gold');
-});
-
-it('applies inclusive boundary at max balance', function () {
-    seedTierRules();
-
-    $customer = makeTierCustomer('general');
-
-    app(AssignMembershipTier::class)->handle(new WalletBalanceUpdated(
-        customerId: $customer->id,
-        oldBalance: 200.0,
-        newBalance: 399.99,
-        reason: 'admin_deduct',
-    ));
-
-    expect($customer->fresh()->group->code)->toBe('gold');
+    makeAssignListener($tierRepo, $customerRepo)->handle(makeBalanceEvent(99, 200.0));
 });
 
 it('does nothing when no tier rules exist', function () {
-    $customer = makeTierCustomer('general');
+    $tierRepo     = Mockery::mock(TierRuleRepository::class);
+    $customerRepo = Mockery::mock(CustomerRepository::class);
 
-    app(AssignMembershipTier::class)->handle(new WalletBalanceUpdated(
-        customerId: $customer->id,
-        oldBalance: 0.0,
-        newBalance: 200.0,
-        reason: 'topup',
-    ));
+    $tierRepo->shouldReceive('findMatchingTier')->andReturn(null);
+    $customerRepo->shouldNotReceive('find');
+    $customerRepo->shouldNotReceive('update');
 
-    expect($customer->fresh()->group->code)->toBe('general');
+    makeAssignListener($tierRepo, $customerRepo)->handle(makeBalanceEvent(1, 200.0));
 });

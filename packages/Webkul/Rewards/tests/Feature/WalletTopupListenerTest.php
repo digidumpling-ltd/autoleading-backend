@@ -8,8 +8,6 @@ use Webkul\Rewards\Models\RewardPoint;
 use Webkul\Rewards\Models\WalletTopupRewardRule;
 use Webkul\Wallet\Events\WalletBalanceUpdated;
 
-uses(Webkul\Rewards\Tests\RewardsTestCase::class);
-
 function enableRewardsModule(): void
 {
     CoreConfig::firstOrCreate(
@@ -32,10 +30,11 @@ function makeFixedRule(int $points, array $overrides = []): WalletTopupRewardRul
 {
     return WalletTopupRewardRule::create(array_merge([
         'customer_group_id' => null,
+        'trigger'           => 'wallet_topup',
         'mode'              => 'fixed',
         'value'             => $points,
-        'min_topup_amount'  => null,
-        'max_topup_amount'  => null,
+        'min_amount'        => null,
+        'max_amount'        => null,
         'priority'          => 0,
         'status'            => true,
     ], $overrides));
@@ -45,22 +44,24 @@ function makePercentRule(float $percent, array $overrides = []): WalletTopupRewa
 {
     return WalletTopupRewardRule::create(array_merge([
         'customer_group_id' => null,
+        'trigger'           => 'wallet_topup',
         'mode'              => 'percent',
         'value'             => $percent,
-        'min_topup_amount'  => null,
-        'max_topup_amount'  => null,
+        'min_amount'        => null,
+        'max_amount'        => null,
         'priority'          => 0,
         'status'            => true,
     ], $overrides));
 }
 
-function fireTopup(Customer $customer, float $oldBalance, float $newBalance, string $reason = 'topup'): void
+function fireTopup(Customer $customer, float $oldBalance, float $newBalance, string $reason = 'wallet_topup'): void
 {
     $event = new WalletBalanceUpdated(
         customerId: $customer->id,
         oldBalance: $oldBalance,
         newBalance: $newBalance,
         reason: $reason,
+        customerGroupId: $customer->customer_group_id,
     );
 
     app(WalletTopup::class)->handle($event);
@@ -135,7 +136,10 @@ it('does not award points when percent rate produces zero points', function () {
 });
 
 it('does not award points when rewards module is disabled', function () {
-    // No CoreConfig for module-status → disabled
+    // Disable module; flush repository cache so the update is visible to core()->getConfigData()
+    \Webkul\Core\Models\CoreConfig::where('code', 'reward.general.general.module-status')->update(['value' => '0']);
+    \Illuminate\Support\Facades\Cache::flush();
+
     $customer = makeCustomerInGroup();
     makeFixedRule(50);
 
@@ -188,15 +192,15 @@ it('narrowest range wins as tie-breaker when priority is equal', function () {
 
     // Wide range: 0-1000
     makeFixedRule(5, [
-        'min_topup_amount' => 0,
-        'max_topup_amount' => 1000,
-        'priority'         => 5,
+        'min_amount' => 0,
+        'max_amount' => 1000,
+        'priority'   => 5,
     ]);
     // Narrower range: 50-200
     makeFixedRule(20, [
-        'min_topup_amount' => 50,
-        'max_topup_amount' => 200,
-        'priority'         => 5,
+        'min_amount' => 50,
+        'max_amount' => 200,
+        'priority'   => 5,
     ]);
 
     fireTopup($customer, 0.0, 100.0);
@@ -206,4 +210,60 @@ it('narrowest range wins as tie-breaker when priority is equal', function () {
             ->where('reward_points', 20)
             ->exists()
     )->toBeTrue();
+});
+
+// ── Wallet spend tests ────────────────────────────────────────────────────────
+
+it('awards fixed points on wallet spend when a matching spend rule exists', function () {
+    enableRewardsModule();
+    $customer = makeCustomerInGroup();
+    makeFixedRule(30, ['trigger' => 'wallet_spend']);
+
+    fireTopup($customer, 100.0, 50.0, 'wallet_spend');
+
+    expect(
+        RewardPoint::where('customer_id', $customer->id)
+            ->where('status', RewardPoint::STATUS_APPROVED)
+            ->where('reward_points', 30)
+            ->exists()
+    )->toBeTrue();
+});
+
+it('awards percent points on wallet spend based on amount spent', function () {
+    enableRewardsModule();
+    $customer = makeCustomerInGroup();
+    makePercentRule(10, ['trigger' => 'wallet_spend']); // 10% of 80 = 8 points
+
+    fireTopup($customer, 100.0, 20.0, 'wallet_spend');
+
+    expect(
+        RewardPoint::where('customer_id', $customer->id)
+            ->where('status', RewardPoint::STATUS_APPROVED)
+            ->where('reward_points', 8)
+            ->exists()
+    )->toBeTrue();
+});
+
+it('wallet_topup rule does not fire on wallet_spend event', function () {
+    enableRewardsModule();
+    $customer = makeCustomerInGroup();
+    makeFixedRule(50, ['trigger' => 'wallet_topup']); // only topup rule
+
+    fireTopup($customer, 100.0, 50.0, 'wallet_spend');
+
+    expect(
+        RewardPoint::where('customer_id', $customer->id)->count()
+    )->toBe(0);
+});
+
+it('wallet_spend rule does not fire on wallet_topup event', function () {
+    enableRewardsModule();
+    $customer = makeCustomerInGroup();
+    makeFixedRule(50, ['trigger' => 'wallet_spend']); // only spend rule
+
+    fireTopup($customer, 0.0, 100.0, 'wallet_topup');
+
+    expect(
+        RewardPoint::where('customer_id', $customer->id)->count()
+    )->toBe(0);
 });

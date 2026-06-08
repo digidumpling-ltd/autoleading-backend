@@ -16,11 +16,7 @@ class WalletTopup
 
     public function handle(WalletBalanceUpdated $event): void
     {
-        if ($event->reason !== 'topup') {
-            return;
-        }
-
-        if ($event->newBalance <= $event->oldBalance) {
+        if (! in_array($event->reason, ['wallet_topup', 'wallet_spend'])) {
             return;
         }
 
@@ -28,9 +24,15 @@ class WalletTopup
             return;
         }
 
-        $topupAmount = $event->newBalance - $event->oldBalance;
+        $amount = $event->reason === 'wallet_topup'
+            ? $event->newBalance - $event->oldBalance
+            : $event->oldBalance - $event->newBalance;
 
-        $rule = $this->ruleRepository->findBestRule($event->customerGroupId, $topupAmount);
+        if ($amount <= 0) {
+            return;
+        }
+
+        $rule = $this->ruleRepository->findBestRule($event->customerGroupId, $amount, $event->reason);
 
         if (! $rule) {
             return;
@@ -38,12 +40,14 @@ class WalletTopup
 
         $points = $rule->mode === 'fixed'
             ? (int) $rule->value
-            : (int) floor($topupAmount * $rule->value / 100);
+            : (int) floor($amount * $rule->value / 100);
 
         if ($points < 1) {
             return;
         }
 
-        $this->rewardPointRepository->awardPoints($event->customerId, $points, 'Wallet topup reward');
+        $label = $event->reason === 'wallet_topup' ? 'Wallet topup reward' : 'Wallet spend reward';
+
+        $this->rewardPointRepository->awardPoints($event->customerId, $points, $label);
     }
 }

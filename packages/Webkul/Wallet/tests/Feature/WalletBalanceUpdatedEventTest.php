@@ -62,7 +62,11 @@ it('dispatches WalletBalanceUpdated after admin add when event publishing is ena
 it('does not dispatch WalletBalanceUpdated when event publishing is disabled', function () {
     Event::fake([WalletBalanceUpdated::class]);
 
-    // No CoreConfig entry means getConfigData returns null → falsy → no dispatch
+    // Override the seeded '1' entry and flush the L5-Repository array cache
+    CoreConfig::where('code', 'sales.wallet.events.publish_balance_updated')->update(['value' => '0']);
+    \Illuminate\Support\Facades\Cache::flush();
+
+    // CoreConfig value '0' → falsy → no dispatch
 
     $admin    = makeAdminAllPerms();
     $customer = makeWalletCustomer();
@@ -106,11 +110,11 @@ it('event payload contains correct fields', function () {
         customerId: 42,
         oldBalance: 150.0,
         newBalance: 250.0,
-        reason: 'topup',
+        reason: 'wallet_topup',
     );
 
     expect($event->customerId)->toBe(42)
         ->and($event->oldBalance)->toBe(150.0)
         ->and($event->newBalance)->toBe(250.0)
-        ->and($event->reason)->toBe('topup');
+        ->and($event->reason)->toBe('wallet_topup');
 });

@@ -19,7 +19,7 @@
                 </a>
 
                 <button type="submit" class="primary-button">
-                    @lang('rewards::app.admin.rewards.wallet-topup.edit.save-btn')
+                    @lang('rewards::app.common.save-btn')
                 </button>
             </div>
         </div>
@@ -53,6 +53,67 @@
                 <x-admin::form.control-group.error control-name="customer_group_id" />
             </x-admin::form.control-group>
 
+            <!-- Trigger -->
+            <x-admin::form.control-group class="mb-2.5">
+                <x-admin::form.control-group.label class="required">
+                    @lang('rewards::app.admin.rewards.wallet-topup.create.trigger')
+                </x-admin::form.control-group.label>
+
+                <x-admin::form.control-group.control
+                    type="select"
+                    name="trigger"
+                    rules="required"
+                    value="{{ old('trigger', $rule->trigger) }}"
+                    :label="trans('rewards::app.admin.rewards.wallet-topup.create.trigger')"
+                >
+                    <option value="">@lang('rewards::app.admin.rewards.wallet-topup.create.select-trigger')</option>
+                    <option value="wallet_topup" {{ old('trigger', $rule->trigger) === 'wallet_topup' ? 'selected' : '' }}>
+                        @lang('rewards::app.admin.rewards.wallet-topup.create.trigger-wallet-topup')
+                    </option>
+                    <option value="wallet_spend" {{ old('trigger', $rule->trigger) === 'wallet_spend' ? 'selected' : '' }}>
+                        @lang('rewards::app.admin.rewards.wallet-topup.create.trigger-wallet-spend')
+                    </option>
+                </x-admin::form.control-group.control>
+
+                <x-admin::form.control-group.error control-name="trigger" />
+            </x-admin::form.control-group>
+
+            <div class="flex gap-4 max-sm:flex-wrap">
+                <!-- Min Amount -->
+                <x-admin::form.control-group class="w-full">
+                    <x-admin::form.control-group.label>
+                        @lang('rewards::app.admin.rewards.wallet-topup.create.min-amount')
+                    </x-admin::form.control-group.label>
+
+                    <x-admin::form.control-group.control
+                        type="text"
+                        name="min_amount"
+                        value="{{ old('min_amount', $rule->min_amount) }}"
+                        :label="trans('rewards::app.admin.rewards.wallet-topup.create.min-amount')"
+                        :placeholder="trans('rewards::app.admin.rewards.wallet-topup.create.min-amount')"
+                    />
+
+                    <x-admin::form.control-group.error control-name="min_amount" />
+                </x-admin::form.control-group>
+
+                <!-- Max Amount -->
+                <x-admin::form.control-group class="w-full">
+                    <x-admin::form.control-group.label>
+                        @lang('rewards::app.admin.rewards.wallet-topup.create.max-amount')
+                    </x-admin::form.control-group.label>
+
+                    <x-admin::form.control-group.control
+                        type="text"
+                        name="max_amount"
+                        value="{{ old('max_amount', $rule->max_amount) }}"
+                        :label="trans('rewards::app.admin.rewards.wallet-topup.create.max-amount')"
+                        :placeholder="trans('rewards::app.admin.rewards.wallet-topup.create.max-amount')"
+                    />
+
+                    <x-admin::form.control-group.error control-name="max_amount" />
+                </x-admin::form.control-group>
+            </div>
+
             <!-- Mode + Value (Vue-reactive) -->
             <v-topup-rule-mode-value
                 initial-mode="{{ old('mode', $rule->mode) }}"
@@ -64,42 +125,6 @@
                 label-mode-fixed="{{ trans('rewards::app.admin.rewards.wallet-topup.create.mode-fixed') }}"
                 label-mode-percent="{{ trans('rewards::app.admin.rewards.wallet-topup.create.mode-percent') }}"
             ></v-topup-rule-mode-value>
-
-            <div class="flex gap-4 max-sm:flex-wrap">
-                <!-- Min Topup Amount -->
-                <x-admin::form.control-group class="w-full">
-                    <x-admin::form.control-group.label>
-                        @lang('rewards::app.admin.rewards.wallet-topup.create.min-topup-amount')
-                    </x-admin::form.control-group.label>
-
-                    <x-admin::form.control-group.control
-                        type="text"
-                        name="min_topup_amount"
-                        value="{{ old('min_topup_amount', $rule->min_topup_amount) }}"
-                        :label="trans('rewards::app.admin.rewards.wallet-topup.create.min-topup-amount')"
-                        :placeholder="trans('rewards::app.admin.rewards.wallet-topup.create.min-topup-amount')"
-                    />
-
-                    <x-admin::form.control-group.error control-name="min_topup_amount" />
-                </x-admin::form.control-group>
-
-                <!-- Max Topup Amount -->
-                <x-admin::form.control-group class="w-full">
-                    <x-admin::form.control-group.label>
-                        @lang('rewards::app.admin.rewards.wallet-topup.create.max-topup-amount')
-                    </x-admin::form.control-group.label>
-
-                    <x-admin::form.control-group.control
-                        type="text"
-                        name="max_topup_amount"
-                        value="{{ old('max_topup_amount', $rule->max_topup_amount) }}"
-                        :label="trans('rewards::app.admin.rewards.wallet-topup.create.max-topup-amount')"
-                        :placeholder="trans('rewards::app.admin.rewards.wallet-topup.create.max-topup-amount')"
-                    />
-
-                    <x-admin::form.control-group.error control-name="max_topup_amount" />
-                </x-admin::form.control-group>
-            </div>
 
             <!-- Priority -->
             <x-admin::form.control-group class="mb-2.5">

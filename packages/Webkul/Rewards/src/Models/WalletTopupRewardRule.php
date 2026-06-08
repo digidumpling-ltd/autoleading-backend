@@ -13,10 +13,11 @@ class WalletTopupRewardRule extends Model implements WalletTopupRewardRuleContra
 
     protected $fillable = [
         'customer_group_id',
+        'trigger',
         'mode',
         'value',
-        'min_topup_amount',
-        'max_topup_amount',
+        'min_amount',
+        'max_amount',
         'priority',
         'status',
     ];

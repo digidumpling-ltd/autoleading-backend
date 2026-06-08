@@ -14,10 +14,11 @@ class WalletTopupRewardRuleDataGrid extends DataGrid
             ->select(
                 'wallet_topup_reward_rules.id',
                 'customer_groups.name as customer_group_name',
+                'wallet_topup_reward_rules.trigger',
                 'wallet_topup_reward_rules.mode',
                 'wallet_topup_reward_rules.value',
-                'wallet_topup_reward_rules.min_topup_amount',
-                'wallet_topup_reward_rules.max_topup_amount',
+                'wallet_topup_reward_rules.min_amount',
+                'wallet_topup_reward_rules.max_amount',
                 'wallet_topup_reward_rules.priority',
                 'wallet_topup_reward_rules.status',
             );
@@ -25,6 +26,7 @@ class WalletTopupRewardRuleDataGrid extends DataGrid
         $this->addFilter('id', 'wallet_topup_reward_rules.id');
         $this->addFilter('status', 'wallet_topup_reward_rules.status');
         $this->addFilter('mode', 'wallet_topup_reward_rules.mode');
+        $this->addFilter('trigger', 'wallet_topup_reward_rules.trigger');
 
         return $queryBuilder;
     }
@@ -50,6 +52,40 @@ class WalletTopupRewardRuleDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
+            'index'      => 'trigger',
+            'label'      => trans('rewards::app.admin.rewards.wallet-topup.index.datagrid.trigger'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => true,
+            'filterable' => true,
+            'closure'    => function ($row) {
+                return match ($row->trigger) {
+                    'wallet_topup' => trans('rewards::app.admin.rewards.wallet-topup.index.datagrid.trigger-wallet-topup'),
+                    'wallet_spend' => trans('rewards::app.admin.rewards.wallet-topup.index.datagrid.trigger-wallet-spend'),
+                    default        => $row->trigger,
+                };
+            },
+        ]);
+
+        $this->addColumn([
+            'index'      => 'min_amount',
+            'label'      => trans('rewards::app.admin.rewards.wallet-topup.index.datagrid.min-amount'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => true,
+            'filterable' => false,
+        ]);
+
+        $this->addColumn([
+            'index'      => 'max_amount',
+            'label'      => trans('rewards::app.admin.rewards.wallet-topup.index.datagrid.max-amount'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => true,
+            'filterable' => false,
+        ]);
+
+        $this->addColumn([
             'index'      => 'mode',
             'label'      => trans('rewards::app.admin.rewards.wallet-topup.index.datagrid.mode'),
             'type'       => 'string',
@@ -64,24 +100,6 @@ class WalletTopupRewardRuleDataGrid extends DataGrid
         $this->addColumn([
             'index'      => 'value',
             'label'      => trans('rewards::app.admin.rewards.wallet-topup.index.datagrid.value'),
-            'type'       => 'string',
-            'searchable' => false,
-            'sortable'   => true,
-            'filterable' => false,
-        ]);
-
-        $this->addColumn([
-            'index'      => 'min_topup_amount',
-            'label'      => trans('rewards::app.admin.rewards.wallet-topup.index.datagrid.min-topup'),
-            'type'       => 'string',
-            'searchable' => false,
-            'sortable'   => true,
-            'filterable' => false,
-        ]);
-
-        $this->addColumn([
-            'index'      => 'max_topup_amount',
-            'label'      => trans('rewards::app.admin.rewards.wallet-topup.index.datagrid.max-topup'),
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => true,

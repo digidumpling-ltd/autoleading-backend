@@ -140,6 +140,7 @@
             "Webkul\\Razorpay\\Tests\\": "packages/Webkul/Razorpay/tests",
             "Webkul\\Shop\\Tests\\": "packages/Webkul/Shop/tests",
             "Webkul\\Stripe\\Tests\\": "packages/Webkul/Stripe/tests",
+            "Webkul\\Rewards\\Tests\\": "packages/Webkul/Rewards/tests",
             "Webkul\\Wallet\\Tests\\": "packages/Webkul/Wallet/tests",
             "Webkul\\Membership\\Tests\\": "packages/Webkul/Membership/tests",
             "Webkul\\Yedpay\\Tests\\": "packages/Webkul/Yedpay/tests",

@@ -37,20 +37,22 @@ class WalletTopupRewardRuleController extends Controller
     public function store()
     {
         request()->validate([
-            'mode'              => 'required|in:fixed,percent',
-            'value'             => 'required|numeric|min:0',
-            'min_topup_amount'  => 'nullable|numeric|min:0',
-            'max_topup_amount'  => 'nullable|numeric|min:0|gte:min_topup_amount',
-            'priority'          => 'nullable|integer|min:0',
-            'status'            => 'required|boolean',
+            'trigger'    => 'required|in:wallet_topup,wallet_spend',
+            'mode'       => 'required|in:fixed,percent',
+            'value'      => 'required|numeric|min:0',
+            'min_amount' => 'nullable|numeric|min:0',
+            'max_amount' => 'nullable|numeric|min:0|gte:min_amount',
+            'priority'   => 'nullable|integer|min:0',
+            'status'     => 'required|boolean',
         ]);
 
         $data = request()->only([
             'customer_group_id',
+            'trigger',
             'mode',
             'value',
-            'min_topup_amount',
-            'max_topup_amount',
+            'min_amount',
+            'max_amount',
             'priority',
             'status',
         ]);
@@ -76,20 +78,22 @@ class WalletTopupRewardRuleController extends Controller
     public function update(int $id)
     {
         request()->validate([
-            'mode'              => 'required|in:fixed,percent',
-            'value'             => 'required|numeric|min:0',
-            'min_topup_amount'  => 'nullable|numeric|min:0',
-            'max_topup_amount'  => 'nullable|numeric|min:0|gte:min_topup_amount',
-            'priority'          => 'nullable|integer|min:0',
-            'status'            => 'required|boolean',
+            'trigger'    => 'required|in:wallet_topup,wallet_spend',
+            'mode'       => 'required|in:fixed,percent',
+            'value'      => 'required|numeric|min:0',
+            'min_amount' => 'nullable|numeric|min:0',
+            'max_amount' => 'nullable|numeric|min:0|gte:min_amount',
+            'priority'   => 'nullable|integer|min:0',
+            'status'     => 'required|boolean',
         ]);
 
         $data = request()->only([
             'customer_group_id',
+            'trigger',
             'mode',
             'value',
-            'min_topup_amount',
-            'max_topup_amount',
+            'min_amount',
+            'max_amount',
             'priority',
             'status',
         ]);
