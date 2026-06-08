@@ -96,7 +96,40 @@ return [
         'key'  => 'sales.wallet',
         'name' => 'bagisto-wallet::app.configuration.index.sales.wallet.title',
         'info' => 'bagisto-wallet::app.configuration.index.sales.wallet.info',
+        'icon' => 'settings/payment-method.svg',
         'sort' => 99,
+    ],
+    [
+        'key'    => 'sales.wallet.gating',
+        'name'   => 'bagisto-wallet::app.configuration.index.sales.wallet.gating.title',
+        'info'   => 'bagisto-wallet::app.configuration.index.sales.wallet.gating.info',
+        'sort'   => 2,
+        'fields' => [
+            [
+                'name'          => 'require_topup_verification',
+                'title'         => 'bagisto-wallet::app.configuration.index.sales.wallet.gating.require-topup-verification',
+                'info'          => 'bagisto-wallet::app.configuration.index.sales.wallet.gating.require-topup-verification-info',
+                'type'          => 'boolean',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ],
+        ],
+    ],
+    [
+        'key'    => 'sales.wallet.notifications',
+        'name'   => 'bagisto-wallet::app.configuration.index.sales.wallet.notifications.title',
+        'info'   => 'bagisto-wallet::app.configuration.index.sales.wallet.notifications.info',
+        'sort'   => 2,
+        'fields' => [
+            [
+                'name'          => 'topup_email_enabled',
+                'title'         => 'bagisto-wallet::app.configuration.index.sales.wallet.notifications.topup-email-enabled',
+                'info'          => 'bagisto-wallet::app.configuration.index.sales.wallet.notifications.topup-email-enabled-info',
+                'type'          => 'boolean',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ],
+        ],
     ],
     [
         'key'    => 'sales.wallet.settings',
@@ -119,7 +152,7 @@ return [
         'key'    => 'sales.wallet.events',
         'name'   => 'bagisto-wallet::app.configuration.index.sales.wallet.events.title',
         'info'   => 'bagisto-wallet::app.configuration.index.sales.wallet.events.info',
-        'sort'   => 2,
+        'sort'   => 4,
         'fields' => [
             [
                 'name'          => 'publish_balance_updated',

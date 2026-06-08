@@ -132,6 +132,23 @@
 
                         <p v-if="errors.reason" class="mt-1 text-xs italic text-red-600" v-text="errors.reason"></p>
                     </div>
+
+                    <!-- Notify Customer (only for add) -->
+                    <div v-show="form.type === 'add'" class="mb-2">
+                        <label class="flex w-max cursor-pointer select-none items-center gap-1 p-1.5">
+                            <input
+                                type="checkbox"
+                                v-model="form.notify_customer"
+                                class="peer hidden"
+                            >
+
+                            <span class="icon-uncheckbox peer-checked:icon-checked cursor-pointer rounded-md text-2xl peer-checked:text-blue-600"></span>
+
+                            <p class="flex cursor-pointer items-center gap-x-1 font-semibold text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">
+                                @lang('bagisto-wallet::app.admin.customers.wallet.notify-customer')
+                            </p>
+                        </label>
+                    </div>
                 </x-slot>
             </x-admin::drawer>
         </div>
@@ -153,7 +170,7 @@
                     balance: '',
                     saving:  false,
                     errors:  { type: '', amount: '', reason: '' },
-                    form:    { type: 'add', amount: '', reason: '' },
+                    form:    { type: 'add', amount: '', reason: '', notify_customer: false },
                 };
             },
 
@@ -165,7 +182,7 @@
 
             methods: {
                 openDrawer() {
-                    this.form   = { type: 'add', amount: '', reason: '' };
+                    this.form   = { type: 'add', amount: '', reason: '', notify_customer: false };
                     this.errors = { type: '', amount: '', reason: '' };
                     this.$refs.drawerRef.toggle();
                 },
@@ -194,9 +211,10 @@
                     this.saving = true;
 
                     this.$axios.post(`${this.baseUrl}/${this.customerId}/wallet/ajax-adjust`, {
-                        type:   this.form.type,
-                        amount: this.form.amount,
-                        reason: this.form.reason,
+                        type:            this.form.type,
+                        amount:          this.form.amount,
+                        reason:          this.form.reason,
+                        notify_customer: this.form.notify_customer ? 1 : 0,
                     })
                     .then(r => {
                         this.balance = r.data.balance;

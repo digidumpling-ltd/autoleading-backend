@@ -2,8 +2,10 @@
 
 return [
     'common' => [
-        'save-btn' => 'Save',
-        'edit-btn' => 'Edit',
+        'save-btn'                            => 'Save',
+        'edit-btn'                            => 'Edit',
+        'topup-requires-verification'         => 'Please complete identity verification before topping up your wallet.',
+        'topup-requires-verification-link'    => 'Please <a href=":dashboard_url" class="underline">complete identity verification</a> before topping up your wallet.',
     ],
 
     'admin' => [
@@ -18,6 +20,7 @@ return [
                 'amount'                => 'Amount',
                 'reason'                => 'Reason',
                 'adjust-submit'         => 'Apply',
+                'notify-customer'       => 'Notify Customer',
                 'adjust-add-success'    => 'Credit added successfully.',
                 'adjust-deduct-success' => 'Credit deducted successfully.',
                 'insufficient-balance'  => 'Insufficient balance.',
@@ -99,6 +102,23 @@ return [
         'wallet-credit-name' => 'Wallet Credit',
     ],
 
+    'mail' => [
+        'topup-success' => [
+            'subject'             => '[Auto Leading] Online Top-Up Confirmation & Thank You Notice',
+            'dear'                => 'Dear :customer_name',
+            'greeting'            => 'Thank you for choosing and supporting Auto Leading!',
+            'body'                => 'We have successfully received your online top-up request. The reloaded amount and any eligible bonus credit will be credited to your membership account within 1 to 24 hours. Once the balance has been updated, you can log in to the Member Center to check your latest account statement.',
+            'transaction-details' => 'Transaction Details',
+            'member-account'      => 'Member Account',
+            'transaction-time'    => 'Transaction Time',
+            'topup-amount'        => 'Top-Up Amount',
+            'footer'              => 'If your account balance is not updated after 24 hours, or if you have any questions regarding this transaction, please feel free to reply directly to this email or contact our customer service team.',
+            'thanks'              => 'Thank you once again for your continued support!',
+            'closing'             => 'Best regards,',
+            'team'                => 'The Auto Leading Team',
+        ],
+    ],
+
     'configuration' => [
         'index' => [
             'sales' => [
@@ -116,6 +136,20 @@ return [
                     'settings' => [
                         'title' => 'Top-Up Settings',
                         'info'  => 'Configure which payment gateways are available for wallet top-ups.',
+                    ],
+
+                    'gating' => [
+                        'title'                           => 'Top-Up Gating',
+                        'info'                            => 'Control access to the wallet top-up flow.',
+                        'require-topup-verification'      => 'Require Verification for Top-Up',
+                        'require-topup-verification-info' => 'When enabled, only verified customers can access the wallet top-up flow. Unverified customers will be redirected to the verification page.',
+                    ],
+
+                    'notifications' => [
+                        'title'                    => 'Email Notifications',
+                        'info'                     => 'Configure wallet email notifications sent to customers.',
+                        'topup-email-enabled'      => 'Send Top-Up Confirmation Email',
+                        'topup-email-enabled-info' => 'When enabled, customers receive an email confirmation after their wallet is successfully topped up via the storefront.',
                     ],
 
                     'events' => [

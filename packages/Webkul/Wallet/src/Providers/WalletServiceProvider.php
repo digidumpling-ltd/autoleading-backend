@@ -5,6 +5,7 @@ namespace Webkul\Wallet\Providers;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Wallet\Http\Middleware\WalletCheckoutMiddleware;
+use Webkul\Wallet\Http\Middleware\WalletTopUpGatingMiddleware;
 use Webkul\Wallet\Services\WalletService;
 
 class WalletServiceProvider extends ServiceProvider
@@ -40,6 +41,8 @@ class WalletServiceProvider extends ServiceProvider
         Event::listen('sales.refund.save.after', 'Webkul\Wallet\Listeners\WalletRefundListener@handle');
 
         $this->app['router']->pushMiddlewareToGroup('web', WalletCheckoutMiddleware::class);
+
+        $this->app['router']->pushMiddlewareToGroup('web', WalletTopUpGatingMiddleware::class);
 
         Event::listen('bagisto.shop.checkout.onepage.summary.grand_total.after', function ($event) {
             $event->addTemplate('wallet::shop.checkout.wallet-balance-widget');

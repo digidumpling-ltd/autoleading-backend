@@ -11,9 +11,12 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Wallet\DataGrids\Admin\WalletTransactionDataGrid;
 use Webkul\Wallet\Events\WalletBalanceUpdated;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
+use Webkul\Wallet\Services\WalletService;
 
 class WalletController extends Controller
 {
+    public function __construct(protected WalletService $walletService) {}
+
     public function index(int $id): View
     {
         abort_if(! bouncer()->hasPermission('customers.wallet'), 401);
@@ -62,19 +65,25 @@ class WalletController extends Controller
                 'reason'   => $validated['reason'],
             ]);
 
+            $newBalance = $customer->fresh()->balanceFloatNum;
+
             if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
                 Event::dispatch(new WalletBalanceUpdated(
                     customerId: $customer->id,
                     oldBalance: $oldBalance,
-                    newBalance: $customer->fresh()->balanceFloatNum,
+                    newBalance: $newBalance,
                     reason: 'admin_grant',
                     customerGroupId: $customer->customer_group_id,
                 ));
             }
 
+            if ($request->input('notify_customer')) {
+                $this->walletService->notifyTopUp($customer, (float) $validated['amount'], $newBalance);
+            }
+
             return response()->json([
                 'message' => trans('bagisto-wallet::app.admin.customers.wallet.adjust-add-success'),
-                'balance' => core()->formatPrice($customer->fresh()->balanceFloatNum),
+                'balance' => core()->formatPrice($newBalance),
             ]);
         }
 
@@ -130,14 +139,20 @@ class WalletController extends Controller
                 'reason'   => $request->reason,
             ]);
 
+            $newBalance = $customer->fresh()->balanceFloatNum;
+
             if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
                 Event::dispatch(new WalletBalanceUpdated(
                     customerId: $customer->id,
                     oldBalance: $oldBalance,
-                    newBalance: $customer->fresh()->balanceFloatNum,
+                    newBalance: $newBalance,
                     reason: 'admin_grant',
                     customerGroupId: $customer->customer_group_id,
                 ));
+            }
+
+            if ($request->notify_customer) {
+                $this->walletService->notifyTopUp($customer, (float) $request->amount, $newBalance);
             }
 
             return redirect()

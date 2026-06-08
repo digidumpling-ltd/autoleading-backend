@@ -2,8 +2,10 @@
 
 return [
     'common' => [
-        'save-btn' => '保存',
-        'edit-btn' => '编辑',
+        'save-btn'                            => '保存',
+        'edit-btn'                            => '编辑',
+        'topup-requires-verification'         => '請先完成身份驗證，方可為錢包充值。',
+        'topup-requires-verification-link'    => '請先<a href=":dashboard_url" class="underline">完成身份驗證</a>，方可為錢包充值。',
     ],
 
     'admin' => [
@@ -18,6 +20,7 @@ return [
                 'amount'                => '金额',
                 'reason'                => '原因',
                 'adjust-submit'         => '应用',
+                'notify-customer'       => '通知客户',
                 'adjust-add-success'    => '积分添加成功。',
                 'adjust-deduct-success' => '积分扣除成功。',
                 'insufficient-balance'  => '余额不足。',
@@ -99,6 +102,23 @@ return [
         'wallet-credit-name' => '钱包积分',
     ],
 
+    'mail' => [
+        'topup-success' => [
+            'subject'             => '【Auto Leading】網上增值確認及感謝通知',
+            'dear'                => '親愛的 :customer_name',
+            'greeting'            => '感謝您支持 Auto Leading 的服務！',
+            'body'                => '我們已成功收到您的網上增值申請。相關金額及贈送金額將於 24 小時內存入您的會員帳戶。金額到帳後，您可以登入會員中心查看最新餘額。',
+            'transaction-details' => '【增值明細】',
+            'member-account'      => '會員帳戶',
+            'transaction-time'    => '增值時間',
+            'topup-amount'        => '本金增值金額',
+            'footer'              => '如 24 小時後您的帳戶餘額未有更新，或對本次增值有任何查詢，歡迎隨時回覆本電郵，或與我們的客戶服務團隊聯絡。',
+            'thanks'              => '再次感謝您的支持與愛護！',
+            'closing'             => '祝您生活愉快！',
+            'team'                => 'Auto Leading 團隊 敬上',
+        ],
+    ],
+
     'configuration' => [
         'index' => [
             'sales' => [
@@ -116,6 +136,20 @@ return [
                     'settings' => [
                         'title' => '充值设置',
                         'info'  => '配置钱包充值可用的支付网关。',
+                    ],
+
+                    'gating' => [
+                        'title'                           => '充值访问控制',
+                        'info'                            => '控制客户访问钱包充值流程的条件。',
+                        'require-topup-verification'      => '充值需要实名认证',
+                        'require-topup-verification-info' => '启用后，只有已验证的客户才能访问钱包充值流程。未验证客户将被重定向至验证页面。',
+                    ],
+
+                    'notifications' => [
+                        'title'                    => '邮件通知',
+                        'info'                     => '配置发送给客户的钱包邮件通知。',
+                        'topup-email-enabled'      => '发送充值确认邮件',
+                        'topup-email-enabled-info' => '启用后，客户通过店面成功充值后将收到一封确认邮件。',
                     ],
 
                     'events' => [

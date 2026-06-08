@@ -10,9 +10,12 @@ use Webkul\Shop\Http\Controllers\Controller;
 use Webkul\Wallet\DataGrids\Shop\WalletTransactionDataGrid;
 use Webkul\Wallet\Events\WalletBalanceUpdated;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
+use Webkul\Wallet\Services\WalletService;
 
 class WalletController extends Controller
 {
+    public function __construct(protected WalletService $walletService) {}
+
     public function index(): mixed
     {
         if (request()->ajax()) {
@@ -43,14 +46,20 @@ class WalletController extends Controller
 
         $customer->depositFloat($request->amount, ['description' => 'Manual top-up']);
 
+        $newBalance = $customer->fresh()->balanceFloatNum;
+
         if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
             Event::dispatch(new WalletBalanceUpdated(
                 customerId: $customer->id,
                 oldBalance: $oldBalance,
-                newBalance: $customer->fresh()->balanceFloatNum,
+                newBalance: $newBalance,
                 reason: 'wallet_topup',
                 customerGroupId: $customer->customer_group_id,
             ));
+        }
+
+        if (core()->getConfigData('sales.wallet.notifications.topup_email_enabled')) {
+            $this->walletService->notifyTopUp($customer, (float) $request->amount, $newBalance);
         }
 
         return redirect()->route('shop.customers.account.wallet.index')

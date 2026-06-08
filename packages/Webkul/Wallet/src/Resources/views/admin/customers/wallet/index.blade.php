@@ -82,7 +82,26 @@
                             </x-admin::form.control-group>
                         </div>
 
-                        <div class="flex justify-end">
+                        <div class="flex items-center justify-between">
+                            <label
+                                class="flex w-max cursor-pointer select-none items-center gap-1 p-1.5"
+                                for="notify_customer"
+                            >
+                                <input
+                                    type="checkbox"
+                                    name="notify_customer"
+                                    id="notify_customer"
+                                    value="1"
+                                    class="peer hidden"
+                                >
+
+                                <span class="icon-uncheckbox peer-checked:icon-checked cursor-pointer rounded-md text-2xl peer-checked:text-blue-600"></span>
+
+                                <p class="flex cursor-pointer items-center gap-x-1 font-semibold text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">
+                                    @lang('bagisto-wallet::app.admin.customers.wallet.notify-customer')
+                                </p>
+                            </label>
+
                             <button type="submit" class="primary-button">
                                 @lang('bagisto-wallet::app.admin.customers.wallet.adjust-submit')
                             </button>

@@ -20,7 +20,7 @@
         </div>
 
         @php
-            $walletGatingEnabled = core()->getConfigData('customer_verification.wallet.settings.require_verification');
+            $walletGatingEnabled = core()->getConfigData('sales.wallet.gating.require_topup_verification');
             $isVerified = auth()->guard('customer')->user()->verification_status ?? 'incomplete';
         @endphp
 
@@ -29,7 +29,7 @@
                 <span class="icon-toast-exclamation-mark text-2xl"></span>
 
                 <div class="text-sm">
-                    {!! trans('customer-verification::app.common.wallet_topup_requires_verification_link', ['dashboard_url' => route('shop.customer.verification.index')]) !!}
+                    {!! trans('bagisto-wallet::app.common.topup-requires-verification-link', ['dashboard_url' => route('shop.customer.verification.index')]) !!}
                 </div>
             </div>
         @endif
