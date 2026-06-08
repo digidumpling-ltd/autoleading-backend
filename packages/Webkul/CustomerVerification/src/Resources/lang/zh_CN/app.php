@@ -76,9 +76,6 @@ return [
         'cannot_add_rental_unverified'          => '您必須完成身份驗證才能租借車輛。<a href=":dashboard_url">造訪您的驗證儀表板</a>。',
         'cannot_add_unverified'                 => '您的帳戶必須通過驗證才能將商品加入購物車。<a href=":dashboard_url">造訪您的驗證儀表板</a>。',
         'cannot_checkout_unverified'            => '您的帳戶必須通過驗證才能下訂單。請先完成驗證。',
-        'wallet_topup_disabled'                 => '錢包充值目前已停用。請聯繫客服或稍後再試。',
-        'wallet_topup_requires_verification'   => '請先完成身份驗證，方可為錢包充值。',
-        'wallet_topup_requires_verification_link' => '請先<a href=":dashboard_url" class="underline">完成身份驗證</a>，方可為錢包充值。',
         'document_deleted'                      => '文件已成功刪除。',
         'open_document'                         => '開啟文件',
         'confirm_delete_document'              => '您確定要刪除此文件嗎？',
@@ -103,11 +100,5 @@ return [
             'require-verification-info' => '啟用後，只有已通過審核的客戶才能將商品加入購物車或下訂單。',
         ],
 
-        'wallet' => [
-            'title'                    => '錢包充值管控',
-            'title-info'               => '控制未驗證客戶是否被允許為錢包充值。',
-            'require-verification'     => '充值是否需要驗證',
-            'require-verification-info'=> '啟用後，只有已通過審核的客戶才能使用錢包充值，未驗證客戶會看到指向驗證儀表板的訊息。',
-        ],
     ],
 ];

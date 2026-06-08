@@ -10,7 +10,6 @@ use Webkul\Customer\Models\Customer;
 use Webkul\CustomerVerification\Console\Commands\GenerateCustomerReferenceNumbers;
 use Webkul\CustomerVerification\Contracts\CustomerVerificationDocument as CustomerVerificationDocumentContract;
 use Webkul\CustomerVerification\Http\Middleware\VerificationCheckoutMiddleware;
-use Webkul\CustomerVerification\Http\Middleware\VerificationTopUpMiddleware;
 use Webkul\CustomerVerification\Models\CustomerVerificationDocument;
 use Webkul\CustomerVerification\Observers\CustomerObserver;
 
@@ -60,9 +59,6 @@ class CustomerVerificationServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
         $this->app['router']->pushMiddlewareToGroup('web', VerificationCheckoutMiddleware::class);
-
-        // Push wallet top-up middleware to web group to gate top-ups when enabled
-        $this->app['router']->pushMiddlewareToGroup('web', VerificationTopUpMiddleware::class);
 
         // Register artisan command for generating reference numbers
         if ($this->app->runningInConsole()) {
