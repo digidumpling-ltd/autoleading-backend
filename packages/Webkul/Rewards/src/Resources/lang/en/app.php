@@ -2,8 +2,9 @@
 
 return [
     'common' => [
-        'save-btn' => 'Save',
-        'edit-btn' => 'Edit',
+        'save-btn'        => 'Save',
+        'edit-btn'        => 'Edit',
+        'notify-customer' => 'Notify Customer',
     ],
 
     'admin' => [
@@ -628,14 +629,15 @@ return [
         ],
 
         'approved' => [
-            'dear'                  => 'Dear :customer_name',
-            'greeting'              => 'You Reward Points have been Approved !',
-            'points-rewarded'       => 'You have rewarded :points Points for Order No #:order_id',
-            'status'                => 'approved',
-            'subject'               => 'Reward Point Approved',
-            'thanks'                => 'Thanks!',
-            'total-point-left'      => 'You have :total_reward_points left',
-            'used-points'           => 'You have used  :used_reward_points points',
+            'dear'                       => 'Dear :customer_name',
+            'greeting'                   => 'You Reward Points have been Approved !',
+            'points-rewarded'            => 'You have rewarded :points Points for Order No #:order_id',
+            'points-rewarded-no-order'   => 'You have been rewarded :points Points.',
+            'status'                     => 'approved',
+            'subject'                    => 'Reward Point Approved',
+            'thanks'                     => 'Thanks!',
+            'total-point-left'           => 'You have :total_reward_points left',
+            'used-points'                => 'You have used  :used_reward_points points',
         ],
 
         'processing' => [

@@ -347,10 +347,17 @@ class RewardPointRepository extends Repository
 
     /**
      * Allocate reward points manually by an admin user.
+     * Creates the reward directly without dispatching the event so the global
+     * email-notification listener does not fire; the controller handles notification.
      */
     public function allocateByAdmin(int $customerId, int $points, string $reason): void
     {
-        $this->awardPoints($customerId, $points, $reason);
+        $this->model->create([
+            'customer_id'   => $customerId,
+            'reward_points' => $points,
+            'note'          => $reason,
+            'status'        => self::STATUS_APPROVED,
+        ]);
     }
 
     public function insertRewardPoints($data, $key, $value)

@@ -4,9 +4,12 @@ namespace Webkul\Rewards\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Rewards\DataGrids\SystemDetailByCustomerDataGrid;
 use Webkul\Rewards\DataGrids\SystemDetailRewardPoints;
+use Webkul\Rewards\Mail\RewardApproved;
+use Webkul\Rewards\Models\RewardPoint;
 use Webkul\Rewards\Repositories\RewardPointRepository;
 
 class SystemDetailsController extends Controller
@@ -72,6 +75,18 @@ class SystemDetailsController extends Controller
             (int) request('points'),
             request('reason')
         );
+
+        if (request('notify_customer')) {
+            Mail::queue(new RewardApproved([
+                'email'               => $customer->email,
+                'name'                => $customer->first_name . ' ' . $customer->last_name,
+                'order_id'            => null,
+                'points'              => (int) request('points'),
+                'note'                => request('reason'),
+                'used_reward_points'  => RewardPoint::where('customer_id', $customer->id)->where('status', 'used')->sum('reward_points'),
+                'total_reward_points' => $this->rewardPointRepository->totalRewardPoints($customer->id),
+            ]));
+        }
 
         return new JsonResponse(['message' => trans('rewards::app.admin.rewards.system.view.allocate-success')]);
     }

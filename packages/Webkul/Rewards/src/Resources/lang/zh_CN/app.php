@@ -2,8 +2,9 @@
 
 return [
     'common' => [
-        'save-btn' => '保存',
-        'edit-btn' => '编辑',
+        'save-btn'        => '保存',
+        'edit-btn'        => '编辑',
+        'notify-customer' => '通知客户',
     ],
 
     'admin' => [
@@ -627,14 +628,15 @@ return [
         ],
 
         'approved' => [
-            'dear'                  => '亲爱的 :customer_name',
-            'greeting'              => '您的积分已被批准！',
-            'points-rewarded'       => '您因订单号 #:order_id 获得了 :points 积分',
-            'status'                => '已批准',
-            'subject'               => '积分批准',
-            'thanks'                => '谢谢！',
-            'total-point-left'      => '您还有 :total_reward_points 积分',
-            'used-points'           => '您已经使用了 :used_reward_points 积分',
+            'dear'                       => '亲爱的 :customer_name',
+            'greeting'                   => '您的积分已被批准！',
+            'points-rewarded'            => '您因订单号 #:order_id 获得了 :points 积分',
+            'points-rewarded-no-order'   => '您已获得 :points 积分。',
+            'status'                     => '已批准',
+            'subject'                    => '积分批准',
+            'thanks'                     => '谢谢！',
+            'total-point-left'           => '您还有 :total_reward_points 积分',
+            'used-points'                => '您已经使用了 :used_reward_points 积分',
         ],
 
         'processing' => [

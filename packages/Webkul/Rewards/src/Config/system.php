@@ -25,6 +25,12 @@ return [
                 'locale_based'  => true,
                 'channel_based' => true,
             ], [
+                'name'          => 'email-notification',
+                'title'         => 'rewards::app.admin.configuration.title.general.reward.setting.email-notification',
+                'type'          => 'boolean',
+                'locale_based'  => true,
+                'channel_based' => true,
+            ], [
                 'name'          => 'reward-when-customer-register',
                 'title'         => 'rewards::app.admin.configuration.title.general.reward.setting.reward-when-customer-register',
                 'type'          => 'number',
@@ -73,21 +79,6 @@ return [
                 'validation'    => 'numeric',
                 'locale_based'  => true,
                 'channel_based' => true,
-            ], [
-                'name'          => 'email-notification',
-                'title'         => 'rewards::app.admin.configuration.title.general.reward.setting.email-notification',
-                'type'          => 'select',
-                'locale_based'  => true,
-                'channel_based' => true,
-                'options' => [
-                    [
-                        'title' => 'Yes',
-                        'value' => '1',
-                    ], [
-                        'title' => 'No',
-                        'value' => '0',
-                    ],
-                ],
             ],
         ],
     ],
