@@ -11,7 +11,7 @@
         <div class="flex gap-x-2.5 items-center">
             <!-- Back -->
             <a
-                href="{{ route('admin.reward.system.index') }}"
+                href="{{ url()->previous(route('admin.reward.system.index')) }}"
                 class="transparent-button hover:bg-gray-200 dark:hover:bg-gray-800 dark:text-white"
             >
                 @lang('admin::app.catalog.attributes.create.back-btn')
