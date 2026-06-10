@@ -21,6 +21,10 @@ class TvdSubmissionMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address(
+                core()->getSenderEmailDetails()['email'],
+                core()->getSenderEmailDetails()['name']
+            ),
             to: [
                 new Address(
                     core()->getAdminEmailDetails()['email'],
