@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-/** @type {import('tailwindcss').Config} */
+import typography from "@tailwindcss/typography";
+
 export default {
     content: [
         "../../../packages/Webkul/Shop/src/Resources/**/*.blade.php",
@@ -43,7 +44,7 @@ export default {
         },
     },
 
-    plugins: [],
+    plugins: [typography],
 
     safelist: [{ pattern: /icon-/ }],
 };
