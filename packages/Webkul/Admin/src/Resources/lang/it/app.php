@@ -118,6 +118,44 @@ return [
         ],
     ],
 
+    'help' => [
+        'index' => [
+            'title' => 'Aiuto e Risorse',
+            'description' => 'Tutto ciò di cui hai bisogno per sfruttare al meglio Bagisto — hosting, supporto e servizi professionali, oltre a estensioni e documentazione per sviluppatori.',
+
+            'services-title' => 'Servizi',
+            'resources-title' => 'Risorse e Documentazione',
+
+            'cloud-hosting' => 'Cloud Hosting',
+            'cloud-hosting-info' => 'Hosting cloud gestito ed economico — avvia il tuo negozio Bagisto sul cloud in pochi minuti, completamente ottimizzato e scalabile.',
+
+            'support' => 'Supporto e Manutenzione',
+            'support-info' => 'Supporto tecnico dedicato e piani di manutenzione continua per mantenere il tuo negozio sicuro, aggiornato e funzionante senza problemi.',
+
+            'paid-services' => 'Servizi a Pagamento',
+            'paid-services-info' => 'Aiuto esperto per l\'integrazione di moduli, personalizzazione, migrazione dei dati, aggiornamenti di versione e sviluppo su misura.',
+
+            'extensions' => 'Estensioni',
+            'extensions-info' => 'Esplora i componenti aggiuntivi ufficiali e della community per estendere Bagisto con nuovi connettori, canali e funzionalità.',
+
+            'docs' => 'Documentazione Dev e Blog',
+            'docs-info' => 'Guide per sviluppatori, tutorial e gli articoli più recenti per aiutarti a costruire, configurare e rimanere aggiornato.',
+
+            'api-docs' => 'Documentazione API',
+            'api-docs-info' => 'Riferimento completo delle API REST e GraphQL con endpoint, autenticazione ed esempi per integrare Bagisto con il tuo stack.',
+
+            'community' => 'Forum della Community',
+            'community-info' => 'Fai domande, condividi idee e connettiti con migliaia di sviluppatori e commercianti Bagisto in tutto il mondo.',
+
+            'video-tutorials' => 'Video Tutorial',
+            'video-tutorials-info' => 'Guide video passo passo che coprono installazione, configurazione e gestione quotidiana del negozio.',
+
+            'cta-title' => 'Hai ancora bisogno di aiuto?',
+            'cta-description' => 'Parla con il team Bagisto di hosting, sviluppo personalizzato o qualsiasi altra cosa.',
+            'cta-btn' => 'Contattaci',
+        ],
+    ],
+
     'dashboard' => [
         'index' => [
             'add-customer' => 'Aggiungi Cliente',
@@ -5244,6 +5282,7 @@ return [
                 'exchange-rates' => 'Tassi di Cambio',
                 'gdpr-data-requests' => 'Richieste di Dati GDPR',
                 'groups' => 'Gruppi',
+                'help' => 'Aiuto e Risorse',
                 'imports' => 'Importazioni',
                 'inventory-sources' => 'Fonti di Inventario',
                 'invoices' => 'Fatture',
@@ -5728,6 +5767,128 @@ return [
                 'subject' => 'Nuovo messaggio di conversazione RMA',
                 'title' => 'Nuova conversazione RMA',
             ],
+        ],
+    ],
+
+    'eu_withdrawal' => [
+        'menu' => [
+            'eu_withdrawals' => 'Recessi UE',
+        ],
+
+        'acl' => [
+            'title' => 'Recessi UE',
+            'view' => 'Visualizza',
+            'decline' => 'Rifiuta',
+            'mark_refunded' => 'Segna come rimborsato',
+            'resend_confirmation' => 'Invia di nuovo la conferma',
+        ],
+
+        'config' => [
+            'title' => 'Recessi UE',
+            'info' => 'Configurazione del pulsante di recesso UE (Direttiva (UE) 2023/2673, articolo 11 bis CRD).',
+
+            'general' => [
+                'title' => 'Generale',
+                'info' => 'Interruttore principale del pulsante di recesso UE per questo canale.',
+                'enabled' => 'Attiva',
+                'enabled_info' => 'Quando è abilitato, i clienti di questo canale vedono un pulsante «Recedere dal contratto» nelle pagine di dettaglio dell’ordine e un modulo pubblico di ricerca su /withdraw. Abilitare solo nei canali rivolti ai consumatori dell’UE.',
+            ],
+        ],
+
+        'index' => [
+            'title' => 'Recessi UE',
+        ],
+
+        'view' => [
+            'title' => 'Recesso :uuid',
+            'heading' => 'Recesso',
+            'back' => 'Torna all’elenco',
+            'guest_badge' => 'Ospite',
+
+            'evidence' => 'Prova',
+            'evidence_note' => 'Immutabile — acquisita al momento dell’invio',
+            'status' => 'Stato',
+            'received_at' => 'Ricevuto il',
+            'uuid' => 'Riferimento',
+            'copy_reference' => 'Copia riferimento',
+            'reference_copied' => 'Riferimento copiato negli appunti.',
+            'order' => 'Ordine',
+            'customer_email' => 'E-mail del cliente',
+            'is_guest' => 'Ospite',
+            'channel' => 'Canale',
+            'locale' => 'Lingua',
+            'reason' => 'Motivazione del cliente',
+
+            'timeline' => 'Cronologia',
+            'timeline_received' => 'Dichiarazione ricevuta',
+            'timeline_received_desc' => 'Il cliente ha inviato una richiesta di recesso dal contratto.',
+            'timeline_email' => 'E-mail di conferma',
+            'timeline_email_pending' => 'Non ancora inviata',
+            'timeline_initial_email' => 'E-mail di conferma iniziale',
+            'timeline_initial_email_desc_sent' => 'E-mail di conferma consegnata al cliente.',
+            'timeline_initial_email_desc_error' => 'Invio dell’e-mail di conferma iniziale non riuscito.',
+            'timeline_initial_email_desc_pending' => 'L’e-mail di conferma iniziale non è ancora stata inviata.',
+            'timeline_final_email' => 'E-mail di conferma finale',
+            'timeline_final_email_pending' => 'Non ancora inviata',
+            'timeline_final_email_desc_sent' => 'E-mail con l’esito consegnata al cliente.',
+            'timeline_final_email_desc_pending' => 'L’e-mail di conferma finale non è ancora stata inviata.',
+            'timeline_declined' => 'Recesso rifiutato',
+            'timeline_declined_desc' => 'Recesso rifiutato da :name.',
+            'timeline_declined_desc_system' => 'Recesso rifiutato.',
+            'timeline_declined_reason_label' => 'Motivazione indicata:',
+            'timeline_refunded' => 'Rimborso emesso',
+            'timeline_refunded_desc' => 'Rimborso emesso da :name.',
+            'timeline_refunded_desc_system' => 'Rimborso emesso.',
+            'timeline_refunded_note_label' => 'Nota dell’amministratore:',
+            'timeline_resolution' => 'Decisione in sospeso',
+            'timeline_resolution_desc' => 'In attesa di esame e decisione dell’amministratore.',
+            'timeline_resolution_pending' => 'In attesa di azione dell’amministratore',
+
+            'confirmation_sent_at' => 'Conferma inviata il',
+            'confirmation_error' => 'Errore di conferma',
+            'declined_at' => 'Rifiutato il',
+            'refunded_at' => 'Rimborsato il',
+
+            'actions' => 'Azioni',
+            'actions_note' => 'I rimborsi vengono elaborati manualmente con gli strumenti di Bagisto già esistenti (ordine / rimborso / RMA). Utilizzare queste azioni per registrare l’esito sulla prova di recesso.',
+            'resend_confirmation' => 'Invia di nuovo l’e-mail di conferma',
+            'mark_refunded' => 'Segna come rimborsato',
+            'refund_note_label' => 'Riferimento del rimborso (facoltativo)',
+            'refund_note_placeholder' => 'es. Rimborso n. 1234',
+            'decline' => 'Rifiuta recesso',
+            'decline_reason_label' => 'Motivazione del rifiuto',
+            'decline_reason_placeholder' => 'Spiegare perché il diritto è contestato',
+            'mark_refunded_confirm_msg' => 'Segnare questo recesso come rimborsato? Eventuali registrazioni di rifiuto precedenti verranno cancellate.',
+            'decline_confirm_msg' => 'Rifiutare questo recesso? La motivazione sarà visibile al cliente.',
+            'resend_confirmation_confirm_msg' => 'Inviare di nuovo l’e-mail di conferma al cliente?',
+            'send_final_confirmation' => 'Invia l’e-mail di conferma finale',
+            'send_final_confirmation_confirm_msg' => 'Inviare al cliente l’e-mail con lo stato finale?',
+        ],
+
+        'status' => [
+            'received' => 'Ricevuto',
+            'refunded' => 'Rimborsato',
+            'declined' => 'Rifiutato',
+        ],
+
+        'datagrid' => [
+            'received_at' => 'Ricevuto il',
+            'uuid' => 'Riferimento',
+            'copy_reference' => 'Copia riferimento',
+            'reference_copied' => 'Riferimento copiato negli appunti.',
+            'order' => 'Ordine',
+            'customer_email' => 'E-mail del cliente',
+            'channel' => 'Canale',
+            'status' => 'Stato',
+            'confirmation_sent_at' => 'Conferma inviata',
+            'view' => 'Visualizza',
+        ],
+
+        'flash' => [
+            'declined' => 'Il recesso è stato rifiutato.',
+            'refunded' => 'Il recesso è stato segnato come rimborsato.',
+            'confirmation_resent' => 'L’e-mail di conferma è stata inviata di nuovo.',
+            'confirmation_failed' => 'Impossibile inviare l’e-mail di conferma. Consultare la cronologia per maggiori dettagli.',
         ],
     ],
 ];

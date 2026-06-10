@@ -118,6 +118,44 @@ return [
         ],
     ],
 
+    'help' => [
+        'index' => [
+            'title' => 'Bantuan & Sumber Daya',
+            'description' => 'Semua yang Anda butuhkan untuk memaksimalkan Bagisto — hosting, dukungan dan layanan profesional, serta ekstensi dan dokumentasi pengembang.',
+
+            'services-title' => 'Layanan',
+            'resources-title' => 'Sumber Daya & Dokumentasi',
+
+            'cloud-hosting' => 'Cloud Hosting',
+            'cloud-hosting-info' => 'Cloud hosting terkelola yang hemat biaya — luncurkan toko Bagisto Anda di cloud dalam hitungan menit, sepenuhnya dioptimalkan dan dapat diskalakan.',
+
+            'support' => 'Dukungan & Pemeliharaan',
+            'support-info' => 'Dukungan teknis khusus dan paket pemeliharaan berkelanjutan untuk menjaga toko Anda tetap aman, diperbarui dan berjalan lancar.',
+
+            'paid-services' => 'Layanan Berbayar',
+            'paid-services-info' => 'Bantuan ahli untuk integrasi modul, kustomisasi, migrasi data, peningkatan versi dan pengembangan khusus.',
+
+            'extensions' => 'Ekstensi',
+            'extensions-info' => 'Jelajahi add-on resmi dan komunitas untuk memperluas Bagisto dengan konektor, saluran dan fitur baru.',
+
+            'docs' => 'Dokumen Dev & Blog',
+            'docs-info' => 'Panduan pengembang, tutorial dan artikel terbaru untuk membantu Anda membangun, mengonfigurasi dan tetap mutakhir.',
+
+            'api-docs' => 'Dokumen API',
+            'api-docs-info' => 'Referensi API REST & GraphQL lengkap dengan endpoint, autentikasi dan contoh untuk mengintegrasikan Bagisto dengan stack Anda.',
+
+            'community' => 'Forum Komunitas',
+            'community-info' => 'Ajukan pertanyaan, bagikan ide dan terhubung dengan ribuan pengembang dan pedagang Bagisto di seluruh dunia.',
+
+            'video-tutorials' => 'Tutorial Video',
+            'video-tutorials-info' => 'Panduan video langkah demi langkah yang mencakup instalasi, konfigurasi dan pengelolaan toko sehari-hari.',
+
+            'cta-title' => 'Masih butuh bantuan?',
+            'cta-description' => 'Bicaralah dengan tim Bagisto tentang hosting, pengembangan khusus atau hal lainnya.',
+            'cta-btn' => 'Hubungi Kami',
+        ],
+    ],
+
     'dashboard' => [
         'index' => [
             'add-customer' => 'Tambah Pelanggan',
@@ -5244,6 +5282,7 @@ return [
                 'exchange-rates' => 'Kurs',
                 'gdpr-data-requests' => 'Permintaan Data GDPR',
                 'groups' => 'Grup',
+                'help' => 'Bantuan & Sumber Daya',
                 'imports' => 'Impor',
                 'inventory-sources' => 'Sumber Inventaris',
                 'invoices' => 'Faktur',
@@ -5728,6 +5767,128 @@ return [
                 'subject' => 'Pesan Percakapan RMA Baru',
                 'title' => 'Percakapan RMA Baru',
             ],
+        ],
+    ],
+
+    'eu_withdrawal' => [
+        'menu' => [
+            'eu_withdrawals' => 'Penarikan Diri UE',
+        ],
+
+        'acl' => [
+            'title' => 'Penarikan Diri UE',
+            'view' => 'Lihat',
+            'decline' => 'Tolak',
+            'mark_refunded' => 'Tandai Telah Dikembalikan',
+            'resend_confirmation' => 'Kirim Ulang Konfirmasi',
+        ],
+
+        'config' => [
+            'title' => 'Penarikan Diri UE',
+            'info' => 'Konfigurasi untuk tombol penarikan diri UE (Direktif (UE) 2023/2673, Pasal 11a CRD).',
+
+            'general' => [
+                'title' => 'Umum',
+                'info' => 'Sakelar utama untuk tombol penarikan diri UE di saluran ini.',
+                'enabled' => 'Aktifkan',
+                'enabled_info' => 'Saat diaktifkan, pelanggan di saluran ini akan melihat tombol "Menarik Diri dari Kontrak" pada halaman detail pesanan dan formulir pencarian publik /withdraw. Aktifkan hanya pada saluran yang menjual kepada konsumen UE.',
+            ],
+        ],
+
+        'index' => [
+            'title' => 'Penarikan Diri UE',
+        ],
+
+        'view' => [
+            'title' => 'Penarikan Diri :uuid',
+            'heading' => 'Penarikan Diri',
+            'back' => 'Kembali ke daftar',
+            'guest_badge' => 'Tamu',
+
+            'evidence' => 'Bukti',
+            'evidence_note' => 'Tidak dapat diubah — tercatat saat pengajuan',
+            'status' => 'Status',
+            'received_at' => 'Diterima pada',
+            'uuid' => 'Referensi',
+            'copy_reference' => 'Salin referensi',
+            'reference_copied' => 'Referensi disalin ke papan klip.',
+            'order' => 'Pesanan',
+            'customer_email' => 'Email pelanggan',
+            'is_guest' => 'Tamu',
+            'channel' => 'Saluran',
+            'locale' => 'Bahasa',
+            'reason' => 'Alasan pelanggan',
+
+            'timeline' => 'Linimasa',
+            'timeline_received' => 'Pernyataan diterima',
+            'timeline_received_desc' => 'Pelanggan mengirimkan permintaan menarik diri dari kontrak.',
+            'timeline_email' => 'Email konfirmasi',
+            'timeline_email_pending' => 'Belum dikirim',
+            'timeline_initial_email' => 'Email Konfirmasi Awal',
+            'timeline_initial_email_desc_sent' => 'Email konfirmasi terkirim kepada pelanggan.',
+            'timeline_initial_email_desc_error' => 'Gagal mengirim email konfirmasi awal.',
+            'timeline_initial_email_desc_pending' => 'Email konfirmasi awal belum dikirim.',
+            'timeline_final_email' => 'Email Konfirmasi Akhir',
+            'timeline_final_email_pending' => 'Belum dikirim',
+            'timeline_final_email_desc_sent' => 'Email hasil keputusan terkirim kepada pelanggan.',
+            'timeline_final_email_desc_pending' => 'Email konfirmasi akhir belum dikirim.',
+            'timeline_declined' => 'Ditolak oleh admin',
+            'timeline_declined_desc' => 'Penarikan diri ditolak oleh :name.',
+            'timeline_declined_desc_system' => 'Penarikan diri ditolak.',
+            'timeline_declined_reason_label' => 'Alasan yang diberikan:',
+            'timeline_refunded' => 'Ditandai dikembalikan oleh admin',
+            'timeline_refunded_desc' => 'Pengembalian dana dikeluarkan oleh :name.',
+            'timeline_refunded_desc_system' => 'Pengembalian dana dikeluarkan.',
+            'timeline_refunded_note_label' => 'Catatan admin:',
+            'timeline_resolution' => 'Penyelesaian',
+            'timeline_resolution_desc' => 'Menunggu peninjauan dan keputusan admin.',
+            'timeline_resolution_pending' => 'Menunggu tindakan admin',
+
+            'confirmation_sent_at' => 'Konfirmasi dikirim pada',
+            'confirmation_error' => 'Kesalahan konfirmasi',
+            'declined_at' => 'Ditolak pada',
+            'refunded_at' => 'Dikembalikan pada',
+
+            'actions' => 'Tindakan',
+            'actions_note' => 'Pengembalian dana diproses secara manual melalui peranti pesanan / refund / RMA Bagisto yang sudah ada. Gunakan tindakan ini untuk mencatat hasil pada bukti penarikan diri.',
+            'resend_confirmation' => 'Kirim Ulang Email Konfirmasi',
+            'mark_refunded' => 'Tandai sebagai Dikembalikan',
+            'refund_note_label' => 'Referensi pengembalian dana (opsional)',
+            'refund_note_placeholder' => 'mis. Refund #1234',
+            'decline' => 'Tolak Penarikan Diri',
+            'decline_reason_label' => 'Alasan penolakan',
+            'decline_reason_placeholder' => 'Jelaskan mengapa hak ini ditolak',
+            'mark_refunded_confirm_msg' => 'Tandai penarikan diri ini sebagai sudah dikembalikan? Catatan penolakan sebelumnya akan dihapus.',
+            'decline_confirm_msg' => 'Tolak penarikan diri ini? Alasan akan terlihat oleh pelanggan.',
+            'resend_confirmation_confirm_msg' => 'Kirim ulang email konfirmasi kepada pelanggan?',
+            'send_final_confirmation' => 'Kirim Email Konfirmasi Akhir',
+            'send_final_confirmation_confirm_msg' => 'Kirim email status akhir kepada pelanggan?',
+        ],
+
+        'status' => [
+            'received' => 'Diterima',
+            'refunded' => 'Dikembalikan',
+            'declined' => 'Ditolak',
+        ],
+
+        'datagrid' => [
+            'received_at' => 'Diterima pada',
+            'uuid' => 'Referensi',
+            'copy_reference' => 'Salin referensi',
+            'reference_copied' => 'Referensi disalin ke papan klip.',
+            'order' => 'Pesanan',
+            'customer_email' => 'Email pelanggan',
+            'channel' => 'Saluran',
+            'status' => 'Status',
+            'confirmation_sent_at' => 'Konfirmasi terkirim',
+            'view' => 'Lihat',
+        ],
+
+        'flash' => [
+            'declined' => 'Penarikan diri telah ditolak.',
+            'refunded' => 'Penarikan diri telah ditandai sebagai dikembalikan.',
+            'confirmation_resent' => 'Email konfirmasi telah dikirim ulang.',
+            'confirmation_failed' => 'Tidak dapat mengirim email konfirmasi. Lihat linimasa untuk detailnya.',
         ],
     ],
 ];

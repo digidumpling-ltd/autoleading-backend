@@ -118,6 +118,44 @@ return [
         ],
     ],
 
+    'help' => [
+        'index' => [
+            'title' => 'सहायता और संसाधन',
+            'description' => 'Bagisto का अधिकतम लाभ उठाने के लिए आपको जो कुछ भी चाहिए — होस्टिंग, समर्थन और पेशेवर सेवाएँ, साथ ही एक्सटेंशन और डेवलपर दस्तावेज़।',
+
+            'services-title' => 'सेवाएँ',
+            'resources-title' => 'संसाधन और दस्तावेज़',
+
+            'cloud-hosting' => 'क्लाउड होस्टिंग',
+            'cloud-hosting-info' => 'किफायती, प्रबंधित क्लाउड होस्टिंग — अपने Bagisto स्टोर को मिनटों में क्लाउड पर लॉन्च करें, पूरी तरह अनुकूलित और स्केलेबल।',
+
+            'support' => 'समर्थन और रखरखाव',
+            'support-info' => 'आपके स्टोर को सुरक्षित, अद्यतन और सुचारू रूप से चलाने के लिए समर्पित तकनीकी समर्थन और निरंतर रखरखाव योजनाएँ।',
+
+            'paid-services' => 'सशुल्क सेवाएँ',
+            'paid-services-info' => 'मॉड्यूल एकीकरण, अनुकूलन, डेटा माइग्रेशन, संस्करण उन्नयन और विशेष विकास के लिए विशेषज्ञ सहायता।',
+
+            'extensions' => 'एक्सटेंशन',
+            'extensions-info' => 'नए कनेक्टर, चैनल और सुविधाओं के साथ Bagisto का विस्तार करने के लिए आधिकारिक और सामुदायिक ऐड-ऑन ब्राउज़ करें।',
+
+            'docs' => 'डेव दस्तावेज़ और ब्लॉग',
+            'docs-info' => 'आपको निर्माण, कॉन्फ़िगर करने और अद्यतन रहने में मदद के लिए डेवलपर गाइड, ट्यूटोरियल और नवीनतम लेख।',
+
+            'api-docs' => 'API दस्तावेज़',
+            'api-docs-info' => 'Bagisto को आपके स्टैक के साथ एकीकृत करने के लिए एंडपॉइंट, प्रमाणीकरण और उदाहरणों के साथ पूर्ण REST और GraphQL API संदर्भ।',
+
+            'community' => 'सामुदायिक मंच',
+            'community-info' => 'प्रश्न पूछें, विचार साझा करें और दुनिया भर के हजारों Bagisto डेवलपर्स और व्यापारियों से जुड़ें।',
+
+            'video-tutorials' => 'वीडियो ट्यूटोरियल',
+            'video-tutorials-info' => 'स्थापना, कॉन्फ़िगरेशन और रोज़मर्रा के स्टोर प्रबंधन को कवर करने वाले चरण-दर-चरण वीडियो वॉकथ्रू।',
+
+            'cta-title' => 'अभी भी मदद चाहिए?',
+            'cta-description' => 'होस्टिंग, कस्टम विकास या किसी अन्य चीज़ के बारे में Bagisto टीम से बात करें।',
+            'cta-btn' => 'हमसे संपर्क करें',
+        ],
+    ],
+
     'dashboard' => [
         'index' => [
             'add-customer' => 'ग्राहक जोड़ें',
@@ -5244,6 +5282,7 @@ return [
                 'exchange-rates' => 'विनिमय दरें',
                 'gdpr-data-requests' => 'GDPR डेटा अनुरोध',
                 'groups' => 'समूह',
+                'help' => 'सहायता और संसाधन',
                 'imports' => 'आयात',
                 'inventory-sources' => 'सूची स्रोत',
                 'invoices' => 'चालान',
@@ -5728,6 +5767,128 @@ return [
                 'subject' => 'नई RMA बातचीत का संदेश',
                 'title' => 'नई RMA बातचीत',
             ],
+        ],
+    ],
+
+    'eu_withdrawal' => [
+        'menu' => [
+            'eu_withdrawals' => 'EU प्रत्याहरण',
+        ],
+
+        'acl' => [
+            'title' => 'EU प्रत्याहरण',
+            'view' => 'देखें',
+            'decline' => 'अस्वीकार करें',
+            'mark_refunded' => 'धन वापसी चिह्नित करें',
+            'resend_confirmation' => 'पुष्टि पुनः भेजें',
+        ],
+
+        'config' => [
+            'title' => 'EU प्रत्याहरण',
+            'info' => 'EU प्रत्याहरण बटन के लिए कॉन्फ़िगरेशन (Directive (EU) 2023/2673, Article 11a CRD)।',
+
+            'general' => [
+                'title' => 'सामान्य',
+                'info' => 'इस चैनल पर EU प्रत्याहरण बटन के लिए मास्टर स्विच।',
+                'enabled' => 'सक्षम करें',
+                'enabled_info' => 'सक्षम होने पर, इस चैनल के ग्राहकों को ऑर्डर विवरण पृष्ठों पर "अनुबंध से हटना" बटन और एक सार्वजनिक /withdraw लुकअप फॉर्म दिखाई देता है। केवल EU उपभोक्ताओं को बेचने वाले चैनलों पर सक्षम करें।',
+            ],
+        ],
+
+        'index' => [
+            'title' => 'EU प्रत्याहरण',
+        ],
+
+        'view' => [
+            'title' => 'प्रत्याहरण :uuid',
+            'heading' => 'प्रत्याहरण',
+            'back' => 'सूची पर वापस जाएं',
+            'guest_badge' => 'अतिथि',
+
+            'evidence' => 'साक्ष्य',
+            'evidence_note' => 'अपरिवर्तनीय — जमा करते समय कैप्चर किया गया',
+            'status' => 'स्थिति',
+            'received_at' => 'प्राप्ति समय',
+            'uuid' => 'संदर्भ',
+            'copy_reference' => 'संदर्भ कॉपी करें',
+            'reference_copied' => 'संदर्भ क्लिपबोर्ड पर कॉपी किया गया।',
+            'order' => 'ऑर्डर',
+            'customer_email' => 'ग्राहक ईमेल',
+            'is_guest' => 'अतिथि',
+            'channel' => 'चैनल',
+            'locale' => 'लोकेल',
+            'reason' => 'ग्राहक का कारण',
+
+            'timeline' => 'समयरेखा',
+            'timeline_received' => 'घोषणा प्राप्त',
+            'timeline_received_desc' => 'ग्राहक ने अनुबंध से प्रत्याहरण का अनुरोध जमा किया।',
+            'timeline_email' => 'पुष्टि ईमेल',
+            'timeline_email_pending' => 'अभी तक नहीं भेजा गया',
+            'timeline_initial_email' => 'प्रारंभिक पुष्टि ईमेल',
+            'timeline_initial_email_desc_sent' => 'ग्राहक को पुष्टि ईमेल भेजा गया।',
+            'timeline_initial_email_desc_error' => 'प्रारंभिक पुष्टि ईमेल भेजने में विफल।',
+            'timeline_initial_email_desc_pending' => 'प्रारंभिक पुष्टि ईमेल अभी तक नहीं भेजा गया है।',
+            'timeline_final_email' => 'अंतिम पुष्टि ईमेल',
+            'timeline_final_email_pending' => 'अभी तक नहीं भेजा गया',
+            'timeline_final_email_desc_sent' => 'ग्राहक को परिणाम ईमेल भेजा गया।',
+            'timeline_final_email_desc_pending' => 'अंतिम पुष्टि ईमेल अभी तक नहीं भेजा गया है।',
+            'timeline_declined' => 'एडमिन द्वारा अस्वीकृत',
+            'timeline_declined_desc' => ':name द्वारा प्रत्याहरण अस्वीकृत।',
+            'timeline_declined_desc_system' => 'प्रत्याहरण अस्वीकृत।',
+            'timeline_declined_reason_label' => 'दिया गया कारण:',
+            'timeline_refunded' => 'एडमिन द्वारा धन वापसी चिह्नित',
+            'timeline_refunded_desc' => ':name द्वारा धन वापसी जारी की गई।',
+            'timeline_refunded_desc_system' => 'धन वापसी जारी की गई।',
+            'timeline_refunded_note_label' => 'एडमिन नोट:',
+            'timeline_resolution' => 'समाधान',
+            'timeline_resolution_desc' => 'एडमिन की समीक्षा और निर्णय की प्रतीक्षा।',
+            'timeline_resolution_pending' => 'एडमिन कार्रवाई की प्रतीक्षा',
+
+            'confirmation_sent_at' => 'पुष्टि भेजने का समय',
+            'confirmation_error' => 'पुष्टि त्रुटि',
+            'declined_at' => 'अस्वीकृत समय',
+            'refunded_at' => 'धन वापसी समय',
+
+            'actions' => 'कार्रवाई',
+            'actions_note' => 'धन वापसी Bagisto के मौजूदा ऑर्डर / रिफंड / RMA टूल्स के माध्यम से मैन्युअल रूप से प्रक्रिया की जाती है। प्रत्याहरण साक्ष्य पर परिणाम दर्ज करने के लिए इन कार्रवाइयों का उपयोग करें।',
+            'resend_confirmation' => 'पुष्टि ईमेल पुनः भेजें',
+            'mark_refunded' => 'धन वापसी के रूप में चिह्नित करें',
+            'refund_note_label' => 'धन वापसी संदर्भ (वैकल्पिक)',
+            'refund_note_placeholder' => 'जैसे Refund #1234',
+            'decline' => 'प्रत्याहरण अस्वीकार करें',
+            'decline_reason_label' => 'अस्वीकार करने का कारण',
+            'decline_reason_placeholder' => 'बताएं कि अधिकार क्यों विवादित है',
+            'mark_refunded_confirm_msg' => 'इस प्रत्याहरण को धन वापसी के रूप में चिह्नित करें? पिछला कोई भी अस्वीकार रिकॉर्ड हटा दिया जाएगा।',
+            'decline_confirm_msg' => 'इस प्रत्याहरण को अस्वीकार करें? कारण ग्राहक को दिखाई देगा।',
+            'resend_confirmation_confirm_msg' => 'ग्राहक को पुष्टि ईमेल पुनः भेजें?',
+            'send_final_confirmation' => 'अंतिम पुष्टि ईमेल भेजें',
+            'send_final_confirmation_confirm_msg' => 'ग्राहक को अंतिम स्थिति ईमेल भेजें?',
+        ],
+
+        'status' => [
+            'received' => 'प्राप्त',
+            'refunded' => 'धन वापसी',
+            'declined' => 'अस्वीकृत',
+        ],
+
+        'datagrid' => [
+            'received_at' => 'प्राप्ति समय',
+            'uuid' => 'संदर्भ',
+            'copy_reference' => 'संदर्भ कॉपी करें',
+            'reference_copied' => 'संदर्भ क्लिपबोर्ड पर कॉपी किया गया।',
+            'order' => 'ऑर्डर',
+            'customer_email' => 'ग्राहक ईमेल',
+            'channel' => 'चैनल',
+            'status' => 'स्थिति',
+            'confirmation_sent_at' => 'पुष्टि भेजी गई',
+            'view' => 'देखें',
+        ],
+
+        'flash' => [
+            'declined' => 'प्रत्याहरण अस्वीकृत कर दिया गया है।',
+            'refunded' => 'प्रत्याहरण को धन वापसी के रूप में चिह्नित किया गया है।',
+            'confirmation_resent' => 'पुष्टि ईमेल पुनः भेजा गया है।',
+            'confirmation_failed' => 'पुष्टि ईमेल भेजा नहीं जा सका। विवरण के लिए समयरेखा देखें।',
         ],
     ],
 ];

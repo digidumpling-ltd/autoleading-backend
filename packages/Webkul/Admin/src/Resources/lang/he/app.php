@@ -118,6 +118,44 @@ return [
         ],
     ],
 
+    'help' => [
+        'index' => [
+            'title' => 'עזרה ומשאבים',
+            'description' => 'כל מה שאתם צריכים כדי להפיק את המרב מ-Bagisto — אירוח, תמיכה ושירותים מקצועיים, וכן הרחבות ותיעוד למפתחים.',
+
+            'services-title' => 'שירותים',
+            'resources-title' => 'משאבים ותיעוד',
+
+            'cloud-hosting' => 'אירוח בענן',
+            'cloud-hosting-info' => 'אירוח ענן מנוהל וחסכוני — השיקו את חנות Bagisto שלכם בענן תוך דקות, מותאם ומדרגי לחלוטין.',
+
+            'support' => 'תמיכה ותחזוקה',
+            'support-info' => 'תמיכה טכנית ייעודית ותוכניות תחזוקה שוטפת כדי לשמור על החנות שלכם מאובטחת, מעודכנת ופועלת באופן חלק.',
+
+            'paid-services' => 'שירותים בתשלום',
+            'paid-services-info' => 'עזרה מקצועית לשילוב מודולים, התאמה אישית, העברת נתונים, שדרוגי גרסה ופיתוח מותאם אישית.',
+
+            'extensions' => 'הרחבות',
+            'extensions-info' => 'עיינו בתוספים רשמיים וקהילתיים כדי להרחיב את Bagisto עם מחברים, ערוצים ותכונות חדשות.',
+
+            'docs' => 'תיעוד למפתחים ובלוגים',
+            'docs-info' => 'מדריכים למפתחים, הדרכות והמאמרים האחרונים שיעזרו לכם לבנות, להגדיר ולהישאר מעודכנים.',
+
+            'api-docs' => 'תיעוד API',
+            'api-docs-info' => 'הפניית API מלאה של REST ו-GraphQL עם נקודות קצה, אימות ודוגמאות לשילוב Bagisto במערכת שלכם.',
+
+            'community' => 'פורום הקהילה',
+            'community-info' => 'שאלו שאלות, שתפו רעיונות והתחברו עם אלפי מפתחים וסוחרים של Bagisto ברחבי העולם.',
+
+            'video-tutorials' => 'הדרכות וידאו',
+            'video-tutorials-info' => 'הדרכות וידאו שלב אחר שלב המכסות התקנה, הגדרה וניהול יומיומי של החנות.',
+
+            'cta-title' => 'עדיין צריכים עזרה?',
+            'cta-description' => 'דברו עם צוות Bagisto על אירוח, פיתוח מותאם אישית או כל דבר אחר.',
+            'cta-btn' => 'צרו קשר',
+        ],
+    ],
+
     'dashboard' => [
         'index' => [
             'add-customer' => 'הוסף לקוח',
@@ -5244,6 +5282,7 @@ return [
                 'exchange-rates' => 'שערי חליפין',
                 'gdpr-data-requests' => 'בקשות נתוני GDPR',
                 'groups' => 'קבוצות',
+                'help' => 'עזרה ומשאבים',
                 'imports' => 'יבוא',
                 'inventory-sources' => 'מקורות מלאי',
                 'invoices' => 'חשבוניות',
@@ -5728,6 +5767,128 @@ return [
                 'subject' => 'הודעת שיחת RMA חדשה',
                 'title' => 'שיחת RMA חדשה',
             ],
+        ],
+    ],
+
+    'eu_withdrawal' => [
+        'menu' => [
+            'eu_withdrawals' => 'ביטולי חוזה (האיחוד האירופי)',
+        ],
+
+        'acl' => [
+            'title' => 'ביטולי חוזה (האיחוד האירופי)',
+            'view' => 'הצגה',
+            'decline' => 'דחייה',
+            'mark_refunded' => 'סימון כהוחזר',
+            'resend_confirmation' => 'שליחה חוזרת של אישור',
+        ],
+
+        'config' => [
+            'title' => 'ביטולי חוזה (האיחוד האירופי)',
+            'info' => 'הגדרות כפתור ביטול החוזה לפי הדירקטיבה (EU) 2023/2673, סעיף 11a ב-CRD.',
+
+            'general' => [
+                'title' => 'כללי',
+                'info' => 'מתג ראשי להפעלת כפתור ביטול החוזה בערוץ זה.',
+                'enabled' => 'הפעלה',
+                'enabled_info' => 'כאשר מופעל, לקוחות בערוץ זה רואים כפתור "ביטול חוזה" בעמודי פרטי ההזמנה וכן טופס איתור ציבורי בכתובת ‎/withdraw. יש להפעיל רק בערוצים המוכרים לצרכנים באיחוד האירופי.',
+            ],
+        ],
+
+        'index' => [
+            'title' => 'ביטולי חוזה',
+        ],
+
+        'view' => [
+            'title' => 'ביטול :uuid',
+            'heading' => 'ביטול',
+            'back' => 'חזרה לרשימה',
+            'guest_badge' => 'אורח',
+
+            'evidence' => 'ראיות',
+            'evidence_note' => 'בלתי ניתן לשינוי — נלכד ברגע ההגשה',
+            'status' => 'סטטוס',
+            'received_at' => 'מועד קבלה',
+            'uuid' => 'מספר אסמכתא',
+            'copy_reference' => 'העתקת מספר אסמכתא',
+            'reference_copied' => 'מספר האסמכתא הועתק ללוח.',
+            'order' => 'הזמנה',
+            'customer_email' => 'דוא"ל הלקוח',
+            'is_guest' => 'אורח',
+            'channel' => 'ערוץ',
+            'locale' => 'שפה',
+            'reason' => 'סיבת הלקוח',
+
+            'timeline' => 'ציר זמן',
+            'timeline_received' => 'ההצהרה התקבלה',
+            'timeline_received_desc' => 'הלקוח הגיש בקשה לביטול החוזה.',
+            'timeline_email' => 'דוא"ל אישור',
+            'timeline_email_pending' => 'טרם נשלח',
+            'timeline_initial_email' => 'דוא"ל אישור ראשוני',
+            'timeline_initial_email_desc_sent' => 'דוא"ל האישור נמסר ללקוח.',
+            'timeline_initial_email_desc_error' => 'שליחת דוא"ל האישור הראשוני נכשלה.',
+            'timeline_initial_email_desc_pending' => 'דוא"ל האישור הראשוני טרם נשלח.',
+            'timeline_final_email' => 'דוא"ל אישור סופי',
+            'timeline_final_email_pending' => 'טרם נשלח',
+            'timeline_final_email_desc_sent' => 'דוא"ל התוצאה נמסר ללקוח.',
+            'timeline_final_email_desc_pending' => 'דוא"ל האישור הסופי טרם נשלח.',
+            'timeline_declined' => 'נדחה על ידי המנהל',
+            'timeline_declined_desc' => 'הביטול נדחה על ידי :name.',
+            'timeline_declined_desc_system' => 'הביטול נדחה.',
+            'timeline_declined_reason_label' => 'הסיבה שנמסרה:',
+            'timeline_refunded' => 'סומן כהוחזר על ידי המנהל',
+            'timeline_refunded_desc' => 'ההחזר בוצע על ידי :name.',
+            'timeline_refunded_desc_system' => 'בוצע החזר.',
+            'timeline_refunded_note_label' => 'הערת מנהל:',
+            'timeline_resolution' => 'החלטה',
+            'timeline_resolution_desc' => 'ממתין לבדיקה ולהחלטה של המנהל.',
+            'timeline_resolution_pending' => 'ממתין לפעולת המנהל',
+
+            'confirmation_sent_at' => 'מועד שליחת האישור',
+            'confirmation_error' => 'שגיאת אישור',
+            'declined_at' => 'מועד הדחייה',
+            'refunded_at' => 'מועד ההחזר',
+
+            'actions' => 'פעולות',
+            'actions_note' => 'החזרים מטופלים ידנית באמצעות כלי ההזמנה / החזר / RMA הקיימים ב-Bagisto. השתמש בפעולות אלו כדי לתעד את התוצאה ברישומי הביטול.',
+            'resend_confirmation' => 'שליחה חוזרת של דוא"ל האישור',
+            'mark_refunded' => 'סימון כהוחזר',
+            'refund_note_label' => 'אסמכתת החזר (לא חובה)',
+            'refund_note_placeholder' => 'לדוגמה: החזר מס\' 1234',
+            'decline' => 'דחיית הבקשה',
+            'decline_reason_label' => 'סיבת הדחייה',
+            'decline_reason_placeholder' => 'נמק מדוע הזכאות שנויה במחלוקת',
+            'mark_refunded_confirm_msg' => 'לסמן ביטול זה כהוחזר? כל רישום דחייה קודם יימחק.',
+            'decline_confirm_msg' => 'לדחות ביטול זה? הסיבה תהיה גלויה ללקוח.',
+            'resend_confirmation_confirm_msg' => 'לשלוח שוב את דוא"ל האישור ללקוח?',
+            'send_final_confirmation' => 'שליחת דוא"ל אישור סופי',
+            'send_final_confirmation_confirm_msg' => 'לשלוח את דוא"ל הסטטוס הסופי ללקוח?',
+        ],
+
+        'status' => [
+            'received' => 'התקבל',
+            'refunded' => 'הוחזר',
+            'declined' => 'נדחה',
+        ],
+
+        'datagrid' => [
+            'received_at' => 'מועד קבלה',
+            'uuid' => 'מספר אסמכתא',
+            'copy_reference' => 'העתקת מספר אסמכתא',
+            'reference_copied' => 'מספר האסמכתא הועתק ללוח.',
+            'order' => 'הזמנה',
+            'customer_email' => 'דוא"ל הלקוח',
+            'channel' => 'ערוץ',
+            'status' => 'סטטוס',
+            'confirmation_sent_at' => 'אישור נשלח',
+            'view' => 'הצגה',
+        ],
+
+        'flash' => [
+            'declined' => 'הביטול נדחה.',
+            'refunded' => 'הביטול סומן כהוחזר.',
+            'confirmation_resent' => 'דוא"ל האישור נשלח שוב.',
+            'confirmation_failed' => 'שליחת דוא"ל האישור נכשלה. ראה את ציר הזמן לפרטים.',
         ],
     ],
 ];

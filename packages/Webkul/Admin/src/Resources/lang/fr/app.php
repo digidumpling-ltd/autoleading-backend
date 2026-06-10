@@ -118,6 +118,44 @@ return [
         ],
     ],
 
+    'help' => [
+        'index' => [
+            'title' => 'Aide et ressources',
+            'description' => 'Tout ce dont vous avez besoin pour tirer le meilleur parti de Bagisto — hébergement, support et services professionnels, ainsi que des extensions et la documentation pour développeurs.',
+
+            'services-title' => 'Services',
+            'resources-title' => 'Ressources et documentation',
+
+            'cloud-hosting' => 'Hébergement cloud',
+            'cloud-hosting-info' => 'Hébergement cloud géré et économique — lancez votre boutique Bagisto sur le cloud en quelques minutes, entièrement optimisée et évolutive.',
+
+            'support' => 'Support et maintenance',
+            'support-info' => 'Support technique dédié et forfaits de maintenance continue pour garder votre boutique sécurisée, à jour et fonctionnant sans accroc.',
+
+            'paid-services' => 'Services payants',
+            'paid-services-info' => 'Aide d\'experts pour l\'intégration de modules, la personnalisation, la migration de données, les mises à niveau de version et le développement sur mesure.',
+
+            'extensions' => 'Extensions',
+            'extensions-info' => 'Parcourez les modules complémentaires officiels et communautaires pour étendre Bagisto avec de nouveaux connecteurs, canaux et fonctionnalités.',
+
+            'docs' => 'Documentation dev et blogs',
+            'docs-info' => 'Guides pour développeurs, tutoriels et derniers articles pour vous aider à créer, configurer et rester à jour.',
+
+            'api-docs' => 'Documentation API',
+            'api-docs-info' => 'Référence complète des API REST et GraphQL avec points de terminaison, authentification et exemples pour intégrer Bagisto à votre stack.',
+
+            'community' => 'Forum communautaire',
+            'community-info' => 'Posez des questions, partagez des idées et connectez-vous avec des milliers de développeurs et de marchands Bagisto dans le monde entier.',
+
+            'video-tutorials' => 'Tutoriels vidéo',
+            'video-tutorials-info' => 'Tutoriels vidéo pas à pas couvrant l\'installation, la configuration et la gestion quotidienne de la boutique.',
+
+            'cta-title' => 'Vous avez encore besoin d\'aide ?',
+            'cta-description' => 'Discutez avec l\'équipe Bagisto de l\'hébergement, du développement personnalisé ou de tout autre sujet.',
+            'cta-btn' => 'Contactez-nous',
+        ],
+    ],
+
     'dashboard' => [
         'index' => [
             'add-customer' => 'Ajouter un client',
@@ -5244,6 +5282,7 @@ return [
                 'exchange-rates' => 'Taux de change',
                 'gdpr-data-requests' => 'Demandes de données GDPR',
                 'groups' => 'Groupes',
+                'help' => 'Aide et ressources',
                 'imports' => 'Importations',
                 'inventory-sources' => 'Sources de l\'inventaire',
                 'invoices' => 'Factures',
@@ -5728,6 +5767,128 @@ return [
                 'subject' => 'Nouveau message de conversation RMA',
                 'title' => 'Nouvelle conversation RMA',
             ],
+        ],
+    ],
+
+    'eu_withdrawal' => [
+        'menu' => [
+            'eu_withdrawals' => 'Rétractations UE',
+        ],
+
+        'acl' => [
+            'title' => 'Rétractations UE',
+            'view' => 'Voir',
+            'decline' => 'Refuser',
+            'mark_refunded' => 'Marquer comme remboursée',
+            'resend_confirmation' => 'Renvoyer la confirmation',
+        ],
+
+        'config' => [
+            'title' => 'Rétractations UE',
+            'info' => 'Configuration du bouton de rétractation UE (directive (UE) 2023/2673, article 11 bis de la DDC).',
+
+            'general' => [
+                'title' => 'Général',
+                'info' => 'Interrupteur principal du bouton de rétractation UE pour ce canal.',
+                'enabled' => 'Activer',
+                'enabled_info' => 'Lorsqu’il est activé, les clients de ce canal voient un bouton « Se rétracter du contrat » sur les pages de détail de commande ainsi qu’un formulaire public de recherche /withdraw. Activez-le uniquement sur les canaux destinés aux consommateurs de l’UE.',
+            ],
+        ],
+
+        'index' => [
+            'title' => 'Rétractations UE',
+        ],
+
+        'view' => [
+            'title' => 'Rétractation :uuid',
+            'heading' => 'Rétractation',
+            'back' => 'Retour à la liste',
+            'guest_badge' => 'Invité',
+
+            'evidence' => 'Preuve',
+            'evidence_note' => 'Immuable — capturée à l’envoi',
+            'status' => 'Statut',
+            'received_at' => 'Reçue le',
+            'uuid' => 'Référence',
+            'copy_reference' => 'Copier la référence',
+            'reference_copied' => 'Référence copiée dans le presse-papiers.',
+            'order' => 'Commande',
+            'customer_email' => 'E-mail du client',
+            'is_guest' => 'Invité',
+            'channel' => 'Canal',
+            'locale' => 'Langue',
+            'reason' => 'Motif du client',
+
+            'timeline' => 'Chronologie',
+            'timeline_received' => 'Déclaration reçue',
+            'timeline_received_desc' => 'Le client a soumis une demande de rétractation du contrat.',
+            'timeline_email' => 'E-mail de confirmation',
+            'timeline_email_pending' => 'Pas encore envoyé',
+            'timeline_initial_email' => 'E-mail de confirmation initial',
+            'timeline_initial_email_desc_sent' => 'E-mail de confirmation remis au client.',
+            'timeline_initial_email_desc_error' => 'L’envoi de l’e-mail de confirmation initial a échoué.',
+            'timeline_initial_email_desc_pending' => 'L’e-mail de confirmation initial n’a pas encore été envoyé.',
+            'timeline_final_email' => 'E-mail de confirmation final',
+            'timeline_final_email_pending' => 'Pas encore envoyé',
+            'timeline_final_email_desc_sent' => 'E-mail de résultat remis au client.',
+            'timeline_final_email_desc_pending' => 'L’e-mail de confirmation final n’a pas encore été envoyé.',
+            'timeline_declined' => 'Rétractation refusée',
+            'timeline_declined_desc' => 'Rétractation refusée par :name.',
+            'timeline_declined_desc_system' => 'Rétractation refusée.',
+            'timeline_declined_reason_label' => 'Motif indiqué :',
+            'timeline_refunded' => 'Remboursement effectué',
+            'timeline_refunded_desc' => 'Remboursement effectué par :name.',
+            'timeline_refunded_desc_system' => 'Remboursement effectué.',
+            'timeline_refunded_note_label' => 'Note de l’administrateur :',
+            'timeline_resolution' => 'Décision en attente',
+            'timeline_resolution_desc' => 'En attente de l’examen et de la décision de l’administrateur.',
+            'timeline_resolution_pending' => 'En attente d’action de l’administrateur',
+
+            'confirmation_sent_at' => 'Confirmation envoyée le',
+            'confirmation_error' => 'Erreur de confirmation',
+            'declined_at' => 'Refusée le',
+            'refunded_at' => 'Remboursée le',
+
+            'actions' => 'Actions',
+            'actions_note' => 'Les remboursements sont traités manuellement via les outils existants de Bagisto (commande / remboursement / RMA). Utilisez ces actions pour enregistrer le résultat sur la preuve de rétractation.',
+            'resend_confirmation' => 'Renvoyer l’e-mail de confirmation',
+            'mark_refunded' => 'Marquer comme remboursée',
+            'refund_note_label' => 'Référence du remboursement (facultatif)',
+            'refund_note_placeholder' => 'ex. Remboursement n° 1234',
+            'decline' => 'Refuser la rétractation',
+            'decline_reason_label' => 'Motif du refus',
+            'decline_reason_placeholder' => 'Expliquez pourquoi le droit est contesté',
+            'mark_refunded_confirm_msg' => 'Marquer cette rétractation comme remboursée ? Tout enregistrement de refus précédent sera effacé.',
+            'decline_confirm_msg' => 'Refuser cette rétractation ? Le motif sera visible par le client.',
+            'resend_confirmation_confirm_msg' => 'Renvoyer l’e-mail de confirmation au client ?',
+            'send_final_confirmation' => 'Envoyer l’e-mail de confirmation final',
+            'send_final_confirmation_confirm_msg' => 'Envoyer au client l’e-mail de statut final ?',
+        ],
+
+        'status' => [
+            'received' => 'Reçue',
+            'refunded' => 'Remboursée',
+            'declined' => 'Refusée',
+        ],
+
+        'datagrid' => [
+            'received_at' => 'Reçue le',
+            'uuid' => 'Référence',
+            'copy_reference' => 'Copier la référence',
+            'reference_copied' => 'Référence copiée dans le presse-papiers.',
+            'order' => 'Commande',
+            'customer_email' => 'E-mail du client',
+            'channel' => 'Canal',
+            'status' => 'Statut',
+            'confirmation_sent_at' => 'Confirmation envoyée',
+            'view' => 'Voir',
+        ],
+
+        'flash' => [
+            'declined' => 'La rétractation a été refusée.',
+            'refunded' => 'La rétractation a été marquée comme remboursée.',
+            'confirmation_resent' => 'L’e-mail de confirmation a été renvoyé.',
+            'confirmation_failed' => 'Impossible d’envoyer l’e-mail de confirmation. Consultez la chronologie pour plus de détails.',
         ],
     ],
 ];

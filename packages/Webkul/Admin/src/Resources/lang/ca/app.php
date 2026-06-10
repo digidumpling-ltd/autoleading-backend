@@ -118,6 +118,44 @@ return [
         ],
     ],
 
+    'help' => [
+        'index' => [
+            'title' => 'Ajuda i recursos',
+            'description' => 'Tot el que necessites per treure el màxim profit de Bagisto: allotjament, suport i serveis professionals, a més d\'extensions i documentació per a desenvolupadors.',
+
+            'services-title' => 'Serveis',
+            'resources-title' => 'Recursos i documentació',
+
+            'cloud-hosting' => 'Allotjament al núvol',
+            'cloud-hosting-info' => 'Allotjament al núvol gestionat i rendible: posa en marxa la teva botiga Bagisto al núvol en minuts, totalment optimitzada i escalable.',
+
+            'support' => 'Suport i manteniment',
+            'support-info' => 'Suport tècnic dedicat i plans de manteniment continu per mantenir la teva botiga segura, actualitzada i funcionant sense problemes.',
+
+            'paid-services' => 'Serveis de pagament',
+            'paid-services-info' => 'Ajuda experta per a la integració de mòduls, personalització, migració de dades, actualitzacions de versió i desenvolupament a mida.',
+
+            'extensions' => 'Extensions',
+            'extensions-info' => 'Explora complements oficials i de la comunitat per ampliar Bagisto amb nous connectors, canals i funcionalitats.',
+
+            'docs' => 'Documentació i blogs per a desenvolupadors',
+            'docs-info' => 'Guies per a desenvolupadors, tutorials i els articles més recents per ajudar-te a construir, configurar i mantenir-te al dia.',
+
+            'api-docs' => 'Documentació de l\'API',
+            'api-docs-info' => 'Referència completa de l\'API REST i GraphQL amb punts d\'accés, autenticació i exemples per integrar Bagisto amb el teu sistema.',
+
+            'community' => 'Fòrum de la comunitat',
+            'community-info' => 'Fes preguntes, comparteix idees i connecta amb milers de desenvolupadors i comerciants de Bagisto de tot el món.',
+
+            'video-tutorials' => 'Videotutorials',
+            'video-tutorials-info' => 'Guies en vídeo pas a pas que cobreixen la instal·lació, la configuració i la gestió diària de la botiga.',
+
+            'cta-title' => 'Encara necessites ajuda?',
+            'cta-description' => 'Parla amb l\'equip de Bagisto sobre allotjament, desenvolupament personalitzat o qualsevol altra cosa.',
+            'cta-btn' => 'Contacta amb nosaltres',
+        ],
+    ],
+
     'dashboard' => [
         'index' => [
             'add-customer' => 'Afegir client',
@@ -5244,6 +5282,7 @@ return [
                 'exchange-rates' => 'Taxes de canvi',
                 'gdpr-data-requests' => 'Sol·licituds de dades GDPR',
                 'groups' => 'Grups',
+                'help' => 'Ajuda i recursos',
                 'imports' => 'Importacions',
                 'inventory-sources' => 'Fonts d\'inventari',
                 'invoices' => 'Factures',
@@ -5728,6 +5767,128 @@ return [
                 'subject' => 'Nou missatge de conversa RMA',
                 'title' => 'Nova conversa RMA',
             ],
+        ],
+    ],
+
+    'eu_withdrawal' => [
+        'menu' => [
+            'eu_withdrawals' => 'Desistiments UE',
+        ],
+
+        'acl' => [
+            'title' => 'Desistiments UE',
+            'view' => 'Veure',
+            'decline' => 'Rebutjar',
+            'mark_refunded' => 'Marcar com a reemborsat',
+            'resend_confirmation' => 'Reenviar confirmació',
+        ],
+
+        'config' => [
+            'title' => 'Desistiments UE',
+            'info' => 'Configuració del botó de desistiment UE (Directiva (UE) 2023/2673, article 11 bis CRD).',
+
+            'general' => [
+                'title' => 'General',
+                'info' => 'Interruptor principal del botó de desistiment UE en aquest canal.',
+                'enabled' => 'Activar',
+                'enabled_info' => 'Quan està activat, els clients d\'aquest canal veuen un botó «Desistir del contracte» a les pàgines de detall de la comanda i un formulari públic /withdraw. Activeu-lo només en canals que venguin a consumidors de la UE.',
+            ],
+        ],
+
+        'index' => [
+            'title' => 'Desistiments UE',
+        ],
+
+        'view' => [
+            'title' => 'Desistiment :uuid',
+            'heading' => 'Desistiment',
+            'back' => 'Tornar a la llista',
+            'guest_badge' => 'Convidat',
+
+            'evidence' => 'Evidència',
+            'evidence_note' => 'Immutable — capturat en el moment de l\'enviament',
+            'status' => 'Estat',
+            'received_at' => 'Rebut el',
+            'uuid' => 'Referència',
+            'copy_reference' => 'Copiar referència',
+            'reference_copied' => 'Referència copiada al porta-retalls.',
+            'order' => 'Comanda',
+            'customer_email' => 'Correu del client',
+            'is_guest' => 'Convidat',
+            'channel' => 'Canal',
+            'locale' => 'Idioma',
+            'reason' => 'Motiu del client',
+
+            'timeline' => 'Cronologia',
+            'timeline_received' => 'Declaració rebuda',
+            'timeline_received_desc' => 'El client ha presentat una sol·licitud de desistiment del contracte.',
+            'timeline_email' => 'Correu de confirmació',
+            'timeline_email_pending' => 'Encara no enviat',
+            'timeline_initial_email' => 'Correu de confirmació inicial',
+            'timeline_initial_email_desc_sent' => 'Correu de confirmació lliurat al client.',
+            'timeline_initial_email_desc_error' => 'No s\'ha pogut enviar el correu de confirmació inicial.',
+            'timeline_initial_email_desc_pending' => 'El correu de confirmació inicial encara no s\'ha enviat.',
+            'timeline_final_email' => 'Correu de confirmació final',
+            'timeline_final_email_pending' => 'Encara no enviat',
+            'timeline_final_email_desc_sent' => 'Correu de resolució lliurat al client.',
+            'timeline_final_email_desc_pending' => 'El correu de confirmació final encara no s\'ha enviat.',
+            'timeline_declined' => 'Rebutjat per l\'administrador',
+            'timeline_declined_desc' => 'Desistiment rebutjat per :name.',
+            'timeline_declined_desc_system' => 'Desistiment rebutjat.',
+            'timeline_declined_reason_label' => 'Motiu indicat:',
+            'timeline_refunded' => 'Marcat com a reemborsat per l\'administrador',
+            'timeline_refunded_desc' => 'Reemborsament emès per :name.',
+            'timeline_refunded_desc_system' => 'Reemborsament emès.',
+            'timeline_refunded_note_label' => 'Nota de l\'administrador:',
+            'timeline_resolution' => 'Resolució',
+            'timeline_resolution_desc' => 'Pendent de revisió i decisió de l\'administrador.',
+            'timeline_resolution_pending' => 'Pendent d\'acció administrativa',
+
+            'confirmation_sent_at' => 'Confirmació enviada el',
+            'confirmation_error' => 'Error de confirmació',
+            'declined_at' => 'Rebutjat el',
+            'refunded_at' => 'Reemborsat el',
+
+            'actions' => 'Accions',
+            'actions_note' => 'Els reemborsaments es processen manualment amb les eines existents de comanda / reemborsament / RMA de Bagisto. Utilitzeu aquestes accions per registrar el resultat a l\'evidència de desistiment.',
+            'resend_confirmation' => 'Reenviar correu de confirmació',
+            'mark_refunded' => 'Marcar com a reemborsat',
+            'refund_note_label' => 'Referència del reemborsament (opcional)',
+            'refund_note_placeholder' => 'p. ex. Reemborsament #1234',
+            'decline' => 'Rebutjar desistiment',
+            'decline_reason_label' => 'Motiu del rebuig',
+            'decline_reason_placeholder' => 'Expliqueu per què es contesta el dret',
+            'mark_refunded_confirm_msg' => 'Marcar aquest desistiment com a reemborsat? Qualsevol registre de rebuig previ s\'eliminarà.',
+            'decline_confirm_msg' => 'Rebutjar aquest desistiment? El motiu serà visible per al client.',
+            'resend_confirmation_confirm_msg' => 'Reenviar el correu de confirmació al client?',
+            'send_final_confirmation' => 'Enviar correu de confirmació final',
+            'send_final_confirmation_confirm_msg' => 'Enviar el correu d\'estat final al client?',
+        ],
+
+        'status' => [
+            'received' => 'Rebut',
+            'refunded' => 'Reemborsat',
+            'declined' => 'Rebutjat',
+        ],
+
+        'datagrid' => [
+            'received_at' => 'Rebut el',
+            'uuid' => 'Referència',
+            'copy_reference' => 'Copiar referència',
+            'reference_copied' => 'Referència copiada al porta-retalls.',
+            'order' => 'Comanda',
+            'customer_email' => 'Correu del client',
+            'channel' => 'Canal',
+            'status' => 'Estat',
+            'confirmation_sent_at' => 'Confirmació enviada',
+            'view' => 'Veure',
+        ],
+
+        'flash' => [
+            'declined' => 'El desistiment ha estat rebutjat.',
+            'refunded' => 'El desistiment s\'ha marcat com a reemborsat.',
+            'confirmation_resent' => 'S\'ha reenviat el correu de confirmació.',
+            'confirmation_failed' => 'No s\'ha pogut enviar el correu de confirmació. Vegeu la cronologia per als detalls.',
         ],
     ],
 ];

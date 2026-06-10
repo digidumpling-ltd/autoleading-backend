@@ -118,6 +118,44 @@ return [
         ],
     ],
 
+    'help' => [
+        'index' => [
+            'title' => 'Help & Bronnen',
+            'description' => 'Alles wat u nodig hebt om het meeste uit Bagisto te halen — hosting, ondersteuning en professionele diensten, plus extensies en ontwikkelaarsdocumentatie.',
+
+            'services-title' => 'Diensten',
+            'resources-title' => 'Bronnen & Documentatie',
+
+            'cloud-hosting' => 'Cloudhosting',
+            'cloud-hosting-info' => 'Kosteneffectieve, beheerde cloudhosting — lanceer uw Bagisto-winkel binnen enkele minuten in de cloud, volledig geoptimaliseerd en schaalbaar.',
+
+            'support' => 'Ondersteuning & Onderhoud',
+            'support-info' => 'Toegewijde technische ondersteuning en doorlopende onderhoudsplannen om uw winkel veilig, up-to-date en soepel draaiend te houden.',
+
+            'paid-services' => 'Betaalde Diensten',
+            'paid-services-info' => 'Deskundige hulp bij module-integratie, maatwerk, datamigratie, versie-upgrades en op maat gemaakte ontwikkeling.',
+
+            'extensions' => 'Extensies',
+            'extensions-info' => 'Blader door officiële en community add-ons om Bagisto uit te breiden met nieuwe connectoren, kanalen en functies.',
+
+            'docs' => 'Dev-documentatie & Blogs',
+            'docs-info' => 'Ontwikkelaarshandleidingen, tutorials en de nieuwste artikelen om u te helpen bouwen, configureren en up-to-date te blijven.',
+
+            'api-docs' => 'API-documentatie',
+            'api-docs-info' => 'Volledige REST- & GraphQL-API-referentie met endpoints, authenticatie en voorbeelden om Bagisto met uw stack te integreren.',
+
+            'community' => 'Communityforum',
+            'community-info' => 'Stel vragen, deel ideeën en maak verbinding met duizenden Bagisto-ontwikkelaars en -verkopers wereldwijd.',
+
+            'video-tutorials' => 'Videotutorials',
+            'video-tutorials-info' => 'Stapsgewijze videohandleidingen over installatie, configuratie en dagelijks winkelbeheer.',
+
+            'cta-title' => 'Toch nog hulp nodig?',
+            'cta-description' => 'Praat met het Bagisto-team over hosting, maatwerkontwikkeling of iets anders.',
+            'cta-btn' => 'Neem Contact Op',
+        ],
+    ],
+
     'dashboard' => [
         'index' => [
             'add-customer' => 'Klant Toevoegen',
@@ -5244,6 +5282,7 @@ return [
                 'exchange-rates' => 'Wisselkoersen',
                 'gdpr-data-requests' => 'GDPR Data Verzoeken',
                 'groups' => 'Groepen',
+                'help' => 'Help & Bronnen',
                 'imports' => 'Importeert',
                 'inventory-sources' => 'Voorraadbronnen',
                 'invoices' => 'Facturen',
@@ -5728,6 +5767,128 @@ return [
                 'subject' => 'Nieuw RMA-gespreksbericht',
                 'title' => 'Nieuw RMA-gesprek',
             ],
+        ],
+    ],
+
+    'eu_withdrawal' => [
+        'menu' => [
+            'eu_withdrawals' => 'EU-herroepingen',
+        ],
+
+        'acl' => [
+            'title' => 'EU-herroepingen',
+            'view' => 'Bekijken',
+            'decline' => 'Afwijzen',
+            'mark_refunded' => 'Markeren als terugbetaald',
+            'resend_confirmation' => 'Bevestiging opnieuw versturen',
+        ],
+
+        'config' => [
+            'title' => 'EU-herroepingen',
+            'info' => 'Configuratie voor de EU-herroepingsknop (Richtlijn (EU) 2023/2673, artikel 11 bis CRD).',
+
+            'general' => [
+                'title' => 'Algemeen',
+                'info' => 'Hoofdschakelaar voor de EU-herroepingsknop in dit kanaal.',
+                'enabled' => 'Inschakelen',
+                'enabled_info' => 'Wanneer ingeschakeld, zien klanten in dit kanaal een knop „Overeenkomst herroepen” op de orderdetailpagina’s en een openbaar zoekformulier op /withdraw. Schakel dit alleen in op kanalen die aan EU-consumenten verkopen.',
+            ],
+        ],
+
+        'index' => [
+            'title' => 'EU-herroepingen',
+        ],
+
+        'view' => [
+            'title' => 'Herroeping :uuid',
+            'heading' => 'Herroeping',
+            'back' => 'Terug naar overzicht',
+            'guest_badge' => 'Gast',
+
+            'evidence' => 'Bewijs',
+            'evidence_note' => 'Onveranderlijk – vastgelegd bij indiening',
+            'status' => 'Status',
+            'received_at' => 'Ontvangen op',
+            'uuid' => 'Referentie',
+            'copy_reference' => 'Referentie kopiëren',
+            'reference_copied' => 'Referentie naar het klembord gekopieerd.',
+            'order' => 'Bestelling',
+            'customer_email' => 'E-mailadres klant',
+            'is_guest' => 'Gast',
+            'channel' => 'Kanaal',
+            'locale' => 'Taal',
+            'reason' => 'Reden van de klant',
+
+            'timeline' => 'Tijdlijn',
+            'timeline_received' => 'Verklaring ontvangen',
+            'timeline_received_desc' => 'De klant heeft een verzoek tot herroeping van de overeenkomst ingediend.',
+            'timeline_email' => 'Bevestigingsmail',
+            'timeline_email_pending' => 'Nog niet verzonden',
+            'timeline_initial_email' => 'Eerste bevestigingsmail',
+            'timeline_initial_email_desc_sent' => 'Bevestigingsmail aan de klant afgeleverd.',
+            'timeline_initial_email_desc_error' => 'Eerste bevestigingsmail kon niet worden verzonden.',
+            'timeline_initial_email_desc_pending' => 'Eerste bevestigingsmail is nog niet verzonden.',
+            'timeline_final_email' => 'Definitieve bevestigingsmail',
+            'timeline_final_email_pending' => 'Nog niet verzonden',
+            'timeline_final_email_desc_sent' => 'Resultaatmail aan de klant afgeleverd.',
+            'timeline_final_email_desc_pending' => 'Definitieve bevestigingsmail is nog niet verzonden.',
+            'timeline_declined' => 'Afgewezen door beheerder',
+            'timeline_declined_desc' => 'Herroeping afgewezen door :name.',
+            'timeline_declined_desc_system' => 'Herroeping afgewezen.',
+            'timeline_declined_reason_label' => 'Opgegeven reden:',
+            'timeline_refunded' => 'Door beheerder als terugbetaald gemarkeerd',
+            'timeline_refunded_desc' => 'Terugbetaling uitgevoerd door :name.',
+            'timeline_refunded_desc_system' => 'Terugbetaling uitgevoerd.',
+            'timeline_refunded_note_label' => 'Opmerking beheerder:',
+            'timeline_resolution' => 'Afhandeling',
+            'timeline_resolution_desc' => 'Wacht op beoordeling en beslissing van de beheerder.',
+            'timeline_resolution_pending' => 'Wacht op actie van de beheerder',
+
+            'confirmation_sent_at' => 'Bevestiging verzonden op',
+            'confirmation_error' => 'Bevestigingsfout',
+            'declined_at' => 'Afgewezen op',
+            'refunded_at' => 'Terugbetaald op',
+
+            'actions' => 'Acties',
+            'actions_note' => 'Terugbetalingen worden handmatig verwerkt via de bestaande bestel-, terugbetalings- en RMA-functies van Bagisto. Gebruik deze acties om het resultaat in het herroepingsbewijs vast te leggen.',
+            'resend_confirmation' => 'Bevestigingsmail opnieuw versturen',
+            'mark_refunded' => 'Als terugbetaald markeren',
+            'refund_note_label' => 'Terugbetalingsreferentie (optioneel)',
+            'refund_note_placeholder' => 'bijv. Terugbetaling #1234',
+            'decline' => 'Herroeping afwijzen',
+            'decline_reason_label' => 'Reden voor afwijzing',
+            'decline_reason_placeholder' => 'Leg uit waarom het recht wordt betwist',
+            'mark_refunded_confirm_msg' => 'Deze herroeping als terugbetaald markeren? Een eerdere afwijzingsregistratie wordt verwijderd.',
+            'decline_confirm_msg' => 'Deze herroeping afwijzen? De reden is zichtbaar voor de klant.',
+            'resend_confirmation_confirm_msg' => 'De bevestigingsmail opnieuw naar de klant sturen?',
+            'send_final_confirmation' => 'Definitieve bevestigingsmail versturen',
+            'send_final_confirmation_confirm_msg' => 'De definitieve statusmail naar de klant sturen?',
+        ],
+
+        'status' => [
+            'received' => 'Ontvangen',
+            'refunded' => 'Terugbetaald',
+            'declined' => 'Afgewezen',
+        ],
+
+        'datagrid' => [
+            'received_at' => 'Ontvangen op',
+            'uuid' => 'Referentie',
+            'copy_reference' => 'Referentie kopiëren',
+            'reference_copied' => 'Referentie naar het klembord gekopieerd.',
+            'order' => 'Bestelling',
+            'customer_email' => 'E-mailadres klant',
+            'channel' => 'Kanaal',
+            'status' => 'Status',
+            'confirmation_sent_at' => 'Bevestiging verzonden',
+            'view' => 'Bekijken',
+        ],
+
+        'flash' => [
+            'declined' => 'De herroeping is afgewezen.',
+            'refunded' => 'De herroeping is als terugbetaald gemarkeerd.',
+            'confirmation_resent' => 'De bevestigingsmail is opnieuw verzonden.',
+            'confirmation_failed' => 'De bevestigingsmail kon niet worden verzonden. Zie de tijdlijn voor meer informatie.',
         ],
     ],
 ];

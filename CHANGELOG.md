@@ -1,8 +1,22 @@
-# CHANGELOG for master
+# CHANGELOG for v2.4
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
 ## Unreleased
+
+- Soon.
+
+## **v2.4.6 (5th of June 2026)** - *Release*
+
+* Help and resources added.
+
+* Security fixes.
+
+## **v2.4.5 (2nd of June 2026)** - *Release*
+
+* Added EU Withdrawal feature (Directive (EU) 2023/2673, Article 11a CRD) — customers and guests can withdraw from a contract online via a "Withdraw from contract" button on order pages and a public lookup form, with durable-medium confirmation emails, an admin datagrid + timeline view for managing withdrawals, and a per-channel enable toggle.
+
+* Added PhonePe payment gateway integration.
 
 * Refined Playwright testcases.
 

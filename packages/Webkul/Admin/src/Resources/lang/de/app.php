@@ -118,6 +118,44 @@ return [
         ],
     ],
 
+    'help' => [
+        'index' => [
+            'title' => 'Hilfe & Ressourcen',
+            'description' => 'Alles, was Sie brauchen, um das Beste aus Bagisto herauszuholen — Hosting, Support und professionelle Dienstleistungen sowie Erweiterungen und Entwicklerdokumentation.',
+
+            'services-title' => 'Dienstleistungen',
+            'resources-title' => 'Ressourcen & Dokumentation',
+
+            'cloud-hosting' => 'Cloud-Hosting',
+            'cloud-hosting-info' => 'Kostengünstiges, verwaltetes Cloud-Hosting — starten Sie Ihren Bagisto-Shop in wenigen Minuten in der Cloud, vollständig optimiert und skalierbar.',
+
+            'support' => 'Support & Wartung',
+            'support-info' => 'Engagierter technischer Support und laufende Wartungspläne, damit Ihr Shop sicher, aktuell und reibungslos läuft.',
+
+            'paid-services' => 'Kostenpflichtige Dienstleistungen',
+            'paid-services-info' => 'Fachkundige Hilfe bei Modulintegration, Anpassung, Datenmigration, Versions-Upgrades und maßgeschneiderter Entwicklung.',
+
+            'extensions' => 'Erweiterungen',
+            'extensions-info' => 'Durchsuchen Sie offizielle und Community-Add-ons, um Bagisto mit neuen Konnektoren, Kanälen und Funktionen zu erweitern.',
+
+            'docs' => 'Entwicklerdokumentation & Blogs',
+            'docs-info' => 'Entwicklerhandbücher, Tutorials und die neuesten Artikel, die Ihnen beim Erstellen, Konfigurieren und Aktualisieren helfen.',
+
+            'api-docs' => 'API-Dokumentation',
+            'api-docs-info' => 'Vollständige REST- & GraphQL-API-Referenz mit Endpunkten, Authentifizierung und Beispielen zur Integration von Bagisto in Ihren Stack.',
+
+            'community' => 'Community-Forum',
+            'community-info' => 'Stellen Sie Fragen, teilen Sie Ideen und vernetzen Sie sich mit Tausenden von Bagisto-Entwicklern und -Händlern weltweit.',
+
+            'video-tutorials' => 'Video-Tutorials',
+            'video-tutorials-info' => 'Schritt-für-Schritt-Video-Anleitungen zu Installation, Konfiguration und alltäglicher Shop-Verwaltung.',
+
+            'cta-title' => 'Brauchen Sie noch Hilfe?',
+            'cta-description' => 'Sprechen Sie mit dem Bagisto-Team über Hosting, individuelle Entwicklung oder alles andere.',
+            'cta-btn' => 'Kontaktieren Sie uns',
+        ],
+    ],
+
     'dashboard' => [
         'index' => [
             'add-customer' => 'Kunde hinzufügen',
@@ -5244,6 +5282,7 @@ return [
                 'exchange-rates' => 'Wechselkurse',
                 'gdpr-data-requests' => 'GDPR-Datenanfragen',
                 'groups' => 'Gruppen',
+                'help' => 'Hilfe & Ressourcen',
                 'imports' => 'Importe',
                 'inventory-sources' => 'Inventarquellen',
                 'invoices' => 'Rechnungen',
@@ -5728,6 +5767,128 @@ return [
                 'subject' => 'Neue RMA-Konversationsnachricht',
                 'title' => 'Neue RMA-Konversation',
             ],
+        ],
+    ],
+
+    'eu_withdrawal' => [
+        'menu' => [
+            'eu_withdrawals' => 'EU-Widerrufe',
+        ],
+
+        'acl' => [
+            'title' => 'EU-Widerrufe',
+            'view' => 'Anzeigen',
+            'decline' => 'Ablehnen',
+            'mark_refunded' => 'Als erstattet markieren',
+            'resend_confirmation' => 'Bestätigung erneut senden',
+        ],
+
+        'config' => [
+            'title' => 'EU-Widerrufe',
+            'info' => 'Konfiguration für die Schaltfläche zum EU-Widerruf (Richtlinie (EU) 2023/2673, Artikel 11a CRD).',
+
+            'general' => [
+                'title' => 'Allgemein',
+                'info' => 'Hauptschalter für die EU-Widerrufsschaltfläche in diesem Kanal.',
+                'enabled' => 'Aktivieren',
+                'enabled_info' => 'Wenn aktiviert, sehen Kunden in diesem Kanal eine Schaltfläche „Vom Vertrag zurücktreten“ auf den Bestelldetailseiten sowie ein öffentliches Suchformular unter /withdraw. Nur in Kanälen aktivieren, die an EU-Verbraucher verkaufen.',
+            ],
+        ],
+
+        'index' => [
+            'title' => 'EU-Widerrufe',
+        ],
+
+        'view' => [
+            'title' => 'Widerruf :uuid',
+            'heading' => 'Widerruf',
+            'back' => 'Zurück zur Liste',
+            'guest_badge' => 'Gast',
+
+            'evidence' => 'Nachweis',
+            'evidence_note' => 'Unveränderlich – bei Einreichung erfasst',
+            'status' => 'Status',
+            'received_at' => 'Eingegangen am',
+            'uuid' => 'Referenz',
+            'copy_reference' => 'Referenz kopieren',
+            'reference_copied' => 'Referenz in die Zwischenablage kopiert.',
+            'order' => 'Bestellung',
+            'customer_email' => 'Kunden-E-Mail',
+            'is_guest' => 'Gast',
+            'channel' => 'Kanal',
+            'locale' => 'Sprache',
+            'reason' => 'Begründung des Kunden',
+
+            'timeline' => 'Verlauf',
+            'timeline_received' => 'Erklärung eingegangen',
+            'timeline_received_desc' => 'Der Kunde hat eine Widerrufserklärung eingereicht.',
+            'timeline_email' => 'Bestätigungs-E-Mail',
+            'timeline_email_pending' => 'Noch nicht gesendet',
+            'timeline_initial_email' => 'Erste Bestätigungs-E-Mail',
+            'timeline_initial_email_desc_sent' => 'Bestätigungs-E-Mail an den Kunden zugestellt.',
+            'timeline_initial_email_desc_error' => 'Erste Bestätigungs-E-Mail konnte nicht gesendet werden.',
+            'timeline_initial_email_desc_pending' => 'Erste Bestätigungs-E-Mail wurde noch nicht gesendet.',
+            'timeline_final_email' => 'Abschließende Bestätigungs-E-Mail',
+            'timeline_final_email_pending' => 'Noch nicht gesendet',
+            'timeline_final_email_desc_sent' => 'Ergebnis-E-Mail an den Kunden zugestellt.',
+            'timeline_final_email_desc_pending' => 'Abschließende Bestätigungs-E-Mail wurde noch nicht gesendet.',
+            'timeline_declined' => 'Vom Administrator abgelehnt',
+            'timeline_declined_desc' => 'Widerruf abgelehnt von :name.',
+            'timeline_declined_desc_system' => 'Widerruf abgelehnt.',
+            'timeline_declined_reason_label' => 'Angegebener Grund:',
+            'timeline_refunded' => 'Vom Administrator als erstattet markiert',
+            'timeline_refunded_desc' => 'Erstattung ausgestellt von :name.',
+            'timeline_refunded_desc_system' => 'Erstattung ausgestellt.',
+            'timeline_refunded_note_label' => 'Anmerkung des Administrators:',
+            'timeline_resolution' => 'Bearbeitung',
+            'timeline_resolution_desc' => 'Wartet auf Prüfung und Entscheidung durch den Administrator.',
+            'timeline_resolution_pending' => 'Warten auf Aktion des Administrators',
+
+            'confirmation_sent_at' => 'Bestätigung gesendet am',
+            'confirmation_error' => 'Bestätigungsfehler',
+            'declined_at' => 'Abgelehnt am',
+            'refunded_at' => 'Erstattet am',
+
+            'actions' => 'Aktionen',
+            'actions_note' => 'Erstattungen werden manuell über die bestehenden Bestell-, Erstattungs- und RMA-Werkzeuge von Bagisto bearbeitet. Verwenden Sie diese Aktionen, um das Ergebnis im Widerrufsnachweis festzuhalten.',
+            'resend_confirmation' => 'Bestätigungs-E-Mail erneut senden',
+            'mark_refunded' => 'Als erstattet markieren',
+            'refund_note_label' => 'Erstattungsreferenz (optional)',
+            'refund_note_placeholder' => 'z. B. Erstattung Nr. 1234',
+            'decline' => 'Widerruf ablehnen',
+            'decline_reason_label' => 'Grund der Ablehnung',
+            'decline_reason_placeholder' => 'Erläutern Sie, warum der Anspruch bestritten wird',
+            'mark_refunded_confirm_msg' => 'Diesen Widerruf als erstattet markieren? Eine zuvor erfasste Ablehnung wird entfernt.',
+            'decline_confirm_msg' => 'Diesen Widerruf ablehnen? Der Grund wird für den Kunden sichtbar sein.',
+            'resend_confirmation_confirm_msg' => 'Bestätigungs-E-Mail erneut an den Kunden senden?',
+            'send_final_confirmation' => 'Abschließende Bestätigungs-E-Mail senden',
+            'send_final_confirmation_confirm_msg' => 'Die abschließende Status-E-Mail an den Kunden senden?',
+        ],
+
+        'status' => [
+            'received' => 'Eingegangen',
+            'refunded' => 'Erstattet',
+            'declined' => 'Abgelehnt',
+        ],
+
+        'datagrid' => [
+            'received_at' => 'Eingegangen am',
+            'uuid' => 'Referenz',
+            'copy_reference' => 'Referenz kopieren',
+            'reference_copied' => 'Referenz in die Zwischenablage kopiert.',
+            'order' => 'Bestellung',
+            'customer_email' => 'Kunden-E-Mail',
+            'channel' => 'Kanal',
+            'status' => 'Status',
+            'confirmation_sent_at' => 'Bestätigung gesendet',
+            'view' => 'Anzeigen',
+        ],
+
+        'flash' => [
+            'declined' => 'Der Widerruf wurde abgelehnt.',
+            'refunded' => 'Der Widerruf wurde als erstattet markiert.',
+            'confirmation_resent' => 'Die Bestätigungs-E-Mail wurde erneut gesendet.',
+            'confirmation_failed' => 'Die Bestätigungs-E-Mail konnte nicht gesendet werden. Einzelheiten finden Sie im Verlauf.',
         ],
     ],
 ];

@@ -6,6 +6,7 @@ use Webkul\Core\Tests\CoreTestCase;
 use Webkul\CustomerPromotions\Tests\CustomerPromotionsTestCase;
 use Webkul\Customer\Tests\CustomerTestCase;
 use Webkul\DataGrid\Tests\DataGridTestCase;
+use Webkul\EUWithdrawal\Tests\EUWithdrawalTestCase;
 use Webkul\Installer\Tests\InstallerTestCase;
 use Webkul\Payment\Tests\PaymentTestCase;
 use Webkul\PayU\Tests\PayUTestCase;
@@ -35,6 +36,7 @@ uses(CustomerPromotionsTestCase::class)->in('../packages/Webkul/CustomerPromotio
 uses(CoreTestCase::class)->in('../packages/Webkul/Core/tests');
 uses(CustomerTestCase::class)->in('../packages/Webkul/Customer/tests');
 uses(DataGridTestCase::class)->in('../packages/Webkul/DataGrid/tests');
+uses(EUWithdrawalTestCase::class)->in('../packages/Webkul/EUWithdrawal/tests');
 uses(InstallerTestCase::class)->in('../packages/Webkul/Installer/tests');
 uses(PaymentTestCase::class)->in('../packages/Webkul/Payment/tests');
 uses(PayUTestCase::class)->in('../packages/Webkul/PayU/tests');
