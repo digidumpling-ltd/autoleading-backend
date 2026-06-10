@@ -61,7 +61,7 @@
         <div class="flex items-center">
         @foreach ($navItems as $navItem)
             @if ($navItem['type'] === 'link')
-                <a href="{{ $navItem['item']['url'] }}" class="flex h-[77px] items-center border-b-4 border-transparent px-5 uppercase hover:border-navyBlue">
+                <a href="{{ $navItem['item']['url'] }}" class="flex h-[77px] items-center border-b-4 border-transparent px-5 uppercase whitespace-nowrap hover:border-navyBlue">
                     {{ $navItem['item']['label'] }}
                 </a>
             @else
@@ -319,7 +319,7 @@
                 v-for="category in categories"
             >
                 <span>
-                    <a :href="category.url" class="inline-block px-5 uppercase">
+                    <a :href="category.url" class="inline-block px-5 uppercase whitespace-nowrap">
                         @{{ category.name }}
                     </a>
                 </span>
@@ -368,7 +368,7 @@
                     class="flex h-[77px] cursor-pointer items-center border-b-4 border-transparent hover:border-b-4 hover:border-navyBlue"
                     @click="toggleCategoryDrawer"
                 >
-                    <span class="flex items-center gap-1 px-5 uppercase">
+                    <span class="flex items-center gap-1 px-5 uppercase whitespace-nowrap">
                         <span class="text-xl icon-hamburger"></span>
                         @lang('shop::app.components.layouts.header.desktop.bottom.all')
                     </span>
@@ -380,7 +380,7 @@
                     v-for="category in categories.slice(0, 4)"
                 >
                     <span>
-                        <a :href="category.url" class="inline-block px-5 uppercase">
+                        <a :href="category.url" class="inline-block px-5 uppercase whitespace-nowrap">
                             @{{ category.name }}
                         </a>
                     </span>
@@ -545,7 +545,7 @@
             class="group relative flex h-[77px] items-center border-b-4 border-transparent hover:border-b-4 hover:border-navyBlue"
             v-else-if="categories.length"
         >
-            <span class="inline-block px-5 uppercase cursor-pointer">
+            <span class="inline-block px-5 uppercase whitespace-nowrap cursor-pointer">
                 @{{ categoriesLabel }}
                 <span class="text-sm icon-sort-down ml-1"></span>
             </span>

@@ -22,6 +22,28 @@
 
     $hasHours   = $hoursRental || $hoursSales;
     $hasContact = $phone || $email || $address || $whatsapp1 || $whatsapp2;
+
+    $quickLinks = [];
+
+    if ((bool) core()->getConfigData('general.design.navbar.show_manual_menu')) {
+        foreach (json_decode(core()->getConfigData('general.design.navbar.menu_items') ?? '[]', true) ?? [] as $item) {
+            if (! empty($item['label']) && ! empty($item['url'])) {
+                $quickLinks[] = ['title' => $item['label'], 'url' => $item['url'], 'sort_order' => (int) ($item['order'] ?? 0)];
+            }
+        }
+    }
+
+    if ($footerCustomization?->options) {
+        foreach ($footerCustomization->options as $section) {
+            foreach ($section as $link) {
+                if (! empty($link['url']) && ! empty($link['title'])) {
+                    $quickLinks[] = ['title' => $link['title'], 'url' => $link['url'], 'sort_order' => (int) ($link['sort_order'] ?? 0)];
+                }
+            }
+        }
+    }
+
+    usort($quickLinks, fn ($a, $b) => $a['sort_order'] <=> $b['sort_order']);
 @endphp
 
 <footer class="mt-9 bg-lightOrange max-sm:mt-10">
@@ -32,31 +54,23 @@
         <div class="grid grid-cols-3 gap-x-10" v-pre>
 
             {{-- Column 1: Quick Links --}}
+            @if (! empty($quickLinks))
             <div>
                 <p class="mb-5 font-bold text-zinc-600">
                     {{ __('custom-theme::app.footer.quick_links') }}
                 </p>
 
-                <div class="flex flex-wrap gap-x-10 gap-y-1 text-zinc-600">
-                    @if ($footerCustomization?->options)
-                        @foreach ($footerCustomization->options as $footerLinkSection)
-                            @php
-                                usort($footerLinkSection, fn ($a, $b) => $a['sort_order'] - $b['sort_order']);
-                            @endphp
-
-                            <ul class="grid gap-5 text-zinc-600">
-                                @foreach ($footerLinkSection as $link)
-                                    <li>
-                                        <a href="{{ $link['url'] }}" class="hover:text-navyBlue">
-                                            {{ $link['title'] }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endforeach
-                    @endif
-                </div>
+                <ul class="grid gap-5 text-zinc-600">
+                    @foreach ($quickLinks as $link)
+                        <li>
+                            <a href="{{ $link['url'] }}" class="hover:text-navyBlue">
+                                {{ $link['title'] }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
+            @endif
 
             {{-- Column 2: Business Hours --}}
             @if ($hasHours)
@@ -131,7 +145,7 @@
     {{-- Mobile: accordions --}}
     <div class="hidden max-1060:grid max-1060:gap-3 max-1060:p-8 max-sm:px-4 max-sm:py-5">
 
-        @if ($footerCustomization?->options)
+        @if (! empty($quickLinks))
             <x-shop::accordion
                 :is-active="false"
                 class="!w-full rounded-xl !border-2 !border-[#e9decc] max-sm:rounded-lg"
@@ -140,22 +154,16 @@
                     {{ __('custom-theme::app.footer.quick_links') }}
                 </x-slot>
 
-                <x-slot:content class="flex flex-wrap justify-between gap-6 !bg-transparent !p-4">
-                    @foreach ($footerCustomization->options as $footerLinkSection)
-                        @php
-                            usort($footerLinkSection, fn ($a, $b) => $a['sort_order'] - $b['sort_order']);
-                        @endphp
-
-                        <ul class="grid gap-5 text-zinc-600">
-                            @foreach ($footerLinkSection as $link)
-                                <li>
-                                    <a href="{{ $link['url'] }}" class="hover:text-navyBlue max-sm:text-xs">
-                                        {{ $link['title'] }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endforeach
+                <x-slot:content class="!bg-transparent !p-4">
+                    <ul class="grid gap-5 text-zinc-600">
+                        @foreach ($quickLinks as $link)
+                            <li>
+                                <a href="{{ $link['url'] }}" class="hover:text-navyBlue max-sm:text-xs">
+                                    {{ $link['title'] }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </x-slot>
             </x-shop::accordion>
         @endif
