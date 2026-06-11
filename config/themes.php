@@ -25,17 +25,6 @@ return [
             ],
         ],
 
-        'auto-leading-theme' => [
-            'name' => 'Auto Leading',
-            'assets_path' => 'public/themes/shop/auto-leading-theme',
-            'views_path' => 'resources/themes/auto-leading-theme/views',
-
-            'vite' => [
-                'hot_file' => 'auto-leading-theme-vite.hot',
-                'build_directory' => 'themes/shop/auto-leading-theme/build',
-                'package_assets_directory' => 'src/Resources/assets',
-            ],
-        ],
 
         'custom-theme' => [
             'name' => 'Custom-theme',

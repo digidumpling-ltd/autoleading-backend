@@ -74,7 +74,6 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Webkul\\Admin\\": "packages/Webkul/Admin/src",
-            "Webkul\\AutoLeadingTheme\\": "packages/Webkul/AutoLeadingTheme/src",
             "Webkul\\Attribute\\": "packages/Webkul/Attribute/src",
             "Webkul\\BookingProduct\\": "packages/Webkul/BookingProduct/src",
             "Webkul\\CMS\\": "packages/Webkul/CMS/src",
