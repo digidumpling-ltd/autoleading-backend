@@ -43,7 +43,7 @@ return [
         'default' => [
             'Core.Encoding' => 'utf-8',
             'HTML.Doctype' => 'HTML 4.01 Transitional',
-            'HTML.Allowed' => 'h1[style],h2[style],h3[style],h4[style],h5[style],h6[style],b,u,strong,i,em,s,del,small[style],a[href|title|target|rel|style],ul,ol,li,p[style],br,span[style],img[width|height|alt|src|style],blockquote,table[style|cellpadding|cellspacing|width],thead,tbody,tfoot,tr[style],th[style|colspan|rowspan|scope],td[style|colspan|rowspan],div[style],hr,section[style]',
+            'HTML.Allowed' => 'h1[style|class],h2[style|class],h3[style|class],h4[style|class],h5[style|class],h6[style|class],b[class],u[class],strong[class],i[class],em[class],s[class],del[class],small[style|class],a[href|title|target|rel|style|class],ul[class],ol[class],li[class],p[style|class],br,span[style|class],img[width|height|alt|src|style|class],blockquote[class],table[style|cellpadding|cellspacing|width|class],thead[class],tbody[class],tfoot[class],tr[style|class],th[style|colspan|rowspan|scope|class],td[style|colspan|rowspan|class],div[style|class],hr,section[style|class]',
             'HTML.ForbiddenElements' => '',
             'CSS.AllowTricky' => true,
             'CSS.Proprietary' => true,
