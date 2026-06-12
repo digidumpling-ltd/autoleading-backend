@@ -4,7 +4,7 @@
 
     $logoMaxHeight  = (int) (core()->getConfigData('general.design.navbar.logo_max_height') ?? 40);
     $logoFit        = core()->getConfigData('general.design.navbar.logo_fit') ?? 'contain';
-    $showStoreName      = (bool) core()->getConfigData('general.design.navbar.show_store_name');
+    $showStoreName      = (bool) core()->getConfigData('general.design.navbar.show_store_name_mobile');
     $storeNameFontSize  = (int) (core()->getConfigData('general.design.navbar.store_name_font_size') ?? 24);
     $showCategories = (bool) (core()->getConfigData('general.design.navbar.show_categories') ?? 1);
     $showManualMenu = (bool) core()->getConfigData('general.design.navbar.show_manual_menu');

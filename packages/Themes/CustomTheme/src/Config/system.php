@@ -124,8 +124,15 @@ return [
                 ],
             ],
             [
-                'name'          => 'show_store_name',
-                'title'         => 'custom-theme::app.configuration.general.design.navbar.show-store-name',
+                'name'          => 'show_store_name_desktop',
+                'title'         => 'custom-theme::app.configuration.general.design.navbar.show-store-name-desktop',
+                'type'          => 'boolean',
+                'channel_based' => true,
+                'locale_based'  => false,
+            ],
+            [
+                'name'          => 'show_store_name_mobile',
+                'title'         => 'custom-theme::app.configuration.general.design.navbar.show-store-name-mobile',
                 'type'          => 'boolean',
                 'channel_based' => true,
                 'locale_based'  => false,
