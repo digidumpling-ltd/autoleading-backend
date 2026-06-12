@@ -32,7 +32,7 @@
 
 <div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 bg-white px-[60px] max-1180:px-8">
     <!-- Left Navigation Section -->
-    <div class="flex items-center gap-x-10 max-[1180px]:gap-x-5">
+    <div class="flex items-center gap-x-8 max-[1180px]:gap-x-5">
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.before') !!}
 
         <a
@@ -42,7 +42,7 @@
         >
             <img
                 src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                style="max-height: {{ $logoMaxHeight }}px; width: auto;"
+                style="width: {{ $logoMaxHeight }}px; min-width: {{ $logoMaxHeight }}px; height: auto;"
                 class="object-{{ $logoFit }} object-center"
                 alt="{{ config('app.name') }}"
             >

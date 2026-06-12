@@ -47,7 +47,7 @@
                 <img
                     class="block object-{{ $logoFit }} object-center"
                     src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                    style="max-height: {{ $logoMaxHeight }}px; width: auto;"
+                    style="width: {{ $logoMaxHeight }}px; min-width: {{ $logoMaxHeight }}px; height: auto;"
                     alt="{{ config('app.name') }}"
                 >
 
@@ -250,7 +250,7 @@
                     <a href="{{ route('shop.home.index') }}" class="flex items-center gap-1.5">
                         <img
                             src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                            style="max-height: {{ $logoMaxHeight }}px; width: auto;"
+                            style="width: {{ $logoMaxHeight }}px; min-width: {{ $logoMaxHeight }}px; height: auto;"
                             class="object-{{ $logoFit }} object-center"
                             alt="{{ config('app.name') }}"
                         >
