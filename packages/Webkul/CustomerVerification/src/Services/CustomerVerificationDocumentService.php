@@ -4,7 +4,10 @@ namespace Webkul\CustomerVerification\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Webkul\Customer\Models\Customer;
 use Webkul\CustomerVerification\Repositories\CustomerVerificationDocumentRepository;
 use Webkul\CustomerVerification\Support\Verification;
 
@@ -62,6 +65,8 @@ class CustomerVerificationDocumentService
 
     public function storeCustomerDocument(int $customerId, string $documentType, UploadedFile $uploadedFile): void
     {
+        $this->assignReferenceNumberIfAbsent($customerId);
+
         $storedPath = $this->storeOnPublicDisk($customerId, $documentType, $uploadedFile);
 
         $payload = [
@@ -104,6 +109,25 @@ class CustomerVerificationDocumentService
         Storage::disk($disk)->delete($doc->path);
 
         $this->documentRepository->delete($documentId);
+    }
+
+    protected function assignReferenceNumberIfAbsent(int $customerId): void
+    {
+        $hasReference = Customer::where('id', $customerId)
+            ->whereNotNull('reference_number')
+            ->exists();
+
+        if ($hasReference) {
+            return;
+        }
+
+        do {
+            $reference = 'CV' . now()->format('Ymd') . strtoupper(Str::random(6));
+        } while (Customer::where('reference_number', $reference)->exists());
+
+        DB::table('customers')
+            ->where('id', $customerId)
+            ->update(['reference_number' => $reference]);
     }
 
     protected function storeOnPublicDisk(int $customerId, string $documentType, UploadedFile $uploadedFile): string

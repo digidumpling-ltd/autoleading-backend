@@ -6,6 +6,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use Webkul\CustomerVerification\Listeners\HandleCustomerRegistration;
 use Webkul\CustomerVerification\Listeners\PreventUnverifiedAddToCartListener;
+use Webkul\CustomerVerification\Listeners\SendDocumentsSubmittedAdminNotification;
+use Webkul\CustomerVerification\Listeners\SendVerificationStatusCustomerNotification;
 use Webkul\Theme\ViewRenderEventManager;
 
 class EventServiceProvider extends ServiceProvider
@@ -19,6 +21,15 @@ class EventServiceProvider extends ServiceProvider
         ],
         'checkout.cart.add.before' => [
             PreventUnverifiedAddToCartListener::class,
+        ],
+        'customer.verification.documents_complete' => [
+            SendDocumentsSubmittedAdminNotification::class,
+        ],
+        'verification.admin.approved' => [
+            SendVerificationStatusCustomerNotification::class . '@approved',
+        ],
+        'verification.admin.rejected' => [
+            SendVerificationStatusCustomerNotification::class . '@rejected',
         ],
         // NOTE: Login verification checks are deferred to Story 2.3 (admin approval workflow)
         // 'customer.after.login' => [

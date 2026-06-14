@@ -4,10 +4,10 @@ namespace Webkul\CustomerVerification\Http\Controllers\Admin;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Customer\Repositories\CustomerRepository;
+use Webkul\CustomerVerification\DataGrids\VerificationDataGrid;
 use Webkul\CustomerVerification\Repositories\CustomerVerificationDocumentRepository;
 use Webkul\CustomerVerification\Services\AdminVerificationActionService;
 use Webkul\CustomerVerification\Services\CustomerVerificationDocumentService;
@@ -22,36 +22,13 @@ class VerificationManagementController extends Controller
         private CustomerVerificationDocumentService $documentService
     ) {}
 
-    public function index(Request $request): View
+    public function index(Request $request)
     {
-        $filter = $request->input('status', 'all');
-        $search = $request->input('search', '');
-
-        $query = $this->customerRepository->getModel();
-
-        // Apply status filter
-        if ($filter !== 'all') {
-            $query = $query->where('verification_status', $filter);
+        if ($request->ajax()) {
+            return datagrid(VerificationDataGrid::class)->process();
         }
 
-        // Apply search filter for reference number, email, name, or phone
-        if (!empty($search)) {
-            $query = $query->where(function ($q) use ($search) {
-                $q->where('reference_number', 'like', '%' . $search . '%')
-                  ->orWhere('email', 'like', '%' . $search . '%')
-                  ->orWhere(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $search . '%')
-                  ->orWhere('phone', 'like', '%' . $search . '%');
-            });
-        }
-
-        $customers = $query->orderBy('created_at', 'desc')->paginate(15);
-
-        return view('customer-verification::admin.verifications.index', [
-            'customers' => $customers,
-            'filter' => $filter,
-            'search' => $search,
-            'statuses' => Verification::STATUSES,
-        ]);
+        return view('customer-verification::admin.verifications.index');
     }
 
     public function show(int $customerId): View
@@ -104,7 +81,7 @@ class VerificationManagementController extends Controller
 
         $this->verificationService->approve($customerId, $adminId);
 
-        session()->flash('success', trans('shop::app.customers.verification.customer-approved'));
+        session()->flash('success', trans('customer-verification::app.common.customer_approved'));
 
         return redirect()->route('admin.verification.index');
     }
@@ -127,7 +104,7 @@ class VerificationManagementController extends Controller
 
         $this->verificationService->reject($customerId, $adminId, $reason);
 
-        session()->flash('success', trans('shop::app.customers.verification.customer-rejected'));
+        session()->flash('success', trans('customer-verification::app.common.customer_rejected'));
 
         return redirect()->route('admin.verification.index');
     }

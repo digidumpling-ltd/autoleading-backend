@@ -82,6 +82,33 @@ return [
         'cannot_delete_doc_approved'            => 'Documents cannot be deleted for an approved customer.',
     ],
 
+    'emails' => [
+        'documents-submitted' => [
+            'subject'    => 'Customer Verification Documents Submitted',
+            'title'      => 'Verification Documents Submitted!',
+            'greeting'   => 'Customer :customer_name has submitted all required verification documents and is ready for review.',
+            'summary'    => 'Customer Details',
+            'phone'      => 'Phone',
+            'review-btn' => 'Review Verification',
+        ],
+
+        'verification-approved' => [
+            'subject'  => 'Your Verification Has Been Approved',
+            'title'    => 'Verification Approved!',
+            'greeting' => 'Your identity verification has been successfully approved. You now have full access to all services.',
+            'summary'  => 'Verification Details',
+            'cta'      => 'Go to My Account',
+        ],
+
+        'verification-rejected' => [
+            'subject'  => 'Your Verification Was Not Approved',
+            'title'    => 'Verification Not Approved',
+            'greeting' => 'Unfortunately, your identity verification could not be approved at this time. Please review the reason below and re-submit your documents.',
+            'summary'  => 'Verification Details',
+            'cta'      => 'Re-submit Documents',
+        ],
+    ],
+
     'signup' => [
         'pdcs_title'           => 'Personal Data Collection Statement',
         'pdcs_agree'           => 'I have read and agree to the :link',

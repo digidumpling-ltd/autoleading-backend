@@ -82,6 +82,33 @@ return [
         'cannot_delete_doc_approved'           => '已批准客戶的文件不能刪除。',
     ],
 
+    'emails' => [
+        'documents-submitted' => [
+            'subject'    => '客戶驗證文件已提交',
+            'title'      => '驗證文件已提交！',
+            'greeting'   => '客戶 :customer_name 已提交所有所需驗證文件，等待審核。',
+            'summary'    => '客戶資料',
+            'phone'      => '電話',
+            'review-btn' => '審核驗證',
+        ],
+
+        'verification-approved' => [
+            'subject'  => '您的驗證已獲批准',
+            'title'    => '驗證已批准！',
+            'greeting' => '您的身份驗證已成功批准，您現在可以完整使用所有服務。',
+            'summary'  => '驗證詳情',
+            'cta'      => '前往我的帳戶',
+        ],
+
+        'verification-rejected' => [
+            'subject'  => '您的驗證未獲批准',
+            'title'    => '驗證未獲批准',
+            'greeting' => '很遺憾，您的身份驗證未能獲批。請查閱以下原因並重新提交文件。',
+            'summary'  => '驗證詳情',
+            'cta'      => '重新提交文件',
+        ],
+    ],
+
     'signup' => [
         'pdcs_title'           => '個人資料收集聲明',
         'pdcs_agree'           => '本人已閱讀並同意:link',
