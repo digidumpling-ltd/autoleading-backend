@@ -19,6 +19,7 @@ class CarAttributeSeeder extends Seeder
         ['en' => 'Hybrid',         'zh_CN' => '混能轎車'],
         ['en' => 'Sports Saloon',  'zh_CN' => '運動房車'],
         ['en' => 'EV',             'zh_CN' => '電動車'],
+        ['en' => 'Super Car',      'zh_CN' => '超級跑車'],
     ];
 
     public function run(): void
