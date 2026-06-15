@@ -15,6 +15,10 @@ class WalletTransactionDataGrid extends DataGrid
 
         $queryBuilder = DB::table('transactions')
             ->join('wallets', 'wallets.id', '=', 'transactions.wallet_id')
+            ->leftJoin('admins', function ($join) use ($p) {
+                $join->on('admins.id', '=', DB::raw("CAST(JSON_UNQUOTE(JSON_EXTRACT({$p}transactions.meta, '$.creator_id')) AS UNSIGNED)"))
+                    ->where(DB::raw("JSON_UNQUOTE(JSON_EXTRACT({$p}transactions.meta, '$.creator_type'))"), '=', 'admin');
+            })
             ->select([
                 'transactions.id',
                 'transactions.type',
@@ -26,6 +30,8 @@ class WalletTransactionDataGrid extends DataGrid
                     JSON_UNQUOTE(JSON_EXTRACT({$p}transactions.meta, '$.description')),
                     ''
                 ) as remarks"),
+                DB::raw("JSON_UNQUOTE(JSON_EXTRACT({$p}transactions.meta, '$.creator_type')) as creator_type"),
+                DB::raw("{$p}admins.name as creator_admin_name"),
             ])
             ->where('wallets.holder_id', $customerId)
             ->where('wallets.holder_type', 'Webkul\\Wallet\\Models\\Customer')
@@ -34,6 +40,7 @@ class WalletTransactionDataGrid extends DataGrid
         $this->addFilter('created_at', 'transactions.created_at');
         $this->addFilter('type', 'transactions.type');
         $this->addFilter('remarks', DB::raw("COALESCE(JSON_UNQUOTE(JSON_EXTRACT({$p}transactions.meta, '$.reason')), JSON_UNQUOTE(JSON_EXTRACT({$p}transactions.meta, '$.description')), '') COLLATE utf8mb4_general_ci"));
+        $this->addFilter('creator_type', DB::raw("JSON_UNQUOTE(JSON_EXTRACT({$p}transactions.meta, '$.creator_type'))"));
 
         return $queryBuilder;
     }
@@ -82,6 +89,29 @@ class WalletTransactionDataGrid extends DataGrid
             'searchable' => true,
             'sortable'   => false,
             'filterable' => false,
+        ]);
+
+        $this->addColumn([
+            'index'              => 'creator_type',
+            'label'              => trans('bagisto-wallet::app.admin.customers.wallet.col-created-by'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => false,
+            'filterable'         => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => [
+                ['label' => trans('bagisto-wallet::app.admin.customers.wallet.creator-system'),   'value' => 'system'],
+                ['label' => trans('bagisto-wallet::app.admin.customers.wallet.creator-admin'),    'value' => 'admin'],
+                ['label' => trans('bagisto-wallet::app.admin.customers.wallet.creator-customer'), 'value' => 'customer'],
+            ],
+            'closure'    => function ($row) {
+                return match ($row->creator_type) {
+                    'admin'    => $row->creator_admin_name ?? trans('bagisto-wallet::app.admin.customers.wallet.creator-admin'),
+                    'customer' => trans('bagisto-wallet::app.admin.customers.wallet.creator-customer'),
+                    'system'   => trans('bagisto-wallet::app.admin.customers.wallet.creator-system'),
+                    default    => '—',
+                };
+            },
         ]);
 
         $this->addColumn([

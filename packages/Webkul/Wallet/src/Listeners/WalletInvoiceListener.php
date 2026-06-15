@@ -49,10 +49,12 @@ class WalletInvoiceListener
         $oldBalance = $customer->balanceFloatNum;
 
         $customer->transferFloat($channel, $amount, [
-            'type'        => 'wallet_payment',
-            'order_id'    => $invoice->order_id,
-            'invoice_id'  => $invoice->id,
-            'description' => trans('bagisto-wallet::app.listeners.wallet-invoice.description', ['order' => $invoice->order_id]),
+            'type'         => 'wallet_payment',
+            'order_id'     => $invoice->order_id,
+            'invoice_id'   => $invoice->id,
+            'description'  => trans('bagisto-wallet::app.listeners.wallet-invoice.description', ['order' => $invoice->order_id]),
+            'creator_type' => 'customer',
+            'creator_id'   => $customer->id,
         ]);
 
         if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {

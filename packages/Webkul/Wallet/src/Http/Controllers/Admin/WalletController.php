@@ -59,10 +59,14 @@ class WalletController extends Controller
         if ($validated['type'] === 'add') {
             $oldBalance = $customer->balanceFloatNum;
 
+            $adminId = auth()->guard('admin')->id();
+
             $customer->depositFloat($validated['amount'], [
-                'type'     => 'admin_grant',
-                'admin_id' => auth()->guard('admin')->id(),
-                'reason'   => $validated['reason'],
+                'type'         => 'admin_grant',
+                'admin_id'     => $adminId,
+                'reason'       => $validated['reason'],
+                'creator_type' => 'admin',
+                'creator_id'   => $adminId,
             ]);
 
             $newBalance = $customer->fresh()->balanceFloatNum;
@@ -97,10 +101,14 @@ class WalletController extends Controller
 
         $oldBalance = $customer->balanceFloatNum;
 
+        $adminId = auth()->guard('admin')->id();
+
         $customer->withdrawFloat($validated['amount'], [
-            'type'     => 'admin_deduct',
-            'admin_id' => auth()->guard('admin')->id(),
-            'reason'   => $validated['reason'],
+            'type'         => 'admin_deduct',
+            'admin_id'     => $adminId,
+            'reason'       => $validated['reason'],
+            'creator_type' => 'admin',
+            'creator_id'   => $adminId,
         ]);
 
         if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
@@ -133,10 +141,14 @@ class WalletController extends Controller
         if ($request->type === 'add') {
             $oldBalance = $customer->balanceFloatNum;
 
+            $adminId = auth()->guard('admin')->id();
+
             $customer->depositFloat($request->amount, [
-                'type'     => 'admin_grant',
-                'admin_id' => auth()->guard('admin')->id(),
-                'reason'   => $request->reason,
+                'type'         => 'admin_grant',
+                'admin_id'     => $adminId,
+                'reason'       => $request->reason,
+                'creator_type' => 'admin',
+                'creator_id'   => $adminId,
             ]);
 
             $newBalance = $customer->fresh()->balanceFloatNum;
@@ -168,10 +180,14 @@ class WalletController extends Controller
 
         $oldBalance = $customer->balanceFloatNum;
 
+        $adminId = auth()->guard('admin')->id();
+
         $customer->withdrawFloat($request->amount, [
-            'type'     => 'admin_deduct',
-            'admin_id' => auth()->guard('admin')->id(),
-            'reason'   => $request->reason,
+            'type'         => 'admin_deduct',
+            'admin_id'     => $adminId,
+            'reason'       => $request->reason,
+            'creator_type' => 'admin',
+            'creator_id'   => $adminId,
         ]);
 
         if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {

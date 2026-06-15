@@ -29,7 +29,11 @@ return [
                 'col-type'              => '类型',
                 'col-amount'            => '金额',
                 'col-meta'              => '备注',
+                'col-created-by'        => '创建人',
                 'col-date'              => '日期',
+                'creator-system'        => '系统',
+                'creator-admin'         => '管理员',
+                'creator-customer'      => '客户（本人）',
                 'balance-card' => [
                     'title'              => '钱包余额',
                     'balance-label'      => '可用余额',

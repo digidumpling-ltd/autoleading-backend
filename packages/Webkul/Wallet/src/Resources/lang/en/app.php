@@ -29,7 +29,11 @@ return [
                 'col-type'              => 'Type',
                 'col-amount'            => 'Amount',
                 'col-meta'              => 'Note',
+                'col-created-by'        => 'Created By',
                 'col-date'              => 'Date',
+                'creator-system'        => 'System',
+                'creator-admin'         => 'Admin',
+                'creator-customer'      => 'Customer (Self)',
                 'balance-card' => [
                     'title'              => 'Wallet Balance',
                     'balance-label'      => 'Available balance',

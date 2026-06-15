@@ -38,10 +38,12 @@ class WalletRefundListener
         $channel = WalletChannel::find($refund->order->channel_id);
 
         $channel->forceTransferFloat($customer, $amount, [
-            'type'        => 'wallet_refund',
-            'order_id'    => $refund->order_id,
-            'refund_id'   => $refund->id,
-            'description' => trans('bagisto-wallet::app.listeners.wallet-refund.description', ['order' => $refund->order_id]),
+            'type'         => 'wallet_refund',
+            'order_id'     => $refund->order_id,
+            'refund_id'    => $refund->id,
+            'description'  => trans('bagisto-wallet::app.listeners.wallet-refund.description', ['order' => $refund->order_id]),
+            'creator_type' => 'system',
+            'creator_id'   => null,
         ]);
     }
 }

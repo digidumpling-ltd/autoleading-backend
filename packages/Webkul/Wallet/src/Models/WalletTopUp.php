@@ -22,6 +22,8 @@ class WalletTopUp extends Model
         'reference',
         'transaction_id',
         'metadata',
+        'creator_type',
+        'creator_id',
     ];
 
     protected $casts = [

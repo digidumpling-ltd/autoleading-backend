@@ -35,12 +35,16 @@ class WalletTopUpController extends Controller
             return back()->withErrors(['payment_method' => trans('bagisto-wallet::app.customers.account.wallet.topup-invalid-method')]);
         }
 
+        $customerId = auth()->guard('customer')->id();
+
         $topUp = WalletTopUp::create([
-            'customer_id'    => auth()->guard('customer')->id(),
+            'customer_id'    => $customerId,
             'amount'         => (float) $validated['amount'],
             'currency'       => core()->getCurrentCurrencyCode(),
             'payment_method' => $validated['payment_method'],
             'status'         => WalletTopUp::STATUS_PENDING,
+            'creator_type'   => 'customer',
+            'creator_id'     => $customerId,
         ]);
 
         session(['wallet_topup_id' => $topUp->id]);
