@@ -264,6 +264,8 @@ class RewardPointRepository extends Repository
                     'status'           => self::STATUS_PENDING,
                     'exp_date'         => core()->getConfigData('reward.general.general.customer_review_exp_days') ? $current->addDays(core()->getConfigData('reward.general.general.customer_review_exp_days')) : null,
                     'product_reviewed' => 1,
+                    'creator_type'     => 'system',
+                    'creator_id'       => null,
                 ]);
 
                 $products = $this->productRepository->where('id', $data['product_id'])->first();
@@ -319,6 +321,8 @@ class RewardPointRepository extends Repository
                 'note'              => self::CUSTOMER_REGISTER_REWARD,
                 'status'            => self::STATUS_APPROVED,
                 'exp_date'          => core()->getConfigData('reward.general.general.reward-when-customer-register-exp-days') ? $current->addDays((int)core()->getConfigData('reward.general.general.reward-when-customer-register-exp-days')) : null,
+                'creator_type'      => 'system',
+                'creator_id'        => null,
             ]);
 
             Event::dispatch('reward.points.register.after', [$rewards]);
@@ -340,6 +344,8 @@ class RewardPointRepository extends Repository
             'reward_points' => $points,
             'note'          => $note,
             'status'        => self::STATUS_APPROVED,
+            'creator_type'  => 'system',
+            'creator_id'    => null,
         ]);
 
         Event::dispatch('reward.points.save.after', [$reward]);
@@ -357,6 +363,8 @@ class RewardPointRepository extends Repository
             'reward_points' => $points,
             'note'          => $reason,
             'status'        => self::STATUS_APPROVED,
+            'creator_type'  => 'admin',
+            'creator_id'    => auth()->guard('admin')->id(),
         ]);
     }
 
@@ -376,6 +384,8 @@ class RewardPointRepository extends Repository
                 'status'        => $data['status'] ?: self::STATUS_PENDING,
                 'exp_date'      => $data['end_date'] ? \Carbon\Carbon::parse($data['end_date'])->format('Y-m-d') : null,
                 $key            => $value,
+                'creator_type'  => 'system',
+                'creator_id'    => null,
             ]);
 
             Event::dispatch('reward.points.save.after', [$rewards]);
@@ -397,6 +407,8 @@ class RewardPointRepository extends Repository
                 'reward_points' => $data['points'],
                 'note'          => sprintf(self::CUSTOMER_USED_REWARD, $data['points'], $data['id']),
                 'status'        => self::STATUS_USED,
+                'creator_type'  => 'customer',
+                'creator_id'    => $data['customer_id'],
             ]);
 
             Event::dispatch('reward.points.save.after', [$rewards]);

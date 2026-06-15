@@ -30,6 +30,8 @@ class SystemDetailByCustomerDataGrid extends DataGrid
     {
         $customer = $this->customerRepository->find(request('id'));
 
+        $p = DB::getTablePrefix();
+
         $queryBuilder = DB::table('reward_points')
             ->addSelect(
                 'orders.id',
@@ -43,9 +45,17 @@ class SystemDetailByCustomerDataGrid extends DataGrid
                 'reward_points.reward_points',
                 'reward_points.note',
                 'reward_points.status',
+                'reward_points.creator_type',
+                DB::raw("{$p}admins.name as creator_admin_name"),
             )
             ->leftJoin('orders', 'reward_points.order_id', '=', 'orders.id')
+            ->leftJoin('admins', function ($join) {
+                $join->on('admins.id', '=', 'reward_points.creator_id')
+                    ->where('reward_points.creator_type', '=', 'admin');
+            })
             ->where('reward_points.customer_id', $customer->id);
+
+        $this->addFilter('creator_type', 'reward_points.creator_type');
 
         return $queryBuilder;
     }
@@ -144,6 +154,29 @@ class SystemDetailByCustomerDataGrid extends DataGrid
             },
 
             'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'              => 'creator_type',
+            'label'              => trans('rewards::app.admin.rewards.system.view.datagrid.created-by'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => false,
+            'filterable'         => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => [
+                ['label' => trans('rewards::app.admin.rewards.system.view.datagrid.creator-system'),   'value' => 'system'],
+                ['label' => trans('rewards::app.admin.rewards.system.view.datagrid.creator-admin'),    'value' => 'admin'],
+                ['label' => trans('rewards::app.admin.rewards.system.view.datagrid.creator-customer'), 'value' => 'customer'],
+            ],
+            'closure'    => function ($row) {
+                return match ($row->creator_type) {
+                    'admin'    => $row->creator_admin_name ?? trans('rewards::app.admin.rewards.system.view.datagrid.creator-admin'),
+                    'customer' => trans('rewards::app.admin.rewards.system.view.datagrid.creator-customer'),
+                    'system'   => trans('rewards::app.admin.rewards.system.view.datagrid.creator-system'),
+                    default    => '—',
+                };
+            },
         ]);
     }
 }

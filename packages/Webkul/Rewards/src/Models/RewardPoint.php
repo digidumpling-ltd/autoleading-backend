@@ -81,6 +81,8 @@ class RewardPoint extends Model implements RewardPointContract
         'product_category',
         'product_attribute',
         'order_cart',
+        'creator_type',
+        'creator_id',
     ];
 
     protected $statusLabel = [
