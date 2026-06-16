@@ -12,6 +12,7 @@ use Webkul\CustomerVerification\Contracts\CustomerVerificationDocument as Custom
 use Webkul\CustomerVerification\Http\Middleware\VerificationCheckoutMiddleware;
 use Webkul\CustomerVerification\Models\CustomerVerificationDocument;
 use Webkul\CustomerVerification\Observers\CustomerObserver;
+use Webkul\Theme\ViewRenderEventManager;
 
 class CustomerVerificationServiceProvider extends ServiceProvider
 {
@@ -73,16 +74,16 @@ class CustomerVerificationServiceProvider extends ServiceProvider
 
         Customer::observe(CustomerObserver::class);
 
-        Event::listen('bagisto.shop.customers.account.profile.email.after', function () {
+        Event::listen('bagisto.shop.customers.account.profile.email.after', function (ViewRenderEventManager $viewRenderEventManager) {
             $customer = auth()->guard('customer')->user();
 
             if (! $customer) {
                 return;
             }
 
-            return view('customer-verification::shop.customers.account.profile-status-row', [
+            $viewRenderEventManager->addTemplate('customer-verification::shop.customers.account.profile-status-row', [
                 'status' => $customer->verification_status ?? 'incomplete',
-            ])->render();
+            ]);
         });
     }
 }

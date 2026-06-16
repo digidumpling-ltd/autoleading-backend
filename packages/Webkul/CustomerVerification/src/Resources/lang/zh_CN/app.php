@@ -77,6 +77,8 @@ return [
         'cannot_add_unverified'                 => '您的帳戶必須通過驗證才能將商品加入購物車。<a href=":dashboard_url">造訪您的驗證儀表板</a>。',
         'cannot_checkout_unverified'            => '您的帳戶必須通過驗證才能下訂單。請先完成驗證。',
         'document_deleted'                      => '文件已成功刪除。',
+        'document_uploaded'                     => '文件上傳成功。',
+        'upload_document'                       => '上傳文件',
         'open_document'                         => '開啟文件',
         'confirm_delete_document'              => '您確定要刪除此文件嗎？',
         'cannot_delete_doc_approved'           => '已批准客戶的文件不能刪除。',

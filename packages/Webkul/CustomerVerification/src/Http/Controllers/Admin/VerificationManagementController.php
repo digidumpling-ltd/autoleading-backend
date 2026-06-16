@@ -48,6 +48,31 @@ class VerificationManagementController extends Controller
         ]);
     }
 
+    public function uploadDocument(Request $request, int $customerId, string $docType): RedirectResponse
+    {
+        $customer = $this->customerRepository->find($customerId);
+
+        if (! $customer) {
+            abort(404);
+        }
+
+        $validTypes = \Webkul\CustomerVerification\Support\Verification::REQUIRED_DOCUMENT_TYPES;
+
+        if (! in_array($docType, $validTypes, true)) {
+            abort(422);
+        }
+
+        $request->validate([
+            'document' => ['required', 'file', 'mimes:png,jpg,jpeg,webp,pdf', 'max:5120'],
+        ]);
+
+        $this->documentService->storeCustomerDocument($customerId, $docType, $request->file('document'));
+
+        session()->flash('success', trans('customer-verification::app.common.document_uploaded'));
+
+        return redirect()->route('admin.verification.show', $customerId);
+    }
+
     public function destroyDocument(int $customerId, int $documentId): RedirectResponse
     {
         $customer = $this->customerRepository->find($customerId);

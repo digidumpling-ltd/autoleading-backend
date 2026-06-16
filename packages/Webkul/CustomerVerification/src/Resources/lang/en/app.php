@@ -77,6 +77,8 @@ return [
         'cannot_add_unverified'                 => 'Your account must be verified before adding items to the cart. <a href=":dashboard_url">Visit your verification dashboard</a>.',
         'cannot_checkout_unverified'            => 'Your account must be verified before placing an order. Please complete your verification first.',
         'document_deleted'                       => 'Document deleted successfully.',
+        'document_uploaded'                      => 'Document uploaded successfully.',
+        'upload_document'                        => 'Upload document',
         'open_document'                          => 'Open document',
         'confirm_delete_document'               => 'Are you sure you want to delete this document?',
         'cannot_delete_doc_approved'            => 'Documents cannot be deleted for an approved customer.',

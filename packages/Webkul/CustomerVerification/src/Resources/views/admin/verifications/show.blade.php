@@ -63,60 +63,122 @@
 
     {{-- Documents --}}
     <div class="box-shadow mt-5 rounded bg-white dark:bg-gray-900">
-        <p class="p-4 pb-0 text-base font-semibold text-gray-800 dark:text-white">
+        <p class="p-4 pb-2 text-base font-semibold text-gray-800 dark:text-white">
             {{ trans('customer-verification::app.common.uploaded_documents') }}
         </p>
 
-        <div class="grid grid-cols-3 gap-4 p-4 max-xl:grid-cols-2 max-sm:grid-cols-1">
+        <div class="flex flex-wrap gap-1 p-4">
             @foreach(['id_document', 'driver_license', 'address_proof'] as $docType)
-                @php $doc = $documents->firstWhere('type', $docType); @endphp
+                @php
+                    $doc = $documents->firstWhere('type', $docType);
+                    $storageDisk = config('filesystems.default');
+                    $ext = $doc ? strtolower(pathinfo($doc->path, PATHINFO_EXTENSION)) : null;
+                    $isImage = $ext && in_array($ext, ['png', 'jpg', 'jpeg', 'webp']);
+                    $canEdit = $customer->verification_status !== 'approved';
+                @endphp
 
-                <div class="group relative rounded border border-gray-200 p-4 transition-all hover:shadow dark:border-gray-700">
-                    @if ($doc)
-                        @php $storageDisk = config('filesystems.default'); $ext = strtolower(pathinfo($doc->path, PATHINFO_EXTENSION)); @endphp
+                @if ($doc)
+                    {{-- Uploaded card --}}
+                    <div class="group relative grid w-[140px] justify-items-center overflow-hidden rounded border border-gray-200 transition-all hover:border-gray-400 dark:border-gray-700" style="height:140px;">
 
-                        {{-- Delete button — top right, fades in on hover --}}
-                        @if ($customer->verification_status !== 'approved')
-                            <form method="POST" action="{{ route('admin.verification.document.destroy', [$customer->id, $doc->id]) }}"
-                                  class="absolute right-2 top-2">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="icon-delete opacity-0 group-hover:opacity-100 cursor-pointer rounded-md p-1 text-xl text-red-600 transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
-                                        onclick="return confirm('{{ trans('customer-verification::app.common.confirm_delete_document') }}')">
-                                </button>
-                            </form>
-                        @endif
+                        {{-- Content --}}
+                        <div class="flex w-full flex-col items-center justify-center gap-1 overflow-hidden p-2" style="height:140px;">
+                            @if ($isImage)
+                                <img src="{{ Storage::disk($storageDisk)->url($doc->path) }}"
+                                     class="rounded object-cover" style="width:80px;height:80px;flex-shrink:0;" alt="">
+                            @else
+                                <span class="icon-clip text-gray-400 dark:text-gray-500" style="font-size:4rem;line-height:1;flex-shrink:0;"></span>
+                            @endif
 
-                        <div class="flex items-start gap-3">
-                            {{-- Thumbnail --}}
-                            <div class="shrink-0">
-                                @if (in_array($ext, ['png', 'jpg', 'jpeg', 'webp']))
-                                    <img src="{{ Storage::disk($storageDisk)->url($doc->path) }}" alt="{{ $doc->original_name }}" class="h-16 w-16 rounded object-cover">
-                                @else
-                                    <span class="icon-folder text-gray-400" style="font-size:3rem;line-height:1"></span>
+                            <p class="w-full truncate text-center text-xs font-semibold text-gray-600 dark:text-gray-300"
+                               title="{{ $doc->original_name }}">
+                                {{ $doc->original_name }}
+                            </p>
+
+                            <p class="w-full truncate text-center text-xs text-gray-400 dark:text-gray-500">
+                                {{ trans('customer-verification::app.common.document_type_' . $docType) }}
+                            </p>
+                        </div>
+
+                        {{-- Hover overlay — matches product image item style --}}
+                        <div class="invisible absolute bottom-0 top-0 flex w-full flex-col justify-between bg-white p-3 opacity-80 transition-all group-hover:visible dark:bg-gray-900">
+                            <p class="break-all text-xs font-semibold text-gray-600 dark:text-gray-300">
+                                {{ trans('customer-verification::app.common.document_type_' . $docType) }}
+                            </p>
+
+                            <div class="flex justify-between">
+                                {{-- View --}}
+                                <a href="{{ Storage::disk($storageDisk)->url($doc->path) }}"
+                                   target="_blank" rel="noopener noreferrer"
+                                   class="icon-view cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-200 dark:hover:bg-gray-800">
+                                </a>
+
+                                @if ($canEdit)
+                                    {{-- Re-upload --}}
+                                    <form method="POST"
+                                          action="{{ route('admin.verification.document.upload', [$customer->id, $docType]) }}"
+                                          enctype="multipart/form-data"
+                                          style="display:contents;">
+                                        @csrf
+                                        <label class="icon-edit cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-200 dark:hover:bg-gray-800">
+                                            <input type="file" name="document" class="hidden"
+                                                   accept="image/png,image/jpeg,image/webp,application/pdf"
+                                                   onchange="this.closest('form').submit()">
+                                        </label>
+                                    </form>
+
+                                    {{-- Delete --}}
+                                    <form method="POST"
+                                          action="{{ route('admin.verification.document.destroy', [$customer->id, $doc->id]) }}"
+                                          style="display:contents;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                                class="icon-delete cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-200 dark:hover:bg-gray-800"
+                                                onclick="return confirm('{{ trans('customer-verification::app.common.confirm_delete_document') }}')">
+                                        </button>
+                                    </form>
                                 @endif
                             </div>
+                        </div>
+                    </div>
 
-                            {{-- Info --}}
-                            <div class="min-w-0 flex-1">
-                                <p class="mb-1 font-medium text-gray-400">
+                @else
+                    {{-- Empty card — whole card is the upload trigger --}}
+                    @if ($canEdit)
+                        <form method="POST"
+                              action="{{ route('admin.verification.document.upload', [$customer->id, $docType]) }}"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <label class="grid w-[140px] cursor-pointer items-center justify-items-center rounded border border-dashed border-gray-300 transition-all hover:border-gray-400 dark:border-gray-800 dark:mix-blend-exclusion dark:invert" style="height:140px;">
+                                <div class="flex flex-col items-center gap-1 p-2">
+                                    <span class="icon-clip" style="font-size:4rem;line-height:1;color:#d1d5db;"></span>
+                                    <p class="text-center text-xs font-semibold text-gray-400">
+                                        {{ trans('customer-verification::app.common.not_uploaded') }}
+                                    </p>
+                                    <p class="text-xs text-gray-400">
+                                        {{ trans('customer-verification::app.common.document_type_' . $docType) }}
+                                    </p>
+                                </div>
+                                <input type="file" name="document" class="hidden"
+                                       accept="image/png,image/jpeg,image/webp,application/pdf"
+                                       onchange="this.closest('form').submit()">
+                            </label>
+                        </form>
+                    @else
+                        <div class="grid w-[140px] items-center justify-items-center rounded border border-dashed border-gray-200 dark:border-gray-700" style="height:140px;">
+                            <div class="flex flex-col items-center gap-1 p-2">
+                                <span class="icon-clip" style="font-size:4rem;line-height:1;color:#d1d5db;"></span>
+                                <p class="text-center text-xs font-semibold text-gray-400">
+                                    {{ trans('customer-verification::app.common.not_uploaded') }}
+                                </p>
+                                <p class="text-xs text-gray-400">
                                     {{ trans('customer-verification::app.common.document_type_' . $docType) }}
                                 </p>
-                                <a href="{{ Storage::disk($storageDisk)->url($doc->path) }}" target="_blank" rel="noopener noreferrer"
-                                   class="block truncate font-semibold text-blue-600 hover:underline dark:text-blue-400">
-                                    {{ $doc->original_name }}
-                                </a>
-                                <p class="mt-0.5 text-gray-400">{{ $doc->created_at->format('Y-m-d H:i') }}</p>
                             </div>
                         </div>
-                    @else
-                        <p class="font-semibold text-gray-800 dark:text-white">
-                            {{ trans('customer-verification::app.common.document_type_' . $docType) }}
-                        </p>
-                        <p class="mt-1 italic text-gray-400">{{ trans('customer-verification::app.common.not_uploaded') }}</p>
                     @endif
-                </div>
+                @endif
             @endforeach
         </div>
     </div>
