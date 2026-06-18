@@ -2,6 +2,40 @@ import.meta.glob(["../images/**", "../fonts/**"]);
 
 import "../../../../../../Webkul/Shop/src/Resources/assets/js/app.js";
 
+// Parallax: activate on any <img data-parallax> or <video data-parallax>
+// The parent element must have overflow:hidden and a fixed height.
+// Optional: data-parallax-speed="0.3" (0 = no movement, 1 = full scroll speed)
+document.addEventListener('DOMContentLoaded', () => {
+    const els = Array.from(document.querySelectorAll('[data-parallax]'));
+    if (!els.length) return;
+
+    let ticking = false;
+
+    const update = () => {
+        const viewH = window.innerHeight;
+
+        els.forEach(el => {
+            const rect = el.parentElement.getBoundingClientRect();
+            if (rect.bottom < -viewH || rect.top > viewH * 2) return;
+
+            const speed = parseFloat(el.dataset.parallaxSpeed ?? 0.3);
+            const offset = (rect.top + rect.height / 2 - viewH / 2) * speed;
+            el.style.transform = `translateY(${offset}px)`;
+        });
+
+        ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(update);
+            ticking = true;
+        }
+    }, { passive: true });
+
+    update();
+});
+
 // --- Intercept v-rental-slots registration to add max-days limit -------------
 // The shop registers the component in an inline <script type="module"> block that
 // runs after this Vite bundle. We wrap app.component() so the definition is

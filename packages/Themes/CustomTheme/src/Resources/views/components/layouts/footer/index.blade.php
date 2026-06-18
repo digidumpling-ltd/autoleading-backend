@@ -20,6 +20,14 @@
     $hoursRental = core()->getConfigData('general.design.footer.hours_rental');
     $hoursSales  = core()->getConfigData('general.design.footer.hours_sales');
 
+    $facebookUrl  = core()->getConfigData('general.design.footer.facebook_url');
+    $instagramUrl = core()->getConfigData('general.design.footer.instagram_url');
+    $twitterUrl   = core()->getConfigData('general.design.footer.twitter_url');
+    $youtubeUrl   = core()->getConfigData('general.design.footer.youtube_url');
+    $tiktokUrl    = core()->getConfigData('general.design.footer.tiktok_url');
+
+    $hasSocial = $facebookUrl || $instagramUrl || $twitterUrl || $youtubeUrl || $tiktokUrl;
+
     $hasHours   = $hoursRental || $hoursSales;
     $hasContact = $phone || $email || $address || $whatsapp1 || $whatsapp2;
 
@@ -48,33 +56,33 @@
 
 <footer class="mt-9 bg-lightOrange max-sm:mt-10">
 
-    {{-- Desktop: 3 columns inside container --}}
+    {{-- Desktop: 4 columns --}}
     <div class="py-[60px] max-1060:hidden">
         <div class="container">
-        <div class="grid grid-cols-3 gap-x-10" v-pre>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 2.5rem" v-pre>
 
             {{-- Column 1: Quick Links --}}
-            @if (! empty($quickLinks))
             <div>
-                <p class="mb-5 font-bold text-zinc-600">
-                    {{ __('custom-theme::app.footer.quick_links') }}
-                </p>
+                @if (! empty($quickLinks))
+                    <p class="mb-5 font-bold text-zinc-600">
+                        {{ __('custom-theme::app.footer.quick_links') }}
+                    </p>
 
-                <ul class="grid gap-5 text-zinc-600">
-                    @foreach ($quickLinks as $link)
-                        <li>
-                            <a href="{{ $link['url'] }}" class="hover:text-navyBlue">
-                                {{ $link['title'] }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+                    <ul class="grid gap-5 text-zinc-600">
+                        @foreach ($quickLinks as $link)
+                            <li>
+                                <a href="{{ $link['url'] }}" class="hover:text-navyBlue">
+                                    {{ $link['title'] }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
-            @endif
 
             {{-- Column 2: Business Hours --}}
-            @if ($hasHours)
-                <div>
+            <div>
+                @if ($hasHours)
                     <p class="mb-5 font-bold text-zinc-600">
                         {{ __('custom-theme::app.footer.business_hours') }}
                     </p>
@@ -90,12 +98,12 @@
                             <li>{{ __('custom-theme::app.footer.sales_hours_label') }} {{ $hoursSales }}</li>
                         @endif
                     </ul>
-                </div>
-            @endif
+                @endif
+            </div>
 
             {{-- Column 3: Hotline --}}
-            @if ($hasContact)
-                <div>
+            <div>
+                @if ($hasContact)
                     <p class="mb-5 font-bold text-zinc-600">
                         {{ __('custom-theme::app.footer.hotline') }}
                     </p>
@@ -135,7 +143,50 @@
                             </span>
                         @endif
                     </address>
+                @endif
+            </div>
+
+            {{-- Column 4: Follow Us --}}
+            @if ($hasSocial)
+                <div>
+                    <p class="mb-5 font-bold text-zinc-600">
+                        {{ __('custom-theme::app.footer.follow_us') }}
+                    </p>
+
+                    <div class="flex flex-wrap gap-3">
+                        @if ($facebookUrl)
+                            <a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="inline-flex items-center text-zinc-500 hover:text-[#1877F2] transition-colors">
+                                <x-custom-theme::icons.facebook class="w-6 h-6" />
+                            </a>
+                        @endif
+
+                        @if ($instagramUrl)
+                            <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="inline-flex items-center text-zinc-500 hover:text-[#E4405F] transition-colors">
+                                <x-custom-theme::icons.instagram class="w-6 h-6" />
+                            </a>
+                        @endif
+
+                        @if ($twitterUrl)
+                            <a href="{{ $twitterUrl }}" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="inline-flex items-center text-zinc-500 hover:text-black transition-colors">
+                                <x-custom-theme::icons.twitter class="w-5 h-5" />
+                            </a>
+                        @endif
+
+                        @if ($youtubeUrl)
+                            <a href="{{ $youtubeUrl }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="inline-flex items-center text-zinc-500 hover:text-[#FF0000] transition-colors">
+                                <x-custom-theme::icons.youtube class="w-6 h-6" />
+                            </a>
+                        @endif
+
+                        @if ($tiktokUrl)
+                            <a href="{{ $tiktokUrl }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="inline-flex items-center text-zinc-500 hover:text-black transition-colors">
+                                <x-custom-theme::icons.tiktok class="w-5 h-5" />
+                            </a>
+                        @endif
+                    </div>
                 </div>
+            @else
+                <div></div>
             @endif
 
         </div>
@@ -143,104 +194,151 @@
     </div>
 
     {{-- Mobile: accordions --}}
-    <div class="hidden max-1060:grid max-1060:gap-3 max-1060:p-8 max-sm:px-4 max-sm:py-5">
+    <div class="hidden max-1060:block max-1060:p-8 max-sm:px-4 max-sm:py-5">
 
-        @if (! empty($quickLinks))
-            <x-shop::accordion
-                :is-active="false"
-                class="!w-full rounded-xl !border-2 !border-[#e9decc] max-sm:rounded-lg"
-            >
-                <x-slot:header class="rounded-t-lg bg-[#F1EADF] font-bold max-md:p-2.5 max-sm:px-3 max-sm:py-2">
-                    {{ __('custom-theme::app.footer.quick_links') }}
-                </x-slot>
+        <div class="grid gap-3">
+            @if (! empty($quickLinks))
+                <x-shop::accordion
+                    :is-active="false"
+                    class="!w-full rounded-xl !border-2 !border-[#e9decc] max-sm:rounded-lg"
+                >
+                    <x-slot:header class="rounded-t-lg bg-[#F1EADF] font-bold max-md:p-2.5 max-sm:px-3 max-sm:py-2">
+                        {{ __('custom-theme::app.footer.quick_links') }}
+                    </x-slot>
 
-                <x-slot:content class="!bg-transparent !p-4">
-                    <ul class="grid gap-5 text-zinc-600">
-                        @foreach ($quickLinks as $link)
-                            <li>
-                                <a href="{{ $link['url'] }}" class="hover:text-navyBlue max-sm:text-xs">
-                                    {{ $link['title'] }}
+                    <x-slot:content class="!bg-transparent !p-4">
+                        <ul class="grid gap-5 text-zinc-600">
+                            @foreach ($quickLinks as $link)
+                                <li>
+                                    <a href="{{ $link['url'] }}" class="hover:text-navyBlue max-sm:text-xs">
+                                        {{ $link['title'] }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </x-slot>
+                </x-shop::accordion>
+            @endif
+
+            @if ($hasHours)
+                <x-shop::accordion
+                    :is-active="false"
+                    class="!w-full rounded-xl !border-2 !border-[#e9decc] max-sm:rounded-lg"
+                >
+                    <x-slot:header class="rounded-t-lg bg-[#F1EADF] font-bold max-md:p-2.5 max-sm:px-3 max-sm:py-2">
+                        {{ __('custom-theme::app.footer.business_hours') }}
+                    </x-slot>
+
+                    <x-slot:content class="!bg-transparent !p-4">
+                        <ul class="grid gap-5 text-zinc-600">
+                            <li>{{ __('custom-theme::app.footer.hours_days') }}</li>
+
+                            @if ($hoursRental)
+                                <li>{{ __('custom-theme::app.footer.rental_hours_label') }} {{ $hoursRental }}</li>
+                            @endif
+
+                            @if ($hoursSales)
+                                <li>{{ __('custom-theme::app.footer.sales_hours_label') }} {{ $hoursSales }}</li>
+                            @endif
+                        </ul>
+                    </x-slot>
+                </x-shop::accordion>
+            @endif
+
+            @if ($hasContact)
+                <x-shop::accordion
+                    :is-active="false"
+                    class="!w-full rounded-xl !border-2 !border-[#e9decc] max-sm:rounded-lg"
+                >
+                    <x-slot:header class="rounded-t-lg bg-[#F1EADF] font-bold max-md:p-2.5 max-sm:px-3 max-sm:py-2">
+                        {{ __('custom-theme::app.footer.hotline') }}
+                    </x-slot>
+
+                    <x-slot:content class="!bg-transparent !p-4">
+                        <address class="not-italic grid gap-5 text-zinc-600">
+                            @if ($phone)
+                                <span>
+                                    {{ __('custom-theme::app.footer.phone_label') }}
+                                    <a href="tel:{{ preg_replace('/\D/', '', $phone) }}" class="hover:text-navyBlue max-sm:text-xs">{{ $phone }}</a>
+                                </span>
+                            @endif
+
+                            @if ($email)
+                                <span>
+                                    {{ __('custom-theme::app.footer.email_label') }}
+                                    <a href="mailto:{{ $email }}" class="hover:text-navyBlue max-sm:text-xs">{{ $email }}</a>
+                                </span>
+                            @endif
+
+                            @if ($address)
+                                <span class="max-sm:text-xs">{{ __('custom-theme::app.footer.address_label') }} {{ $address }}</span>
+                            @endif
+
+                            @if ($whatsapp1 || $whatsapp2)
+                                <span>
+                                    {{ __('custom-theme::app.footer.whatsapp_label') }}
+                                    @if ($whatsapp1)
+                                        <a href="https://wa.me/{{ preg_replace('/\D/', '', $whatsapp1) }}" class="block hover:text-navyBlue max-sm:text-xs">
+                                            +{{ preg_replace('/\D/', '', $whatsapp1) }}
+                                        </a>
+                                    @endif
+                                    @if ($whatsapp2)
+                                        <a href="https://wa.me/{{ preg_replace('/\D/', '', $whatsapp2) }}" class="block hover:text-navyBlue max-sm:text-xs">
+                                            +{{ preg_replace('/\D/', '', $whatsapp2) }}
+                                        </a>
+                                    @endif
+                                </span>
+                            @endif
+                        </address>
+                    </x-slot>
+                </x-shop::accordion>
+            @endif
+
+            @if ($hasSocial)
+                <x-shop::accordion
+                    :is-active="false"
+                    class="!w-full rounded-xl !border-2 !border-[#e9decc] max-sm:rounded-lg"
+                >
+                    <x-slot:header class="rounded-t-lg bg-[#F1EADF] font-bold max-md:p-2.5 max-sm:px-3 max-sm:py-2">
+                        {{ __('custom-theme::app.footer.follow_us') }}
+                    </x-slot>
+
+                    <x-slot:content class="!bg-transparent !p-4">
+                        <div class="flex flex-wrap gap-4">
+                            @if ($facebookUrl)
+                                <a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="inline-flex items-center text-zinc-500 hover:text-[#1877F2] transition-colors">
+                                    <x-custom-theme::icons.facebook class="w-7 h-7" />
                                 </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </x-slot>
-            </x-shop::accordion>
-        @endif
+                            @endif
 
-        @if ($hasHours)
-            <x-shop::accordion
-                :is-active="false"
-                class="!w-full rounded-xl !border-2 !border-[#e9decc] max-sm:rounded-lg"
-            >
-                <x-slot:header class="rounded-t-lg bg-[#F1EADF] font-bold max-md:p-2.5 max-sm:px-3 max-sm:py-2">
-                    {{ __('custom-theme::app.footer.business_hours') }}
-                </x-slot>
+                            @if ($instagramUrl)
+                                <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="inline-flex items-center text-zinc-500 hover:text-[#E4405F] transition-colors">
+                                    <x-custom-theme::icons.instagram class="w-7 h-7" />
+                                </a>
+                            @endif
 
-                <x-slot:content class="!bg-transparent !p-4">
-                    <ul class="grid gap-5 text-zinc-600">
-                        <li>{{ __('custom-theme::app.footer.hours_days') }}</li>
+                            @if ($twitterUrl)
+                                <a href="{{ $twitterUrl }}" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="inline-flex items-center text-zinc-500 hover:text-black transition-colors">
+                                    <x-custom-theme::icons.twitter class="w-6 h-6" />
+                                </a>
+                            @endif
 
-                        @if ($hoursRental)
-                            <li>{{ __('custom-theme::app.footer.rental_hours_label') }} {{ $hoursRental }}</li>
-                        @endif
+                            @if ($youtubeUrl)
+                                <a href="{{ $youtubeUrl }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="inline-flex items-center text-zinc-500 hover:text-[#FF0000] transition-colors">
+                                    <x-custom-theme::icons.youtube class="w-7 h-7" />
+                                </a>
+                            @endif
 
-                        @if ($hoursSales)
-                            <li>{{ __('custom-theme::app.footer.sales_hours_label') }} {{ $hoursSales }}</li>
-                        @endif
-                    </ul>
-                </x-slot>
-            </x-shop::accordion>
-        @endif
-
-        @if ($hasContact)
-            <x-shop::accordion
-                :is-active="false"
-                class="!w-full rounded-xl !border-2 !border-[#e9decc] max-sm:rounded-lg"
-            >
-                <x-slot:header class="rounded-t-lg bg-[#F1EADF] font-bold max-md:p-2.5 max-sm:px-3 max-sm:py-2">
-                    {{ __('custom-theme::app.footer.hotline') }}
-                </x-slot>
-
-                <x-slot:content class="!bg-transparent !p-4">
-                    <address class="not-italic grid gap-5 text-zinc-600">
-                        @if ($phone)
-                            <span>
-                                {{ __('custom-theme::app.footer.phone_label') }}
-                                <a href="tel:{{ preg_replace('/\D/', '', $phone) }}" class="hover:text-navyBlue max-sm:text-xs">{{ $phone }}</a>
-                            </span>
-                        @endif
-
-                        @if ($email)
-                            <span>
-                                {{ __('custom-theme::app.footer.email_label') }}
-                                <a href="mailto:{{ $email }}" class="hover:text-navyBlue max-sm:text-xs">{{ $email }}</a>
-                            </span>
-                        @endif
-
-                        @if ($address)
-                            <span class="max-sm:text-xs">{{ __('custom-theme::app.footer.address_label') }} {{ $address }}</span>
-                        @endif
-
-                        @if ($whatsapp1 || $whatsapp2)
-                            <span>
-                                {{ __('custom-theme::app.footer.whatsapp_label') }}
-                                @if ($whatsapp1)
-                                    <a href="https://wa.me/{{ preg_replace('/\D/', '', $whatsapp1) }}" class="block hover:text-navyBlue max-sm:text-xs">
-                                        +{{ preg_replace('/\D/', '', $whatsapp1) }}
-                                    </a>
-                                @endif
-                                @if ($whatsapp2)
-                                    <a href="https://wa.me/{{ preg_replace('/\D/', '', $whatsapp2) }}" class="block hover:text-navyBlue max-sm:text-xs">
-                                        +{{ preg_replace('/\D/', '', $whatsapp2) }}
-                                    </a>
-                                @endif
-                            </span>
-                        @endif
-                    </address>
-                </x-slot>
-            </x-shop::accordion>
-        @endif
+                            @if ($tiktokUrl)
+                                <a href="{{ $tiktokUrl }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="inline-flex items-center text-zinc-500 hover:text-black transition-colors">
+                                    <x-custom-theme::icons.tiktok class="w-6 h-6" />
+                                </a>
+                            @endif
+                        </div>
+                    </x-slot>
+                </x-shop::accordion>
+            @endif
+        </div>
 
     </div>
 
