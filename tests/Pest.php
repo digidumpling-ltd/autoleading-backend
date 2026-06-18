@@ -45,6 +45,7 @@ uses(ShopTestCase::class)->in('../packages/Webkul/Shop/tests');
 uses(StripeTestCase::class)->in('../packages/Webkul/Stripe/tests');
 uses(RewardsTestCase::class)->in('../packages/Webkul/Rewards/tests');
 uses(WalletTestCase::class)->in('../packages/Webkul/Wallet/tests');
+uses(Tests\TestCase::class)->in('../packages/Webkul/MobilePass/tests');
 uses(MembershipTestCase::class)->in('../packages/Webkul/Membership/tests');
 uses(YedpayTestCase::class)->in('../packages/Webkul/Yedpay/tests');
 uses(RentalPricingTestCase::class)->in('../packages/Webkul/RentalPricing/tests');

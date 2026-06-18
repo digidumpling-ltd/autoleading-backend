@@ -114,4 +114,5 @@ return [
     CustomThemeServiceProvider::class,
     BlogServiceProvider::class,
     CustomFormServiceProvider::class,
+    \Webkul\MobilePass\Providers\MobilePassServiceProvider::class,
 ];

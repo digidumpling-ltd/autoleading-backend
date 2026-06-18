@@ -87,6 +87,11 @@
             <directory suffix="Test.php">packages/Webkul/Wallet/tests/Feature</directory>
         </testsuite>
 
+        <!-- MobilePass package testsuites. -->
+        <testsuite name="MobilePass Feature Test">
+            <directory suffix="Test.php">packages/Webkul/MobilePass/tests/Feature</directory>
+        </testsuite>
+
         <!-- Yedpay package testsuites. -->
         <testsuite name="Yedpay Feature Test">
             <directory suffix="Test.php">packages/Webkul/Yedpay/tests/Feature</directory>

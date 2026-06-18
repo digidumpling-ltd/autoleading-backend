@@ -50,6 +50,7 @@
         "razorpay/razorpay": "^2.9",
         "secondnetwork/blade-tabler-icons": "^3.41",
         "simplesoftwareio/simple-qrcode": "^4.2",
+        "spatie/laravel-mobile-pass": "^1.0",
         "spatie/laravel-responsecache": "^7.4",
         "spatie/laravel-sitemap": "^7.3",
         "stevebauman/purify": "^6.3",
@@ -123,7 +124,8 @@
             "Webkul\\RentalPricing\\": "packages/Webkul/RentalPricing/src",
             "Themes\\CustomTheme\\": "packages/Themes/CustomTheme/src",
             "Webbycrown\\BlogBagisto\\": "packages/Webbycrown/BlogBagisto/src",
-            "Webkul\\CustomForm\\": "packages/Webkul/CustomForm/src"
+            "Webkul\\CustomForm\\": "packages/Webkul/CustomForm/src",
+            "Webkul\\MobilePass\\": "packages/Webkul/MobilePass/src"
         }
     },
     "autoload-dev": {
@@ -145,7 +147,8 @@
             "Webkul\\Wallet\\Tests\\": "packages/Webkul/Wallet/tests",
             "Webkul\\Membership\\Tests\\": "packages/Webkul/Membership/tests",
             "Webkul\\Yedpay\\Tests\\": "packages/Webkul/Yedpay/tests",
-            "Webkul\\RentalPricing\\Tests\\": "packages/Webkul/RentalPricing/tests"
+            "Webkul\\RentalPricing\\Tests\\": "packages/Webkul/RentalPricing/tests",
+            "Webkul\\MobilePass\\Tests\\": "packages/Webkul/MobilePass/tests"
         }
     },
     "scripts": {

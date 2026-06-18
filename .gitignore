@@ -25,6 +25,7 @@ boost.json
 /docker-compose-collection
 Homestead.json
 Homestead.yaml
+service-account.json
 /ignorables/*
 /node_modules
 npm-debug.log
