@@ -10,5 +10,6 @@ class WalletBalanceUpdated
         public readonly float $newBalance,
         public readonly string $reason,
         public readonly ?int $customerGroupId = null,
+        public readonly ?int $transactionId = null,
     ) {}
 }

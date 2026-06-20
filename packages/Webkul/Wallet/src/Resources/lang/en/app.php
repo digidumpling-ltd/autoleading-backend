@@ -108,7 +108,7 @@ return [
 
     'mail' => [
         'topup-success' => [
-            'subject'             => '[Auto Leading] Online Top-Up Confirmation & Thank You Notice',
+            'subject'             => '[Auto Leading] Online Top-Up Confirmation',
             'dear'                => 'Dear :customer_name',
             'greeting'            => 'Thank you for choosing and supporting Auto Leading!',
             'body'                => 'We have successfully received your online top-up request. The reloaded amount and any eligible bonus credit will be credited to your membership account within 1 to 24 hours. Once the balance has been updated, you can log in to the Member Center to check your latest account statement.',
@@ -118,6 +118,21 @@ return [
             'topup-amount'        => 'Top-Up Amount',
             'footer'              => 'If your account balance is not updated after 24 hours, or if you have any questions regarding this transaction, please feel free to reply directly to this email or contact our customer service team.',
             'thanks'              => 'Thank you once again for your continued support!',
+            'closing'             => 'Best regards,',
+            'team'                => 'The Auto Leading Team',
+        ],
+
+        'wallet-reward' => [
+            'subject'             => '[Auto Leading] Wallet Promotion Reward Credited',
+            'dear'                => 'Dear :customer_name',
+            'greeting'            => 'Great news! You have received a promotion reward.',
+            'body'                => 'A wallet credit has been added to your account as part of a promotion reward. The amount is now available in your wallet balance.',
+            'transaction-details' => 'Reward Details',
+            'member-account'      => 'Member Account',
+            'transaction-time'    => 'Credited At',
+            'topup-amount'        => 'Reward Amount',
+            'footer'              => 'If you have any questions regarding this reward, please contact our customer service team.',
+            'thanks'              => 'Thank you for being a valued member!',
             'closing'             => 'Best regards,',
             'team'                => 'The Auto Leading Team',
         ],

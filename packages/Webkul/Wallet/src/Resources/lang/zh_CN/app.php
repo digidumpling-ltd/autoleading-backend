@@ -108,7 +108,7 @@ return [
 
     'mail' => [
         'topup-success' => [
-            'subject'             => '【Auto Leading】網上增值確認及感謝通知',
+            'subject'             => '【Auto Leading】網上增值確認',
             'dear'                => '親愛的 :customer_name',
             'greeting'            => '感謝您支持 Auto Leading 的服務！',
             'body'                => '我們已成功收到您的網上增值申請。相關金額及贈送金額將於 24 小時內存入您的會員帳戶。金額到帳後，您可以登入會員中心查看最新餘額。',

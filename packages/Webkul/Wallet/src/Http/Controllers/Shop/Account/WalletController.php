@@ -44,7 +44,12 @@ class WalletController extends Controller
 
         $oldBalance = $customer->balanceFloatNum;
 
-        $customer->depositFloat($request->amount, ['description' => 'Manual top-up']);
+        $transaction = $customer->depositFloat($request->amount, [
+            'type'         => 'customer_topup',
+            'creator_type' => 'customer',
+            'creator_id'   => $customer->id,
+            'description'  => 'Manual top-up',
+        ]);
 
         $newBalance = $customer->fresh()->balanceFloatNum;
 
@@ -55,11 +60,8 @@ class WalletController extends Controller
                 newBalance: $newBalance,
                 reason: 'wallet_topup',
                 customerGroupId: $customer->customer_group_id,
+                transactionId: $transaction->id,
             ));
-        }
-
-        if (core()->getConfigData('sales.wallet.notifications.topup_email_enabled')) {
-            $this->walletService->notifyTopUp($customer, (float) $request->amount, $newBalance);
         }
 
         return redirect()->route('shop.customers.account.wallet.index')

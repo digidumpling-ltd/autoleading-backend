@@ -3,6 +3,7 @@
 namespace Webkul\Wallet\Services;
 
 use Illuminate\Support\Facades\Mail;
+use Webkul\Wallet\Mail\WalletRewardSuccess;
 use Webkul\Wallet\Mail\WalletTopUpSuccess;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
 
@@ -27,6 +28,17 @@ class WalletService
             'transaction_time' => now()->format('Y-m-d H:i:s'),
             'amount'           => core()->formatPrice($amount),
             'new_balance'      => core()->formatPrice($newBalance),
+        ]));
+    }
+
+    public function notifyReward(WalletCustomer $customer, float $amount): void
+    {
+        Mail::queue(new WalletRewardSuccess([
+            'email'            => $customer->email,
+            'name'             => $customer->name,
+            'customer_id'      => $customer->id,
+            'transaction_time' => now()->format('Y-m-d H:i:s'),
+            'amount'           => core()->formatPrice($amount),
         ]));
     }
 }
