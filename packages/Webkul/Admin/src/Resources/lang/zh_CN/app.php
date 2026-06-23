@@ -109,6 +109,9 @@ return [
 
         'setup' => [
             'back' => '返回',
+            'backup-codes-subtitle' => '请将这些代码安全存放——每个代码仅能使用一次。',
+            'backup-codes-title' => '您的备份代码',
+            'backup-codes-warning' => '请妥善保管这些代码，不要与他人分享。请离线存放在安全位置。',
             'code-label' => '验证码',
             'code-placeholder' => '输入6位验证码',
             'enable' => '启用',
@@ -5057,16 +5060,20 @@ return [
                     ],
 
                     'calculation' => [
-                        'title' => '计算设置',
-                        'title-info' => '与商品或服务的价格、折扣、税费、附加费用等相关的详细信息。',
+                        'after-discount' => '折扣后',
+                        'apply-tax-on' => '应用税于',
+                        'apply-tax-on-info' => '选择税费按原始商品价格（折扣前）计算，还是按应用购物车规则折扣后的价格（折扣后）计算。此设置仅适用于不含税价格。',
                         'based-on' => '计算依据',
-                        'shipping-address' => '收货地址',
+                        'before-discount' => '折扣前',
                         'billing-address' => '账单地址',
-                        'shipping-origin' => '发货地',
-                        'product-prices' => '产品价格',
-                        'shipping-prices' => '运费',
                         'excluding-tax' => '未含税',
                         'including-tax' => '含税',
+                        'product-prices' => '产品价格',
+                        'shipping-address' => '收货地址',
+                        'shipping-origin' => '发货地',
+                        'shipping-prices' => '运费',
+                        'title' => '计算设置',
+                        'title-info' => '与商品或服务的价格、折扣、税费、附加费用等相关的详细信息。',
                     ],
 
                     'default-destination-calculation' => [
@@ -5078,6 +5085,8 @@ return [
                     ],
 
                     'shopping-cart' => [
+                        'show-tax-breakdown' => '显示税费明细',
+                        'show-tax-breakdown-info' => '在购物车和结账摘要中显示按商品、按税率的详细税费明细。用于调试。',
                         'title' => '购物车显示设置',
                         'title-info' => '设置购物车中税费的显示方式。',
                         'display-prices' => '显示价格',

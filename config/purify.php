@@ -43,11 +43,11 @@ return [
         'default' => [
             'Core.Encoding' => 'utf-8',
             'HTML.Doctype' => 'HTML 4.01 Transitional',
-            'HTML.Allowed' => 'h1[style|class],h2[style|class],h3[style|class],h4[style|class],h5[style|class],h6[style|class],b[class],u[class],strong[class],i[class],em[class],s[class],del[class],small[style|class],a[href|title|target|rel|style|class],ul[class],ol[class],li[class],p[style|class],br,span[style|class],img[width|height|alt|src|style|class],blockquote[class],table[style|cellpadding|cellspacing|width|class],thead[class],tbody[class],tfoot[class],tr[style|class],th[style|colspan|rowspan|scope|class],td[style|colspan|rowspan|class],div[style|class],hr,section[style|class]',
+            'HTML.Allowed' => 'h1[class|style],h2[class|style],h3[class|style],h4[class|style],h5[class|style],h6[class|style],b,u,strong,i,em,s,del,small[class|style],a[href|title|target|rel|class|style],ul[class|style],ol[class|style],li[class|style],p[class|style],br,hr,span[class|style],img[width|height|alt|src|class|style],blockquote[class|style],div[class|style],pre[class|style],code[class|style],section[class|style],table[class|style|border|cellpadding|cellspacing|width|summary],thead[class|style],tbody[class|style],tfoot[class|style],tr[class|style],td[class|style|colspan|rowspan|width|height|align|valign],th[class|style|colspan|rowspan|width|height|align|valign|scope],caption[class|style],colgroup[span|width],col[span|width]',
             'HTML.ForbiddenElements' => '',
             'CSS.AllowTricky' => true,
             'CSS.Proprietary' => true,
-            'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,color,background-color,text-align,margin,margin-top,margin-bottom,margin-left,margin-right,padding,padding-top,padding-bottom,padding-left,padding-right,border,border-top,border-bottom,border-left,border-right,border-collapse,border-color,border-radius,width,height,max-width,min-width,display,vertical-align,line-height,white-space',
+            'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding,padding-left,padding-right,padding-top,padding-bottom,margin,margin-left,margin-right,margin-top,margin-bottom,color,background-color,text-align,vertical-align,width,height,max-width,min-width,display,line-height,white-space,border,border-collapse,border-spacing,border-color,border-style,border-width,border-radius,border-top,border-right,border-bottom,border-left',
             'AutoFormat.AutoParagraph' => false,
             'AutoFormat.RemoveEmpty' => false,
         ],

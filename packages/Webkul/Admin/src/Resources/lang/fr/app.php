@@ -109,6 +109,9 @@ return [
 
         'setup' => [
             'back' => 'Retour',
+            'backup-codes-subtitle' => 'Conservez ces codes en lieu sûr – chacun ne peut être utilisé qu’une seule fois.',
+            'backup-codes-title' => 'Vos codes de secours',
+            'backup-codes-warning' => 'Gardez ces codes en sécurité et ne les partagez avec personne. Conservez-les hors ligne dans un endroit sûr.',
             'code-label' => 'Code de vérification',
             'code-placeholder' => 'Entrez le code à 6 chiffres',
             'enable' => 'Activer',
@@ -5057,16 +5060,20 @@ return [
                     ],
 
                     'calculation' => [
-                        'title' => 'Paramètres de calcul',
-                        'title-info' => 'Détails sur le coût des biens ou services, y compris le prix de base, les remises, les taxes et les frais supplémentaires.',
+                        'after-discount' => 'Après remise',
+                        'apply-tax-on' => 'Appliquer la taxe sur',
+                        'apply-tax-on-info' => 'Choisissez si la taxe est calculée sur le prix d\'origine du produit (Avant remise) ou sur le prix après application des remises de règles du panier (Après remise). Ce paramètre s\'applique uniquement aux prix hors taxe.',
                         'based-on' => 'Calcul basé sur',
-                        'shipping-address' => 'Adresse de livraison',
+                        'before-discount' => 'Avant remise',
                         'billing-address' => 'Adresse de facturation',
-                        'shipping-origin' => 'Origine de l\'expédition',
-                        'product-prices' => 'Prix des produits',
-                        'shipping-prices' => 'Prix d\'expédition',
                         'excluding-tax' => 'Hors taxe',
                         'including-tax' => 'Toutes taxes comprises',
+                        'product-prices' => 'Prix des produits',
+                        'shipping-address' => 'Adresse de livraison',
+                        'shipping-origin' => 'Origine de l\'expédition',
+                        'shipping-prices' => 'Prix d\'expédition',
+                        'title' => 'Paramètres de calcul',
+                        'title-info' => 'Détails sur le coût des biens ou services, y compris le prix de base, les remises, les taxes et les frais supplémentaires.',
                     ],
 
                     'default-destination-calculation' => [
@@ -5078,6 +5085,8 @@ return [
                     ],
 
                     'shopping-cart' => [
+                        'show-tax-breakdown' => 'Afficher le détail des taxes',
+                        'show-tax-breakdown-info' => 'Affiche un détail des taxes par produit et par taux dans le récapitulatif du panier et de la commande. Destiné au débogage.',
                         'title' => 'Paramètres d\'affichage du panier',
                         'title-info' => 'Définir l\'affichage des taxes dans le panier',
                         'display-prices' => 'Afficher les prix',

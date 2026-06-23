@@ -109,6 +109,9 @@ return [
 
         'setup' => [
             'back' => 'Zurück',
+            'backup-codes-subtitle' => 'Bewahren Sie diese Codes an einem sicheren Ort auf – jeder Code kann nur einmal verwendet werden.',
+            'backup-codes-title' => 'Ihre Backup-Codes',
+            'backup-codes-warning' => 'Bewahren Sie diese Codes sicher auf und teilen Sie sie nicht mit anderen. Lagern Sie sie offline an einem sicheren Ort.',
             'code-label' => 'Verifizierungscode',
             'code-placeholder' => '6-stelligen Code eingeben',
             'enable' => 'Aktivieren',
@@ -5057,16 +5060,20 @@ return [
                     ],
 
                     'calculation' => [
-                        'title' => 'Berechnungseinstellungen',
-                        'title-info' => 'Details zu den Kosten von Waren oder Dienstleistungen, einschließlich Grundpreis, Rabatten, Steuern und zusätzlichen Gebühren.',
+                        'after-discount' => 'Nach Rabatt',
+                        'apply-tax-on' => 'Steuer anwenden auf',
+                        'apply-tax-on-info' => 'Legt fest, ob die Steuer auf den ursprünglichen Produktpreis (Vor Rabatt) oder auf den Preis nach Anwendung von Warenkorbregel-Rabatten (Nach Rabatt) berechnet wird. Diese Einstellung gilt nur für Preise ohne Steuer.',
                         'based-on' => 'Berechnung basierend auf',
-                        'shipping-address' => 'Lieferadresse',
+                        'before-discount' => 'Vor Rabatt',
                         'billing-address' => 'Rechnungsadresse',
-                        'shipping-origin' => 'Versandursprung',
-                        'product-prices' => 'Produktpreise',
-                        'shipping-prices' => 'Versandpreise',
                         'excluding-tax' => 'Ohne Steuern',
                         'including-tax' => 'Inklusive Steuern',
+                        'product-prices' => 'Produktpreise',
+                        'shipping-address' => 'Lieferadresse',
+                        'shipping-origin' => 'Versandursprung',
+                        'shipping-prices' => 'Versandpreise',
+                        'title' => 'Berechnungseinstellungen',
+                        'title-info' => 'Details zu den Kosten von Waren oder Dienstleistungen, einschließlich Grundpreis, Rabatten, Steuern und zusätzlichen Gebühren.',
                     ],
 
                     'default-destination-calculation' => [
@@ -5078,6 +5085,8 @@ return [
                     ],
 
                     'shopping-cart' => [
+                        'show-tax-breakdown' => 'Steueraufschlüsselung anzeigen',
+                        'show-tax-breakdown-info' => 'Zeigt eine detaillierte Steueraufschlüsselung pro Produkt und Satz in der Warenkorb- und Kassenübersicht an. Für Debugging-Zwecke.',
                         'title' => 'Einstellungen zur Anzeige im Warenkorb',
                         'title-info' => 'Legen Sie die Anzeige von Steuern im Warenkorb fest',
                         'display-prices' => 'Preise anzeigen',

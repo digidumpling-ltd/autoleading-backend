@@ -109,6 +109,9 @@ return [
 
         'setup' => [
             'back' => 'Geri',
+            'backup-codes-subtitle' => 'Bu kodları güvenli bir yerde saklayın – her biri yalnızca bir kez kullanılabilir.',
+            'backup-codes-title' => 'Yedek Kodlarınız',
+            'backup-codes-warning' => 'Bu kodları güvende tutun ve kimseyle paylaşmayın. Çevrimdışı güvenli bir yerde saklayın.',
             'code-label' => 'Doğrulama Kodu',
             'code-placeholder' => '6 haneli kodu girin',
             'enable' => 'Etkinleştir',
@@ -5057,16 +5060,20 @@ return [
                     ],
 
                     'calculation' => [
-                        'title' => 'Hesaplama Ayarları',
-                        'title-info' => 'Temel fiyat, indirimler, vergiler ve ek ücretler gibi mal veya hizmetlerin maliyeti hakkında ayrıntılar.',
+                        'after-discount' => 'İndirimden Sonra',
+                        'apply-tax-on' => 'Vergiyi Uygula',
+                        'apply-tax-on-info' => 'Verginin orijinal ürün fiyatı üzerinden mi (İndirimden Önce) yoksa sepet kuralı indirimleri uygulandıktan sonraki fiyat üzerinden mi (İndirimden Sonra) hesaplanacağını seçin. Bu ayar yalnızca vergi hariç fiyatlar için geçerlidir.',
                         'based-on' => 'Hesaplama Temeli',
-                        'shipping-address' => 'Teslimat Adresi',
+                        'before-discount' => 'İndirimden Önce',
                         'billing-address' => 'Fatura Adresi',
-                        'shipping-origin' => 'Nakliye Kaynağı',
-                        'product-prices' => 'Ürün Fiyatları',
-                        'shipping-prices' => 'Nakliye Fiyatları',
                         'excluding-tax' => 'Vergi Hariç',
                         'including-tax' => 'Vergi Dahil',
+                        'product-prices' => 'Ürün Fiyatları',
+                        'shipping-address' => 'Teslimat Adresi',
+                        'shipping-origin' => 'Nakliye Kaynağı',
+                        'shipping-prices' => 'Nakliye Fiyatları',
+                        'title' => 'Hesaplama Ayarları',
+                        'title-info' => 'Temel fiyat, indirimler, vergiler ve ek ücretler gibi mal veya hizmetlerin maliyeti hakkında ayrıntılar.',
                     ],
 
                     'default-destination-calculation' => [
@@ -5078,6 +5085,8 @@ return [
                     ],
 
                     'shopping-cart' => [
+                        'show-tax-breakdown' => 'Vergi Dökümünü Göster',
+                        'show-tax-breakdown-info' => 'Sepet ve ödeme özetinde ürün ve oran bazında ayrıntılı vergi dökümü gösterir. Hata ayıklama amaçlıdır.',
                         'title' => 'Alışveriş Sepeti Görüntüleme Ayarları',
                         'title-info' => 'Alışveriş sepetinde vergilerin görüntülenmesini ayarlayın',
                         'display-prices' => 'Fiyatları Göster',
