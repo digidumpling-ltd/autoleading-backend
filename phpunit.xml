@@ -96,6 +96,14 @@
         <testsuite name="Yedpay Feature Test">
             <directory suffix="Test.php">packages/Webkul/Yedpay/tests/Feature</directory>
         </testsuite>
+
+        <!-- CustomPromotions package testsuites. -->
+        <testsuite name="CustomPromotions Unit Test">
+            <directory suffix="Test.php">packages/Webkul/CustomPromotions/tests/Unit</directory>
+        </testsuite>
+        <testsuite name="CustomPromotions Feature Test">
+            <directory suffix="Test.php">packages/Webkul/CustomPromotions/tests/Feature</directory>
+        </testsuite>
     </testsuites>
 
     <source>

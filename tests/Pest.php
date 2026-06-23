@@ -16,6 +16,7 @@ use Webkul\Stripe\Tests\StripeTestCase;
 use Webkul\Membership\Tests\MembershipTestCase;
 use Webkul\Rewards\Tests\RewardsTestCase;
 use Webkul\Wallet\Tests\WalletTestCase;
+use Webkul\CustomPromotions\Tests\CustomPromotionsTestCase;
 use Webkul\Yedpay\Tests\YedpayTestCase;
 
 ini_set('memory_limit', '1024M');
@@ -49,6 +50,7 @@ uses(Tests\TestCase::class)->in('../packages/Webkul/MobilePass/tests');
 uses(MembershipTestCase::class)->in('../packages/Webkul/Membership/tests');
 uses(YedpayTestCase::class)->in('../packages/Webkul/Yedpay/tests');
 uses(RentalPricingTestCase::class)->in('../packages/Webkul/RentalPricing/tests');
+uses(CustomPromotionsTestCase::class)->in('../packages/Webkul/CustomPromotions/tests');
 
 /*
 |--------------------------------------------------------------------------

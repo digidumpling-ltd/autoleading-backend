@@ -125,7 +125,8 @@
             "Themes\\CustomTheme\\": "packages/Themes/CustomTheme/src",
             "Webbycrown\\BlogBagisto\\": "packages/Webbycrown/BlogBagisto/src",
             "Webkul\\CustomForm\\": "packages/Webkul/CustomForm/src",
-            "Webkul\\MobilePass\\": "packages/Webkul/MobilePass/src"
+            "Webkul\\MobilePass\\": "packages/Webkul/MobilePass/src",
+            "Webkul\\CustomPromotions\\": "packages/Webkul/CustomPromotions/src"
         }
     },
     "autoload-dev": {
@@ -148,7 +149,8 @@
             "Webkul\\Membership\\Tests\\": "packages/Webkul/Membership/tests",
             "Webkul\\Yedpay\\Tests\\": "packages/Webkul/Yedpay/tests",
             "Webkul\\RentalPricing\\Tests\\": "packages/Webkul/RentalPricing/tests",
-            "Webkul\\MobilePass\\Tests\\": "packages/Webkul/MobilePass/tests"
+            "Webkul\\MobilePass\\Tests\\": "packages/Webkul/MobilePass/tests",
+            "Webkul\\CustomPromotions\\Tests\\": "packages/Webkul/CustomPromotions/tests"
         }
     },
     "scripts": {

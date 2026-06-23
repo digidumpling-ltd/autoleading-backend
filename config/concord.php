@@ -56,5 +56,6 @@ return [
         Webkul\Membership\Providers\ModuleServiceProvider::class,
         Webkul\RentalPricing\Providers\ModuleServiceProvider::class,
         Webbycrown\BlogBagisto\Providers\ModuleServiceProvider::class,
+        Webkul\CustomPromotions\Providers\ModuleServiceProvider::class,
     ],
 ];

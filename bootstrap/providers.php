@@ -115,4 +115,5 @@ return [
     BlogServiceProvider::class,
     CustomFormServiceProvider::class,
     \Webkul\MobilePass\Providers\MobilePassServiceProvider::class,
+    \Webkul\CustomPromotions\Providers\CustomPromotionsServiceProvider::class,
 ];
