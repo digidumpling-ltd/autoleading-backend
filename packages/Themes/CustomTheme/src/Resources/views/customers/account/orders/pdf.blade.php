@@ -15,26 +15,30 @@
         />
 
         @php
+            // Use the locale stored at order time (in item's additional data) so the correct
+            // font is chosen regardless of which locale the admin or customer is currently using.
+            $orderLocale = $invoice->items->first()?->additional['locale'] ?? app()->getLocale();
+
             $fontPath = [];
 
-            if (app()->getLocale() == 'en' && $orderCurrencyCode == 'INR') {
+            if ($orderLocale == 'en' && $orderCurrencyCode == 'INR') {
                 $fontFamily = [
                     'regular' => 'DejaVu Sans',
                     'bold'    => 'DejaVu Sans',
                 ];
-            }  else {
+            } else {
                 $fontFamily = [
                     'regular' => 'Arial, sans-serif',
                     'bold'    => 'Arial, sans-serif',
                 ];
             }
 
-            if (in_array(app()->getLocale(), ['ar', 'he', 'fa', 'tr', 'ru', 'uk'])) {
+            if (in_array($orderLocale, ['ar', 'he', 'fa', 'tr', 'ru', 'uk'])) {
                 $fontFamily = [
                     'regular' => 'DejaVu Sans',
                     'bold'    => 'DejaVu Sans',
                 ];
-            } elseif (str_starts_with(app()->getLocale(), 'zh')) {
+            } elseif (str_starts_with($orderLocale, 'zh')) {
                 $fontPath = [
                     'regular' => 'file://' . public_path('fonts/NotoSansSC-Regular.ttf'),
                     'bold'    => 'file://' . public_path('fonts/NotoSansSC-Bold.ttf'),
@@ -44,7 +48,7 @@
                     'regular' => 'Noto Sans SC',
                     'bold'    => 'Noto Sans SC',
                 ];
-            } elseif (app()->getLocale() == 'ja') {
+            } elseif ($orderLocale == 'ja') {
                 $fontPath = [
                     'regular' => asset('fonts/NotoSansJP-Regular.ttf'),
                     'bold'    => asset('fonts/NotoSansJP-Bold.ttf'),
@@ -54,7 +58,7 @@
                     'regular' => 'Noto Sans JP',
                     'bold'    => 'Noto Sans JP Bold',
                 ];
-            } elseif (app()->getLocale() == 'hi_IN') {
+            } elseif ($orderLocale == 'hi_IN') {
                 $fontPath = [
                     'regular' => asset('fonts/Hind-Regular.ttf'),
                     'bold'    => asset('fonts/Hind-Bold.ttf'),
@@ -64,7 +68,7 @@
                     'regular' => 'Hind',
                     'bold'    => 'Hind Bold',
                 ];
-            } elseif (app()->getLocale() == 'bn') {
+            } elseif ($orderLocale == 'bn') {
                 $fontPath = [
                     'regular' => asset('fonts/NotoSansBengali-Regular.ttf'),
                     'bold'    => asset('fonts/NotoSansBengali-Bold.ttf'),
@@ -74,7 +78,7 @@
                     'regular' => 'Noto Sans Bengali',
                     'bold'    => 'Noto Sans Bengali Bold',
                 ];
-            } elseif (app()->getLocale() == 'sin') {
+            } elseif ($orderLocale == 'sin') {
                 $fontPath = [
                     'regular' => asset('fonts/NotoSansSinhala-Regular.ttf'),
                     'bold'    => asset('fonts/NotoSansSinhala-Bold.ttf'),
