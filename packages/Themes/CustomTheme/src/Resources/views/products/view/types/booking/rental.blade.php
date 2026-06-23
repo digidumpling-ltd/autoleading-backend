@@ -26,6 +26,8 @@
     :day-pricing-rules="{{ json_encode($dayPricingRules) }}"
 ></v-rental-slots>
 
+@include('custom_promotions::shop.components.rental-promo-card')
+
 @pushOnce('scripts')
     <script
         type="text/x-template"
@@ -367,6 +369,12 @@
                     </p>
                 </template>
             </div>
+
+            <!-- Rental promo card -->
+            <v-rental-promo-card
+                :date-from="booking.date_from"
+                :date-to="booking.date_to"
+            />
 
             <!-- WhatsApp Enquiry Button -->
             @if ($waNumber)

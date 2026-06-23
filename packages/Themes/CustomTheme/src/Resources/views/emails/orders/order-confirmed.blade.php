@@ -51,6 +51,18 @@
                 </td>
             </tr>
         </table>
+
+        @php $customerComments = $order->comments->where('customer_notified', 1); @endphp
+        @if ($customerComments->isNotEmpty())
+        <div style="margin-top:16px;padding:12px 16px;background:#fffbeb;border-left:4px solid #f59e0b;border-radius:4px;">
+            @foreach ($customerComments as $orderComment)
+            <div style="display:flex;align-items:flex-start;margin-bottom:4px;">
+                <span style="color:#22c55e;font-weight:700;font-size:14px;line-height:20px;margin-right:8px;flex-shrink:0;">✓</span>
+                <p style="font-size:14px;color:#384860;margin:0;line-height:20px;">{{ $orderComment->comment }}</p>
+            </div>
+            @endforeach
+        </div>
+        @endif
     </div>
 
     {{-- Process overview --}}
