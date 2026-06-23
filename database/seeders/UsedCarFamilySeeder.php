@@ -91,6 +91,14 @@ class UsedCarFamilySeeder extends Seeder
             'is_visible_on_front' => 1,
             'position'            => 51,
         ],
+        'post_only' => [
+            'admin_name'          => 'Post Only (Inquiry)',
+            'type'                => 'boolean',
+            'is_required'         => 0,
+            'is_filterable'       => 0,
+            'is_visible_on_front' => 0,
+            'position'            => 52,
+        ],
     ];
 
     private array $selectOptions = [
@@ -140,6 +148,7 @@ class UsedCarFamilySeeder extends Seeder
         'mileage'         => ['en' => 'Mileage',            'zh_CN' => '里數'],
         'seats'           => ['en' => 'Seats',              'zh_CN' => '座位'],
         'car_features'    => ['en' => 'Features',           'zh_CN' => '配備'],
+        'post_only'       => ['en' => 'Post Only',          'zh_CN' => '只供查詢'],
     ];
 
     // Groups for the Used Car family: code => [name, column, position]
@@ -172,6 +181,7 @@ class UsedCarFamilySeeder extends Seeder
         'vehicle_identity'   => ['listing_ref', 'car_type', 'make', 'car_model', 'manufacture_year'],
         'engine_performance' => ['fuel_type', 'engine_cc', 'transmission', 'mileage'],
         'comfort_specs'      => ['seats', 'car_features'],
+        'settings'           => ['post_only'],
     ];
 
     public function run(): void

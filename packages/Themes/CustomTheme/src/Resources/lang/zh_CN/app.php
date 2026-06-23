@@ -60,13 +60,19 @@ return [
         ],
     ],
 
+    'common' => [
+        'view' => '查看詳情',
+    ],
+
     'configuration' => [
         'catalog' => [
             'products' => [
                 'whatsapp' => [
-                    'title' => 'WhatsApp',
-                    'info' => '配置WhatsApp咨询号码。',
-                    'number' => 'WhatsApp号码',
+                    'title'           => 'WhatsApp',
+                    'info'            => '配置 WhatsApp 查詢號碼及預填訊息。可用 :name 代入產品名稱，:url 代入頁面網址。',
+                    'number'          => 'WhatsApp 號碼（純數字，例如 85297718221）',
+                    'inquiry-message' => '二手車查詢訊息',
+                    'rental-message'  => '租車查詢訊息',
                 ],
                 'rental' => [
                     'title' => '租赁设置',
@@ -138,11 +144,12 @@ return [
 
     'products' => [
         'view' => [
+            'whatsapp-inquiry'        => '你好，我有興趣查詢：:name - :url',
+            'whatsapp-inquiry-button' => 'WhatsApp 查詢',
+            'post-only-notice'        => '此車盤僅供查詢，不支援網上購買。',
             'type' => [
                 'booking' => [
                     'rental' => [
-                        'whatsapp-enquire' => '通过WhatsApp咨询',
-                        'whatsapp-message' => '您好，我对 :name 感兴趣 - :url',
                         'pricing-tiers' => '价格梯度',
                         'days' => '天',
                     ],

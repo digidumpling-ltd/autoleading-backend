@@ -60,13 +60,19 @@ return [
         ],
     ],
 
+    'common' => [
+        'view' => 'View Details',
+    ],
+
     'configuration' => [
         'catalog' => [
             'products' => [
                 'whatsapp' => [
-                    'title' => 'WhatsApp',
-                    'info' => 'Configure the WhatsApp enquiry number.',
-                    'number' => 'WhatsApp Number',
+                    'title'           => 'WhatsApp',
+                    'info'            => 'Configure the WhatsApp enquiry number and pre-filled messages. Use :name for product name, :url for page URL.',
+                    'number'          => 'WhatsApp Number (digits only, e.g. 85297718221)',
+                    'inquiry-message' => 'Sale Inquiry Message',
+                    'rental-message'  => 'Rental Enquiry Message',
                 ],
                 'rental' => [
                     'title' => 'Rental',
@@ -138,11 +144,12 @@ return [
 
     'products' => [
         'view' => [
+            'whatsapp-inquiry'        => 'Hi, I am interested in :name - :url',
+            'whatsapp-inquiry-button' => 'WhatsApp Inquiry',
+            'post-only-notice'        => 'This listing is for enquiry only and cannot be purchased online.',
             'type' => [
                 'booking' => [
                     'rental' => [
-                        'whatsapp-enquire' => 'Enquire on WhatsApp',
-                        'whatsapp-message' => 'Hi, I\'m interested in :name - :url',
                         'pricing-tiers' => 'Pricing Tiers',
                         'days' => 'days',
                     ],

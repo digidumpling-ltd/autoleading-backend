@@ -9,11 +9,25 @@ return [
 
         'fields' => [
             [
-                'name' => 'number',
-                'title' => 'custom-theme::app.configuration.catalog.products.whatsapp.number',
-                'type' => 'text',
+                'name'          => 'number',
+                'title'         => 'custom-theme::app.configuration.catalog.products.whatsapp.number',
+                'type'          => 'text',
                 'channel_based' => true,
-                'locale_based' => false,
+                'locale_based'  => false,
+            ],
+            [
+                'name'          => 'inquiry_message',
+                'title'         => 'custom-theme::app.configuration.catalog.products.whatsapp.inquiry-message',
+                'type'          => 'text',
+                'channel_based' => true,
+                'locale_based'  => true,
+            ],
+            [
+                'name'          => 'rental_message',
+                'title'         => 'custom-theme::app.configuration.catalog.products.whatsapp.rental-message',
+                'type'          => 'text',
+                'channel_based' => true,
+                'locale_based'  => true,
             ],
         ],
     ],
