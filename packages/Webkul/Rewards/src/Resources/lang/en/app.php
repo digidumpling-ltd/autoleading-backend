@@ -553,7 +553,6 @@ return [
     'checkout' => [
         'onepage' => [
             'apply-points'          => 'Apply Points',
-            'apply-points'          => 'Apply Points',
             'enter-points'          => 'Enter Points',
             'points-used'           => 'Points Used',
             'redemption-setting'    => 'Info: :points point(s) is equal to :conversion_rate',

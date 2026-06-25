@@ -38,6 +38,16 @@
                     'regular' => 'DejaVu Sans',
                     'bold'    => 'DejaVu Sans',
                 ];
+            } elseif ($orderLocale === 'zh_TW') {
+                $fontPath = [
+                    'regular' => 'file://' . public_path('fonts/NotoSansTC-Regular.ttf'),
+                    'bold'    => 'file://' . public_path('fonts/NotoSansTC-Bold.ttf'),
+                ];
+
+                $fontFamily = [
+                    'regular' => 'Noto Sans TC',
+                    'bold'    => 'Noto Sans TC',
+                ];
             } elseif (str_starts_with($orderLocale, 'zh')) {
                 $fontPath = [
                     'regular' => 'file://' . public_path('fonts/NotoSansSC-Regular.ttf'),

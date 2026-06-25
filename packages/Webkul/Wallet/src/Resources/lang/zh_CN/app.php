@@ -4,8 +4,8 @@ return [
     'common' => [
         'save-btn'                            => '保存',
         'edit-btn'                            => '编辑',
-        'topup-requires-verification'         => '請先完成身份驗證，方可為錢包充值。',
-        'topup-requires-verification-link'    => '請先<a href=":dashboard_url" class="underline">完成身份驗證</a>，方可為錢包充值。',
+        'topup-requires-verification'         => '请先完成身份验证，方可为钱包充值。',
+        'topup-requires-verification-link'    => '请先<a href=":dashboard_url" class="underline">完成身份验证</a>，方可为钱包充值。',
     ],
 
     'admin' => [
@@ -108,18 +108,33 @@ return [
 
     'mail' => [
         'topup-success' => [
-            'subject'             => '【Auto Leading】網上增值確認',
-            'dear'                => '親愛的 :customer_name',
-            'greeting'            => '感謝您支持 Auto Leading 的服務！',
-            'body'                => '我們已成功收到您的網上增值申請。相關金額及贈送金額將於 24 小時內存入您的會員帳戶。金額到帳後，您可以登入會員中心查看最新餘額。',
-            'transaction-details' => '【增值明細】',
-            'member-account'      => '會員帳戶',
-            'transaction-time'    => '增值時間',
-            'topup-amount'        => '本金增值金額',
-            'footer'              => '如 24 小時後您的帳戶餘額未有更新，或對本次增值有任何查詢，歡迎隨時回覆本電郵，或與我們的客戶服務團隊聯絡。',
-            'thanks'              => '再次感謝您的支持與愛護！',
+            'subject'             => '【Auto Leading】网上充值确认',
+            'dear'                => '亲爱的 :customer_name',
+            'greeting'            => '感谢您支持 Auto Leading 的服务！',
+            'body'                => '我们已成功收到您的网上充值申请。相关金额及赠送金额将于 24 小时内存入您的会员账户。金额到账后，您可以登录会员中心查看最新余额。',
+            'transaction-details' => '【充值明细】',
+            'member-account'      => '会员账户',
+            'transaction-time'    => '充值时间',
+            'topup-amount'        => '充值金额',
+            'footer'              => '如 24 小时后您的账户余额未有更新，或对本次充值有任何查询，欢迎随时回复本邮件，或与我们的客户服务团队联系。',
+            'thanks'              => '再次感谢您的支持与关爱！',
             'closing'             => '祝您生活愉快！',
-            'team'                => 'Auto Leading 團隊 敬上',
+            'team'                => 'Auto Leading 团队 敬上',
+        ],
+
+        'wallet-reward' => [
+            'subject'             => '【Auto Leading】积分奖励兑换入账通知',
+            'dear'                => '亲爱的 :customer_name',
+            'greeting'            => '恭喜！您的奖励积分已成功兑换为钱包余额。',
+            'body'                => '您兑换的奖励积分已存入您的钱包账户，可于下次消费时直接使用。',
+            'transaction-details' => '【兑换明细】',
+            'member-account'      => '会员账户',
+            'transaction-time'    => '兑换时间',
+            'topup-amount'        => '存入金额',
+            'footer'              => '如对此次兑换有任何疑问，欢迎随时回复本邮件，或与我们的客户服务团队联系。',
+            'thanks'              => '再次感谢您的支持与关爱！',
+            'closing'             => '祝您生活愉快！',
+            'team'                => 'Auto Leading 团队 敬上',
         ],
     ],
 

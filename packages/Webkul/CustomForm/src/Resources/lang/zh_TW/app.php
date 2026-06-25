@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'title' => 'TVD 退款申請',
+    'submit' => '提交',
+    'success' => '您的退款申請已成功提交。',
+    'menu' => 'TVD 退款申請記錄',
+    'back' => '返回',
+    'view' => '查看',
+    'actions' => '操作',
+    'no-submissions' => '暫無申請記錄。',
+    'mail-subject' => '新TVD退款申請',
+    'fields' => [
+        'chinese-name' => '租賃人中文全名',
+        'chinese-name-placeholder' => '輸入租賃人中文全名，如不適用請輸入 N/A',
+        'english-name' => '租賃人英文全名',
+        'english-name-placeholder' => '輸入租賃人英文全名',
+        'rental-model' => '最後租賃車型',
+        'rental-model-placeholder' => '輸入最後租賃車型',
+        'return-date' => '最後租賃還車日期',
+        'contact-number' => '租賃人聯絡電話',
+        'contact-number-placeholder' => '輸入租賃人聯絡電話',
+        'email' => '租賃人電子郵件',
+        'email-placeholder' => '輸入租賃人電子郵件',
+        'refund-type' => '退款',
+        'refund-type-local' => '本地退款（請填項目8）',
+        'refund-type-overseas' => '海外退款（請填項目9）',
+        'local-bank-info' => '轉數快／本地銀行帳號資料（銀行及帳號）',
+        'local-bank-info-placeholder' => '輸入轉數快／本地銀行帳號資料',
+        'overseas-bank-info' => '收款銀行所在國家／收款銀行名稱／收款銀行的SWIFT CODE／收款人賬戶的法定全名／賬號/IBAN／貨幣',
+        'overseas-bank-info-placeholder' => '輸入收款銀行所在國家／收款銀行名稱／收款銀行的SWIFT CODE／收款人賬戶的法定全名／賬號/IBAN／貨幣',
+    ],
+];
