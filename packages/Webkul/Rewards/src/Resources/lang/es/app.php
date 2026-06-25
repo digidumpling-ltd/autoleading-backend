@@ -340,6 +340,15 @@ return [
 
                 'view' => [
                     'title' => 'Detalles del sistema de recompensas',
+                    'adjust-success-add'    => 'Reward points added successfully.',
+                    'adjust-success-deduct' => 'Reward points deducted successfully.',
+                    'insufficient-balance'  => 'Insufficient reward point balance.',
+                    'type-add'              => 'Add',
+                    'type-deduct'           => 'Deduct',
+
+                    'adjust-modal' => [
+                        'title' => 'Adjust Reward Points',
+                    ],
 
                     'datagrid' => [
                         'approved'            => 'Aprobado',

@@ -176,6 +176,8 @@ Route::group(['middleware' => ['admin'], 'prefix' => config('app.admin_url')], f
 
             Route::post('allocate/{id}', 'allocate')->name('admin.reward.system.allocate');
 
+            Route::post('adjust/{id}', 'adjust')->name('admin.reward.system.adjust');
+
             Route::get('balance/{id}', 'balance')->name('admin.reward.system.balance');
         });
 

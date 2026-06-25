@@ -340,6 +340,15 @@ return [
 
                 'view' => [
                     'title' => 'পুরস্কার সিস্টেমের বিস্তারিত',
+                    'adjust-success-add'    => 'Reward points added successfully.',
+                    'adjust-success-deduct' => 'Reward points deducted successfully.',
+                    'insufficient-balance'  => 'Insufficient reward point balance.',
+                    'type-add'              => 'Add',
+                    'type-deduct'           => 'Deduct',
+
+                    'adjust-modal' => [
+                        'title' => 'Adjust Reward Points',
+                    ],
 
                     'datagrid' => [
                         'approved'            => 'অনুমোদিত',

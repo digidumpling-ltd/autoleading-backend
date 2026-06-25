@@ -2,6 +2,7 @@
     :customer-id="customer.id"
     balance-url="{{ rtrim(config('app.url'), '/') }}/{{ config('app.admin_url') }}/rewards/system/balance"
     allocate-url="{{ rtrim(config('app.url'), '/') }}/{{ config('app.admin_url') }}/rewards/system/allocate"
+    adjust-url="{{ rtrim(config('app.url'), '/') }}/{{ config('app.admin_url') }}/rewards/system/adjust"
     view-url="{{ rtrim(config('app.url'), '/') }}/{{ config('app.admin_url') }}/rewards/system/view"
 ></v-reward-balance-card>
 
@@ -52,12 +53,12 @@
                 </template>
             </div>
 
-            <!-- Allocate drawer -->
+            <!-- Adjust drawer -->
             <x-admin::drawer ref="drawerRef">
                 <x-slot:header>
                     <div class="flex items-center justify-between">
                         <p class="my-2.5 text-xl font-medium dark:text-white">
-                            @lang('rewards::app.admin.rewards.system.view.allocate-modal.title')
+                            @lang('rewards::app.admin.rewards.system.view.adjust-modal.title')
                         </p>
 
                         <div class="ltr:mr-11 rtl:ml-11">
@@ -74,6 +75,29 @@
                 </x-slot>
 
                 <x-slot:content>
+                    <!-- Type -->
+                    <div class="mb-4">
+                        <label class="mb-1.5 flex required items-center gap-1 text-xs font-medium text-gray-800 dark:text-white">
+                            @lang('rewards::app.admin.rewards.system.view.allocate-modal.points')
+                        </label>
+
+                        <div class="flex gap-4">
+                            <label class="flex cursor-pointer items-center gap-2">
+                                <input type="radio" v-model="form.type" value="add" class="accent-blue-600" />
+                                <span class="text-sm text-gray-700 dark:text-gray-300">
+                                    @lang('rewards::app.admin.rewards.system.view.type-add')
+                                </span>
+                            </label>
+
+                            <label class="flex cursor-pointer items-center gap-2">
+                                <input type="radio" v-model="form.type" value="deduct" class="accent-blue-600" />
+                                <span class="text-sm text-gray-700 dark:text-gray-300">
+                                    @lang('rewards::app.admin.rewards.system.view.type-deduct')
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
                     <!-- Points -->
                     <div class="mb-4">
                         <label class="mb-1.5 flex required items-center gap-1 text-xs font-medium text-gray-800 dark:text-white">
@@ -109,8 +133,8 @@
                         <p v-if="errors.reason" class="mt-1 text-xs italic text-red-600" v-text="errors.reason"></p>
                     </div>
 
-                    <!-- Notify Customer -->
-                    <div class="mb-2">
+                    <!-- Notify Customer (add only) -->
+                    <div v-show="form.type === 'add'" class="mb-2">
                         <label class="flex w-max cursor-pointer select-none items-center gap-1 p-1.5">
                             <input
                                 type="checkbox"
@@ -138,6 +162,7 @@
                 customerId:  { type: [Number, String], required: true },
                 balanceUrl:  { type: String, required: true },
                 allocateUrl: { type: String, required: true },
+                adjustUrl:   { type: String, required: true },
                 viewUrl:     { type: String, required: true },
             },
 
@@ -148,7 +173,7 @@
                     balance: 0,
                     saving:  false,
                     errors:  { points: '', reason: '' },
-                    form:    { points: '', reason: '', notify_customer: false },
+                    form:    { type: 'add', points: '', reason: '', notify_customer: false },
                 };
             },
 
@@ -160,7 +185,7 @@
 
             methods: {
                 openDrawer() {
-                    this.form   = { points: '', reason: '', notify_customer: false };
+                    this.form   = { type: 'add', points: '', reason: '', notify_customer: false };
                     this.errors = { points: '', reason: '' };
                     this.$refs.drawerRef.toggle();
                 },
@@ -182,13 +207,18 @@
 
                     this.saving = true;
 
-                    this.$axios.post(`${this.allocateUrl}/${this.customerId}`, {
+                    this.$axios.post(`${this.adjustUrl}/${this.customerId}`, {
+                        type:            this.form.type,
                         points:          this.form.points,
                         reason:          this.form.reason,
                         notify_customer: this.form.notify_customer ? 1 : 0,
                     })
                     .then(r => {
-                        this.balance += parseInt(this.form.points);
+                        if (this.form.type === 'add') {
+                            this.balance += parseInt(this.form.points);
+                        } else {
+                            this.balance -= parseInt(this.form.points);
+                        }
                         this.$refs.drawerRef.toggle();
                         this.$emitter.emit('add-flash', {
                             type:    'success',

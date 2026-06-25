@@ -368,6 +368,22 @@ class RewardPointRepository extends Repository
         ]);
     }
 
+    public function deductByAdmin(int $customerId, int $points, string $reason): void
+    {
+        if ($points > $this->totalRewardPoints($customerId)) {
+            throw new \InvalidArgumentException('Insufficient reward point balance.');
+        }
+
+        $this->model->create([
+            'customer_id'   => $customerId,
+            'reward_points' => $points,
+            'note'          => $reason,
+            'status'        => self::STATUS_USED,
+            'creator_type'  => 'admin',
+            'creator_id'    => auth()->guard('admin')->id(),
+        ]);
+    }
+
     public function insertRewardPoints($data, $key, $value)
     {
         if ($data) {

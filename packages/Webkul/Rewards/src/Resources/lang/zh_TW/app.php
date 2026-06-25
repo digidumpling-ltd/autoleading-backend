@@ -356,6 +356,16 @@ return [
                     'allocate-btn'     => '分配積分',
                     'allocate-success' => '獎勵積分分配成功。',
 
+                    'adjust-success-add'    => '獎勵積分新增成功。',
+                    'adjust-success-deduct' => '獎勵積分扣除成功。',
+                    'insufficient-balance'  => '獎勵積分餘額不足。',
+                    'type-add'              => '新增',
+                    'type-deduct'           => '扣除',
+
+                    'adjust-modal' => [
+                        'title' => '調整獎勵積分',
+                    ],
+
                     'allocate-modal' => [
                         'title'              => '分配獎勵積分',
                         'points'             => '積分',

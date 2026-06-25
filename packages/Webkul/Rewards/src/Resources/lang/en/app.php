@@ -352,9 +352,18 @@ return [
                 ],
 
                 'view' => [
-                    'title'            => 'Reward System Details',
-                    'allocate-btn'     => 'Allocate Points',
-                    'allocate-success' => 'Reward points allocated successfully.',
+                    'title'                 => 'Reward System Details',
+                    'allocate-btn'          => 'Allocate Points',
+                    'allocate-success'      => 'Reward points allocated successfully.',
+                    'adjust-success-add'    => 'Reward points added successfully.',
+                    'adjust-success-deduct' => 'Reward points deducted successfully.',
+                    'insufficient-balance'  => 'Insufficient reward point balance.',
+                    'type-add'              => 'Add',
+                    'type-deduct'           => 'Deduct',
+
+                    'adjust-modal' => [
+                        'title' => 'Adjust Reward Points',
+                    ],
 
                     'allocate-modal' => [
                         'title'              => 'Allocate Reward Points',

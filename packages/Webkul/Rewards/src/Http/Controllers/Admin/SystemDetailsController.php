@@ -56,6 +56,61 @@ class SystemDetailsController extends Controller
     }
 
     /**
+     * Add or deduct reward points for a customer.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function adjust(int $id): JsonResponse
+    {
+        $customer = $this->customerRepository->findOrFail($id);
+
+        request()->validate([
+            'type'   => 'required|in:add,deduct',
+            'points' => 'required|integer|min:1',
+            'reason' => 'required|string|max:500',
+        ]);
+
+        if (request('type') === 'deduct') {
+            try {
+                $this->rewardPointRepository->deductByAdmin(
+                    $customer->id,
+                    (int) request('points'),
+                    request('reason')
+                );
+            } catch (\InvalidArgumentException) {
+                return new JsonResponse([
+                    'errors' => [
+                        'points' => [trans('rewards::app.admin.rewards.system.view.insufficient-balance')],
+                    ],
+                ], 422);
+            }
+
+            return new JsonResponse(['message' => trans('rewards::app.admin.rewards.system.view.adjust-success-deduct')]);
+        }
+
+        $this->rewardPointRepository->allocateByAdmin(
+            $customer->id,
+            (int) request('points'),
+            request('reason')
+        );
+
+        if (request('notify_customer')) {
+            Mail::queue(new RewardApproved([
+                'email'               => $customer->email,
+                'name'                => $customer->first_name . ' ' . $customer->last_name,
+                'order_id'            => null,
+                'points'              => (int) request('points'),
+                'note'                => request('reason'),
+                'used_reward_points'  => RewardPoint::where('customer_id', $customer->id)->where('status', 'used')->sum('reward_points'),
+                'total_reward_points' => $this->rewardPointRepository->totalRewardPoints($customer->id),
+            ]));
+        }
+
+        return new JsonResponse(['message' => trans('rewards::app.admin.rewards.system.view.adjust-success-add')]);
+    }
+
+    /**
      * Allocate reward points to a customer.
      *
      * @param int $id

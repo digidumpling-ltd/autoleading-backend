@@ -356,6 +356,16 @@ return [
                     'allocate-btn'     => '分配积分',
                     'allocate-success' => '奖励积分分配成功。',
 
+                    'adjust-success-add'    => '奖励积分添加成功。',
+                    'adjust-success-deduct' => '奖励积分扣除成功。',
+                    'insufficient-balance'  => '奖励积分余额不足。',
+                    'type-add'              => '添加',
+                    'type-deduct'           => '扣除',
+
+                    'adjust-modal' => [
+                        'title' => '调整奖励积分',
+                    ],
+
                     'allocate-modal' => [
                         'title'              => '分配奖励积分',
                         'points'             => '积分',
