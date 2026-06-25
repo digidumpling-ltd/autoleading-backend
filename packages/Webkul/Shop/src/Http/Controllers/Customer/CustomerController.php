@@ -123,7 +123,7 @@ class CustomerController extends Controller
                 $this->customerRepository->uploadImages($data, $customer);
             } else {
                 if (isset($data['image'])) {
-                    if (! empty($data['image'])) {
+                    if (! empty($customer->image)) {
                         Storage::delete((string) $customer->image);
                     }
 
