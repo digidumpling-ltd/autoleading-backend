@@ -130,6 +130,26 @@ return [
         'view'                          => '查看',
     ],
 
+    'setting' => [
+        'title'                         => '博客设置',
+        'save-btn'                      => '保存设置',
+        'post-setting'                  => '文章设置',
+        'comment-setting'               => '评论设置',
+        'seo-setting'                   => '默认博客SEO设置',
+        'per-page'                      => '每页记录数',
+        'max-related'                   => '最多允许相关文章数',
+        'show-categories-count'         => '显示带文章数量的分类',
+        'show-tags-count'               => '显示带文章数量的标签',
+        'show-author-page'              => '显示作者页面',
+        'enable-comment'                => '启用文章评论',
+        'allow-guest-comment'           => '允许访客评论',
+        'max-nested-comment'            => '允许的最大嵌套评论层级',
+        'meta-title'                    => 'Meta标题',
+        'meta-keywords'                 => 'Meta关键词',
+        'meta-description'              => 'Meta描述',
+        'save-success'                  => '博客设置保存成功。',
+    ],
+
     'shop' => [
         'blog-title'                    => '我们的博客',
         'posts-by'                      => ':author 的文章',

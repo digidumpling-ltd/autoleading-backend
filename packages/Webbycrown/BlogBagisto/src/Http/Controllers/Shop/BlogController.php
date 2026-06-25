@@ -64,9 +64,9 @@ class BlogController extends Controller
         $show_tags_count = $this->getConfigByKey('blog_post_show_tags_with_count');
         $show_author_page = $this->getConfigByKey('blog_post_show_author_page');
 
-        $blog_seo_meta_title = $this->getConfigByKey('blog_seo_meta_title');
-        $blog_seo_meta_keywords = $this->getConfigByKey('blog_seo_meta_keywords');
-        $blog_seo_meta_description = $this->getConfigByKey('blog_seo_meta_description');
+        $blog_seo_meta_title = $this->getSeoConfigByKey('blog_seo_meta_title');
+        $blog_seo_meta_keywords = $this->getSeoConfigByKey('blog_seo_meta_keywords');
+        $blog_seo_meta_description = $this->getSeoConfigByKey('blog_seo_meta_description');
 
         return view($this->_config['view'], compact('blogs', 'categories', 'customizations', 'tags', 'show_categories_count', 'show_tags_count', 'show_author_page', 'blog_seo_meta_title', 'blog_seo_meta_keywords', 'blog_seo_meta_description'));
     }
@@ -98,9 +98,9 @@ class BlogController extends Controller
         $show_tags_count = $this->getConfigByKey('blog_post_show_tags_with_count');
         $show_author_page = $this->getConfigByKey('blog_post_show_author_page');
 
-        $blog_seo_meta_title = $this->getConfigByKey('blog_seo_meta_title');
-        $blog_seo_meta_keywords = $this->getConfigByKey('blog_seo_meta_keywords');
-        $blog_seo_meta_description = $this->getConfigByKey('blog_seo_meta_description');
+        $blog_seo_meta_title = $this->getSeoConfigByKey('blog_seo_meta_title');
+        $blog_seo_meta_keywords = $this->getSeoConfigByKey('blog_seo_meta_keywords');
+        $blog_seo_meta_description = $this->getSeoConfigByKey('blog_seo_meta_description');
 
         return view($this->_config['view'], compact('blogs', 'categories', 'customizations', 'tags', 'author_data', 'show_categories_count', 'show_tags_count', 'show_author_page', 'blog_seo_meta_title', 'blog_seo_meta_keywords', 'blog_seo_meta_description'));
     }
@@ -167,9 +167,9 @@ class BlogController extends Controller
         $allow_guest_comment = $this->getConfigByKey('blog_post_allow_guest_comment');
         $maximum_nested_comment = $this->getConfigByKey('blog_post_maximum_nested_comment');
 
-        $blog_seo_meta_title = $this->getConfigByKey('blog_seo_meta_title');
-        $blog_seo_meta_keywords = $this->getConfigByKey('blog_seo_meta_keywords');
-        $blog_seo_meta_description = $this->getConfigByKey('blog_seo_meta_description');
+        $blog_seo_meta_title = $this->getSeoConfigByKey('blog_seo_meta_title');
+        $blog_seo_meta_keywords = $this->getSeoConfigByKey('blog_seo_meta_keywords');
+        $blog_seo_meta_description = $this->getSeoConfigByKey('blog_seo_meta_description');
 
         return view($this->_config['view'], compact('blog', 'categories', 'tags', 'comments', 'total_comments', 'total_comments_cnt', 'related_blogs', 'blog_tags', 'show_categories_count', 'show_tags_count', 'show_author_page', 'enable_comment', 'allow_guest_comment', 'maximum_nested_comment', 'loggedIn_user', 'loggedIn_user_name', 'loggedIn_user_email', 'blog_seo_meta_title', 'blog_seo_meta_keywords', 'blog_seo_meta_description'));
     }
@@ -223,6 +223,19 @@ class BlogController extends Controller
             }
         }
         return $config_val;
+    }
+
+    public function getSeoConfigByKey($code = '')
+    {
+        $localeCode = core()->getCurrentLocale()->code;
+
+        $value = $this->getConfigByKey($code . '_' . $localeCode);
+
+        if (! $value) {
+            $value = $this->getConfigByKey($code);
+        }
+
+        return $value;
     }
     
 }

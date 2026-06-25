@@ -5,17 +5,17 @@
 
 {{-- SEO Meta Content --}}
 @push ('meta')
-    <meta name="title" content="{{ $blog_seo_meta_title ?? ( $channel->home_seo['meta_title'] ?? '' ) }}" />
+    <meta name="title" content="{{ $blog_seo_meta_title ?? ( $channel->home_seo['meta_title'] ?? __('blog::app.shop.blog-title') ) }}" />
 
-    <meta name="description" content="{{ $blog_seo_meta_keywords ?? ( $channel->home_seo['meta_description'] ?? '' ) }}" />
+    <meta name="description" content="{{ $blog_seo_meta_description ?? ( $channel->home_seo['meta_description'] ?? '' ) }}" />
 
-    <meta name="keywords" content="{{ $blog_seo_meta_description ?? ( $channel->home_seo['meta_keywords'] ?? '' ) }}" />
+    <meta name="keywords" content="{{ $blog_seo_meta_keywords ?? ( $channel->home_seo['meta_keywords'] ?? '' ) }}" />
 @endPush
 
 <x-shop::layouts>
     {{-- Page Title --}}
     <x-slot:title>
-        {{ $blog_seo_meta_title ?? ( $channel->home_seo['meta_title'] ?? '' ) }}
+        {{ $blog_seo_meta_title ?? ( $channel->home_seo['meta_title'] ?? __('blog::app.shop.blog-title') ) }}
     </x-slot>
 
     @push ('styles')

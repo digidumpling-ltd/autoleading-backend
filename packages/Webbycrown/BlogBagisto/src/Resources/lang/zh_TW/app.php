@@ -130,6 +130,26 @@ return [
         'view'                          => '查看',
     ],
 
+    'setting' => [
+        'title'                         => '部落格設定',
+        'save-btn'                      => '儲存設定',
+        'post-setting'                  => '文章設定',
+        'comment-setting'               => '留言設定',
+        'seo-setting'                   => '預設部落格SEO設定',
+        'per-page'                      => '每頁記錄數',
+        'max-related'                   => '最多允許相關文章數',
+        'show-categories-count'         => '顯示帶文章數量的分類',
+        'show-tags-count'               => '顯示帶文章數量的標籤',
+        'show-author-page'              => '顯示作者頁面',
+        'enable-comment'                => '啟用文章留言',
+        'allow-guest-comment'           => '允許訪客留言',
+        'max-nested-comment'            => '允許的最大巢狀留言層級',
+        'meta-title'                    => 'Meta標題',
+        'meta-keywords'                 => 'Meta關鍵詞',
+        'meta-description'              => 'Meta描述',
+        'save-success'                  => '部落格設定儲存成功。',
+    ],
+
     'shop' => [
         'blog-title'                    => '我們的部落格',
         'posts-by'                      => ':author 的文章',

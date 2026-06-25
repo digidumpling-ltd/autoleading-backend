@@ -127,6 +127,26 @@ return [
         'view'                          => 'Görüntüle',
     ],
 
+    'setting' => [
+        'title'                         => 'Blog Ayarı',
+        'save-btn'                      => 'Ayarı Kaydet',
+        'post-setting'                  => 'Gönderi Ayarı',
+        'comment-setting'               => 'Yorum Ayarı',
+        'seo-setting'                   => 'Varsayılan Blog SEO Ayarı',
+        'per-page'                      => 'Sayfa Başına Kayıt',
+        'max-related'                   => 'İzin Verilen Maksimum İlgili Gönderi',
+        'show-categories-count'         => 'Kategorileri Gönderi Sayısıyla Göster',
+        'show-tags-count'               => 'Etiketleri Gönderi Sayısıyla Göster',
+        'show-author-page'              => 'Yazar Sayfasını Göster',
+        'enable-comment'                => 'Gönderi Yorumunu Etkinleştir',
+        'allow-guest-comment'           => 'Misafir Yorumuna İzin Ver',
+        'max-nested-comment'            => 'İzin verilen maksimum iç içe yorum seviyesi',
+        'meta-title'                    => 'Meta Başlık',
+        'meta-keywords'                 => 'Meta Anahtar Kelimeler',
+        'meta-description'              => 'Meta Açıklama',
+        'save-success'                  => 'Blog ayarı başarıyla kaydedildi.',
+    ],
+
     'shop' => [
         'blog-title'                    => 'Bloğumuz',
         'posts-by'                      => ':author tarafından yazılar',

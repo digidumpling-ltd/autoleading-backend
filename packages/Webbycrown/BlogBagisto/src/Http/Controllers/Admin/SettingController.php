@@ -49,22 +49,30 @@ class SettingController extends Controller
             'random' => 'Random',
         );
 
-        $config_data_keys = array( 'blog_post_per_page', 'blog_post_maximum_related', 'blog_post_recent_order_by', 'blog_post_show_categories_with_count', 'blog_post_show_tags_with_count', 'blog_post_show_author_page', 'blog_post_enable_comment', 'blog_post_allow_guest_comment', 'blog_post_enable_comment_moderation', 'blog_post_maximum_nested_comment', 'blog_seo_meta_title', 'blog_seo_meta_keywords', 'blog_seo_meta_description' );
+        $currentLocale = core()->getRequestedLocale();
 
-        $setting_deatils = $settings = array();
+        $non_seo_keys = array( 'blog_post_per_page', 'blog_post_maximum_related', 'blog_post_recent_order_by', 'blog_post_show_categories_with_count', 'blog_post_show_tags_with_count', 'blog_post_show_author_page', 'blog_post_enable_comment', 'blog_post_allow_guest_comment', 'blog_post_enable_comment_moderation', 'blog_post_maximum_nested_comment' );
+
+        $seo_base_keys = array( 'blog_seo_meta_title', 'blog_seo_meta_keywords', 'blog_seo_meta_description' );
+
+        $locale_seo_keys = array_map(fn ($k) => $k . '_' . $currentLocale->code, $seo_base_keys);
+
+        $config_data_keys = array_merge($non_seo_keys, $locale_seo_keys);
+
+        $setting_details = $settings = array();
         $setting_datas = CoreConfig::whereIn('code', $config_data_keys)->get();
         if ( !empty($setting_datas) && count($setting_datas) > 0 ) {
             $setting_datas = $setting_datas->toarray();
             foreach ($setting_datas as $setting_data) {
-                $setting_deatils[ $setting_data['code'] ] = $setting_data['value'];
+                $setting_details[ $setting_data['code'] ] = $setting_data['value'];
             }
         }
 
         foreach ($config_data_keys as $config_data_key) {
-            $settings[ $config_data_key ] = ( array_key_exists($config_data_key, $setting_deatils) ) ? $setting_deatils[ $config_data_key ] : '';
+            $settings[ $config_data_key ] = ( array_key_exists($config_data_key, $setting_details) ) ? $setting_details[ $config_data_key ] : '';
         }
 
-        return view($this->_config['view'], compact('post_orders', 'settings'));
+        return view($this->_config['view'], compact('post_orders', 'settings', 'currentLocale'));
     }
 
     /**
@@ -86,7 +94,7 @@ class SettingController extends Controller
     {
         $data = request()->all();
     
-        $config_except_keys = array( 'switch_blog_post_show_categories_with_count', 'switch_blog_post_show_tags_with_count', 'switch_blog_post_show_author_page', 'switch_blog_post_enable_comment', 'switch_blog_post_allow_guest_comment', 'switch_blog_post_enable_comment_moderation' );
+        $config_except_keys = array( '_token', '_method', 'switch_blog_post_show_categories_with_count', 'switch_blog_post_show_tags_with_count', 'switch_blog_post_show_author_page', 'switch_blog_post_enable_comment', 'switch_blog_post_allow_guest_comment', 'switch_blog_post_enable_comment_moderation' );
 
         if ( !empty($data) && count($data) > 0 ) {
             foreach ( $data as $data_key => $data_value ) {
@@ -103,7 +111,7 @@ class SettingController extends Controller
                 }
             }
         }
-        session()->flash('success', 'Save Blog Setting Successfully');
+        session()->flash('success', trans('blog::app.setting.save-success'));
         return redirect()->route($this->_config['redirect']);
 
     }

@@ -127,6 +127,26 @@ return [
         'view'                          => 'Visualizar',
     ],
 
+    'setting' => [
+        'title'                         => 'Configuração do Blog',
+        'save-btn'                      => 'Salvar Configuração',
+        'post-setting'                  => 'Configuração de Post',
+        'comment-setting'               => 'Configuração de Comentários',
+        'seo-setting'                   => 'Configuração Padrão de SEO do Blog',
+        'per-page'                      => 'Registros por Página',
+        'max-related'                   => 'Máximo de Posts Relacionados Permitidos',
+        'show-categories-count'         => 'Mostrar Categorias com Contagem de Posts',
+        'show-tags-count'               => 'Mostrar Tags com Contagem de Posts',
+        'show-author-page'              => 'Mostrar Página do Autor',
+        'enable-comment'                => 'Habilitar Comentários no Post',
+        'allow-guest-comment'           => 'Permitir Comentário de Visitante',
+        'max-nested-comment'            => 'Nível máximo de aninhamento de comentários permitido',
+        'meta-title'                    => 'Título Meta',
+        'meta-keywords'                 => 'Palavras-chave Meta',
+        'meta-description'              => 'Descrição Meta',
+        'save-success'                  => 'Configuração do blog salva com sucesso.',
+    ],
+
     'shop' => [
         'blog-title'                    => 'Nosso Blog',
         'posts-by'                      => 'Posts de :author',

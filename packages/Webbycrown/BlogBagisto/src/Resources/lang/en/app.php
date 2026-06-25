@@ -130,6 +130,26 @@ return [
         'view'                          => 'View',
     ],
 
+    'setting' => [
+        'title'                         => 'Blog Setting',
+        'save-btn'                      => 'Save Setting',
+        'post-setting'                  => 'Post Setting',
+        'comment-setting'               => 'Comment Setting',
+        'seo-setting'                   => 'Default Blog SEO Setting',
+        'per-page'                      => 'Per Page Records',
+        'max-related'                   => 'Maximum Related Posts Allowed',
+        'show-categories-count'         => 'Show Categories With Posts Count',
+        'show-tags-count'               => 'Show Tags With Posts Count',
+        'show-author-page'              => 'Show Author Page',
+        'enable-comment'                => 'Enable Post Comment',
+        'allow-guest-comment'           => 'Allow Guest Comment',
+        'max-nested-comment'            => 'Allowed maximum nested comment level',
+        'meta-title'                    => 'Meta Title',
+        'meta-keywords'                 => 'Meta Keywords',
+        'meta-description'              => 'Meta Description',
+        'save-success'                  => 'Blog setting saved successfully.',
+    ],
+
     'shop' => [
         'blog-title'                    => 'Our Blog',
         'posts-by'                      => 'Posts by :author',
