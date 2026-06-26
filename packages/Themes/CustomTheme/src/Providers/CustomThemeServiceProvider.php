@@ -5,13 +5,17 @@ namespace Themes\CustomTheme\Providers;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Themes\CustomTheme\Helpers\Indexers\Price\Booking as BookingIndexer;
 use Themes\CustomTheme\Listeners\Order;
+use Webkul\Product\Helpers\Indexers\Price\Booking as BaseBookingIndexer;
 
 class CustomThemeServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../Config/system.php', 'core');
+
+        $this->app->bind(BaseBookingIndexer::class, BookingIndexer::class);
     }
 
     public function boot(): void
