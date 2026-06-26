@@ -15,12 +15,18 @@
         "resource load delay" subpart Lighthouse reports as the biggest
         contributor on this page.
     --}}
+    {{--
+        The hero image is served from the configured filesystem disk (S3/R2),
+        so it is a single pre-optimised WebP — there are no on-the-fly
+        cache/{size} resize variants (those only exist for local-disk images).
+        Preload the image directly.
+    --}}
     @push('meta')
         <link
             rel="preload"
             as="image"
-            href="{{ str_replace('storage', 'cache/small', $firstImage) }}"
-            imagesrcset="{{ $firstImage }} 1920w, {{ str_replace('storage', 'cache/large', $firstImage) }} 1280w, {{ str_replace('storage', 'cache/medium', $firstImage) }} 1024w, {{ str_replace('storage', 'cache/small', $firstImage) }} 768w"
+            href="{{ $firstImage }}"
+            imagesrcset="{{ $firstImage }}"
             imagesizes="100vw"
             fetchpriority="high"
         >
@@ -29,14 +35,15 @@
 
 @php
     // Promo-specific portrait banner shown only on mobile (different ratio from the
-    // landscape hero). Lives here in the theme override so it never touches header/footer.
-    $alMobileBanner = 'storage/theme/1/almobilebanner0000042137promo.webp';
+    // landscape hero). Served from the configured disk (S3/R2) via Storage::url so it
+    // follows FILESYSTEM_DISK. Lives here in the theme override so it never touches header/footer.
+    $alMobileBanner = \Illuminate\Support\Facades\Storage::url('theme/1/almobilebanner0000042137promo.webp');
 @endphp
 
 {{-- Mobile-only hero banner (portrait). Hidden on md+ where the carousel shows. --}}
 <a href="/for-rent" class="al-mobile-hero md:hidden block">
     <img
-        src="{{ asset($alMobileBanner) }}"
+        src="{{ $alMobileBanner }}"
         class="w-full h-auto select-none"
         style="display:block;width:100%;height:auto"
         alt="{{ $firstImageTitle ?? trans('shop::app.home.index.image-carousel') }}"
@@ -60,7 +67,7 @@
             --}}
             <img
                 src="{{ $firstImage }}"
-                srcset="{{ $firstImage }} 1920w, {{ str_replace('storage', 'cache/large', $firstImage) }} 1280w, {{ str_replace('storage', 'cache/medium', $firstImage) }} 1024w, {{ str_replace('storage', 'cache/small', $firstImage) }} 768w"
+                srcset="{{ $firstImage }}"
                 sizes="100vw"
                 class="aspect-[2.743/1] max-h-screen w-screen select-none object-cover"
                 style="width:100vw;aspect-ratio:2.743/1;max-height:100vh;object-fit:cover;display:block"
@@ -96,7 +103,7 @@
                         class="aspect-[2.743/1] max-h-full w-full max-w-full select-none transition-transform duration-300 ease-in-out will-change-transform"
                         ::lazy="index === 0 ? false : true"
                         ::src="image.image"
-                        ::srcset="image.image + ' 1920w, ' + image.image.replace('storage', 'cache/large') + ' 1280w,' + image.image.replace('storage', 'cache/medium') + ' 1024w, ' + image.image.replace('storage', 'cache/small') + ' 768w'"
+                        ::srcset="image.image"
                         sizes="100vw"
                         ::alt="image?.title || 'Carousel Image ' + (index + 1)"
                         tabindex="0"
