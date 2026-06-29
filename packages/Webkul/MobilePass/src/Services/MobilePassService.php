@@ -74,13 +74,15 @@ class MobilePassService
 
         $assets = dirname(__DIR__).'/Resources/assets/images/apple-pass';
 
+        $theme = $this->appleTierTheme($customer->group?->code);
+
         $pass = StoreCardPassBuilder::make()
             ->setSerialNumber('WALLET-'.$customer->id)
             ->setOrganizationName($organization)
             ->setDescription($organization.' Membership')
-            ->setBackgroundColor('#0E0D0C')
-            ->setForegroundColor('#FFFFFF')
-            ->setLabelColor('#E2620A')
+            ->setBackgroundColor($theme['background'])
+            ->setForegroundColor($theme['foreground'])
+            ->setLabelColor($theme['label'])
             ->setIconImage($assets.'/icon.png', $assets.'/icon@2x.png', $assets.'/icon@3x.png')
             ->setLogoImage($assets.'/logo.png', $assets.'/logo@2x.png', $assets.'/logo@3x.png')
             ->addHeaderField('points', $this->applePointsValue($rewardPoints), 'Points')
@@ -126,6 +128,27 @@ class MobilePassService
     protected function applePointsValue($rewardPoints): string
     {
         return ((int) ($rewardPoints ?? 0)).' pts';
+    }
+
+    /**
+     * Per-membership-tier colour scheme for the Apple pass, keyed by customer
+     * group code. Labels stay AutoLeading orange where it reads well; on the
+     * lighter gold tier the label switches to white for contrast. Unknown or
+     * non-member groups fall back to the brand black theme.
+     *
+     * @return array{background:string,foreground:string,label:string}
+     */
+    protected function appleTierTheme(?string $groupCode): array
+    {
+        $themes = [
+            'member1' => ['background' => '#0E0D0C', 'foreground' => '#FFFFFF', 'label' => '#E2620A'], // Regular  - brand black
+            'member2' => ['background' => '#9A7B1F', 'foreground' => '#FFFFFF', 'label' => '#FFFFFF'], // Gold
+            'member3' => ['background' => '#3A3F44', 'foreground' => '#FFFFFF', 'label' => '#E2620A'], // Platinum - graphite
+            'member4' => ['background' => '#1E3A5F', 'foreground' => '#FFFFFF', 'label' => '#E2620A'], // Diamond  - deep blue
+            'member5' => ['background' => '#0E6B4F', 'foreground' => '#FFFFFF', 'label' => '#E2620A'], // Jadeite  - jade green
+        ];
+
+        return $themes[$groupCode] ?? ['background' => '#0E0D0C', 'foreground' => '#FFFFFF', 'label' => '#E2620A'];
     }
 
     public function deleteApplePass(int $customerId): bool
