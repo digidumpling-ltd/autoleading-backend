@@ -4,13 +4,16 @@ return [
     'common' => [
         'save-to-google-wallet' => '儲存至 Google 錢包',
         'view-on-google-wallet' => '在 Google 錢包中查看',
+        'save-to-apple-wallet'  => '加入 Apple Wallet',
+        'view-on-apple-wallet'  => '在 Apple Wallet 中查看',
         'delete'                => '刪除',
     ],
 
     'customers' => [
         'account' => [
             'profile' => [
-                'loyalty-pass' => '忠誠通行證',
+                'loyalty-pass'       => '忠誠通行證',
+                'apple-loyalty-pass' => 'Apple 忠誠通行證',
             ],
         ],
     ],

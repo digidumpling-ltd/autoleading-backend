@@ -2,6 +2,7 @@
 
 namespace Webkul\MobilePass\Services;
 
+use Spatie\LaravelMobilePass\Builders\Apple\StoreCardPassBuilder;
 use Spatie\LaravelMobilePass\Builders\Google\LoyaltyPassBuilder;
 use Spatie\LaravelMobilePass\Enums\BarcodeType;
 use Spatie\LaravelMobilePass\Enums\Platform;
@@ -46,6 +47,90 @@ class MobilePassService
         $this->syncPassContent($pass, $customer->id);
 
         return $pass->fresh();
+    }
+
+    public function getCustomerApplePass(int $customerId): ?MobilePass
+    {
+        return MobilePass::where('model_type', Customer::class)
+            ->where('model_id', $customerId)
+            ->where('platform', Platform::Apple)
+            ->first();
+    }
+
+    public function createOrGetApplePass(Customer $customer): MobilePass
+    {
+        $existing = $this->getCustomerApplePass($customer->id);
+
+        if ($existing) {
+            return $existing;
+        }
+
+        $rewardPoints = app(RewardPointRepository::class)->totalRewardPoints($customer->id);
+        $walletBalance = \Webkul\Wallet\Models\Customer::find($customer->id)?->balanceFloatNum ?? 0;
+        $tier = $customer->group?->name ?? 'Standard';
+
+        $organization = (string) (config('mobile-pass.apple.organization_name') ?: 'Auto Leading Limited');
+
+        $pass = StoreCardPassBuilder::make()
+            ->setSerialNumber('WALLET-'.$customer->id)
+            ->setOrganizationName($organization)
+            ->setDescription($organization.' Membership')
+            ->setBackgroundColor('#0E0D0C')
+            ->setForegroundColor('#FFFFFF')
+            ->setLabelColor('#E2620A')
+            ->addHeaderField('points', (string) ($rewardPoints ?? 0), 'Points')
+            ->addSecondaryField('credit', core()->formatPrice($walletBalance), 'Credit')
+            ->addAuxiliaryField('tier', $tier, 'Tier')
+            ->addBackField('name', trim($customer->first_name.' '.$customer->last_name), 'Member')
+            ->setBarcode(BarcodeType::Qr, (string) $customer->id)
+            ->save();
+
+        $pass->update([
+            'model_type' => Customer::class,
+            'model_id' => $customer->id,
+        ]);
+
+        return $pass->fresh();
+    }
+
+    public function syncApplePassContent(int $customerId): void
+    {
+        $pass = $this->getCustomerApplePass($customerId);
+
+        if (! $pass) {
+            return;
+        }
+
+        $rewardPoints = app(RewardPointRepository::class)->totalRewardPoints($customerId);
+        $walletBalance = \Webkul\Wallet\Models\Customer::find($customerId)?->balanceFloatNum ?? 0;
+        $tier = Customer::find($customerId)?->group?->name ?? 'Standard';
+
+        $pass->updateField('points', (string) ($rewardPoints ?? 0));
+        $pass->updateField('credit', core()->formatPrice($walletBalance));
+        $pass->updateField('tier', $tier);
+    }
+
+    public function deleteApplePass(int $customerId): bool
+    {
+        $pass = $this->getCustomerApplePass($customerId);
+
+        if (! $pass) {
+            return false;
+        }
+
+        $pass->delete();
+
+        return true;
+    }
+
+    public function hasAppleCredentials(): bool
+    {
+        $hasCert = ! empty(config('mobile-pass.apple.certificate'))
+            || ! empty(config('mobile-pass.apple.certificate_path'));
+
+        return $hasCert
+            && ! empty(config('mobile-pass.apple.type_identifier'))
+            && ! empty(config('mobile-pass.apple.team_identifier'));
     }
 
     public function syncPassContent(MobilePass $pass, int $customerId): void

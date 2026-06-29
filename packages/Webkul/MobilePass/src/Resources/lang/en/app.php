@@ -4,13 +4,16 @@ return [
     'common' => [
         'save-to-google-wallet' => 'Save to Google Wallet',
         'view-on-google-wallet' => 'View on Google Wallet',
+        'save-to-apple-wallet'  => 'Add to Apple Wallet',
+        'view-on-apple-wallet'  => 'View in Apple Wallet',
         'delete'                => 'Delete',
     ],
 
     'customers' => [
         'account' => [
             'profile' => [
-                'loyalty-pass' => 'Loyalty Pass',
+                'loyalty-pass'       => 'Loyalty Pass',
+                'apple-loyalty-pass' => 'Apple Loyalty Pass',
             ],
         ],
     ],
