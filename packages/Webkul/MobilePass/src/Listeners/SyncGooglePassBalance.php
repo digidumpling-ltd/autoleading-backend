@@ -15,12 +15,15 @@ class SyncGooglePassBalance
             return;
         }
 
-        $pass = $this->mobilePassService->getCustomerGooglePass($event->customerId);
+        $googlePass = $this->mobilePassService->getCustomerGooglePass($event->customerId);
 
-        if (! $pass) {
-            return;
+        if ($googlePass) {
+            $this->mobilePassService->syncPassContent($googlePass, $event->customerId);
         }
 
-        $this->mobilePassService->syncPassContent($pass, $event->customerId);
+        // Keep the Apple pass in step too. syncApplePassContent() no-ops when the
+        // customer has no Apple pass, and updating the pass content triggers the
+        // package's APNs push so an already-installed pass refreshes on-device.
+        $this->mobilePassService->syncApplePassContent($event->customerId);
     }
 }
