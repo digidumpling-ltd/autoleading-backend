@@ -71,6 +71,8 @@ class MobilePassService
 
         $organization = (string) (config('mobile-pass.apple.organization_name') ?: 'Auto Leading Limited');
 
+        $assets = dirname(__DIR__).'/Resources/assets/images/apple-pass';
+
         $pass = StoreCardPassBuilder::make()
             ->setSerialNumber('WALLET-'.$customer->id)
             ->setOrganizationName($organization)
@@ -78,6 +80,8 @@ class MobilePassService
             ->setBackgroundColor('#0E0D0C')
             ->setForegroundColor('#FFFFFF')
             ->setLabelColor('#E2620A')
+            ->setIconImage($assets.'/icon.png', $assets.'/icon@2x.png', $assets.'/icon@3x.png')
+            ->setLogoImage($assets.'/logo.png', $assets.'/logo@2x.png', $assets.'/logo@3x.png')
             ->addHeaderField('points', (string) ($rewardPoints ?? 0), 'Points')
             ->addSecondaryField('credit', core()->formatPrice($walletBalance), 'Credit')
             ->addAuxiliaryField('tier', $tier, 'Tier')
