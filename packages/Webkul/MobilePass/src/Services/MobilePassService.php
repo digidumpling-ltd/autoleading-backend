@@ -93,7 +93,7 @@ class MobilePassService
             ->addHeaderField('points', $this->applePointsValue($rewardPoints), 'Points')
             ->addSecondaryField('name', $memberName, 'Name')
             ->addSecondaryField('updated', $updated, 'Updated')
-            ->addSecondaryField('credit', core()->formatPrice($walletBalance), 'Reward Value')
+            ->addSecondaryField('credit', core()->formatPrice($walletBalance), 'Wallet Balance')
             ->addBackField('tier', $tier, 'Membership Tier')
             ->setBarcode(BarcodeType::Qr, (string) $customer->id)
             ->save();
