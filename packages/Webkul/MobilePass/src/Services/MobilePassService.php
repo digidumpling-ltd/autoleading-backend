@@ -67,7 +67,8 @@ class MobilePassService
 
         $rewardPoints = app(RewardPointRepository::class)->totalRewardPoints($customer->id);
         $walletBalance = \Webkul\Wallet\Models\Customer::find($customer->id)?->balanceFloatNum ?? 0;
-        $tier = $customer->group?->name ?? 'Standard';
+        $tier = $customer->group?->name ?: 'Standard';
+        $memberName = trim($customer->first_name.' '.$customer->last_name) ?: 'Member';
 
         $organization = (string) (config('mobile-pass.apple.organization_name') ?: 'Auto Leading Limited');
 
@@ -82,10 +83,10 @@ class MobilePassService
             ->setLabelColor('#E2620A')
             ->setIconImage($assets.'/icon.png', $assets.'/icon@2x.png', $assets.'/icon@3x.png')
             ->setLogoImage($assets.'/logo.png', $assets.'/logo@2x.png', $assets.'/logo@3x.png')
-            ->addHeaderField('points', (string) ($rewardPoints ?? 0), 'Points')
+            ->addHeaderField('points', $this->applePointsValue($rewardPoints), 'Points')
             ->addSecondaryField('credit', core()->formatPrice($walletBalance), 'Credit')
             ->addAuxiliaryField('tier', $tier, 'Tier')
-            ->addBackField('name', trim($customer->first_name.' '.$customer->last_name), 'Member')
+            ->addBackField('name', $memberName, 'Member')
             ->setBarcode(BarcodeType::Qr, (string) $customer->id)
             ->save();
 
@@ -109,9 +110,22 @@ class MobilePassService
         $walletBalance = \Webkul\Wallet\Models\Customer::find($customerId)?->balanceFloatNum ?? 0;
         $tier = Customer::find($customerId)?->group?->name ?? 'Standard';
 
-        $pass->updateField('points', (string) ($rewardPoints ?? 0));
+        $pass->updateField('points', $this->applePointsValue($rewardPoints));
         $pass->updateField('credit', core()->formatPrice($walletBalance));
-        $pass->updateField('tier', $tier);
+        $pass->updateField('tier', $tier ?: 'Standard');
+    }
+
+    /**
+     * Format the reward-points value for an Apple pass field. The value must
+     * never be a "falsy" string: the underlying pkpass field serializer runs
+     * array_filter() over each field, which silently drops a bare "0" or empty
+     * string, leaving a field with a label and no value. Apple rejects such a
+     * pass on-device (it opens then immediately closes). Appending a unit makes
+     * the value non-falsy and reads better than a lone number.
+     */
+    protected function applePointsValue($rewardPoints): string
+    {
+        return ((int) ($rewardPoints ?? 0)).' pts';
     }
 
     public function deleteApplePass(int $customerId): bool
