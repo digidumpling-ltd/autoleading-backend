@@ -137,8 +137,17 @@ class MobilePassServiceProvider extends ServiceProvider
                 config(['mobile-pass.apple.certificate_password' => $certificatePassword]);
             }
 
-            // The Apple PassKit web-service host is the storefront itself.
+            // The Apple PassKit web-service host is the storefront itself. Apple
+            // requires that whenever a pass declares webServiceURL it ALSO carries
+            // an authenticationToken (>= 16 chars); a pass with one but not the
+            // other is rejected on-device ("Safari cannot download this file").
+            // The package builds webServiceURL from webservice.host and sets
+            // authenticationToken from webservice.secret, so we must supply both.
+            // The secret must be STABLE across requests (it is embedded in the
+            // pass and used to authenticate device update calls), so derive it
+            // deterministically from the app key rather than randomising it.
             config(['mobile-pass.apple.webservice.host' => config('app.url')]);
+            config(['mobile-pass.apple.webservice.secret' => hash('sha256', 'mobile-pass-apple-webservice|'.config('app.key'))]);
         } catch (\Exception) {
             // DB may not be available during installation
         }
