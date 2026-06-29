@@ -69,6 +69,7 @@ class MobilePassService
         $walletBalance = \Webkul\Wallet\Models\Customer::find($customer->id)?->balanceFloatNum ?? 0;
         $tier = $customer->group?->name ?: 'Standard';
         $memberName = trim($customer->first_name.' '.$customer->last_name) ?: 'Member';
+        $updated = now()->format('n/j/y');
 
         $organization = (string) (config('mobile-pass.apple.organization_name') ?: 'Auto Leading Limited');
 
@@ -76,6 +77,9 @@ class MobilePassService
 
         $theme = $this->appleTierTheme($customer->group?->code);
 
+        // Layout mirrors the reference design: logo + Points in the header, a
+        // full-width strip banner, then a row of three secondary fields
+        // (Name / Updated / Reward Value). Tier lives on the back of the card.
         $pass = StoreCardPassBuilder::make()
             ->setSerialNumber('WALLET-'.$customer->id)
             ->setOrganizationName($organization)
@@ -85,10 +89,12 @@ class MobilePassService
             ->setLabelColor($theme['label'])
             ->setIconImage($assets.'/icon.png', $assets.'/icon@2x.png', $assets.'/icon@3x.png')
             ->setLogoImage($assets.'/logo.png', $assets.'/logo@2x.png', $assets.'/logo@3x.png')
+            ->setStripImage($assets.'/strip.png', $assets.'/strip@2x.png', $assets.'/strip@3x.png')
             ->addHeaderField('points', $this->applePointsValue($rewardPoints), 'Points')
-            ->addSecondaryField('credit', core()->formatPrice($walletBalance), 'Credit')
-            ->addAuxiliaryField('tier', $tier, 'Tier')
-            ->addBackField('name', $memberName, 'Member')
+            ->addSecondaryField('name', $memberName, 'Name')
+            ->addSecondaryField('updated', $updated, 'Updated')
+            ->addSecondaryField('credit', core()->formatPrice($walletBalance), 'Reward Value')
+            ->addBackField('tier', $tier, 'Membership Tier')
             ->setBarcode(BarcodeType::Qr, (string) $customer->id)
             ->save();
 
@@ -115,6 +121,7 @@ class MobilePassService
         $pass->updateField('points', $this->applePointsValue($rewardPoints));
         $pass->updateField('credit', core()->formatPrice($walletBalance));
         $pass->updateField('tier', $tier ?: 'Standard');
+        $pass->updateField('updated', now()->format('n/j/y'));
     }
 
     /**
