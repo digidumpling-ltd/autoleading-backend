@@ -37,6 +37,8 @@ class MobilePassServiceProvider extends ServiceProvider
 
         $this->overrideGoogleConfig();
 
+        $this->overrideAppleConfig();
+
         $this->commands([SetupGoogleLoyaltyClass::class, SyncCustomerPass::class]);
 
         $this->app->register(EventServiceProvider::class);
@@ -95,6 +97,48 @@ class MobilePassServiceProvider extends ServiceProvider
                 config(['mobile-pass.google.service_account_key' => $serviceAccountKey]);
                 config(['mobile-pass.google.service_account_key_path' => null]);
             }
+        } catch (\Exception) {
+            // DB may not be available during installation
+        }
+    }
+
+    protected function overrideAppleConfig(): void
+    {
+        try {
+            $organizationName = core()->getConfigData('sales.mobile_pass.apple.organization_name');
+            $typeIdentifier = core()->getConfigData('sales.mobile_pass.apple.type_identifier');
+            $teamIdentifier = core()->getConfigData('sales.mobile_pass.apple.team_identifier');
+            $certificate = core()->getConfigData('sales.mobile_pass.apple.certificate');
+            $certificatePassword = core()->getConfigData('sales.mobile_pass.apple.certificate_password');
+
+            if ($organizationName) {
+                config(['mobile-pass.apple.organization_name' => $organizationName]);
+            }
+
+            if ($typeIdentifier) {
+                config(['mobile-pass.apple.type_identifier' => $typeIdentifier]);
+            }
+
+            if ($teamIdentifier) {
+                config(['mobile-pass.apple.team_identifier' => $teamIdentifier]);
+            }
+
+            if ($certificate) {
+                // The certificate is stored as base64 of the .p12 binary; strip any
+                // whitespace/newlines a textarea may insert. The package decodes this
+                // and writes a temp .p12 (see ApplePassBuilder::getCertificatePath()).
+                $certificate = preg_replace('/\s+/', '', (string) $certificate);
+
+                config(['mobile-pass.apple.certificate' => $certificate]);
+                config(['mobile-pass.apple.certificate_path' => null]);
+            }
+
+            if ($certificatePassword !== null && $certificatePassword !== '') {
+                config(['mobile-pass.apple.certificate_password' => $certificatePassword]);
+            }
+
+            // The Apple PassKit web-service host is the storefront itself.
+            config(['mobile-pass.apple.webservice.host' => config('app.url')]);
         } catch (\Exception) {
             // DB may not be available during installation
         }

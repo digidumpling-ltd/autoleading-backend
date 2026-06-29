@@ -54,4 +54,47 @@ return [
             ],
         ],
     ],
+    [
+        'key' => 'sales.mobile_pass.apple',
+        'name' => 'mobile-pass::app.configuration.index.sales.mobile-pass.apple.title',
+        'info' => 'mobile-pass::app.configuration.index.sales.mobile-pass.apple.info',
+        'sort' => 3,
+        'fields' => [
+            [
+                'name'          => 'organization_name',
+                'title'         => 'mobile-pass::app.configuration.index.sales.mobile-pass.apple.organization-name',
+                'type'          => 'text',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ],
+            [
+                'name'          => 'type_identifier',
+                'title'         => 'mobile-pass::app.configuration.index.sales.mobile-pass.apple.type-identifier',
+                'type'          => 'text',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ],
+            [
+                'name'          => 'team_identifier',
+                'title'         => 'mobile-pass::app.configuration.index.sales.mobile-pass.apple.team-identifier',
+                'type'          => 'text',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ],
+            [
+                'name'          => 'certificate',
+                'title'         => 'mobile-pass::app.configuration.index.sales.mobile-pass.apple.certificate',
+                'type'          => 'textarea',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ],
+            [
+                'name'          => 'certificate_password',
+                'title'         => 'mobile-pass::app.configuration.index.sales.mobile-pass.apple.certificate-password',
+                'type'          => 'password',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ],
+        ],
+    ],
 ];
