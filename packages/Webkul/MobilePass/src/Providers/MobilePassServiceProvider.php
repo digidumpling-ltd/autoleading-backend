@@ -48,6 +48,40 @@ class MobilePassServiceProvider extends ServiceProvider
             SyncGooglePassBalance::class
         );
 
+        /*
+         * Keep the wallet passes in step when a customer's reward-point balance
+         * changes (admin allocation, registration bonus, redemption, etc). The
+         * rewards module fires these events with the affected RewardPoint model
+         * (which carries customer_id) wrapped in an array; the wallet-balance
+         * listener above only covers money changes, so without this a points
+         * change would leave the pass's Points field stale.
+         */
+        Event::listen([
+            'reward.points.save.after',
+            'reward.points.update.after',
+            'reward.points.register.after',
+        ], function ($payload) {
+            $reward = is_array($payload) ? ($payload[0] ?? null) : $payload;
+
+            $customerId = is_object($reward) ? ($reward->customer_id ?? null) : null;
+
+            if (! $customerId) {
+                return;
+            }
+
+            $service = app(MobilePassService::class);
+
+            if (! $service->isEnabled()) {
+                return;
+            }
+
+            if ($googlePass = $service->getCustomerGooglePass($customerId)) {
+                $service->syncPassContent($googlePass, $customerId);
+            }
+
+            $service->syncApplePassContent($customerId);
+        });
+
         Event::listen('checkout.order.save.after', function ($order) {
             if (! in_array($order->payment->method ?? '', ['wallet'])) {
                 return;
