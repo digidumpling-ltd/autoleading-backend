@@ -87,8 +87,8 @@ class MobilePassService
             ->setBackgroundColor($theme['background'])
             ->setForegroundColor($theme['foreground'])
             ->setLabelColor($theme['label'])
-            ->setIconImage($assets.'/icon.png', $assets.'/icon@2x.png', $assets.'/icon@3x.png')
-            ->setLogoImage($assets.'/logo.png', $assets.'/logo@2x.png', $assets.'/logo@3x.png')
+            ->setIconImage($assets.'/'.$theme['icon'].'.png', $assets.'/'.$theme['icon'].'@2x.png', $assets.'/'.$theme['icon'].'@3x.png')
+            ->setLogoImage($assets.'/'.$theme['logo'].'.png', $assets.'/'.$theme['logo'].'@2x.png', $assets.'/'.$theme['logo'].'@3x.png')
             ->setStripImage($assets.'/strip.png', $assets.'/strip@2x.png', $assets.'/strip@3x.png')
             ->addHeaderField('points', $this->applePointsValue($rewardPoints), 'Points')
             ->addSecondaryField('name', $memberName, 'Name')
@@ -139,23 +139,27 @@ class MobilePassService
 
     /**
      * Per-membership-tier colour scheme for the Apple pass, keyed by customer
-     * group code. Labels stay AutoLeading orange where it reads well; on the
-     * lighter gold tier the label switches to white for contrast. Unknown or
-     * non-member groups fall back to the brand black theme.
+     * group code. The Regular tier uses a white card with dark text, so it
+     * needs the black-wordmark logo ('logo' => 'logo-dark'); every other tier
+     * is a dark card and uses the white-wordmark logo ('logo'). Unknown or
+     * non-member groups fall back to the Regular (white) theme.
      *
-     * @return array{background:string,foreground:string,label:string}
+     * @return array{background:string,foreground:string,label:string,logo:string,icon:string}
      */
     protected function appleTierTheme(?string $groupCode): array
     {
+        // Regular: white card -> black-wordmark logo + white-background icon.
+        $regular = ['background' => '#FFFFFF', 'foreground' => '#0E0D0C', 'label' => '#E2620A', 'logo' => 'logo-dark', 'icon' => 'icon-light'];
+
         $themes = [
-            'member1' => ['background' => '#0E0D0C', 'foreground' => '#FFFFFF', 'label' => '#E2620A'], // Regular  - brand black
-            'member2' => ['background' => '#9A7B1F', 'foreground' => '#FFFFFF', 'label' => '#FFFFFF'], // Gold
-            'member3' => ['background' => '#3A3F44', 'foreground' => '#FFFFFF', 'label' => '#E2620A'], // Platinum - graphite
-            'member4' => ['background' => '#1E3A5F', 'foreground' => '#FFFFFF', 'label' => '#E2620A'], // Diamond  - deep blue
-            'member5' => ['background' => '#0E6B4F', 'foreground' => '#FFFFFF', 'label' => '#E2620A'], // Jadeite  - jade green
+            'member1' => $regular,
+            'member2' => ['background' => '#9A7B1F', 'foreground' => '#FFFFFF', 'label' => '#FFFFFF', 'logo' => 'logo', 'icon' => 'icon'], // Gold
+            'member3' => ['background' => '#3A3F44', 'foreground' => '#FFFFFF', 'label' => '#E2620A', 'logo' => 'logo', 'icon' => 'icon'], // Platinum - graphite
+            'member4' => ['background' => '#1E3A5F', 'foreground' => '#FFFFFF', 'label' => '#E2620A', 'logo' => 'logo', 'icon' => 'icon'], // Diamond  - deep blue
+            'member5' => ['background' => '#0E6B4F', 'foreground' => '#FFFFFF', 'label' => '#E2620A', 'logo' => 'logo', 'icon' => 'icon'], // Jadeite  - jade green
         ];
 
-        return $themes[$groupCode] ?? ['background' => '#0E0D0C', 'foreground' => '#FFFFFF', 'label' => '#E2620A'];
+        return $themes[$groupCode] ?? $regular;
     }
 
     public function deleteApplePass(int $customerId): bool
