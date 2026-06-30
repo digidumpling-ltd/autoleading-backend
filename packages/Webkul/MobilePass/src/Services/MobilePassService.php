@@ -204,14 +204,19 @@ class MobilePassService
     }
 
     /**
-     * Rebuild a customer's Apple pass from scratch. Needed when something that
-     * is baked in at build time changes (e.g. the membership-tier colour scheme
-     * / logo), which a field-value sync cannot alter. No-ops when the customer
-     * has no Apple pass. Returns true when a rebuild happened.
+     * Re-theme a customer's existing Apple pass in place (colours + logo/icon)
+     * to match their current membership tier. Updates the SAME pass record so
+     * its serial and device registrations are preserved — the model's updated()
+     * hook then fires an APNs push so the installed pass refreshes on-device.
+     * (A delete + recreate would orphan the copy already on the customer's
+     * phone, leaving it stuck on the old colour forever.) No-ops when the
+     * customer has no Apple pass. Returns true when a re-theme happened.
      */
     public function rebuildApplePass(int $customerId): bool
     {
-        if (! $this->getCustomerApplePass($customerId)) {
+        $pass = $this->getCustomerApplePass($customerId);
+
+        if (! $pass) {
             return false;
         }
 
@@ -221,8 +226,18 @@ class MobilePassService
             return false;
         }
 
-        $this->deleteApplePass($customerId);
-        $this->createOrGetApplePass($customer);
+        $assets = dirname(__DIR__).'/Resources/assets/images/apple-pass';
+        $theme = $this->appleTierTheme($customer->group?->code);
+
+        // Hydrate the builder from the stored pass, re-apply the tier theme,
+        // and save() back onto the same record (triggers the push).
+        $pass->builder()
+            ->setBackgroundColor($theme['background'])
+            ->setForegroundColor($theme['foreground'])
+            ->setLabelColor($theme['label'])
+            ->setIconImage($assets.'/'.$theme['icon'].'.png', $assets.'/'.$theme['icon'].'@2x.png', $assets.'/'.$theme['icon'].'@3x.png')
+            ->setLogoImage($assets.'/'.$theme['logo'].'.png', $assets.'/'.$theme['logo'].'@2x.png', $assets.'/'.$theme['logo'].'@3x.png')
+            ->save();
 
         return true;
     }
