@@ -168,9 +168,9 @@ class MobilePassService
         return [
             'background' => $bg,
             'foreground' => $text,
-            // Labels stay AutoLeading orange on dark cards; on a light card use
-            // the chosen text colour so the small captions remain legible.
-            'label'      => $isLight ? $text : '#E2620A',
+            // Field captions (NAME / UPDATED / WALLET BALANCE / POINTS) always use
+            // the AutoLeading brand orange across every tier.
+            'label'      => '#E2620A',
             'logo'       => $isLight ? 'logo-dark' : 'logo',
             'icon'       => $isLight ? 'icon-light' : 'icon',
         ];
