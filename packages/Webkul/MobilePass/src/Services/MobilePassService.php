@@ -75,7 +75,7 @@ class MobilePassService
 
         $assets = dirname(__DIR__).'/Resources/assets/images/apple-pass';
 
-        $theme = $this->appleTierTheme($customer->group?->code);
+        $theme = $this->appleTierTheme($customer->group?->id);
 
         // Layout mirrors the reference design: logo + Points in the header, a
         // full-width strip banner, then a row of three secondary fields
@@ -138,37 +138,73 @@ class MobilePassService
     }
 
     /**
-     * Per-membership-tier colour scheme for the Apple pass, keyed by customer
-     * group code. The Regular tier uses a white card with dark text, so it
-     * needs the black-wordmark logo ('logo' => 'logo-dark'); every other tier
-     * is a dark card and uses the white-wordmark logo ('logo'). Unknown or
-     * non-member groups fall back to the Regular (white) theme.
+     * Resolve the Apple-pass colour scheme for a customer group from the
+     * membership tier rules managed in admin/membership/tiers. The admin sets
+     * background + text colours per tier; the logo/icon variant is derived from
+     * the background brightness (light background -> black-wordmark logo +
+     * white-background icon; dark background -> white logo + dark icon). Groups
+     * with no configured tier colour fall back to the white default.
      *
      * @return array{background:string,foreground:string,label:string,logo:string,icon:string}
      */
-    protected function appleTierTheme(?string $groupCode): array
+    protected function appleTierTheme(?int $groupId): array
     {
-        // Regular: white card -> black-wordmark logo + white-background icon.
-        $regular = ['background' => '#FFFFFF', 'foreground' => '#0E0D0C', 'label' => '#E2620A', 'logo' => 'logo-dark', 'icon' => 'icon-light'];
+        $defaultBg = '#FFFFFF';
+        $defaultText = '#0E0D0C';
 
-        $themes = [
-            'member1' => $regular,
-            'member2' => ['background' => '#9A7B1F', 'foreground' => '#FFFFFF', 'label' => '#FFFFFF', 'logo' => 'logo', 'icon' => 'icon'], // Gold
-            'member3' => ['background' => '#3A3F44', 'foreground' => '#FFFFFF', 'label' => '#E2620A', 'logo' => 'logo', 'icon' => 'icon'], // Platinum - graphite
-            'member4' => ['background' => '#1E3A5F', 'foreground' => '#FFFFFF', 'label' => '#E2620A', 'logo' => 'logo', 'icon' => 'icon'], // Diamond  - deep blue
-            'member5' => ['background' => '#0E6B4F', 'foreground' => '#FFFFFF', 'label' => '#E2620A', 'logo' => 'logo', 'icon' => 'icon'], // Jadeite  - jade green
+        $bg = $defaultBg;
+        $text = $defaultText;
+
+        if ($groupId) {
+            $rule = \Webkul\Membership\Models\TierRule::where('customer_group_id', $groupId)->first();
+            if ($rule && $rule->background_color) {
+                $bg = $rule->background_color;
+                $text = $rule->text_color ?: $this->contrastColor($bg);
+            }
+        }
+
+        $isLight = $this->isLightColor($bg);
+
+        return [
+            'background' => $bg,
+            'foreground' => $text,
+            // Labels stay AutoLeading orange on dark cards; on a light card use
+            // the chosen text colour so the small captions remain legible.
+            'label'      => $isLight ? $text : '#E2620A',
+            'logo'       => $isLight ? 'logo-dark' : 'logo',
+            'icon'       => $isLight ? 'icon-light' : 'icon',
         ];
+    }
 
-        return $themes[$groupCode] ?? $regular;
+    /**
+     * Whether a #RRGGBB colour is "light" (per relative luminance), used to pick
+     * the logo/icon variant and a contrasting text colour.
+     */
+    protected function isLightColor(string $hex): bool
+    {
+        $hex = ltrim($hex, '#');
+        if (strlen($hex) !== 6) {
+            return true;
+        }
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
+        // Rec. 601 luma; > 150 reads as light.
+        return (0.299 * $r + 0.587 * $g + 0.114 * $b) > 150;
+    }
+
+    protected function contrastColor(string $bgHex): string
+    {
+        return $this->isLightColor($bgHex) ? '#0E0D0C' : '#FFFFFF';
     }
 
     /**
      * The pass background colour (hex) a given customer-group code resolves to.
      * Exposed so the tier-change listener can compare against a stored pass.
      */
-    public function appleThemeBackgroundFor(?string $groupCode): string
+    public function appleThemeBackgroundFor(?int $groupId): string
     {
-        return $this->appleTierTheme($groupCode)['background'];
+        return $this->appleTierTheme($groupId)['background'];
     }
 
     /**
@@ -227,7 +263,7 @@ class MobilePassService
         }
 
         $assets = dirname(__DIR__).'/Resources/assets/images/apple-pass';
-        $theme = $this->appleTierTheme($customer->group?->code);
+        $theme = $this->appleTierTheme($customer->group?->id);
 
         // Hydrate the builder from the stored pass, re-apply the tier theme,
         // and save() back onto the same record (triggers the push).

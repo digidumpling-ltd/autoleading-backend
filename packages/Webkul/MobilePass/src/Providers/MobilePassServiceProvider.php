@@ -108,7 +108,7 @@ class MobilePassServiceProvider extends ServiceProvider
             }
 
             $currentBg = $pass->content['backgroundColor'] ?? null;
-            $expectedHex = $service->appleThemeBackgroundFor($customer->fresh()->group?->code);
+            $expectedHex = $service->appleThemeBackgroundFor($customer->fresh()->group?->id);
             $expectedRgb = $service->hexToRgbString($expectedHex);
 
             if ($currentBg !== null && $currentBg !== $expectedRgb) {

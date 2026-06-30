@@ -10,7 +10,7 @@
     </div>
 
     <v-membership-tiers
-        :initial-rules="{{ json_encode($tierRules->map(fn ($r) => ['id' => $r->id, 'min_balance' => $r->min_balance, 'max_balance' => $r->max_balance, 'customer_group_id' => $r->customer_group_id, 'sort_order' => $r->sort_order])->values()) }}"
+        :initial-rules="{{ json_encode($tierRules->map(fn ($r) => ['id' => $r->id, 'min_balance' => $r->min_balance, 'max_balance' => $r->max_balance, 'customer_group_id' => $r->customer_group_id, 'background_color' => $r->background_color ?? '#FFFFFF', 'text_color' => $r->text_color ?? '#0E0D0C', 'sort_order' => $r->sort_order])->values()) }}"
         :customer-groups="{{ json_encode($customerGroups->map(fn ($g) => ['id' => $g->id, 'name' => $g->name, 'code' => $g->code])->values()) }}"
         store-url="{{ route('admin.membership.tiers.store') }}"
     ></v-membership-tiers>
@@ -47,10 +47,14 @@
                                 :key="rule.id || index"
                                 class="flex items-center gap-1"
                             >
-                                <p class="flex items-center rounded bg-gray-600 px-2.5 py-1 font-semibold text-white">
+                                <p
+                                    class="flex items-center rounded px-2.5 py-1 font-semibold"
+                                    :style="{ backgroundColor: rule.background_color || '#4B5563', color: rule.text_color || '#FFFFFF' }"
+                                >
                                     @{{ chipLabel(rule) }}
                                     <span
-                                        class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                        class="icon-cross cursor-pointer text-lg ltr:ml-1.5 rtl:mr-1.5"
+                                        :style="{ color: rule.text_color || '#FFFFFF' }"
                                         @click="removeRule(index)"
                                     ></span>
                                 </p>
@@ -178,6 +182,32 @@
                                     </select>
                                 </x-admin::form.control-group>
 
+                                <!-- Background Colour -->
+                                <x-admin::form.control-group class="!mb-0 w-full">
+                                    <x-admin::form.control-group.label>
+                                        @lang('bagisto-membership::app.admin.tiers.col-background-color')
+                                    </x-admin::form.control-group.label>
+
+                                    <input
+                                        type="color"
+                                        v-model="row.background_color"
+                                        class="h-[42px] w-full cursor-pointer rounded-md border bg-white p-1 dark:border-gray-800 dark:bg-gray-900"
+                                    />
+                                </x-admin::form.control-group>
+
+                                <!-- Text Colour -->
+                                <x-admin::form.control-group class="!mb-0 w-full">
+                                    <x-admin::form.control-group.label>
+                                        @lang('bagisto-membership::app.admin.tiers.col-text-color')
+                                    </x-admin::form.control-group.label>
+
+                                    <input
+                                        type="color"
+                                        v-model="row.text_color"
+                                        class="h-[42px] w-full cursor-pointer rounded-md border bg-white p-1 dark:border-gray-800 dark:bg-gray-900"
+                                    />
+                                </x-admin::form.control-group>
+
                                 <!-- Delete -->
                                 <div
                                     class="icon-delete mb-3 w-fit cursor-pointer p-1.5 text-2xl transition-all"
@@ -238,6 +268,8 @@
                             min_balance:       '',
                             max_balance:       '',
                             customer_group_id: '',
+                            background_color:  '#FFFFFF',
+                            text_color:        '#0E0D0C',
                         });
                     },
 

@@ -61,6 +61,10 @@ class SetupGoogleLoyaltyClass extends Command
                 'programName' => $programName,
                 'reviewStatus' => 'UNDER_REVIEW',
                 'programLogo' => $logo,
+                // Google sets the background on the (shared) LoyaltyClass, so it
+                // is one colour for every customer rather than per-tier like
+                // Apple. Use the AutoLeading brand black.
+                'hexBackgroundColor' => '#0E0D0C',
             ];
 
             if ($exists) {

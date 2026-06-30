@@ -27,6 +27,8 @@ return [
             'col-min-balance'    => '最低餘額',
             'col-max-balance'    => '最高餘額',
             'col-customer-group' => '客戶群組',
+            'col-background-color' => '背景顏色',
+            'col-text-color'    => '文字顏色',
 
             'validation' => [
                 'min-balance-required' => '第 :n 條規則：最低餘額為必填項且須 ≥ 0。',

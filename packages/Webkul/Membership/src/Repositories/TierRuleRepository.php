@@ -26,9 +26,26 @@ class TierRuleRepository extends Repository
                 'min_balance'       => (float) $rule['min_balance'],
                 'max_balance'       => isset($rule['max_balance']) && $rule['max_balance'] !== '' ? (float) $rule['max_balance'] : null,
                 'customer_group_id' => (int) $rule['customer_group_id'],
+                'background_color'  => $this->normalizeHex($rule['background_color'] ?? null),
+                'text_color'        => $this->normalizeHex($rule['text_color'] ?? null),
                 'sort_order'        => (int) ($rule['sort_order'] ?? 0),
             ]);
         }
+    }
+
+    /**
+     * Normalise a colour input to a #RRGGBB hex string, or null when empty /
+     * malformed. Accepts values with or without a leading '#'.
+     */
+    private function normalizeHex(?string $value): ?string
+    {
+        if ($value === null || trim($value) === '') {
+            return null;
+        }
+
+        $value = '#'.ltrim(trim($value), '#');
+
+        return preg_match('/^#[0-9A-Fa-f]{6}$/', $value) ? strtoupper($value) : null;
     }
 
     /**
