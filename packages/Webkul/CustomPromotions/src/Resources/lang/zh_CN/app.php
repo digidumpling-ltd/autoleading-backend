@@ -16,8 +16,6 @@ return [
             'topup-amount' => '充值金额',
             'spend-amount' => '消费金额',
             'is-first-topup' => '是否首次充值',
-            'rental-start-date' => '租赁开始日期',
-            'rental-end-date' => '租赁结束日期',
             'rental-total' => '租赁总金额',
             'rental-total-days' => '租赁总天数',
             'is-first-booking' => '是否首次预订',
@@ -85,6 +83,17 @@ return [
                 'marketing-time' => '营销时间',
                 'starts-from' => '开始日期',
                 'ends-till' => '结束日期',
+
+                'coupon' => '优惠券',
+                'coupon-type' => '优惠券类型',
+                'coupon-type-none' => '无优惠券',
+                'coupon-type-specific' => '指定优惠券码',
+                'coupon-code' => '优惠券码',
+                'uses-per-coupon' => '每券使用次数',
+                'usage-per-customer' => '每客户使用次数',
+                'end-other-rules' => '结束其他规则',
+                'end-other-rules-yes' => '是',
+                'end-other-rules-no' => '否',
 
                 'operators' => [
                     '==' => '等于',
@@ -180,6 +189,17 @@ return [
                 'starts-from' => '开始日期',
                 'ends-till' => '结束日期',
 
+                'coupon' => '优惠券',
+                'coupon-type' => '优惠券类型',
+                'coupon-type-none' => '无优惠券',
+                'coupon-type-specific' => '指定优惠券码',
+                'coupon-code' => '优惠券码',
+                'uses-per-coupon' => '每券使用次数',
+                'usage-per-customer' => '每客户使用次数',
+                'end-other-rules' => '结束其他规则',
+                'end-other-rules-yes' => '是',
+                'end-other-rules-no' => '否',
+
                 'operators' => [
                     '==' => '等于',
                     '!=' => '不等于',
@@ -203,6 +223,12 @@ return [
     ],
 
     'shop' => [
+        'coupon' => [
+            'coupon-not-found' => '优惠券码无效。',
+            'coupon-usage-exceeded' => '此优惠券已达到使用限额。',
+            'coupon-per-customer-exceeded' => '您已达到此优惠券的最大使用次数。',
+        ],
+
         'promo-card' => [
             'heading' => '您的预订专属优惠',
             'free-extension-label' => '免费延期 :days 天',

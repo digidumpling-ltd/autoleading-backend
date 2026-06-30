@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Webkul\Core\Models\ChannelProxy;
 use Webkul\Customer\Models\CustomerGroupProxy;
 use Webkul\CustomPromotions\Contracts\WalletPromotionRule as WalletPromotionRuleContract;
+use Webkul\CustomPromotions\Models\Concerns\HasPromotionCoupon;
 
 class WalletPromotionRule extends Model implements WalletPromotionRuleContract
 {
+    use HasPromotionCoupon;
+
     protected $table = 'custom_wallet_promotion_rules';
+
+    protected string $promotionType = 'wallet';
 
     protected $fillable = [
         'name',
@@ -24,11 +29,17 @@ class WalletPromotionRule extends Model implements WalletPromotionRuleContract
         'reward_mode',
         'reward_value',
         'sort_order',
+        'coupon_type',
+        'uses_per_coupon',
+        'usage_per_customer',
+        'end_other_rules',
     ];
 
     protected $casts = [
         'conditions' => 'array',
         'status' => 'boolean',
+        'coupon_type' => 'integer',
+        'end_other_rules' => 'boolean',
     ];
 
     public function channels(): BelongsToMany

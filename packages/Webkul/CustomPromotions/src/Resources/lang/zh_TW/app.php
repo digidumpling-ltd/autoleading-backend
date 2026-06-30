@@ -16,8 +16,6 @@ return [
             'topup-amount'      => '儲值金額',
             'spend-amount'      => '消費金額',
             'is-first-topup'    => '是否首次儲值',
-            'rental-start-date' => '租賃開始日期',
-            'rental-end-date'   => '租賃結束日期',
             'rental-total'      => '租賃總金額',
             'rental-total-days' => '租賃總天數',
             'is-first-booking'  => '是否首次預訂',
@@ -85,6 +83,17 @@ return [
                 'marketing-time' => '行銷時間',
                 'starts-from'    => '開始日期',
                 'ends-till'      => '結束日期',
+
+                'coupon'              => '優惠券',
+                'coupon-type'         => '優惠券類型',
+                'coupon-type-none'    => '無優惠券',
+                'coupon-type-specific' => '指定優惠券碼',
+                'coupon-code'         => '優惠券碼',
+                'uses-per-coupon'     => '每券使用次數',
+                'usage-per-customer'  => '每客戶使用次數',
+                'end-other-rules'     => '結束其他規則',
+                'end-other-rules-yes' => '是',
+                'end-other-rules-no'  => '否',
 
                 'operators' => [
                     '==' => '等於',
@@ -180,6 +189,17 @@ return [
                 'starts-from'    => '開始日期',
                 'ends-till'      => '結束日期',
 
+                'coupon'              => '優惠券',
+                'coupon-type'         => '優惠券類型',
+                'coupon-type-none'    => '無優惠券',
+                'coupon-type-specific' => '指定優惠券碼',
+                'coupon-code'         => '優惠券碼',
+                'uses-per-coupon'     => '每券使用次數',
+                'usage-per-customer'  => '每客戶使用次數',
+                'end-other-rules'     => '結束其他規則',
+                'end-other-rules-yes' => '是',
+                'end-other-rules-no'  => '否',
+
                 'operators' => [
                     '==' => '等於',
                     '!=' => '不等於',
@@ -203,6 +223,12 @@ return [
     ],
 
     'shop' => [
+        'coupon' => [
+            'coupon-not-found'            => '優惠券碼無效。',
+            'coupon-usage-exceeded'       => '此優惠券已達到使用上限。',
+            'coupon-per-customer-exceeded' => '您已達到此優惠券的最大使用次數。',
+        ],
+
         'promo-card' => [
             'heading'               => '您的預訂專屬優惠',
             'free-extension-label'  => '免費延期 :days 天',

@@ -23,7 +23,7 @@
                 <x-admin::form.control-group.error control-name="name" />
             </x-admin::form.control-group>
 
-            <x-admin::form.control-group class="!mb-0">
+            <x-admin::form.control-group>
                 <x-admin::form.control-group.label>
                     @lang('custom_promotions::app.admin.rental-rules.create.description')
                 </x-admin::form.control-group.label>
@@ -35,6 +35,19 @@
                     :placeholder="trans('custom_promotions::app.admin.rental-rules.create.description')"
                 />
             </x-admin::form.control-group>
+
+            <v-promotion-coupon
+                initial-coupon-type="{{ old('coupon_type', $rule?->coupon_type ?? 0) }}"
+                initial-coupon-code="{{ old('coupon_code', $coupon?->code ?? '') }}"
+                initial-uses-per-coupon="{{ old('uses_per_coupon', $coupon?->usage_limit ?? 0) }}"
+                initial-usage-per-customer="{{ old('usage_per_customer', $coupon?->usage_per_customer ?? 0) }}"
+                label-coupon-type="{{ trans('custom_promotions::app.admin.rental-rules.create.coupon-type') }}"
+                label-coupon-type-none="{{ trans('custom_promotions::app.admin.rental-rules.create.coupon-type-none') }}"
+                label-coupon-type-specific="{{ trans('custom_promotions::app.admin.rental-rules.create.coupon-type-specific') }}"
+                label-coupon-code="{{ trans('custom_promotions::app.admin.rental-rules.create.coupon-code') }}"
+                label-uses-per-coupon="{{ trans('custom_promotions::app.admin.rental-rules.create.uses-per-coupon') }}"
+                label-usage-per-customer="{{ trans('custom_promotions::app.admin.rental-rules.create.usage-per-customer') }}"
+            ></v-promotion-coupon>
         </div>
 
         <!-- Conditions (Vue component owns the card header with title + condition-type) -->
@@ -68,7 +81,23 @@
                 label-note-text="{{ trans('custom_promotions::app.admin.rental-rules.create.note-text') }}"
                 :product-reward-mode-options='@json(trans("custom_promotions::app.admin.rental-rules.create.product-reward-modes"))'
             ></v-rental-rule-actions>
+
+            <!-- Stop Further Rules -->
+            <x-admin::form.control-group class="!mb-0">
+                <x-admin::form.control-group.label>
+                    @lang('custom_promotions::app.admin.rental-rules.create.end-other-rules')
+                </x-admin::form.control-group.label>
+                <x-admin::form.control-group.control
+                    type="select"
+                    name="end_other_rules"
+                    :value="old('end_other_rules', (int) ($rule?->end_other_rules ?? 0))"
+                >
+                    <option value="0">@lang('custom_promotions::app.admin.rental-rules.create.end-other-rules-no')</option>
+                    <option value="1">@lang('custom_promotions::app.admin.rental-rules.create.end-other-rules-yes')</option>
+                </x-admin::form.control-group.control>
+            </x-admin::form.control-group>
         </div>
+
 
     </div>
 
@@ -163,7 +192,7 @@
                 </div>
 
                 <!-- Status -->
-                <x-admin::form.control-group class="!mb-0">
+                <x-admin::form.control-group>
                     <x-admin::form.control-group.label>
                         @lang('custom_promotions::app.admin.rental-rules.create.status')
                     </x-admin::form.control-group.label>
@@ -175,6 +204,7 @@
                         :checked="(boolean) old('status', $rule?->status)"
                     />
                 </x-admin::form.control-group>
+
             </x-slot>
         </x-admin::accordion>
 
@@ -217,6 +247,98 @@
 </div>
 
 @pushOnce('scripts')
+<script type="text/x-template" id="v-promotion-coupon-template">
+    <div>
+        <!-- Coupon Type -->
+        <div class="mb-4">
+            <label class="mb-1.5 flex items-center gap-1 text-xs font-medium text-gray-800 dark:text-white">
+                @{{ labelCouponType }}
+            </label>
+            <select
+                name="coupon_type"
+                v-model="couponType"
+                class="custom-select w-full rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+            >
+                <option :value="0">@{{ labelCouponTypeNone }}</option>
+                <option :value="1">@{{ labelCouponTypeSpecific }}</option>
+            </select>
+        </div>
+
+        <!-- Coupon Fields (visible only when couponType == 1) -->
+        <template v-if="couponType == 1">
+            <div class="mb-4">
+                <label class="mb-1.5 flex items-center gap-1 text-xs font-medium text-gray-800 dark:text-white required">
+                    @{{ labelCouponCode }}
+                </label>
+                <input
+                    type="text"
+                    name="coupon_code"
+                    v-model="couponCode"
+                    class="w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                />
+            </div>
+
+            <div class="mb-4">
+                <label class="mb-1.5 flex items-center gap-1 text-xs font-medium text-gray-800 dark:text-white">
+                    @{{ labelUsesPerCoupon }}
+                </label>
+                <input
+                    type="number"
+                    name="uses_per_coupon"
+                    v-model="usesPerCoupon"
+                    min="0"
+                    placeholder="0"
+                    class="w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                />
+            </div>
+
+            <div class="mb-4">
+                <label class="mb-1.5 flex items-center gap-1 text-xs font-medium text-gray-800 dark:text-white">
+                    @{{ labelUsagePerCustomer }}
+                </label>
+                <input
+                    type="number"
+                    name="usage_per_customer"
+                    v-model="usagePerCustomer"
+                    min="0"
+                    placeholder="0"
+                    class="w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                />
+            </div>
+        </template>
+    </div>
+</script>
+
+<script>
+    window.addEventListener('load', function () {
+        app.component('v-promotion-coupon', {
+            template: '#v-promotion-coupon-template',
+
+            props: {
+                initialCouponType:      { type: [String, Number], default: 0 },
+                initialCouponCode:      { type: String, default: '' },
+                initialUsesPerCoupon:   { type: [String, Number], default: 0 },
+                initialUsagePerCustomer:{ type: [String, Number], default: 0 },
+                labelCouponType:        { type: String, default: 'Coupon Type' },
+                labelCouponTypeNone:    { type: String, default: 'No Coupon' },
+                labelCouponTypeSpecific:{ type: String, default: 'Specific Coupon Code' },
+                labelCouponCode:        { type: String, default: 'Coupon Code' },
+                labelUsesPerCoupon:     { type: String, default: 'Uses Per Coupon' },
+                labelUsagePerCustomer:  { type: String, default: 'Usage Per Customer' },
+            },
+
+            data() {
+                return {
+                    couponType:       parseInt(this.initialCouponType) || 0,
+                    couponCode:       this.initialCouponCode,
+                    usesPerCoupon:    this.initialUsesPerCoupon,
+                    usagePerCustomer: this.initialUsagePerCustomer,
+                };
+            },
+        });
+    });
+</script>
+
 <script type="text/x-template" id="v-rental-rule-actions-template">
     <div>
         <!-- Action Type -->

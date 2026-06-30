@@ -3,9 +3,11 @@
 namespace Webkul\CustomPromotions\Services;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Webkul\Customer\Models\Customer;
+use Webkul\CustomPromotions\Models\CustomPromotionCouponProxy;
 use Webkul\Product\Repositories\ProductRepository;
 use Webkul\Rewards\Repositories\RewardPointRepository;
 use Webkul\Wallet\Events\WalletBalanceUpdated;
@@ -16,7 +18,94 @@ class PromotionActionHandler
     public function __construct(
         protected RewardPointRepository $rewardPointRepository,
         protected ProductRepository $productRepository,
+        protected ConditionEvaluator $conditionEvaluator,
     ) {}
+
+    public function processRules(Collection $rules, Customer $customer, array $eventData, array $eventContext = []): void
+    {
+        foreach ($rules as $rule) {
+            if (($rule->coupon_type ?? 0) == 1) {
+                $sessionCode = session('custom_promo_coupon');
+
+                if (! $sessionCode) {
+                    continue;
+                }
+
+                $couponModel = $rule->coupon;
+
+                if (! $couponModel || $couponModel->code !== $sessionCode) {
+                    continue;
+                }
+
+                $executed = $this->executeGuardedByCoupon($rule, $customer, $couponModel->id, $eventData, $eventContext);
+
+                if ($executed && ($rule->end_other_rules ?? false)) {
+                    break;
+                }
+            } else {
+                if ($this->conditionEvaluator->matches(
+                    $rule->conditions ?? [],
+                    (int) $rule->condition_type,
+                    $eventData,
+                    $customer
+                )) {
+                    $this->execute($rule, $customer, $eventContext);
+
+                    if ($rule->end_other_rules ?? false) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private function executeGuardedByCoupon(
+        object $rule,
+        Customer $customer,
+        int $couponId,
+        array $eventData,
+        array $eventContext
+    ): bool {
+        return DB::transaction(function () use ($rule, $customer, $couponId, $eventData, $eventContext) {
+            $coupon = CustomPromotionCouponProxy::modelClass()::lockForUpdate()->find($couponId);
+
+            if ($coupon->usage_limit > 0 && $coupon->times_used >= $coupon->usage_limit) {
+                return false;
+            }
+
+            $customerUsage = DB::table('custom_promotion_coupon_usages')
+                ->where('custom_promotion_coupon_id', $coupon->id)
+                ->where('customer_id', $customer->id)
+                ->value('times_used') ?? 0;
+
+            if ($coupon->usage_per_customer > 0 && $customerUsage >= $coupon->usage_per_customer) {
+                return false;
+            }
+
+            if (! $this->conditionEvaluator->matches(
+                $rule->conditions ?? [],
+                (int) $rule->condition_type,
+                $eventData,
+                $customer
+            )) {
+                return false;
+            }
+
+            $this->execute($rule, $customer, $eventContext);
+
+            $coupon->increment('times_used');
+
+            DB::table('custom_promotion_coupon_usages')->upsert(
+                [['custom_promotion_coupon_id' => $coupon->id, 'customer_id' => $customer->id, 'times_used' => 1]],
+                ['custom_promotion_coupon_id', 'customer_id'],
+                ['times_used' => DB::raw('times_used + 1')]
+            );
+
+            session()->forget('custom_promo_coupon');
+
+            return true;
+        });
+    }
 
     public function execute(object $rule, Customer $customer, array $eventContext = []): void
     {

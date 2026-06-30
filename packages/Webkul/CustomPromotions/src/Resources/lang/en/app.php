@@ -16,8 +16,6 @@ return [
             'topup-amount' => 'Top-Up Amount',
             'spend-amount' => 'Spend Amount',
             'is-first-topup' => 'Is First Top-Up',
-            'rental-start-date' => 'Rental Start Date',
-            'rental-end-date' => 'Rental End Date',
             'rental-total' => 'Rental Total',
             'rental-total-days' => 'Rental Total Days',
             'is-first-booking' => 'Is First Booking',
@@ -85,6 +83,17 @@ return [
                 'marketing-time' => 'Marketing Time',
                 'starts-from' => 'Starts From',
                 'ends-till' => 'Ends Till',
+
+                'coupon' => 'Coupon',
+                'coupon-type' => 'Coupon Type',
+                'coupon-type-none' => 'No Coupon',
+                'coupon-type-specific' => 'Specific Coupon Code',
+                'coupon-code' => 'Coupon Code',
+                'uses-per-coupon' => 'Uses Per Coupon',
+                'usage-per-customer' => 'Usage Per Customer',
+                'end-other-rules' => 'End Of Other Rules',
+                'end-other-rules-yes' => 'Yes',
+                'end-other-rules-no' => 'No',
 
                 'operators' => [
                     '==' => 'Equals',
@@ -180,6 +189,17 @@ return [
                 'starts-from' => 'Starts From',
                 'ends-till' => 'Ends Till',
 
+                'coupon' => 'Coupon',
+                'coupon-type' => 'Coupon Type',
+                'coupon-type-none' => 'No Coupon',
+                'coupon-type-specific' => 'Specific Coupon Code',
+                'coupon-code' => 'Coupon Code',
+                'uses-per-coupon' => 'Uses Per Coupon',
+                'usage-per-customer' => 'Usage Per Customer',
+                'end-other-rules' => 'End Of Other Rules',
+                'end-other-rules-yes' => 'Yes',
+                'end-other-rules-no' => 'No',
+
                 'operators' => [
                     '==' => 'Equals',
                     '!=' => 'Not Equals',
@@ -203,6 +223,12 @@ return [
     ],
 
     'shop' => [
+        'coupon' => [
+            'coupon-not-found' => 'The coupon code is invalid.',
+            'coupon-usage-exceeded' => 'This coupon has reached its usage limit.',
+            'coupon-per-customer-exceeded' => 'You have already used this coupon the maximum number of times.',
+        ],
+
         'promo-card' => [
             'heading' => 'Special Offers for Your Booking',
             'free-extension-label' => ':days extra days at no cost',

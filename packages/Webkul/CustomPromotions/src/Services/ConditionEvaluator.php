@@ -112,8 +112,6 @@ class ConditionEvaluator
     public function getRentalConditionAttributes(): array
     {
         return [
-            ['code' => 'rental_start_date',  'type' => 'date',    'label' => trans('custom_promotions::app.admin.conditions.rental-start-date')],
-            ['code' => 'rental_end_date',    'type' => 'date',    'label' => trans('custom_promotions::app.admin.conditions.rental-end-date')],
             ['code' => 'rental_total',       'type' => 'price',   'label' => trans('custom_promotions::app.admin.conditions.rental-total')],
             ['code' => 'rental_total_days',  'type' => 'integer', 'label' => trans('custom_promotions::app.admin.conditions.rental-total-days')],
             ['code' => 'is_first_booking',   'type' => 'boolean', 'label' => trans('custom_promotions::app.admin.conditions.is-first-booking')],

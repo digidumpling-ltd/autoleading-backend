@@ -4,7 +4,6 @@ namespace Webkul\CustomPromotions\Listeners;
 
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\CustomPromotions\Repositories\WalletPromotionRuleRepository;
-use Webkul\CustomPromotions\Services\ConditionEvaluator;
 use Webkul\CustomPromotions\Services\PromotionActionHandler;
 use Webkul\Wallet\Events\WalletBalanceUpdated;
 
@@ -12,7 +11,6 @@ class WalletPromotionListener
 {
     public function __construct(
         protected WalletPromotionRuleRepository $ruleRepository,
-        protected ConditionEvaluator $conditionEvaluator,
         protected PromotionActionHandler $actionHandler,
         protected CustomerRepository $customerRepository,
     ) {}
@@ -37,19 +35,10 @@ class WalletPromotionListener
             'transaction_id' => $event->transactionId,
         ];
 
+        $eventContext = ['eventAmount' => $eventAmount];
+
         $rules = $this->ruleRepository->getActiveRulesForCustomer($customer);
 
-        foreach ($rules as $rule) {
-            if ($this->conditionEvaluator->matches(
-                $rule->conditions ?? [],
-                (int) $rule->condition_type,
-                $eventData,
-                $customer
-            )) {
-                $this->actionHandler->execute($rule, $customer, [
-                    'eventAmount' => $eventAmount,
-                ]);
-            }
-        }
+        $this->actionHandler->processRules($rules, $customer, $eventData, $eventContext);
     }
 }

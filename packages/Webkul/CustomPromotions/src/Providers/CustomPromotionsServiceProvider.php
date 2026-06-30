@@ -2,8 +2,10 @@
 
 namespace Webkul\CustomPromotions\Providers;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Webkul\CustomPromotions\Http\Middleware\CustomPromotionCouponMiddleware;
 use Webkul\CustomPromotions\Listeners\RentalBookingCompleteListener;
 use Webkul\CustomPromotions\Listeners\WalletPromotionListener;
 use Webkul\CustomPromotions\Services\ConditionEvaluator;
@@ -21,8 +23,10 @@ class CustomPromotionsServiceProvider extends ServiceProvider
         $this->app->singleton(PromotionActionHandler::class);
     }
 
-    public function boot(): void
+    public function boot(Router $router): void
     {
+        $router->pushMiddlewareToGroup('shop', CustomPromotionCouponMiddleware::class);
+
         $this->loadMigrationsFrom(dirname(__DIR__).'/Database/Migrations');
         $this->loadTranslationsFrom(dirname(__DIR__).'/Resources/lang', 'custom_promotions');
         $this->loadViewsFrom(dirname(__DIR__).'/Resources/views', 'custom_promotions');

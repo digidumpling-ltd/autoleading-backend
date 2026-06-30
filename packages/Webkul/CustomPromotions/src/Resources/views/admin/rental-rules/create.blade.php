@@ -26,6 +26,7 @@
 
         @include('custom_promotions::admin.rental-rules._form', [
             'rule'             => null,
+            'coupon'           => null,
             'attributeOptions' => app(\Webkul\CustomPromotions\Services\ConditionEvaluator::class)->getRentalConditionAttributes(),
         ])
 

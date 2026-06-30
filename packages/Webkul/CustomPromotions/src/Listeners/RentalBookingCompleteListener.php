@@ -6,14 +6,12 @@ use Carbon\Carbon;
 use Webkul\BookingProduct\Models\Booking;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\CustomPromotions\Repositories\RentalPromotionRuleRepository;
-use Webkul\CustomPromotions\Services\ConditionEvaluator;
 use Webkul\CustomPromotions\Services\PromotionActionHandler;
 
 class RentalBookingCompleteListener
 {
     public function __construct(
         protected RentalPromotionRuleRepository $ruleRepository,
-        protected ConditionEvaluator $conditionEvaluator,
         protected PromotionActionHandler $actionHandler,
         protected CustomerRepository $customerRepository,
     ) {}
@@ -40,29 +38,20 @@ class RentalBookingCompleteListener
 
         $eventData = [
             'rental_start_date' => $from ? Carbon::createFromTimestamp($from)->toDateString() : null,
-            'rental_end_date' => $to ? Carbon::createFromTimestamp($to)->toDateString() : null,
-            'rental_total' => $rentalTotal,
+            'rental_end_date'   => $to ? Carbon::createFromTimestamp($to)->toDateString() : null,
+            'rental_total'      => $rentalTotal,
             'rental_total_days' => $rentalTotalDays,
-            'booking_id' => $booking->id,
+            'booking_id'        => $booking->id,
         ];
 
         $eventContext = [
             'eventAmount' => $rentalTotal,
-            'booking' => $booking,
-            'order' => $order,
+            'booking'     => $booking,
+            'order'       => $order,
         ];
 
         $rules = $this->ruleRepository->getActiveRulesForBooking($customer);
 
-        foreach ($rules as $rule) {
-            if ($this->conditionEvaluator->matches(
-                $rule->conditions ?? [],
-                (int) $rule->condition_type,
-                $eventData,
-                $customer
-            )) {
-                $this->actionHandler->execute($rule, $customer, $eventContext);
-            }
-        }
+        $this->actionHandler->processRules($rules, $customer, $eventData, $eventContext);
     }
 }

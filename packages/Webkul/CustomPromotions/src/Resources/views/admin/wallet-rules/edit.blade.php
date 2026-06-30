@@ -29,6 +29,7 @@
 
         @include('custom_promotions::admin.wallet-rules._form', [
             'rule'             => $rule,
+            'coupon'           => $coupon,
             'attributeOptions' => app(\Webkul\CustomPromotions\Services\ConditionEvaluator::class)->getWalletConditionAttributes(),
         ])
 

@@ -40,8 +40,9 @@ class RentalPromotionRuleController extends Controller
     public function edit(int $id): View
     {
         $rule = $this->ruleRepository->findOrFail($id);
+        $coupon = $rule->coupon;
 
-        return view('custom_promotions::admin.rental-rules.edit', compact('rule'));
+        return view('custom_promotions::admin.rental-rules.edit', compact('rule', 'coupon'));
     }
 
     public function update(RentalPromotionRuleRequest $request, int $id): RedirectResponse

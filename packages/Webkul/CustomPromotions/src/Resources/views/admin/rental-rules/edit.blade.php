@@ -29,6 +29,7 @@
 
         @include('custom_promotions::admin.rental-rules._form', [
             'rule'             => $rule,
+            'coupon'           => $coupon,
             'attributeOptions' => app(\Webkul\CustomPromotions\Services\ConditionEvaluator::class)->getRentalConditionAttributes(),
         ])
 

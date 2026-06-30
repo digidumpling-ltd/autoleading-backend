@@ -40,8 +40,9 @@ class WalletPromotionRuleController extends Controller
     public function edit(int $id): View
     {
         $rule = $this->ruleRepository->findOrFail($id);
+        $coupon = $rule->coupon;
 
-        return view('custom_promotions::admin.wallet-rules.edit', compact('rule'));
+        return view('custom_promotions::admin.wallet-rules.edit', compact('rule', 'coupon'));
     }
 
     public function update(WalletPromotionRuleRequest $request, int $id): RedirectResponse
