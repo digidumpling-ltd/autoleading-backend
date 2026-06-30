@@ -37,6 +37,8 @@ class MobilePassServiceProvider extends ServiceProvider
 
         $this->overrideGoogleConfig();
 
+        $this->overrideAppleConfig();
+
         $this->commands([SetupGoogleLoyaltyClass::class, SyncCustomerPass::class]);
 
         $this->app->register(EventServiceProvider::class);
@@ -45,6 +47,74 @@ class MobilePassServiceProvider extends ServiceProvider
             WalletBalanceUpdated::class,
             SyncGooglePassBalance::class
         );
+
+        /*
+         * Keep the wallet passes in step when a customer's reward-point balance
+         * changes (admin allocation, registration bonus, redemption, etc). The
+         * rewards module fires these events with the affected RewardPoint model
+         * (which carries customer_id) wrapped in an array; the wallet-balance
+         * listener above only covers money changes, so without this a points
+         * change would leave the pass's Points field stale.
+         */
+        Event::listen([
+            'reward.points.save.after',
+            'reward.points.update.after',
+            'reward.points.register.after',
+        ], function ($payload) {
+            $reward = is_array($payload) ? ($payload[0] ?? null) : $payload;
+
+            $customerId = is_object($reward) ? ($reward->customer_id ?? null) : null;
+
+            if (! $customerId) {
+                return;
+            }
+
+            $service = app(MobilePassService::class);
+
+            if (! $service->isEnabled()) {
+                return;
+            }
+
+            if ($googlePass = $service->getCustomerGooglePass($customerId)) {
+                $service->syncPassContent($googlePass, $customerId);
+            }
+
+            $service->syncApplePassContent($customerId);
+        });
+
+        /*
+         * Re-theme the Apple pass when a customer's membership tier changes.
+         * The tier colour / logo are baked in at build time, so a field-value
+         * sync cannot change them — the pass must be rebuilt. Only rebuild when
+         * the customer already has an Apple pass and its stored background no
+         * longer matches the tier theme, so an ordinary customer save (or a
+         * tier change that maps to the same colour) does not churn the pass.
+         */
+        Event::listen('customer.update.after', function ($customer) {
+            if (! is_object($customer) || empty($customer->id)) {
+                return;
+            }
+
+            $service = app(MobilePassService::class);
+
+            if (! $service->isEnabled()) {
+                return;
+            }
+
+            $pass = $service->getCustomerApplePass($customer->id);
+
+            if (! $pass) {
+                return;
+            }
+
+            $currentBg = $pass->content['backgroundColor'] ?? null;
+            $expectedHex = $service->appleThemeBackgroundFor($customer->fresh()->group?->id);
+            $expectedRgb = $service->hexToRgbString($expectedHex);
+
+            if ($currentBg !== null && $currentBg !== $expectedRgb) {
+                $service->rebuildApplePass($customer->id);
+            }
+        });
 
         Event::listen('checkout.order.save.after', function ($order) {
             if (! in_array($order->payment->method ?? '', ['wallet'])) {
@@ -95,6 +165,57 @@ class MobilePassServiceProvider extends ServiceProvider
                 config(['mobile-pass.google.service_account_key' => $serviceAccountKey]);
                 config(['mobile-pass.google.service_account_key_path' => null]);
             }
+        } catch (\Exception) {
+            // DB may not be available during installation
+        }
+    }
+
+    protected function overrideAppleConfig(): void
+    {
+        try {
+            $organizationName = core()->getConfigData('sales.mobile_pass.apple.organization_name');
+            $typeIdentifier = core()->getConfigData('sales.mobile_pass.apple.type_identifier');
+            $teamIdentifier = core()->getConfigData('sales.mobile_pass.apple.team_identifier');
+            $certificate = core()->getConfigData('sales.mobile_pass.apple.certificate');
+            $certificatePassword = core()->getConfigData('sales.mobile_pass.apple.certificate_password');
+
+            if ($organizationName) {
+                config(['mobile-pass.apple.organization_name' => $organizationName]);
+            }
+
+            if ($typeIdentifier) {
+                config(['mobile-pass.apple.type_identifier' => $typeIdentifier]);
+            }
+
+            if ($teamIdentifier) {
+                config(['mobile-pass.apple.team_identifier' => $teamIdentifier]);
+            }
+
+            if ($certificate) {
+                // The certificate is stored as base64 of the .p12 binary; strip any
+                // whitespace/newlines a textarea may insert. The package decodes this
+                // and writes a temp .p12 (see ApplePassBuilder::getCertificatePath()).
+                $certificate = preg_replace('/\s+/', '', (string) $certificate);
+
+                config(['mobile-pass.apple.certificate' => $certificate]);
+                config(['mobile-pass.apple.certificate_path' => null]);
+            }
+
+            if ($certificatePassword !== null && $certificatePassword !== '') {
+                config(['mobile-pass.apple.certificate_password' => $certificatePassword]);
+            }
+
+            // The Apple PassKit web-service host is the storefront itself. Apple
+            // requires that whenever a pass declares webServiceURL it ALSO carries
+            // an authenticationToken (>= 16 chars); a pass with one but not the
+            // other is rejected on-device ("Safari cannot download this file").
+            // The package builds webServiceURL from webservice.host and sets
+            // authenticationToken from webservice.secret, so we must supply both.
+            // The secret must be STABLE across requests (it is embedded in the
+            // pass and used to authenticate device update calls), so derive it
+            // deterministically from the app key rather than randomising it.
+            config(['mobile-pass.apple.webservice.host' => config('app.url')]);
+            config(['mobile-pass.apple.webservice.secret' => hash('sha256', 'mobile-pass-apple-webservice|'.config('app.key'))]);
         } catch (\Exception) {
             // DB may not be available during installation
         }

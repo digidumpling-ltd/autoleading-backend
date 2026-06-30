@@ -14,6 +14,8 @@ class TierRule extends Model
         'min_balance',
         'max_balance',
         'customer_group_id',
+        'background_color',
+        'text_color',
         'sort_order',
     ];
 

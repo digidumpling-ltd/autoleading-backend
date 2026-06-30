@@ -49,6 +49,8 @@ class TierRuleController extends Controller
                     'min_balance'       => $r->min_balance,
                     'max_balance'       => $r->max_balance,
                     'customer_group_id' => $r->customer_group_id,
+                    'background_color'  => $r->background_color,
+                    'text_color'        => $r->text_color,
                     'sort_order'        => $r->sort_order,
                 ]),
         ]);

@@ -33,6 +33,10 @@ class EventServiceProvider extends ServiceProvider
                 $viewRenderEventManager->addTemplate(
                     'mobile-pass::shop.customers.profile.google-wallet-row'
                 );
+
+                $viewRenderEventManager->addTemplate(
+                    'mobile-pass::shop.customers.profile.apple-wallet-row'
+                );
             }
         );
     }

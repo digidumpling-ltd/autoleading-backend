@@ -358,7 +358,7 @@ class RewardPointRepository extends Repository
      */
     public function allocateByAdmin(int $customerId, int $points, string $reason): void
     {
-        $this->model->create([
+        $reward = $this->model->create([
             'customer_id'   => $customerId,
             'reward_points' => $points,
             'note'          => $reason,
@@ -366,6 +366,8 @@ class RewardPointRepository extends Repository
             'creator_type'  => 'admin',
             'creator_id'    => auth()->guard('admin')->id(),
         ]);
+
+        Event::dispatch('reward.points.save.after', [$reward]);
     }
 
     public function deductByAdmin(int $customerId, int $points, string $reason): void
@@ -374,7 +376,7 @@ class RewardPointRepository extends Repository
             throw new \InvalidArgumentException('Insufficient reward point balance.');
         }
 
-        $this->model->create([
+        $reward = $this->model->create([
             'customer_id'   => $customerId,
             'reward_points' => $points,
             'note'          => $reason,
@@ -382,6 +384,8 @@ class RewardPointRepository extends Repository
             'creator_type'  => 'admin',
             'creator_id'    => auth()->guard('admin')->id(),
         ]);
+
+        Event::dispatch('reward.points.save.after', [$reward]);
     }
 
     public function insertRewardPoints($data, $key, $value)

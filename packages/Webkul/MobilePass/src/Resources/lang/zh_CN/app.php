@@ -4,13 +4,16 @@ return [
     'common' => [
         'save-to-google-wallet' => '保存到 Google 钱包',
         'view-on-google-wallet' => '在 Google 钱包中查看',
+        'save-to-apple-wallet'  => '添加到 Apple Wallet',
+        'view-on-apple-wallet'  => '在 Apple Wallet 中查看',
         'delete'                => '删除',
     ],
 
     'customers' => [
         'account' => [
             'profile' => [
-                'loyalty-pass' => '忠诚通行证',
+                'loyalty-pass'       => '忠诚通行证',
+                'apple-loyalty-pass' => 'Apple 忠诚通行证',
             ],
         ],
     ],
@@ -45,6 +48,15 @@ return [
                         'issuer-id'           => '发行方 ID',
                         'class-suffix'        => '忠诚度类后缀',
                         'service-account-key' => '服务账号密钥（Base64 JSON）',
+                    ],
+                    'apple' => [
+                        'title'                => 'Apple Wallet',
+                        'info'                 => 'Apple Wallet 通行证凭证。请粘贴以 Base64 编码的 Pass Type ID 证书（.p12）。',
+                        'organization-name'    => '机构名称',
+                        'type-identifier'      => 'Pass Type 标识符',
+                        'team-identifier'      => 'Team 标识符',
+                        'certificate'          => '证书（.p12，Base64）',
+                        'certificate-password' => '证书密码',
                     ],
                 ],
             ],

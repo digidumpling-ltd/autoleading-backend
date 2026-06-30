@@ -4,13 +4,16 @@ return [
     'common' => [
         'save-to-google-wallet' => 'Save to Google Wallet',
         'view-on-google-wallet' => 'View on Google Wallet',
+        'save-to-apple-wallet'  => 'Add to Apple Wallet',
+        'view-on-apple-wallet'  => 'View in Apple Wallet',
         'delete'                => 'Delete',
     ],
 
     'customers' => [
         'account' => [
             'profile' => [
-                'loyalty-pass' => 'Loyalty Pass',
+                'loyalty-pass'       => 'Loyalty Pass',
+                'apple-loyalty-pass' => 'Apple Loyalty Pass',
             ],
         ],
     ],
@@ -45,6 +48,15 @@ return [
                         'issuer-id'           => 'Issuer ID',
                         'class-suffix'        => 'Loyalty Class Suffix',
                         'service-account-key' => 'Service Account Key (Base64 JSON)',
+                    ],
+                    'apple' => [
+                        'title'                => 'Apple Wallet',
+                        'info'                 => 'Apple Wallet pass credentials. Paste the base64-encoded Pass Type ID certificate (.p12).',
+                        'organization-name'    => 'Organization Name',
+                        'type-identifier'      => 'Pass Type Identifier',
+                        'team-identifier'      => 'Team Identifier',
+                        'certificate'          => 'Certificate (.p12, Base64)',
+                        'certificate-password' => 'Certificate Password',
                     ],
                 ],
             ],

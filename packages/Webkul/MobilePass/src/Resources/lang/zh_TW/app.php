@@ -4,13 +4,16 @@ return [
     'common' => [
         'save-to-google-wallet' => '儲存至 Google 錢包',
         'view-on-google-wallet' => '在 Google 錢包中查看',
+        'save-to-apple-wallet'  => '加入 Apple Wallet',
+        'view-on-apple-wallet'  => '在 Apple Wallet 中查看',
         'delete'                => '刪除',
     ],
 
     'customers' => [
         'account' => [
             'profile' => [
-                'loyalty-pass' => '忠誠通行證',
+                'loyalty-pass'       => '忠誠通行證',
+                'apple-loyalty-pass' => 'Apple 忠誠通行證',
             ],
         ],
     ],
@@ -45,6 +48,15 @@ return [
                         'issuer-id'           => '發行方 ID',
                         'class-suffix'        => '忠誠度類別後綴',
                         'service-account-key' => '服務帳號金鑰（Base64 JSON）',
+                    ],
+                    'apple' => [
+                        'title'                => 'Apple Wallet',
+                        'info'                 => 'Apple Wallet 通行證憑證。請貼上以 Base64 編碼的 Pass Type ID 憑證（.p12）。',
+                        'organization-name'    => '機構名稱',
+                        'type-identifier'      => 'Pass Type 識別碼',
+                        'team-identifier'      => 'Team 識別碼',
+                        'certificate'          => '憑證（.p12，Base64）',
+                        'certificate-password' => '憑證密碼',
                     ],
                 ],
             ],

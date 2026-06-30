@@ -27,6 +27,8 @@ return [
             'col-min-balance'   => 'Min Balance',
             'col-max-balance'   => 'Max Balance',
             'col-customer-group'=> 'Customer Group',
+            'col-background-color' => 'Background',
+            'col-text-color'    => 'Text',
 
             'validation' => [
                 'min-balance-required' => 'Tier :n: minimum balance is required and must be ≥ 0.',
