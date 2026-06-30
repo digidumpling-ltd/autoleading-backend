@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="secondary-button" @click="openDrawer">
-                        @lang('bagisto-membership::app.admin.tiers.add-tier')
+                        @lang('bagisto-membership::app.admin.tiers.edit-tiers')
                     </div>
                 </div>
 
@@ -48,8 +48,12 @@
                                 class="flex items-center gap-1"
                             >
                                 <p
-                                    class="flex items-center rounded px-2.5 py-1 font-semibold"
-                                    :style="{ backgroundColor: rule.background_color || '#4B5563', color: rule.text_color || '#FFFFFF' }"
+                                    class="flex items-center rounded border px-2.5 py-1 font-semibold"
+                                    :style="{
+                                        backgroundColor: rule.background_color || '#4B5563',
+                                        color: rule.text_color || '#FFFFFF',
+                                        borderColor: (!rule.background_color || rule.background_color.toUpperCase() === '#FFFFFF') ? '#D1D5DB' : 'transparent'
+                                    }"
                                 >
                                     @{{ chipLabel(rule) }}
                                     <span
@@ -70,11 +74,11 @@
                 </div>
 
                 <!-- Drawer -->
-                <x-admin::drawer ref="drawerRef">
+                <x-admin::drawer ref="drawerRef" width="600px">
                     <x-slot:header>
                         <div class="flex items-center justify-between">
                             <p class="my-2.5 text-xl font-medium dark:text-white">
-                                @lang('bagisto-membership::app.admin.tiers.drawer-title')
+                                @lang('bagisto-membership::app.admin.tiers.edit-tiers')
                             </p>
 
                             <div class="flex items-center gap-4 ltr:mr-11 rtl:ml-11">
@@ -183,7 +187,7 @@
                                 </x-admin::form.control-group>
 
                                 <!-- Background Colour -->
-                                <x-admin::form.control-group class="!mb-0 w-full">
+                                <x-admin::form.control-group class="!mb-0 shrink-0">
                                     <x-admin::form.control-group.label>
                                         @lang('bagisto-membership::app.admin.tiers.col-background-color')
                                     </x-admin::form.control-group.label>
@@ -191,12 +195,12 @@
                                     <input
                                         type="color"
                                         v-model="row.background_color"
-                                        class="h-[42px] w-full cursor-pointer rounded-md border bg-white p-1 dark:border-gray-800 dark:bg-gray-900"
+                                        class="block h-[42px] aspect-square cursor-pointer rounded-md border bg-white p-1 dark:border-gray-800 dark:bg-gray-900"
                                     />
                                 </x-admin::form.control-group>
 
                                 <!-- Text Colour -->
-                                <x-admin::form.control-group class="!mb-0 w-full">
+                                <x-admin::form.control-group class="!mb-0 shrink-0">
                                     <x-admin::form.control-group.label>
                                         @lang('bagisto-membership::app.admin.tiers.col-text-color')
                                     </x-admin::form.control-group.label>
@@ -204,7 +208,7 @@
                                     <input
                                         type="color"
                                         v-model="row.text_color"
-                                        class="h-[42px] w-full cursor-pointer rounded-md border bg-white p-1 dark:border-gray-800 dark:bg-gray-900"
+                                        class="block h-[42px] aspect-square cursor-pointer rounded-md border bg-white p-1 dark:border-gray-800 dark:bg-gray-900"
                                     />
                                 </x-admin::form.control-group>
 

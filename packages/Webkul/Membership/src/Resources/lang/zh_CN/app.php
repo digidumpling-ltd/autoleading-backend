@@ -18,6 +18,7 @@ return [
             'description'  => '根据客户钱包余额范围自动分配客户分组。',
             'drawer-title' => '管理等级规则',
             'add-tier'     => '添加等级',
+            'edit-tiers'   => '编辑等级',
             'save'         => '保存',
             'saved'        => '会员等级规则保存成功。',
             'no-rules'     => '尚未配置等级规则。',

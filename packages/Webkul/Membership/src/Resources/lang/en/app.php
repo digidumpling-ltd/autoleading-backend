@@ -18,6 +18,7 @@ return [
             'description'  => 'Assign customers to groups automatically based on their wallet balance range.',
             'drawer-title' => 'Manage Tier Rules',
             'add-tier'     => 'Add Tier',
+            'edit-tiers'   => 'Edit Tiers',
             'save'         => 'Save',
             'saved'        => 'Membership tier rules saved successfully.',
             'no-rules'     => 'No tier rules configured yet.',

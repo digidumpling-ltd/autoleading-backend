@@ -18,6 +18,7 @@ return [
             'description'  => '根據客戶錢包餘額範圍自動分配客戶群組。',
             'drawer-title' => '管理等級規則',
             'add-tier'     => '新增等級',
+            'edit-tiers'   => '編輯等級',
             'save'         => '儲存',
             'saved'        => '會員等級規則儲存成功。',
             'no-rules'     => '尚未設定等級規則。',
