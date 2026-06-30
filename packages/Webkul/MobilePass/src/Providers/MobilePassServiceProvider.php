@@ -82,6 +82,40 @@ class MobilePassServiceProvider extends ServiceProvider
             $service->syncApplePassContent($customerId);
         });
 
+        /*
+         * Re-theme the Apple pass when a customer's membership tier changes.
+         * The tier colour / logo are baked in at build time, so a field-value
+         * sync cannot change them — the pass must be rebuilt. Only rebuild when
+         * the customer already has an Apple pass and its stored background no
+         * longer matches the tier theme, so an ordinary customer save (or a
+         * tier change that maps to the same colour) does not churn the pass.
+         */
+        Event::listen('customer.update.after', function ($customer) {
+            if (! is_object($customer) || empty($customer->id)) {
+                return;
+            }
+
+            $service = app(MobilePassService::class);
+
+            if (! $service->isEnabled()) {
+                return;
+            }
+
+            $pass = $service->getCustomerApplePass($customer->id);
+
+            if (! $pass) {
+                return;
+            }
+
+            $currentBg = $pass->content['backgroundColor'] ?? null;
+            $expectedHex = $service->appleThemeBackgroundFor($customer->fresh()->group?->code);
+            $expectedRgb = $service->hexToRgbString($expectedHex);
+
+            if ($currentBg !== null && $currentBg !== $expectedRgb) {
+                $service->rebuildApplePass($customer->id);
+            }
+        });
+
         Event::listen('checkout.order.save.after', function ($order) {
             if (! in_array($order->payment->method ?? '', ['wallet'])) {
                 return;

@@ -162,6 +162,30 @@ class MobilePassService
         return $themes[$groupCode] ?? $regular;
     }
 
+    /**
+     * The pass background colour (hex) a given customer-group code resolves to.
+     * Exposed so the tier-change listener can compare against a stored pass.
+     */
+    public function appleThemeBackgroundFor(?string $groupCode): string
+    {
+        return $this->appleTierTheme($groupCode)['background'];
+    }
+
+    /**
+     * Convert a #RRGGBB hex string to the "rgb(r, g, b)" form the pkpass
+     * library stores in pass content, so the two can be compared directly.
+     */
+    public function hexToRgbString(string $hex): string
+    {
+        $hex = ltrim($hex, '#');
+
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
+
+        return "rgb({$r}, {$g}, {$b})";
+    }
+
     public function deleteApplePass(int $customerId): bool
     {
         $pass = $this->getCustomerApplePass($customerId);
@@ -170,7 +194,35 @@ class MobilePassService
             return false;
         }
 
+        // A pass installed on a device has rows in apple_mobile_pass_registrations
+        // that FK-reference it; remove them first so the delete does not fail.
+        \DB::table('apple_mobile_pass_registrations')->where('mobile_pass_id', $pass->id)->delete();
+
         $pass->delete();
+
+        return true;
+    }
+
+    /**
+     * Rebuild a customer's Apple pass from scratch. Needed when something that
+     * is baked in at build time changes (e.g. the membership-tier colour scheme
+     * / logo), which a field-value sync cannot alter. No-ops when the customer
+     * has no Apple pass. Returns true when a rebuild happened.
+     */
+    public function rebuildApplePass(int $customerId): bool
+    {
+        if (! $this->getCustomerApplePass($customerId)) {
+            return false;
+        }
+
+        $customer = Customer::find($customerId);
+
+        if (! $customer) {
+            return false;
+        }
+
+        $this->deleteApplePass($customerId);
+        $this->createOrGetApplePass($customer);
 
         return true;
     }
