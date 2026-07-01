@@ -47,22 +47,23 @@ class RentalSlot extends CoreRentalSlot
             $days = (int) abs($to->diffInDays($from));
             $rate = $this->effectiveDailyRate($bookingProduct->id, (float) $bookingProduct->rental_slot->daily_price, $days);
 
-            $price = $rate * $days;
+            $basePrice = $rate * $days;
         } else {
             $from = Carbon::createFromTimestamp($products[0]['additional']['booking']['slot']['from']);
             $to = Carbon::createFromTimestamp($products[0]['additional']['booking']['slot']['to']);
 
-            $price = $bookingProduct->rental_slot->hourly_price * (int) abs($to->diffInHours($from));
+            $basePrice = $bookingProduct->rental_slot->hourly_price * (int) abs($to->diffInHours($from));
         }
 
-        $price = core()->convertPrice($price);
+        $price = core()->convertPrice($basePrice);
 
         $quantity = $products[0]['quantity'];
 
-        $products[0]['price'] += $price;
-        $products[0]['base_price'] += $price;
-        $products[0]['total'] += ($price * $quantity);
-        $products[0]['base_total'] += ($price * $quantity);
+        // Replace (not add) to avoid double-counting the daily_price already in the price index.
+        $products[0]['price'] = $price;
+        $products[0]['base_price'] = $basePrice;
+        $products[0]['total'] = $price * $quantity;
+        $products[0]['base_total'] = $basePrice * $quantity;
 
         return $products;
     }
@@ -79,8 +80,6 @@ class RentalSlot extends CoreRentalSlot
 
             return $result;
         }
-
-        $price = $item->product->getTypeInstance()->getFinalPrice($item->quantity);
 
         $bookingProduct = $this->bookingProductRepository->findOneByField('product_id', $item->product_id);
 
@@ -101,7 +100,7 @@ class RentalSlot extends CoreRentalSlot
             $days = (int) abs($to->diffInDays($from));
             $rate = $this->effectiveDailyRate($bookingProduct->id, (float) $bookingProduct->rental_slot->daily_price, $days);
 
-            $price += $rate * $days;
+            $price = $rate * $days;
         } else {
             if (
                 ! isset($item->additional['booking']['slot']['from'])
@@ -115,7 +114,7 @@ class RentalSlot extends CoreRentalSlot
             $from = Carbon::createFromTimestamp($item->additional['booking']['slot']['from']);
             $to = Carbon::createFromTimestamp($item->additional['booking']['slot']['to']);
 
-            $price += $bookingProduct->rental_slot->hourly_price * (int) abs($to->diffInHours($from));
+            $price = $bookingProduct->rental_slot->hourly_price * (int) abs($to->diffInHours($from));
         }
 
         if ($price == $item->base_price) {
