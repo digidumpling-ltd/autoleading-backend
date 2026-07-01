@@ -1,5 +1,6 @@
 @php
     $channel = core()->getCurrentChannel();
+    $show_sidebar = (int)$show_categories_count === 1 || (int)$show_tags_count === 1;
 @endphp
 
 
@@ -31,42 +32,60 @@
             <div class="row col-12 remove-padding-margin">
                 <div id="home-right-bar-container" class="col-12 no-padding content">
                     <div class="container-right row no-margin col-12 no-padding">
-                        <section class="blog-hero-wrapper">
-                            <div class="blog-hero-image {{ ! $blog->src ? 'bg-gray-200 dark:bg-gray-700' : '' }}">
-                                <h1 class="hero-main-title">{{ $blog->name }}</h1>
-                                @if ($blog->src)
-                                    <img
-                                        src="{{ \Illuminate\Support\Facades\Storage::url($blog->src) }}"
-                                        alt="{{ $blog->name }}"
-                                        class="card-img img-fluid img-thumbnail bg-fill">
-                                @endif
-                            </div>
-                        </section>
-                        <div id="blog" class="container mt-5">
+                        <div id="blog" class="container mt-8">
 
                             <div class="full-content-wrapper">
                                 <div class="flex flex-wrap grid-wrap">
-                                    <div class="column-9">
-                                        <section class="blog-content">
-                                            <div class="text-justify mb-3 blog-post-content">
-                                                <h3 class="page-title">{{ $blog->name }}</h3>
-                                                <div class="post-tags mb-3">
-                                                    <strong>@lang('blog::app.shop.tags-label')</strong>
-                                                    <div class="post-tag-lists">
-                                                        @if( !empty($blog_tags) && count($blog_tags) > 0 )
-                                                            @foreach( $blog_tags as $blog_tag )
-                                                                @if(!$blog_tag->slug) @continue @endif
-                                                                <a href="{{route('shop.blog.tag.index',[$blog_tag->slug])}}" class="cat-link">{{$blog_tag->name}}</a>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                </div>
+                                    <div class="{{ $show_sidebar ? 'column-9' : 'column-12' }}">
+                                        <section class="blog-detail-content">
 
+                                            {{-- Featured image --}}
+                                            @if ($blog->src)
+                                                <div class="blog-detail-featured-img">
+                                                    <img
+                                                        src="{{ \Illuminate\Support\Facades\Storage::url($blog->src) }}"
+                                                        alt="{{ $blog->name }}">
+                                                </div>
+                                            @endif
+
+                                            {{-- Title --}}
+                                            <h1 class="blog-detail-title">{{ $blog->name }}</h1>
+
+                                            {{-- Tags + Meta row --}}
+                                            <div class="blog-detail-meta">
+                                                <div class="blog-detail-meta__tags">
+                                                    @if( !empty($blog->assign_categorys) && count($blog->assign_categorys) > 0 )
+                                                        @foreach( $blog->assign_categorys as $assign_category )
+                                                            @if(!$assign_category->slug) @continue @endif
+                                                            <a href="{{ route('shop.blog.category.index', [$assign_category->slug]) }}" class="cat-link">{{ $assign_category->name }}</a>
+                                                        @endforeach
+                                                    @endif
+                                                    @if( !empty($blog_tags) && count($blog_tags) > 0 )
+                                                        @foreach( $blog_tags as $blog_tag )
+                                                            @if(!$blog_tag->slug) @continue @endif
+                                                            <a href="{{ route('shop.blog.tag.index', [$blog_tag->slug]) }}" class="cat-link">{{ $blog_tag->name }}</a>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="blog-detail-meta__author">
+                                                    <span class="blog-detail-meta__date">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $blog->created_at)->format('d M, Y') }}</span>
+                                                    @if( (int)$show_author_page == 1 )
+                                                        <a href="{{ route('shop.blog.author.index', [$blog->author_id]) }}" class="blog-detail-meta__author-name">{{ $blog->author }}</a>
+                                                    @else
+                                                        <span class="blog-detail-meta__author-name">{{ $blog->author }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- Body --}}
+                                            <div class="blog-detail-body blog-post-content">
                                                 {!! $blog->description !!}
                                             </div>
+
                                         </section>
                                     </div>
 
+                                    @if ($show_sidebar)
                                     <sidebar class="column-3 blog-sidebar">
                                         <div class="row">
                                             <div class="col-lg-12 mb-4 categories">
@@ -104,6 +123,7 @@
                                             </div>
                                         </div>
                                     </sidebar>
+                                    @endif
                                 </div>
                             </div>
 

@@ -1,5 +1,6 @@
 @php
     $channel = core()->getCurrentChannel();
+    $show_sidebar = (int)$show_categories_count === 1 || (int)$show_tags_count === 1;
 @endphp
 
 
@@ -33,7 +34,7 @@
         <div class="full-content-wrapper mt-8 max-md:mt-5">
             <div class="flex flex-wrap grid-wrap">
 
-                                    <div class="column-9">
+                                    <div class="{{ $show_sidebar ? 'column-9' : 'column-12' }}">
 
                                         @if( !empty($blogs) &&  count($blogs) > 0 )
 
@@ -101,7 +102,8 @@
 
                                     </div>
 
-                                    <div class=" column-3 blog-sidebar">
+                                    @if ($show_sidebar)
+                                    <div class="column-3 blog-sidebar">
                                         <div class="row">
                                             <div class="col-lg-12 mb-4 categories">
                                                 @if($categories->isNotEmpty())
@@ -137,6 +139,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
             </div>
         </div>
 

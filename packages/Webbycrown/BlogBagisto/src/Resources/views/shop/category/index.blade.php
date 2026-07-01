@@ -1,5 +1,6 @@
 @php
     $channel = core()->getCurrentChannel();
+    $show_sidebar = (int)$show_categories_count === 1 || (int)$show_tags_count === 1;
 @endphp
 
 
@@ -29,14 +30,18 @@
             <div class="row col-12 remove-padding-margin">
                 <div id="home-right-bar-container" class="col-12 no-padding content">
                     <div class="container-right row no-margin col-12 no-padding">
-                        <section class="blog-hero-wrapper">
-                            <div class="blog-hero-image {{ ! $category->image ? 'bg-gray-200 dark:bg-gray-700' : '' }}">
-                                <h1 class="hero-main-title">{{ $category->name }}</h1>
-                                @if ($category->image)
-                                    <img
-                                        src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}"
-                                        alt="{{ $category->name }}"
-                                        class="card-img img-fluid img-thumbnail bg-fill">
+                        <section class="blog-category-hero {{ ! $category->image ? 'blog-category-hero--no-image' : '' }}">
+                            @if ($category->image)
+                                <img
+                                    src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}"
+                                    alt="{{ $category->name }}"
+                                    class="blog-category-hero__img">
+                            @endif
+                            <div class="blog-category-hero__overlay"></div>
+                            <div class="blog-category-hero__content">
+                                <h1 class="blog-category-hero__title">{{ $category->name }}</h1>
+                                @if ($category->description)
+                                    <p class="blog-category-hero__desc">{{ strip_tags($category->description) }}</p>
                                 @endif
                             </div>
                         </section>
@@ -44,13 +49,7 @@
                             <div class="full-content-wrapper">
                                 <div class="flex flex-wrap grid-wrap">
 
-                                    <div class="column-12">
-                                        <div class="text-justify blog-post-content">
-                                            {!! $category->description !!}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="column-9">
+                                    <div class="{{ $show_sidebar ? 'column-9' : 'column-12' }}">
 
                                         @if( !empty($blogs) &&  count($blogs) > 0 )
 
@@ -118,7 +117,8 @@
 
                                     </div>
 
-                                    <div class=" column-3 blog-sidebar">
+                                    @if ($show_sidebar)
+                                    <div class="column-3 blog-sidebar">
                                         <div class="row">
                                             <div class="col-lg-12 mb-4 categories">
                                                 @if($categories->isNotEmpty())
@@ -154,6 +154,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

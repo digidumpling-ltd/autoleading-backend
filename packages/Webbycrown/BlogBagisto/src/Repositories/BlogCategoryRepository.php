@@ -8,6 +8,7 @@ use Webkul\Core\Eloquent\Repository;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Illuminate\Support\Str;
 
 class BlogCategoryRepository extends Repository
@@ -108,13 +109,13 @@ class BlogCategoryRepository extends Repository
                         Storage::delete($category->{$type});
                     }
 
-                    $manager = new ImageManager();
+                    $manager = new ImageManager(new GdDriver());
 
-                    $image = $manager->make(request()->file($file))->encode('webp');
+                    $image = $manager->read(request()->file($file))->toWebp();
 
                     $category->{$type} = 'blog-category/' . $category->id . '/' . Str::random(40) . '.webp';
 
-                    Storage::put($category->{$type}, $image);
+                    Storage::put($category->{$type}, $image->toString());
 
                     $category->save();
                 }

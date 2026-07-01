@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Illuminate\Support\Str;
 
 class BlogTagRepository extends Repository
@@ -108,13 +109,13 @@ class BlogTagRepository extends Repository
                         Storage::delete($tag->{$type});
                     }
 
-                    $manager = new ImageManager();
+                    $manager = new ImageManager(new GdDriver());
 
-                    $image = $manager->make(request()->file($file))->encode('webp');
+                    $image = $manager->read(request()->file($file))->toWebp();
 
                     $tag->{$type} = 'blog-tag/' . $tag->id . '/' . Str::random(40) . '.webp';
 
-                    Storage::put($tag->{$type}, $image);
+                    Storage::put($tag->{$type}, $image->toString());
 
                     $tag->save();
                 }
