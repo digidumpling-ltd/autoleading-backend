@@ -8,10 +8,9 @@ use Webkul\Product\Type\Booking as BookingType;
 class Booking extends BaseBooking
 {
     /**
-     * For rental booking products the base product price is irrelevant —
-     * customers pay a per-day or per-hour rate, not a sale price. We replace
-     * the price index with the rental starting rate so the storefront price
-     * filter matches the "starting from" price displayed on the product card.
+     * For rental booking products getPriceHtml() displays product->price + min
+     * rental rate as the "starting from" price. We sync the price index to that
+     * same value so the storefront price filter matches what the card shows.
      *
      * Non-rental booking types fall through to the default indexer.
      */
@@ -35,10 +34,14 @@ class Booking extends BaseBooking
     }
 
     /**
-     * Return the rental starting price based on the configured renting_type:
+     * Return the rental starting rate for the price index:
      *   daily        → daily_price
      *   hourly       → hourly_price
      *   daily_hourly → min(daily_price, hourly_price)
+     *
+     * getPriceHtml() reads getMinimalPrice() from this index and adds zero
+     * extras (via the CustomTheme Booking type override), so the displayed
+     * "starting from" price equals this rate exactly.
      *
      * Returns null for non-rental booking types.
      */

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Themes\CustomTheme\Helpers\Indexers\Price\Booking as BookingIndexer;
 use Themes\CustomTheme\Listeners\Order;
+use Themes\CustomTheme\Type\Booking as CustomBookingType;
 use Webkul\Product\Helpers\Indexers\Price\Booking as BaseBookingIndexer;
 
 class CustomThemeServiceProvider extends ServiceProvider
@@ -16,6 +17,8 @@ class CustomThemeServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../Config/system.php', 'core');
 
         $this->app->bind(BaseBookingIndexer::class, BookingIndexer::class);
+
+        config(['product_types.booking.class' => CustomBookingType::class]);
     }
 
     public function boot(): void

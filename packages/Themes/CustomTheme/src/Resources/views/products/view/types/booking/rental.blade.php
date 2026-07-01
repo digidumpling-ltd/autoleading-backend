@@ -14,8 +14,8 @@
 <v-rental-slots
     :booking-product="{{ $bookingProduct }}"
     :availability="{{ json_encode($calendarAvailability) }}"
-    :base-price="{{ $product->getTypeInstance()->getMinimalPrice() ?? 0 }}"
-    :base-regular-price="{{ $product->getTypeInstance()->getRegularMinimalPrice() ?? 0 }}"
+    :base-price="0"
+    :base-regular-price="0"
     :day-pricing-rules="{{ json_encode($dayPricingRules) }}"
 ></v-rental-slots>
 
