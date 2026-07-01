@@ -272,6 +272,64 @@
 
                 </div>
 
+                <!-- Blog Index Page Banner Section -->
+                <div class="p-4 w-50 bg-white dark:bg-gray-900 rounded-[4px] box-shadow">
+                    <p class="mb-4 text-base text-gray-800 dark:text-white font-semibold">
+                        {{ __('blog::app.setting.index-banner-setting') }}
+                    </p>
+
+                    <div class="mt-8">
+
+                        {{-- Banner Image --}}
+                        @php $existingBannerImage = \Webkul\Core\Models\CoreConfig::where('code', 'blog_index_banner_image')->value('value'); @endphp
+                        <div class="flex flex-col gap-2 mb-4">
+                            <p class="text-gray-800 dark:text-white font-medium">
+                                {{ __('blog::app.setting.index-banner-image') }}
+                            </p>
+
+                            <x-admin::media.images
+                                name="blog_index_banner_image"
+                                :uploaded-images="$existingBannerImage ? [['id' => 'image', 'url' => \Illuminate\Support\Facades\Storage::url($existingBannerImage)]] : []"
+                            />
+                        </div>
+
+                        {{-- Banner Title --}}
+                        <x-admin::form.control-group class="mb-2.5">
+                            <x-admin::form.control-group.label>
+                                {{ __('blog::app.setting.index-banner-title') }}
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="text"
+                                :name="'blog_index_banner_title_' . $currentLocale->code"
+                                :id="'blog_index_banner_title_' . $currentLocale->code"
+                                :value="old('blog_index_banner_title_' . $currentLocale->code) ?? $settings['blog_index_banner_title_' . $currentLocale->code]"
+                                :label="__('blog::app.setting.index-banner-title')"
+                                :placeholder="__('blog::app.setting.index-banner-title')"
+                            >
+                            </x-admin::form.control-group.control>
+                        </x-admin::form.control-group>
+
+                        {{-- Banner Description --}}
+                        <x-admin::form.control-group class="mb-2.5">
+                            <x-admin::form.control-group.label>
+                                {{ __('blog::app.setting.index-banner-description') }}
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="textarea"
+                                :name="'blog_index_banner_description_' . $currentLocale->code"
+                                :id="'blog_index_banner_description_' . $currentLocale->code"
+                                :value="old('blog_index_banner_description_' . $currentLocale->code) ?? $settings['blog_index_banner_description_' . $currentLocale->code]"
+                                :label="__('blog::app.setting.index-banner-description')"
+                                :placeholder="__('blog::app.setting.index-banner-description')"
+                            >
+                            </x-admin::form.control-group.control>
+                        </x-admin::form.control-group>
+
+                    </div>
+                </div>
+
                 <!-- Default Blog SEO Setting Section -->
                 <div class="p-4 w-50 bg-white dark:bg-gray-900 rounded-[4px] box-shadow">
                     <p class="mb-4 text-base text-gray-800 dark:text-white font-semibold">

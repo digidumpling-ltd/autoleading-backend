@@ -68,7 +68,11 @@ class BlogController extends Controller
         $blog_seo_meta_keywords = $this->getSeoConfigByKey('blog_seo_meta_keywords');
         $blog_seo_meta_description = $this->getSeoConfigByKey('blog_seo_meta_description');
 
-        return view($this->_config['view'], compact('blogs', 'categories', 'customizations', 'tags', 'show_categories_count', 'show_tags_count', 'show_author_page', 'blog_seo_meta_title', 'blog_seo_meta_keywords', 'blog_seo_meta_description'));
+        $blog_index_banner_title = $this->getSeoConfigByKey('blog_index_banner_title');
+        $blog_index_banner_description = $this->getSeoConfigByKey('blog_index_banner_description');
+        $blog_index_banner_image = $this->getConfigByKey('blog_index_banner_image');
+
+        return view($this->_config['view'], compact('blogs', 'categories', 'customizations', 'tags', 'show_categories_count', 'show_tags_count', 'show_author_page', 'blog_seo_meta_title', 'blog_seo_meta_keywords', 'blog_seo_meta_description', 'blog_index_banner_title', 'blog_index_banner_description', 'blog_index_banner_image'));
     }
 
     public function authorPage($author_id)

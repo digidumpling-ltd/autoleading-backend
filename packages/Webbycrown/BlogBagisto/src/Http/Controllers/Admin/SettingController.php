@@ -6,6 +6,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Webkul\User\Models\Admin;
 use Webkul\Core\Models\CoreConfig;
 use Webbycrown\BlogBagisto\Models\Category;
@@ -51,9 +54,9 @@ class SettingController extends Controller
 
         $currentLocale = core()->getRequestedLocale();
 
-        $non_seo_keys = array( 'blog_post_per_page', 'blog_post_maximum_related', 'blog_post_recent_order_by', 'blog_post_show_categories_with_count', 'blog_post_show_tags_with_count', 'blog_post_show_author_page', 'blog_post_enable_comment', 'blog_post_allow_guest_comment', 'blog_post_enable_comment_moderation', 'blog_post_maximum_nested_comment' );
+        $non_seo_keys = array( 'blog_post_per_page', 'blog_post_maximum_related', 'blog_post_recent_order_by', 'blog_post_show_categories_with_count', 'blog_post_show_tags_with_count', 'blog_post_show_author_page', 'blog_post_enable_comment', 'blog_post_allow_guest_comment', 'blog_post_enable_comment_moderation', 'blog_post_maximum_nested_comment', 'blog_index_banner_image' );
 
-        $seo_base_keys = array( 'blog_seo_meta_title', 'blog_seo_meta_keywords', 'blog_seo_meta_description' );
+        $seo_base_keys = array( 'blog_seo_meta_title', 'blog_seo_meta_keywords', 'blog_seo_meta_description', 'blog_index_banner_title', 'blog_index_banner_description' );
 
         $locale_seo_keys = array_map(fn ($k) => $k . '_' . $currentLocale->code, $seo_base_keys);
 
@@ -94,7 +97,31 @@ class SettingController extends Controller
     {
         $data = request()->all();
     
-        $config_except_keys = array( '_token', '_method', 'switch_blog_post_show_categories_with_count', 'switch_blog_post_show_tags_with_count', 'switch_blog_post_show_author_page', 'switch_blog_post_enable_comment', 'switch_blog_post_allow_guest_comment', 'switch_blog_post_enable_comment_moderation' );
+        $config_except_keys = array( '_token', '_method', 'switch_blog_post_show_categories_with_count', 'switch_blog_post_show_tags_with_count', 'switch_blog_post_show_author_page', 'switch_blog_post_enable_comment', 'switch_blog_post_allow_guest_comment', 'switch_blog_post_enable_comment_moderation', 'blog_index_banner_image' );
+
+        // Handle banner image — x-admin::media.images posts:
+        //   new file   → blog_index_banner_image[] (file input)
+        //   image kept → blog_index_banner_image[image] = '' (hidden input)
+        //   image gone → neither key present
+        $existingImage = CoreConfig::where('code', 'blog_index_banner_image')->value('value');
+        $newFiles = request()->file('blog_index_banner_image');
+
+        if (!empty($newFiles)) {
+            $newFile = is_array($newFiles) ? reset($newFiles) : $newFiles;
+            if ($existingImage) {
+                Storage::delete($existingImage);
+            }
+            $manager = new ImageManager(new GdDriver());
+            $image = $manager->read($newFile)->toWebp();
+            $path = 'blog/index-banner/' . uniqid() . '.webp';
+            Storage::put($path, $image->toString());
+            $record = CoreConfig::firstOrNew(['code' => 'blog_index_banner_image']);
+            $record->value = $path;
+            $record->save();
+        } elseif ($existingImage && ! request()->has('blog_index_banner_image')) {
+            Storage::delete($existingImage);
+            CoreConfig::where('code', 'blog_index_banner_image')->delete();
+        }
 
         if ( !empty($data) && count($data) > 0 ) {
             foreach ( $data as $data_key => $data_value ) {

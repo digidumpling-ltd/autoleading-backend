@@ -25,14 +25,29 @@
 
     @endpush
 
-    <div class="container px-[60px] max-lg:px-8 max-sm:px-4">
-
-        <div class="mt-8 flex items-center justify-between max-md:mt-5">
-            <h2 class="text-2xl font-medium max-sm:text-base">@lang('blog::app.shop.blog-title')</h2>
-        </div>
-
-        <div class="full-content-wrapper mt-8 max-md:mt-5">
-            <div class="flex flex-wrap grid-wrap">
+    <div class="main">
+        <div>
+            <div class="row col-12 remove-padding-margin">
+                <div id="home-right-bar-container" class="col-12 no-padding content">
+                    <div class="container-right row no-margin col-12 no-padding">
+                        <section class="blog-category-hero {{ ! $blog_index_banner_image ? 'blog-category-hero--no-image' : '' }}">
+                            @if ($blog_index_banner_image)
+                                <img
+                                    src="{{ \Illuminate\Support\Facades\Storage::url($blog_index_banner_image) }}"
+                                    alt="{{ $blog_index_banner_title ?? __('blog::app.shop.blog-title') }}"
+                                    class="blog-category-hero__img">
+                            @endif
+                            <div class="blog-category-hero__overlay"></div>
+                            <div class="blog-category-hero__content">
+                                <h1 class="blog-category-hero__title">{{ !empty($blog_index_banner_title) ? $blog_index_banner_title : __('blog::app.shop.blog-title') }}</h1>
+                                @if (!empty($blog_index_banner_description))
+                                    <p class="blog-category-hero__desc">{{ $blog_index_banner_description }}</p>
+                                @endif
+                            </div>
+                        </section>
+                        <div id="blog" class="container mt-5">
+                            <div class="full-content-wrapper">
+                                <div class="flex flex-wrap grid-wrap">
 
                                     <div class="{{ $show_sidebar ? 'column-9' : 'column-12' }}">
 
@@ -140,8 +155,12 @@
                                         </div>
                                     </div>
                                     @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </x-shop::layouts>
