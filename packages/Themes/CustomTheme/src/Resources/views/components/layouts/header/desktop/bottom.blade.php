@@ -61,7 +61,7 @@
         <div class="flex items-center">
         @foreach ($navItems as $navItem)
             @if ($navItem['type'] === 'link')
-                <a href="{{ $navItem['item']['url'] }}" class="flex h-[77px] items-center border-b-4 border-transparent px-5 uppercase whitespace-nowrap hover:border-navyBlue">
+                <a href="{{ $navItem['item']['url'] }}" class="flex h-[77px] items-center border-b-4 border-transparent px-3 uppercase whitespace-nowrap hover:border-navyBlue">
                     {{ $navItem['item']['label'] }}
                 </a>
             @else
@@ -92,53 +92,27 @@
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.search_bar.before') !!}
 
-        <!-- Search Bar Container -->
-        <div class="relative w-full">
-            <form
-                action="{{ route('shop.search.index') }}"
-                class="flex max-w-[445px] items-center"
-                role="search"
-            >
-                <label
-                    for="organic-search"
-                    class="sr-only"
-                >
-                    @lang('shop::app.components.layouts.header.desktop.bottom.search')
-                </label>
-
-                <div class="icon-search pointer-events-none absolute top-2.5 flex items-center text-xl ltr:left-3 rtl:right-3"></div>
-
-                <input
-                    type="text"
-                    name="query"
-                    value="{{ request('query') }}"
-                    class="block w-full py-3 text-xs font-medium text-gray-900 transition-all border border-transparent rounded-lg bg-zinc-100 px-11 hover:border-gray-400 focus:border-gray-400"
-                    minlength="{{ core()->getConfigData('catalog.products.search.min_query_length') }}"
-                    maxlength="{{ core()->getConfigData('catalog.products.search.max_query_length') }}"
-                    placeholder="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
-                    aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
-                    aria-required="true"
-                    pattern="[^\\]+"
-                    required
-                >
-
-                <button
-                    type="submit"
-                    class="hidden"
-                    aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.submit')"
-                >
-                </button>
-
-                @if (core()->getConfigData('catalog.products.settings.image_search'))
-                    @include('shop::search.images.index')
-                @endif
-            </form>
-        </div>
+        <v-search-bar
+            search-route="{{ route('shop.search.index') }}"
+            current-query="{{ request('query') }}"
+            min-length="{{ core()->getConfigData('catalog.products.search.min_query_length') }}"
+            max-length="{{ core()->getConfigData('catalog.products.search.max_query_length') }}"
+            placeholder="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
+            search-label="@lang('shop::app.components.layouts.header.desktop.bottom.search')"
+            submit-label="@lang('shop::app.components.layouts.header.desktop.bottom.submit')"
+        >
+            <span
+                class="icon-search cursor-pointer text-2xl"
+                role="button"
+                aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.search')"
+                tabindex="0"
+            ></span>
+        </v-search-bar>
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.search_bar.after') !!}
 
         <!-- Right Navigation Links -->
-        <div class="mt-1.5 flex gap-x-8 max-[1100px]:gap-x-6 max-lg:gap-x-8">
+        <div class="flex items-center gap-x-8 max-[1100px]:gap-x-6 max-lg:gap-x-8">
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.compare.before') !!}
 
@@ -292,6 +266,95 @@
 
 @pushOnce('scripts')
     {{-- =====================================================================
+         v-search-bar — clickable search icon that opens a full-width overlay
+         ===================================================================== --}}
+    <script
+        type="text/x-template"
+        id="v-search-bar-template"
+    >
+        <div @keydown.escape.window="closeSearch">
+            <!-- Search Icon Trigger -->
+            <div @click="openSearch">
+                <slot></slot>
+            </div>
+
+            <!-- Backdrop -->
+            <Transition
+                enter-active-class="transition duration-150 ease-out"
+                enter-from-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="transition duration-100 ease-in"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
+            >
+                <div
+                    v-if="isOpen"
+                    class="fixed inset-0 z-10 bg-black/40"
+                    :style="{ top: panelTop + 'px' }"
+                    @click="closeSearch"
+                ></div>
+            </Transition>
+
+            <!-- Search Panel (drops below navbar) -->
+            <Transition
+                enter-active-class="transition duration-200 ease-out"
+                enter-from-class="opacity-0 -translate-y-1"
+                enter-to-class="opacity-100 translate-y-0"
+                leave-active-class="transition duration-150 ease-in"
+                leave-from-class="opacity-100 translate-y-0"
+                leave-to-class="opacity-0 -translate-y-1"
+            >
+                <div
+                    v-if="isOpen"
+                    class="fixed left-0 right-0 z-10 bg-white border-b border-zinc-200 shadow-md px-[60px] py-4 flex items-center gap-4"
+                    :style="{ top: panelTop + 'px' }"
+                >
+                    <form
+                        :action="searchRoute"
+                        class="flex flex-1 items-center"
+                        role="search"
+                        @submit="closeSearch"
+                    >
+                        <label :for="inputId" class="sr-only">@{{ searchLabel }}</label>
+
+                        <div class="relative flex flex-1 items-center">
+                            <div class="icon-search pointer-events-none absolute top-2.5 flex items-center text-xl ltr:left-3 rtl:right-3"></div>
+
+                            <input
+                                :id="inputId"
+                                ref="searchInput"
+                                type="text"
+                                name="query"
+                                :value="currentQuery"
+                                :minlength="minLength"
+                                :maxlength="maxLength"
+                                :placeholder="placeholder"
+                                :aria-label="searchLabel"
+                                aria-required="true"
+                                pattern="[^\\]+"
+                                required
+                                class="block w-full py-3 text-xs font-medium text-gray-900 transition-all border border-transparent rounded-lg bg-zinc-100 px-11 hover:border-gray-400 focus:border-gray-400 focus:outline-none"
+                            >
+                        </div>
+
+                        <button type="submit" class="hidden" :aria-label="submitLabel"></button>
+                    </form>
+
+                    <!-- Close Button -->
+                    <button
+                        type="button"
+                        class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full hover:bg-zinc-100 transition"
+                        @click="closeSearch"
+                        aria-label="Close search"
+                    >
+                        <span class="icon-cancel text-xl text-zinc-500"></span>
+                    </button>
+                </div>
+            </Transition>
+        </div>
+    </script>
+
+    {{-- =====================================================================
          v-desktop-category — exact copy of the default theme component,
          used when the "categories dropdown" setting is OFF.
          ===================================================================== --}}
@@ -319,7 +382,7 @@
                 v-for="category in categories"
             >
                 <span>
-                    <a :href="category.url" class="inline-block px-5 uppercase whitespace-nowrap">
+                    <a :href="category.url" class="inline-block px-3 uppercase whitespace-nowrap">
                         @{{ category.name }}
                     </a>
                 </span>
@@ -368,7 +431,7 @@
                     class="flex h-[77px] cursor-pointer items-center border-b-4 border-transparent hover:border-b-4 hover:border-navyBlue"
                     @click="toggleCategoryDrawer"
                 >
-                    <span class="flex items-center gap-1 px-5 uppercase whitespace-nowrap">
+                    <span class="flex items-center gap-1 px-3 uppercase whitespace-nowrap">
                         <span class="text-xl icon-hamburger"></span>
                         @lang('shop::app.components.layouts.header.desktop.bottom.all')
                     </span>
@@ -380,7 +443,7 @@
                     v-for="category in categories.slice(0, 4)"
                 >
                     <span>
-                        <a :href="category.url" class="inline-block px-5 uppercase whitespace-nowrap">
+                        <a :href="category.url" class="inline-block px-3 uppercase whitespace-nowrap">
                             @{{ category.name }}
                         </a>
                     </span>
@@ -545,7 +608,7 @@
             class="group relative flex h-[77px] items-center border-b-4 border-transparent hover:border-b-4 hover:border-navyBlue"
             v-else-if="categories.length"
         >
-            <span class="inline-block px-5 uppercase whitespace-nowrap cursor-pointer">
+            <span class="inline-block px-3 uppercase whitespace-nowrap cursor-pointer">
                 @{{ categoriesLabel }}
                 <span class="text-sm icon-sort-down ml-1"></span>
             </span>
@@ -580,6 +643,57 @@
     </script>
 
     <script type="module">
+        app.component('v-search-bar', {
+            template: '#v-search-bar-template',
+
+            props: {
+                searchRoute:  { type: String, required: true },
+                currentQuery: { type: String, default: '' },
+                minLength:    { type: String, default: '1' },
+                maxLength:    { type: String, default: '255' },
+                placeholder:  { type: String, default: 'Search...' },
+                searchLabel:  { type: String, default: 'Search' },
+                submitLabel:  { type: String, default: 'Submit' },
+            },
+
+            data() {
+                return {
+                    isOpen: false,
+                    inputId: 'v-search-bar-input',
+                    panelTop: 78,
+                };
+            },
+
+            mounted() {
+                this._onScroll = () => {
+                    if (this.isOpen) this.updatePanelTop();
+                };
+
+                window.addEventListener('scroll', this._onScroll, { passive: true });
+            },
+
+            beforeUnmount() {
+                window.removeEventListener('scroll', this._onScroll);
+            },
+
+            methods: {
+                updatePanelTop() {
+                    const header = document.querySelector('header');
+                    this.panelTop = header ? header.getBoundingClientRect().bottom : 78;
+                },
+
+                openSearch() {
+                    this.updatePanelTop();
+                    this.isOpen = true;
+                    this.$nextTick(() => this.$refs.searchInput?.focus());
+                },
+
+                closeSearch() {
+                    this.isOpen = false;
+                },
+            },
+        });
+
         app.component('v-desktop-category', {
             template: '#v-desktop-category-template',
 
