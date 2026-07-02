@@ -114,11 +114,28 @@ class YedpayTopUpController extends Controller
             $customer = WalletCustomer::find($topUp->customer_id);
             $channel  = WalletChannel::find(core()->getCurrentChannel()->id);
 
+            $oldBalance = $customer->balanceFloatNum;
+
             $channel->forceTransferFloat($customer, $topUp->amount, [
                 'type'        => 'wallet_topup',
                 'topup_id'    => $topUp->id,
                 'description' => trans('bagisto-wallet::app.listeners.wallet-topup.description', ['order' => $topUp->id]),
             ]);
+
+            // A gateway top-up credits the wallet but does not otherwise announce
+            // it. Dispatch WalletBalanceUpdated (as the admin/account top-up paths
+            // do) so downstream listeners run — notably the wallet-pass sync that
+            // keeps the Apple/Google pass balance in step. Gated by the same
+            // publish flag the other paths use.
+            if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
+                \Illuminate\Support\Facades\Event::dispatch(new \Webkul\Wallet\Events\WalletBalanceUpdated(
+                    customerId: $customer->id,
+                    oldBalance: $oldBalance,
+                    newBalance: $customer->fresh()->balanceFloatNum,
+                    reason: 'wallet_topup',
+                    customerGroupId: $customer->customer_group_id,
+                ));
+            }
 
             session()->forget(['wallet_topup_id', 'yedpay_topup_reference']);
 
