@@ -62,9 +62,6 @@ return [
         'clear'                                 => 'Clear',
         'reference'                             => 'Reference',
         'reference_number'                      => 'Reference No.',
-        'search_by_reference_email_name_phone'  => 'Search by reference, email, name or phone...',
-        'no_customers_found'                    => 'No customers found.',
-        'no_documents_found'                    => 'No documents found.',
         'customer_approved'                     => 'Customer approval verified, documents successful.',
         'customer_rejected'                     => 'Customer rejected successfully.',
         'verification_required_to_rent'         => 'Verification Required to Rent',
@@ -82,6 +79,8 @@ return [
         'open_document'                          => 'Open document',
         'confirm_delete_document'               => 'Are you sure you want to delete this document?',
         'cannot_delete_doc_approved'            => 'Documents cannot be deleted for an approved customer.',
+        'remind'                                => 'Remind',
+        'reminder-sent'                         => 'Reminder sent successfully.',
     ],
 
     'emails' => [
@@ -109,6 +108,13 @@ return [
             'summary'  => 'Verification Details',
             'cta'      => 'Re-submit Documents',
         ],
+
+        'reminder' => [
+            'subject'         => 'Complete Your Identity Verification',
+            'greeting'        => 'Dear :customer_name,',
+            'default-message' => 'We noticed you have not yet completed your identity verification. Please visit your account dashboard to upload the required documents and complete the process.',
+            'cta'             => 'Complete Verification',
+        ],
     ],
 
     'signup' => [
@@ -129,5 +135,11 @@ return [
             'require-verification-info' => 'When enabled, only approved customers can add products to their cart or place orders.',
         ],
 
+        'signup' => [
+            'title'              => 'Signup Document URLs',
+            'title-info'         => 'Set the URLs for the PDCS and Membership T&C documents shown on the signup form.',
+            'pdcs-url'           => 'PDCS Document URL',
+            'membership-tnc-url' => 'Membership T&C Document URL',
+        ],
     ],
 ];

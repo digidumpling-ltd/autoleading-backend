@@ -31,10 +31,6 @@ class EventServiceProvider extends ServiceProvider
         'verification.admin.rejected' => [
             SendVerificationStatusCustomerNotification::class . '@rejected',
         ],
-        // NOTE: Login verification checks are deferred to Story 2.3 (admin approval workflow)
-        // 'customer.after.login' => [
-        //     HandleCustomerLogin::class,
-        // ],
     ];
 
     public function boot(): void

@@ -18,14 +18,4 @@ class CustomerObserver
         }
     }
 
-    /**
-     * Handle the Customer "updated" event.
-     */
-    public function updated(Customer $customer): void
-    {
-        // Handle verification status updates based on document uploads
-        if ($customer->wasChanged('verification_status')) {
-            // Additional logic can be added here if needed
-        }
-    }
 }

@@ -2,12 +2,15 @@
 
 namespace Webkul\CustomerVerification\Http\Controllers\Admin;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\CustomerVerification\DataGrids\VerificationDataGrid;
+use Webkul\CustomerVerification\Mail\ReminderNotification;
 use Webkul\CustomerVerification\Repositories\CustomerVerificationDocumentRepository;
 use Webkul\CustomerVerification\Services\AdminVerificationActionService;
 use Webkul\CustomerVerification\Services\CustomerVerificationDocumentService;
@@ -46,6 +49,19 @@ class VerificationManagementController extends Controller
             'documents' => $documents,
             'statuses' => Verification::STATUSES,
         ]);
+    }
+
+    public function sendReminder(int $customerId): JsonResponse
+    {
+        $customer = $this->customerRepository->find($customerId);
+
+        if (! $customer) {
+            abort(404);
+        }
+
+        Mail::to($customer->email)->queue(new ReminderNotification($customer));
+
+        return response()->json(['message' => trans('customer-verification::app.common.reminder-sent')]);
     }
 
     public function uploadDocument(Request $request, int $customerId, string $docType): RedirectResponse

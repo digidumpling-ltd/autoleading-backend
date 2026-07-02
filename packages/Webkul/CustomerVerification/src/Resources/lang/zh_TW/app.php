@@ -62,9 +62,6 @@ return [
         'clear'                                 => '清除',
         'reference'                             => '參考編號',
         'reference_number'                      => '參考編號',
-        'search_by_reference_email_name_phone'  => '按參考編號、電郵、姓名或電話搜尋...',
-        'no_customers_found'                    => '未找到客戶。',
-        'no_documents_found'                    => '未找到文件。',
         'customer_approved'                     => '客戶批准驗證成功、文件已確認。',
         'customer_rejected'                     => '客戶已成功被拒。',
         'verification_required_to_rent'         => '租賃需要驗證',
@@ -82,6 +79,8 @@ return [
         'open_document'                         => '開啟文件',
         'confirm_delete_document'              => '您確定要刪除此文件嗎？',
         'cannot_delete_doc_approved'           => '已批准客戶的文件不能刪除。',
+        'remind'                               => '提醒',
+        'reminder-sent'                        => '提醒已成功發送。',
     ],
 
     'emails' => [
@@ -109,6 +108,13 @@ return [
             'summary'  => '驗證詳情',
             'cta'      => '重新提交文件',
         ],
+
+        'reminder' => [
+            'subject'         => '請完成身份驗證',
+            'greeting'        => '親愛的 :customer_name，',
+            'default-message' => '我們注意到您尚未完成身份驗證。請前往您的帳戶儀表板上傳所需文件並完成驗證流程。',
+            'cta'             => '完成驗證',
+        ],
     ],
 
     'signup' => [
@@ -129,5 +135,11 @@ return [
             'require-verification-info' => '啟用後，只有已通過審核的客戶才能將商品加入購物車或下訂單。',
         ],
 
+        'signup' => [
+            'title'              => '註冊文件連結',
+            'title-info'         => '設定註冊表單中顯示的個資聲明及會員條款文件連結。',
+            'pdcs-url'           => '個資收集聲明文件連結',
+            'membership-tnc-url' => '會員條款及細則文件連結',
+        ],
     ],
 ];

@@ -9,7 +9,7 @@ class PreventUnverifiedAddToCartListener
 {
     public function handle(mixed $_product): void
     {
-        if (! core()->getConfigData('customer_verification.checkout.gating.require_verification')) {
+        if (! core()->getConfigData('customer.verification.checkout.require_verification')) {
             return;
         }
 

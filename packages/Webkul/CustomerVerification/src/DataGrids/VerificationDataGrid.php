@@ -18,7 +18,6 @@ class VerificationDataGrid extends DataGrid
             ->addSelect([
                 'customers.id as customer_id',
                 'customers.email',
-                'customers.phone',
                 'customers.reference_number',
                 'customers.verification_status',
                 'customers.created_at',
@@ -31,7 +30,6 @@ class VerificationDataGrid extends DataGrid
         $this->addFilter('reference_number', 'customers.reference_number');
         $this->addFilter('full_name', DB::raw('CONCAT('.$tablePrefix.'customers.first_name, " ", '.$tablePrefix.'customers.last_name)'));
         $this->addFilter('email', 'customers.email');
-        $this->addFilter('phone', 'customers.phone');
         $this->addFilter('verification_status', 'customers.verification_status');
         $this->addFilter('created_at', 'customers.created_at');
 
@@ -114,6 +112,7 @@ class VerificationDataGrid extends DataGrid
             'type'     => 'datetime',
             'sortable' => true,
         ]);
+
     }
 
     public function prepareActions()
@@ -123,6 +122,13 @@ class VerificationDataGrid extends DataGrid
             'title'  => trans('customer-verification::app.common.view'),
             'method' => 'GET',
             'url'    => fn ($row) => route('admin.verification.show', $row->customer_id),
+        ]);
+
+        $this->addAction([
+            'icon'   => 'icon-mail',
+            'title'  => trans('customer-verification::app.common.remind'),
+            'method' => 'POST',
+            'url'    => fn ($row) => route('admin.verification.remind', $row->customer_id),
         ]);
     }
 }

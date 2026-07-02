@@ -62,9 +62,6 @@ return [
         'clear'                                  => '清除',
         'reference'                              => '参考编号',
         'reference_number'                       => '参考编号',
-        'search_by_reference_email_name_phone'   => '按参考编号、电邮、姓名或电话搜索...',
-        'no_customers_found'                     => '未找到客户。',
-        'no_documents_found'                     => '未找到文件。',
         'customer_approved'                      => '客户批准验证成功、文件已确认。',
         'customer_rejected'                      => '客户已成功被拒。',
         'verification_required_to_rent'          => '租赁需要验证',
@@ -82,6 +79,8 @@ return [
         'open_document'                          => '打开文件',
         'confirm_delete_document'                => '您确定要删除此文件吗？',
         'cannot_delete_doc_approved'             => '已批准客户的文件不能删除。',
+        'remind'                                 => '提醒',
+        'reminder-sent'                          => '提醒已成功发送。',
     ],
 
     'emails' => [
@@ -109,6 +108,13 @@ return [
             'summary'  => '验证详情',
             'cta'      => '重新提交文件',
         ],
+
+        'reminder' => [
+            'subject'         => '请完成身份验证',
+            'greeting'        => '亲爱的 :customer_name，',
+            'default-message' => '我们注意到您尚未完成身份验证。请前往您的账户仪表板上传所需文件并完成验证流程。',
+            'cta'             => '完成验证',
+        ],
     ],
 
     'signup' => [
@@ -127,6 +133,13 @@ return [
             'title-info'                => '控制未验证客户是否可以将商品加入购物车或下订单。',
             'require-verification'      => '需要验证',
             'require-verification-info' => '启用后，只有已通过审核的客户才能将商品加入购物车或下订单。',
+        ],
+
+        'signup' => [
+            'title'              => '注册文件链接',
+            'title-info'         => '设置注册表单中显示的个资声明和会员条款文件链接。',
+            'pdcs-url'           => '个资收集声明文件链接',
+            'membership-tnc-url' => '会员条款及细则文件链接',
         ],
     ],
 ];

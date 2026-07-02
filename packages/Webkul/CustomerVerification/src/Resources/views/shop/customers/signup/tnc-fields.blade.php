@@ -16,7 +16,7 @@
         v-pre
     >
         {!! trans('customer-verification::app.signup.pdcs_agree', [
-            'link' => '<a href="#" target="_blank" class="text-navyBlue">' . trans('customer-verification::app.signup.pdcs_title') . '</a>',
+            'link' => '<a href="' . (core()->getConfigData('customer.verification.signup.pdcs_url') ?: '#') . '" target="_blank" class="text-navyBlue">' . trans('customer-verification::app.signup.pdcs_title') . '</a>',
         ]) !!}
     </label>
 </div>
@@ -41,7 +41,7 @@
         v-pre
     >
         {!! trans('customer-verification::app.signup.membership_tnc_agree', [
-            'link' => '<a href="#" target="_blank" class="text-navyBlue">' . trans('customer-verification::app.signup.membership_tnc_title') . '</a>',
+            'link' => '<a href="' . (core()->getConfigData('customer.verification.signup.membership_tnc_url') ?: '#') . '" target="_blank" class="text-navyBlue">' . trans('customer-verification::app.signup.membership_tnc_title') . '</a>',
         ]) !!}
     </label>
 </div>
