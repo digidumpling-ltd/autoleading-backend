@@ -50,9 +50,7 @@
     @stack('styles')
 
     <style>
-        {
-             ! ! core()->getConfigData('general.content.custom_scripts.custom_css') ! !
-        }
+        {!! core()->getConfigData('general.content.custom_scripts.custom_css') !!}
     </style>
 
     @if(core()->getConfigData('general.content.speculation_rules.enabled'))
