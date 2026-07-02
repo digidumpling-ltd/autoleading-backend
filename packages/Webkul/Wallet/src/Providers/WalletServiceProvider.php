@@ -2,12 +2,14 @@
 
 namespace Webkul\Wallet\Providers;
 
+use Bavix\Wallet\Internal\Events\TransactionCreatedEventInterface;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Wallet\Events\WalletBalanceUpdated;
 use Webkul\Wallet\Http\Middleware\WalletCheckoutMiddleware;
 use Webkul\Wallet\Http\Middleware\WalletTopUpGatingMiddleware;
 use Webkul\Wallet\Listeners\WalletNotificationListener;
+use Webkul\Wallet\Listeners\WalletTransactionListener;
 use Webkul\Wallet\Services\WalletService;
 
 class WalletServiceProvider extends ServiceProvider
@@ -43,6 +45,8 @@ class WalletServiceProvider extends ServiceProvider
         Event::listen('sales.refund.save.after', 'Webkul\Wallet\Listeners\WalletRefundListener@handle');
 
         Event::listen(WalletBalanceUpdated::class, WalletNotificationListener::class);
+
+        Event::listen(TransactionCreatedEventInterface::class, WalletTransactionListener::class);
 
         $this->app['router']->pushMiddlewareToGroup('web', WalletCheckoutMiddleware::class);
 

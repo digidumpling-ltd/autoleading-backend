@@ -59,10 +59,13 @@ return [
                 'topup'                    => '充值',
                 'topup-amount'             => '金额',
                 'topup-amount-placeholder' => '输入金额',
-                'topup-select-method'      => '选择支付方式',
-                'topup-no-methods'         => '当前没有可用的支付方式。',
-                'topup-invalid-method'     => '所选支付方式无效。',
-                'topup-submit'             => '添加资金',
+                'topup-select-method'         => '选择支付方式',
+                'topup-no-methods'            => '当前没有可用的支付方式。',
+                'topup-invalid-method'        => '所选支付方式无效。',
+                'topup-submit'                => '添加资金',
+                'topup-test-mode-notice'      => '测试模式已启用。充值将即时到账，无需通过支付网关。',
+                'topup-test-mode-title'       => '测试模式',
+                'topup-test-mode-description' => '绕过支付网关（仅限测试模式）。',
                 'topup-success'            => '钱包充值成功。',
                 'topup-already-completed'  => '此次充值已处理。',
                 'transactions'             => '交易记录',
@@ -153,8 +156,10 @@ return [
                     'topup-allowed-methods-info'      => '选择客户可在钱包充值页面使用的支付网关。留空以允许所有已启用的网关。',
 
                     'settings' => [
-                        'title' => '充值设置',
-                        'info'  => '配置钱包充值可用的支付网关。',
+                        'title'          => '充值设置',
+                        'info'           => '配置钱包充值可用的支付网关。',
+                        'test-mode'      => '测试模式',
+                        'test-mode-info' => '启用后，客户无需通过支付网关即可为钱包充值。仅限在开发或测试环境中使用。',
                     ],
 
                     'gating' => [

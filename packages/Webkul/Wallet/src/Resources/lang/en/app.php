@@ -59,10 +59,13 @@ return [
                 'topup'                    => 'Top Up',
                 'topup-amount'             => 'Amount',
                 'topup-amount-placeholder' => 'Enter amount',
-                'topup-select-method'      => 'Select Payment Method',
-                'topup-no-methods'         => 'No payment methods are currently available.',
-                'topup-invalid-method'     => 'The selected payment method is invalid.',
-                'topup-submit'             => 'Add Funds',
+                'topup-select-method'       => 'Select Payment Method',
+                'topup-no-methods'          => 'No payment methods are currently available.',
+                'topup-invalid-method'      => 'The selected payment method is invalid.',
+                'topup-submit'              => 'Add Funds',
+                'topup-test-mode-notice'    => 'Test mode is active. Top-ups are credited instantly without going through a payment gateway.',
+                'topup-test-mode-title'     => 'Test Mode',
+                'topup-test-mode-description' => 'Bypass payment gateway (test mode only).',
                 'topup-success'            => 'Wallet topped up successfully.',
                 'topup-already-completed'  => 'This top-up has already been processed.',
                 'transactions'             => 'Transaction History',
@@ -153,8 +156,10 @@ return [
                     'topup-allowed-methods-info'      => 'Select which payment gateways customers may use on the wallet top-up page. Leave empty to allow all enabled gateways.',
 
                     'settings' => [
-                        'title' => 'Top-Up Settings',
-                        'info'  => 'Configure which payment gateways are available for wallet top-ups.',
+                        'title'          => 'Top-Up Settings',
+                        'info'           => 'Configure which payment gateways are available for wallet top-ups.',
+                        'test-mode'      => 'Test Mode',
+                        'test-mode-info' => 'When enabled, customers can top up their wallet without going through a payment gateway. Use only in development or staging environments.',
                     ],
 
                     'gating' => [

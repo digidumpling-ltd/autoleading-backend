@@ -59,10 +59,13 @@ return [
                 'topup'                    => '儲值',
                 'topup-amount'             => '金額',
                 'topup-amount-placeholder' => '輸入金額',
-                'topup-select-method'      => '選擇付款方式',
-                'topup-no-methods'         => '目前沒有可用的付款方式。',
-                'topup-invalid-method'     => '所選付款方式無效。',
-                'topup-submit'             => '新增資金',
+                'topup-select-method'         => '選擇付款方式',
+                'topup-no-methods'            => '目前沒有可用的付款方式。',
+                'topup-invalid-method'        => '所選付款方式無效。',
+                'topup-submit'                => '新增資金',
+                'topup-test-mode-notice'      => '測試模式已啟用。儲值將即時入帳，無需通過付款閘道。',
+                'topup-test-mode-title'       => '測試模式',
+                'topup-test-mode-description' => '略過付款閘道（僅限測試模式）。',
                 'topup-success'            => '錢包儲值成功。',
                 'topup-already-completed'  => '此次儲值已處理。',
                 'transactions'             => '交易記錄',
@@ -153,8 +156,10 @@ return [
                     'topup-allowed-methods-info'      => '選擇客戶可在錢包儲值頁面使用的付款閘道。留空以允許所有已啟用的閘道。',
 
                     'settings' => [
-                        'title' => '儲值設定',
-                        'info'  => '設定錢包儲值可用的付款閘道。',
+                        'title'          => '儲值設定',
+                        'info'           => '設定錢包儲值可用的付款閘道。',
+                        'test-mode'      => '測試模式',
+                        'test-mode-info' => '啟用後，客戶無需通過付款閘道即可為錢包儲值。僅限在開發或測試環境中使用。',
                     ],
 
                     'gating' => [

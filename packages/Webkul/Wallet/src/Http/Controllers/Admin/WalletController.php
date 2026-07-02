@@ -5,11 +5,9 @@ namespace Webkul\Wallet\Http\Controllers\Admin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Wallet\DataGrids\Admin\WalletTransactionDataGrid;
-use Webkul\Wallet\Events\WalletBalanceUpdated;
 use Webkul\Wallet\Models\Customer as WalletCustomer;
 use Webkul\Wallet\Services\WalletService;
 
@@ -57,8 +55,6 @@ class WalletController extends Controller
         $customer = WalletCustomer::findOrFail($id);
 
         if ($validated['type'] === 'add') {
-            $oldBalance = $customer->balanceFloatNum;
-
             $adminId = auth()->guard('admin')->id();
 
             $customer->depositFloat($validated['amount'], [
@@ -70,16 +66,6 @@ class WalletController extends Controller
             ]);
 
             $newBalance = $customer->fresh()->balanceFloatNum;
-
-            if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
-                Event::dispatch(new WalletBalanceUpdated(
-                    customerId: $customer->id,
-                    oldBalance: $oldBalance,
-                    newBalance: $newBalance,
-                    reason: 'admin_grant',
-                    customerGroupId: $customer->customer_group_id,
-                ));
-            }
 
             if ($request->input('notify_customer')) {
                 $this->walletService->notifyTopUp($customer, (float) $validated['amount'], $newBalance);
@@ -99,8 +85,6 @@ class WalletController extends Controller
             ], 422);
         }
 
-        $oldBalance = $customer->balanceFloatNum;
-
         $adminId = auth()->guard('admin')->id();
 
         $customer->withdrawFloat($validated['amount'], [
@@ -110,15 +94,6 @@ class WalletController extends Controller
             'creator_type' => 'admin',
             'creator_id'   => $adminId,
         ]);
-
-        if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
-            Event::dispatch(new WalletBalanceUpdated(
-                customerId: $customer->id,
-                oldBalance: $oldBalance,
-                newBalance: $customer->fresh()->balanceFloatNum,
-                reason: 'admin_deduct',
-            ));
-        }
 
         return response()->json([
             'message' => trans('bagisto-wallet::app.admin.customers.wallet.adjust-deduct-success'),
@@ -139,8 +114,6 @@ class WalletController extends Controller
         $customer = WalletCustomer::findOrFail($id);
 
         if ($request->type === 'add') {
-            $oldBalance = $customer->balanceFloatNum;
-
             $adminId = auth()->guard('admin')->id();
 
             $customer->depositFloat($request->amount, [
@@ -152,16 +125,6 @@ class WalletController extends Controller
             ]);
 
             $newBalance = $customer->fresh()->balanceFloatNum;
-
-            if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
-                Event::dispatch(new WalletBalanceUpdated(
-                    customerId: $customer->id,
-                    oldBalance: $oldBalance,
-                    newBalance: $newBalance,
-                    reason: 'admin_grant',
-                    customerGroupId: $customer->customer_group_id,
-                ));
-            }
 
             if ($request->notify_customer) {
                 $this->walletService->notifyTopUp($customer, (float) $request->amount, $newBalance);
@@ -178,8 +141,6 @@ class WalletController extends Controller
             ]);
         }
 
-        $oldBalance = $customer->balanceFloatNum;
-
         $adminId = auth()->guard('admin')->id();
 
         $customer->withdrawFloat($request->amount, [
@@ -189,15 +150,6 @@ class WalletController extends Controller
             'creator_type' => 'admin',
             'creator_id'   => $adminId,
         ]);
-
-        if (core()->getConfigData('sales.wallet.events.publish_balance_updated')) {
-            Event::dispatch(new WalletBalanceUpdated(
-                customerId: $customer->id,
-                oldBalance: $oldBalance,
-                newBalance: $customer->fresh()->balanceFloatNum,
-                reason: 'admin_deduct',
-            ));
-        }
 
         return redirect()
             ->route('admin.customers.wallet.index', $id)

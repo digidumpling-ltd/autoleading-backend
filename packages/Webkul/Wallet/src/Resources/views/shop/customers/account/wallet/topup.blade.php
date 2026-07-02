@@ -52,7 +52,57 @@
                     </x-shop::form.control-group>
                 </div>
 
-                @if ($methods->isNotEmpty())
+                @if ($testMode)
+                    <div class="mb-6">
+                        <label class="mb-3 block text-sm font-medium text-zinc-700">
+                            @lang('bagisto-wallet::app.customers.account.wallet.topup-select-method')
+                            <span class="text-red-500">*</span>
+                        </label>
+
+                        <div class="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2.5">
+                            <p class="text-xs font-medium text-amber-700">
+                                @lang('bagisto-wallet::app.customers.account.wallet.topup-test-mode-notice')
+                            </p>
+                        </div>
+
+                        <div class="flex flex-wrap gap-7 max-md:gap-4 max-sm:gap-2.5">
+                            <div class="relative cursor-pointer max-md:max-w-full max-md:flex-auto">
+                                <input
+                                    type="radio"
+                                    name="payment_method"
+                                    value="test"
+                                    id="payment_method_test"
+                                    checked
+                                    class="peer hidden"
+                                />
+
+                                <label
+                                    for="payment_method_test"
+                                    class="icon-radio-unselect peer-checked:icon-radio-select absolute top-5 cursor-pointer text-2xl text-navyBlue ltr:right-5 rtl:left-5"
+                                ></label>
+
+                                <label
+                                    for="payment_method_test"
+                                    class="block w-[190px] cursor-pointer rounded-xl border border-zinc-200 p-5 max-md:flex max-md:w-full max-md:gap-5 max-md:rounded-lg max-sm:gap-4 max-sm:px-4 max-sm:py-2.5"
+                                >
+                                    <div>
+                                        <p class="mt-1.5 text-sm font-semibold max-md:mt-1 max-sm:mt-0">
+                                            @lang('bagisto-wallet::app.customers.account.wallet.topup-test-mode-title')
+                                        </p>
+
+                                        <p class="mt-2.5 text-xs font-medium text-zinc-500 max-md:mt-1 max-sm:mt-0">
+                                            @lang('bagisto-wallet::app.customers.account.wallet.topup-test-mode-description')
+                                        </p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        @error('payment_method')
+                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @elseif ($methods->isNotEmpty())
                     <div class="mb-6">
                         <label class="mb-3 block text-sm font-medium text-zinc-700">
                             @lang('bagisto-wallet::app.customers.account.wallet.topup-select-method')

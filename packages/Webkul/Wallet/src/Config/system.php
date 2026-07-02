@@ -138,6 +138,13 @@ return [
         'sort'   => 1,
         'fields' => [
             [
+                'name'          => 'test_mode',
+                'title'         => 'bagisto-wallet::app.configuration.index.sales.wallet.settings.test-mode',
+                'info'          => 'bagisto-wallet::app.configuration.index.sales.wallet.settings.test-mode-info',
+                'type'          => 'boolean',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ], [
                 'name'          => 'topup_allowed_methods',
                 'title'         => 'bagisto-wallet::app.configuration.index.sales.wallet.topup-allowed-methods',
                 'info'          => 'bagisto-wallet::app.configuration.index.sales.wallet.topup-allowed-methods-info',

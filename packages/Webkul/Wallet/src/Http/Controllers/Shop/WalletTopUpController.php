@@ -15,10 +15,10 @@ class WalletTopUpController extends Controller
     public function create(): View
     {
         $customer = WalletCustomer::find(auth()->guard('customer')->id());
+        $testMode = (bool) core()->getConfigData('sales.wallet.settings.test_mode');
+        $methods  = $testMode ? collect() : $this->resolveTopUpMethods();
 
-        $methods = $this->resolveTopUpMethods();
-
-        return view('wallet::shop.customers.account.wallet.topup', compact('customer', 'methods'));
+        return view('wallet::shop.customers.account.wallet.topup', compact('customer', 'methods', 'testMode'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -27,6 +27,21 @@ class WalletTopUpController extends Controller
             'amount'         => 'required|numeric|min:1',
             'payment_method' => 'required|string|not_in:wallet',
         ]);
+
+        if (core()->getConfigData('sales.wallet.settings.test_mode') && $validated['payment_method'] === 'test') {
+            $customerId = auth()->guard('customer')->id();
+            $customer   = WalletCustomer::find($customerId);
+
+            $customer->depositFloat($validated['amount'], [
+                'type'         => 'wallet_topup',
+                'creator_type' => 'customer',
+                'creator_id'   => $customerId,
+                'description'  => 'Test mode top-up',
+            ]);
+
+            return redirect()->route('shop.customers.account.wallet.index')
+                ->with('success', trans('bagisto-wallet::app.customers.account.wallet.topup-success'));
+        }
 
         $methods      = $this->resolveTopUpMethods();
         $methodConfig = $methods->firstWhere('method', $validated['payment_method']);
