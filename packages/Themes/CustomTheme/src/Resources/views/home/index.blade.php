@@ -15,11 +15,8 @@ $channel = core()->getCurrentChannel();
 <meta property="og:site_name" content="{{ $channel->name }}" />
 <meta property="og:title" content="{{ $channel->home_seo['meta_title'] ?? $channel->name }}" />
 <meta property="og:description" content="{{ $channel->home_seo['meta_description'] ?? '' }}" />
-<meta property="og:image" content="{{ $channel->logo_url ?? bagisto_asset('images/logo.svg') }}" />
-<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{{ $channel->home_seo['meta_title'] ?? $channel->name }}" />
 <meta name="twitter:description" content="{{ $channel->home_seo['meta_description'] ?? '' }}" />
-<meta name="twitter:image" content="{{ $channel->logo_url ?? bagisto_asset('images/logo.svg') }}" />
 @endPush
 
 @push('scripts')
@@ -52,9 +49,7 @@ $channel = core()->getCurrentChannel();
         @if (! empty($data['css']))
         @push ('styles')
         <style>
-            {
-                 ! ! $data['css'] ! !
-            }
+            {!! $data['css'] !!}
         </style>
         @endpush
         @endif
